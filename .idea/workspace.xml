@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0ba80433-d235-4acd-b7ad-47c56be46df3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/components/already_have_an_account_acheck.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/components/birthday_widget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/components/rounded_button.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/components/rounded_input_field.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/components/rounded_password_field.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/components/text_field_container.dart" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1sshSBmjGszrxsjThPESW4tGywG" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Laptrinh\AdroidStudioProject\Welcome-Login-Signup-Page-Flutter-master\lib\Screens\Login\components" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Laptrinh\AdroidStudioProject\Welcome-Login-Signup-Page-Flutter-master\lib\components" />
+      <recent name="D:\Laptrinh\AdroidStudioProject\Welcome-Login-Signup-Page-Flutter-master\lib\Screens\Login\components" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0ba80433-d235-4acd-b7ad-47c56be46df3" name="Default Changelist" comment="" />
+      <created>1621667201819</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1621667201819</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1169" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1621848953715">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1169" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1621848953715" />
+    <state x="1052" y="100" width="774" height="840" key="AVDManager" timestamp="1622043812068">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1052" y="100" width="774" height="840" key="AVDManager/0.0.1920.1040@0.0.1920.1040" timestamp="1622043812068" />
+    <state x="1219" y="275" key="FileChooserDialogImpl" timestamp="1622040238721">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1219" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1622040238721" />
+    <state width="914" height="340" key="GridCell.Tab.0.bottom" timestamp="1622043582198">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="914" height="340" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1622043582198" />
+    <state width="914" height="340" key="GridCell.Tab.0.center" timestamp="1622043582198">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="914" height="340" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1622043582198" />
+    <state width="914" height="340" key="GridCell.Tab.0.left" timestamp="1622043582198">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="914" height="340" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1622043582198" />
+    <state width="914" height="340" key="GridCell.Tab.0.right" timestamp="1622043582198">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="914" height="340" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1622043582198" />
+    <state x="461" y="165" key="SettingsEditor" timestamp="1622042589976">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1622042589976" />
+    <state x="1102" y="229" width="672" height="678" key="search.everywhere.popup" timestamp="1622043709588">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1102" y="229" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622043709588" />
+  </component>
+</project>
