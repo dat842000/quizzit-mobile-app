@@ -8,8 +8,25 @@ class Body extends StatefulWidget {
   @override
   _BodyState createState() => _BodyState();
 }
-class _BodyState extends State<Body>{
-  DateTime birthday;
+
+class _BodyState extends State<Body> {
+  String _email;
+  String _username;
+  String _password;
+  String _confirmedPassword;
+  DateTime _birthday;
+
+  void setEmail(String email) => this._email = email;
+
+  void setUsername(String username) => this._username = username;
+
+  void setPassword(String password) => this._password = password;
+
+  void setConfirmedPassword(String confirmedPassword) =>
+      this._confirmedPassword = confirmedPassword;
+
+  void setBirthday(DateTime birthday) => this._birthday = birthday;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -54,17 +71,28 @@ class _BodyState extends State<Body>{
               ),
               Column(
                 children: <Widget>[
-                  inputFile(label: "Email"),
+                  inputFile(label: "Email", exp: setEmail),
                   // inputFile(label: "Fullname"),
-                  inputFile(label: "Username"),
-                  inputFile(label: "Password", obscureText: true),
-                  inputFile(label: "Confirm Password ", obscureText: true),
+                  inputFile(label: "Username", exp: setUsername),
+                  inputFile(
+                      label: "Password", obscureText: true, exp: setPassword),
+                  inputFile(
+                      label: "Confirm Password ",
+                      obscureText: true,
+                      exp: setConfirmedPassword),
                   buildBirthday(),
                 ],
               ),
               RoundedButton(
                 text: "SIGN UP",
-                press: () {fetchAlbum().then((value) => print(value.body));},
+                press: () {
+                  // fetchAlbum().then((value) => print(value.body));
+                  print(_username);
+                  print(_password);
+                  print(_confirmedPassword);
+                  print(_email);
+                  print(_birthday);
+                },
               ),
             ],
           ),
@@ -72,50 +100,46 @@ class _BodyState extends State<Body>{
       ),
     );
   }
-  Widget inputFile({label, obscureText = false, }) {
+
+  Widget inputFile({label, obscureText = false, Function exp}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
           label,
           style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w400,
-              color: Colors.black87
-          ),
-
+              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
         ),
         SizedBox(
           height: 5,
         ),
-        TextField(
-          obscureText: obscureText,
-          decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(vertical: 0,
-                  horizontal: 10),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: Colors.grey[400]
+        TextFormField(
+            obscureText: obscureText,
+            decoration: InputDecoration(
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey[400]),
                 ),
-
-              ),
-              border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey[400])
-              )
-          ),
-        ),
-        SizedBox(height: 10,)
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey[400]))),
+            onChanged: (value) => exp(value)),
+        SizedBox(
+          height: 10,
+        )
       ],
     );
   }
+
   Widget buildBirthday() => buildTitle(
-    title: 'Birthday',
-    child: BirthdayWidget(
-      birthday: birthday,
-      onChangedBirthday: (birthday) =>
-          setState(() => this.birthday = birthday),
-    ),
-  );
+        title: 'Birthday',
+        child: BirthdayWidget(
+          birthday: _birthday,
+          onChangedBirthday: (birthday) =>
+              setState(() => this._birthday = birthday),
+        ),
+      );
+
   Widget buildTitle({
     @required String title,
     @required Widget child,
@@ -132,6 +156,19 @@ class _BodyState extends State<Body>{
         ],
       );
 
+  set username(String value) {
+    _username = value;
+  }
 
+  set password(String value) {
+    _password = value;
+  }
+
+  set confirmedPassword(String value) {
+    _confirmedPassword = value;
+  }
+
+  set birthday(DateTime value) {
+    _birthday = value;
+  }
 }
-
