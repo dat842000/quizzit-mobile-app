@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  http: ^0.13.3
   intl: ^0.15.7
   flutter:
     sdk: flutter
