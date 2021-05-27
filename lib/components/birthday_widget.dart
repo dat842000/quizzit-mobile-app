@@ -34,14 +34,16 @@ class _BirthdayWidgetState extends State<BirthdayWidget> {
     setDate();
   }
 
-  void setDate() => setState(() {
+  void setDate() =>
+      setState(() {
         controller.text = widget.birthday == null
             ? ''
             : DateFormat.yMd().format(widget.birthday);
       });
 
   @override
-  Widget build(BuildContext context) => FocusBuilder(
+  Widget build(BuildContext context) =>
+      FocusBuilder(
         onChangeVisibility: (isVisible) {
           if (isVisible) {
             selectDate(context);
@@ -51,16 +53,23 @@ class _BirthdayWidgetState extends State<BirthdayWidget> {
           }
         },
         focusNode: focusNode,
-        builder: (hasFocus) => TextFormField(
-          controller: controller,
-          validator: (value) => value.isEmpty ? 'Is Required' : null,
-          decoration: InputDecoration(
-            prefixText: ' ',
-            hintText: 'Your birthday',
-            prefixIcon: Icon(Icons.calendar_today_rounded),
-            border: OutlineInputBorder(),
-          ),
-        ),
+        builder: (hasFocus) =>
+            TextFormField(
+              controller: controller,
+              validator: (value) => value.isEmpty ? 'Is Required' : null,
+
+              decoration: InputDecoration(
+                  prefixText: ' ',
+                  hintText: 'Your birthday',
+                  prefixIcon: Icon(Icons.calendar_today_rounded),
+                  contentPadding:
+                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey[400]),
+                  ),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey[400]))),
+            ),
       );
 
   Future selectDate(BuildContext context) async {
@@ -95,7 +104,8 @@ class FocusBuilder extends StatefulWidget {
 
 class _FocusBuilderState extends State<FocusBuilder> {
   @override
-  Widget build(BuildContext context) => GestureDetector(
+  Widget build(BuildContext context) =>
+      GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () => widget.onChangeVisibility(true),
         child: Focus(

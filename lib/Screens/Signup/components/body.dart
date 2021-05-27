@@ -44,35 +44,29 @@ class _BodyState extends State<Body> {
               size: 20,
               color: kPrimaryColor,
             )),
+        centerTitle: true,
+        title:const Text(
+          "Sign up",
+          style: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            color: kPrimaryColor,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 40),
-          height: MediaQuery.of(context).size.height - 50,
+          height: MediaQuery.of(context).size.height,
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  Text(
-                    "Sign up",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "Create an account, It's free ",
-                    style: TextStyle(fontSize: 15, color: Colors.grey[700]),
-                  ),
-                  SizedBox(height: 20),
-                ],
-              ),
-              Column(
-                children: <Widget>[
+                  SizedBox(height: 10),
                   inputFile(label: "Email", exp: setEmail),
-                  // inputFile(label: "Fullname"),
+                  inputFile(label: "Fullname"),
                   inputFile(label: "Username", exp: setUsername),
                   inputFile(
                       label: "Password", obscureText: true, exp: setPassword),
@@ -81,6 +75,11 @@ class _BodyState extends State<Body> {
                       obscureText: true,
                       exp: setConfirmedPassword),
                   buildBirthday(),
+                  SizedBox(height: 20),
+                  Text(
+                    "Create an account, It's free ",
+                    style: TextStyle(fontSize: 15, color: Colors.grey[700]),
+                  ),
                 ],
               ),
               RoundedButton(
@@ -149,7 +148,10 @@ class _BodyState extends State<Body> {
         children: [
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w400,
+                color: Colors.black87),
           ),
           const SizedBox(height: 8),
           child,

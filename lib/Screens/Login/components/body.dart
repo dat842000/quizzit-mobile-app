@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/Screens/Login/components/or_divider.dart';
 import 'package:flutter_auth/Screens/Login/components/social_icon.dart';
 import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
@@ -6,13 +7,35 @@ import 'package:flutter_auth/components/already_have_an_account_acheck.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
 import 'package:flutter_auth/components/rounded_input_field.dart';
 import 'package:flutter_auth/components/rounded_password_field.dart';
+import 'package:flutter_auth/constants.dart';
 import 'package:flutter_svg/svg.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({
     Key key,
   }) : super(key: key);
+  @override
+  _BodyState createState() => _BodyState();
+}
 
+class _BodyState extends State<Body> {
+  String _username;
+  String _password;
+  void setUsername(String username) => this._username = username;
+
+  void setPassword(String password) => this._password = password;
+  void save(){
+    if(_username == 'admin' && _password == "123"){
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return DashboardScreen();
+          },
+        ),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -25,8 +48,9 @@ class Body extends StatelessWidget {
             Text(
               "Login",
               style: TextStyle(
+                fontSize: 30,
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                color: kPrimaryColor,
               ),
             ),
             SizedBox(height: size.height * 0.03),
@@ -37,14 +61,20 @@ class Body extends StatelessWidget {
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
               hintText: "Username",
-              onChanged: (value) {},
+              onChanged: (value) {
+                this._username = value;
+              },
             ),
             RoundedPasswordField(
-              onChanged: (value) {},
+              onChanged: (value) {
+                this._password = value;
+              },
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () {},
+              press: (){
+                save();
+              },
             ),
             SizedBox(height: size.height * 0.001),
             AlreadyHaveAnAccountCheck(
