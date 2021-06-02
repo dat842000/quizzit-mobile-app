@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
+import 'package:flutter_auth/Screens/Dashboard/components/devider.dart';
 import 'package:flutter_auth/components/navigation_drawer_widget.ws.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:http/http.dart';
@@ -14,10 +16,11 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Color(0xffe4e6eb),
       appBar: AppBar(
         elevation: 0,
         brightness: Brightness.light,
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xffe4e6eb),
         iconTheme: IconThemeData(color: kPrimaryColor),
         actions: <Widget>[
           PopupMenuButton<String>(
@@ -33,12 +36,23 @@ class _BodyState extends State<Body> {
           )
         ],
         centerTitle: true,
-        title: const Text(
-          "Dashboard",
-          style: TextStyle(
-            fontSize: 30,
-            color: kPrimaryColor,
-          ),
+        title: Wrap(
+          children: <Widget>[
+            Text(
+              "Dash",
+              style: TextStyle(
+                fontSize: 30,
+                color: Colors.black87,
+              ),
+            ),
+            Text(
+              "Board",
+              style: TextStyle(
+                fontSize: 30,
+                color: kPrimaryColor,
+              ),
+            ),
+          ],
         ),
       ),
       drawer: NavigationDrawer(),
@@ -48,24 +62,24 @@ class _BodyState extends State<Body> {
             SizedBox(height: 20),
             GroupsTitle(
               imgUrl:
-                  'https://holidaysarthi.com/wp-content/uploads/elementor/thumbs/Cheap-tour-Nha-Trang-10-most-beautiful-places-to-visit-vietnam-holiday-destination-oelwps02gica3afv2ixdd23kz1caenta0b7mtiex5w.jpg',
+                  'https://scontent-sin6-3.xx.fbcdn.net/v/t1.6435-9/90954431_1582148621924471_7611655305281142784_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=825194&_nc_ohc=jgOg1-97daQAX--nxb2&_nc_ht=scontent-sin6-3.xx&oh=e405c37b9c016426c7052451ae7a161d&oe=60D913F0',
               title: 'Math Group',
               authorName: 'Dat Nguyen',
-              description: 'none',
+              description: 'Toan',
             ),
             GroupsTitle(
               imgUrl:
-                  'https://holidaysarthi.com/wp-content/uploads/elementor/thumbs/Cheap-tour-Phu-Quoc-Island-10-most-beautiful-places-to-visit-vietnam-holiday-destination-oely2hywpd1bvno4kl37lrhpg177dv8epgjobu6an8.jpg',
-              title: 'Math Group',
+                  'https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.18169-9/28379844_10156181840423126_2758359348106619364_n.jpg?_nc_cat=106&ccb=1-3&_nc_sid=825194&_nc_ohc=P2ycqfZHNUUAX-pPnZK&_nc_ht=scontent.fsgn5-6.fna&oh=cafbc3bcc1801c35a918915e1ce4011f&oe=60DB12E0',
+              title: 'Physics Group',
               authorName: 'Dat Nguyen',
-              description: 'none',
+              description: 'Ly',
             ),
             GroupsTitle(
               imgUrl:
-                  'https://d2rdhxfof4qmbb.cloudfront.net/wp-content/uploads/20180912154048/British-rural.jpg',
-              title: 'Math Group',
+                  'https://image.shutterstock.com/image-vector/maths-hand-drawn-vector-illustration-260nw-460780561.jpg',
+              title: 'PRJ303_Survice',
               authorName: 'Dat Nguyen',
-              description: 'none',
+              description: 'Hoa',
             ),
             GroupsTitle(
               imgUrl:
@@ -81,9 +95,25 @@ class _BodyState extends State<Body> {
               authorName: 'Dat Nguyen',
               description: 'none',
             ),
-            GroupCreate(),
-            const SizedBox(height: 15,),
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: IconButton(
+          icon: Icon(
+            Icons.add,
+            size: 30,
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return CreateGroupScreen();
+                },
+              ),
+            );
+          },
         ),
       ),
     );
@@ -92,16 +122,44 @@ class _BodyState extends State<Body> {
   void choiceAction(String choice) {}
 }
 
-class GroupCreate extends StatelessWidget {
+class Tag extends StatelessWidget {
+  String text;
+
+  Tag({@required this.text});
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: IconButton(
-        icon: Icon(
-          Icons.add,
-          size: 30,
-        ),
-        onPressed: () {},
+    return Container(
+      padding: EdgeInsets.all(5.0),
+      width: 60.0,
+      decoration: BoxDecoration(
+        color: Theme.of(context).accentColor,
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      alignment: Alignment.center,
+      child: Text(text),
+    );
+  }
+}
+
+class ContinueTag extends StatelessWidget {
+  String text;
+
+  ContinueTag({@required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(5.0),
+      width: 30.0,
+      decoration: BoxDecoration(
+        color: Theme.of(context).accentColor,
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        text,
+        style: TextStyle(fontWeight: FontWeight.w700),
       ),
     );
   }
@@ -124,16 +182,18 @@ class GroupsTitle extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(bottom: 20),
             width: MediaQuery.of(context).size.width - 50,
-            height: 150,
+            height: 240,
             decoration: BoxDecoration(
-                color: Colors.black45.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(6)),
+                color: Colors.white, borderRadius: BorderRadius.circular(20)),
             child: Stack(
               children: <Widget>[
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20.0),
+                      topRight: Radius.circular(20.0)),
                   child: CachedNetworkImage(
                     imageUrl: imgUrl,
+                    height: 135,
                     width: MediaQuery.of(context).size.width - 50,
                     fit: BoxFit.cover,
                   ),
@@ -141,33 +201,104 @@ class GroupsTitle extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.width - 50,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        title,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white),
-                      ),
-                      SizedBox(
-                        height: 4,
-                      ),
-                      Text(
-                        description,
-                        style: TextStyle(
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 12,
+                          top: 10,
+                          bottom: 0,
+                        ),
+                        child: Text(
+                          title,
+                          style: TextStyle(
                             fontSize: 17,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white),
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                       ),
-                      SizedBox(
-                        height: 4,
+
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 12,
+                          top: 3,
+                          bottom: 7,
+                        ),
+                        child: Row(
+                          children: <Widget>[
+                            Tag(
+                              text: description,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Tag(
+                              text: 'Ly',
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            ContinueTag(
+                              text: '...',
+                            ),
+                          ],
+                        ),
                       ),
-                      Text(
-                        authorName,
-                        style: TextStyle(color: Colors.white),
+                      Divider(
+                        color: Color(0xfff3f4fb),
+                        height: 0,
+                        thickness: 2,
+                      ),
+                      // SizedBox(
+                      //   height: 2,
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 12,
+                          top: 12,
+                          bottom: 12,
+                          right: 5,
+                        ),
+                        child: Wrap(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Icon(
+                                Icons.calendar_today_outlined,
+                                size: 18,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 14.0),
+                              child: Text(
+                                "Tue 4 February 2021",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 4.0),
+                              child: Icon(
+                                Icons.account_circle_outlined,
+                                size: 20,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 14.0),
+                              child: Text(
+                                "18K",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       )
                     ],
                   ),
