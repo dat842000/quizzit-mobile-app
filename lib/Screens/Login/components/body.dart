@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
+import 'package:flutter_auth/Screens/ForgotPassword/forgot_password.dart';
 import 'package:flutter_auth/Screens/Login/components/or_divider.dart';
 import 'package:flutter_auth/Screens/Login/components/social_icon.dart';
 import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
@@ -14,6 +15,7 @@ class Body extends StatefulWidget {
   const Body({
     Key key,
   }) : super(key: key);
+
   @override
   _BodyState createState() => _BodyState();
 }
@@ -21,11 +23,13 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   String _username;
   String _password;
+
   void setUsername(String username) => this._username = username;
 
   void setPassword(String password) => this._password = password;
-  void save(){
-    if(_username == 'admin' && _password == "123"){
+
+  void save() {
+    if (_username == 'admin' && _password == "123") {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -36,6 +40,7 @@ class _BodyState extends State<Body> {
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -70,9 +75,31 @@ class _BodyState extends State<Body> {
                 this._password = value;
               },
             ),
+            Padding(
+              padding: const EdgeInsets.only(left: 170, bottom: 15),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return ForgotPassword();
+                      },
+                    ),
+                  );
+                },
+                child: Text(
+                  "Forgot your password ",
+                  style: TextStyle(
+                    color: kPrimaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
             RoundedButton(
               text: "LOGIN",
-              press: (){
+              press: () {
                 save();
               },
             ),
