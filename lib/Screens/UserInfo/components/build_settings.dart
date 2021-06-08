@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/components/rounded_button.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -40,13 +39,32 @@ class BuildSettings extends StatelessWidget {
                 ),
               ],
             ),
-            Row(children: [
-              // RaisedButton(
-              //   color: Colors.blue,
-              //   child: Text('Change password',style : Colors.blue,),
-              //   textColor: Colors.white,
-              // ),
-            ]),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              width: 250,
+              decoration: BoxDecoration(
+                color: kPrimaryColor,
+                borderRadius: BorderRadius.circular(29),
+              ),
+              child: FlatButton(
+                // padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                color: kPrimaryColor,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(
+                      Icons.app_registration,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      'Change Passwword',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
