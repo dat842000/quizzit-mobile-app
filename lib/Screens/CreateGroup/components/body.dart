@@ -134,6 +134,7 @@ class _BodyState extends State<Body> {
                     height: 8,
                   ),
                   Container(
+                    width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       children: <Widget>[
@@ -144,7 +145,7 @@ class _BodyState extends State<Body> {
                           },
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
+                          padding: const EdgeInsets.only(bottom: 16.0),
                           child: TextField(
                             decoration: InputDecoration(hintText: "Quiz Size"),
                             keyboardType: TextInputType.number,
@@ -153,46 +154,6 @@ class _BodyState extends State<Body> {
                             },
                           ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(top:16.0, bottom: 16.0),
-                        //   child: Container(
-                        //     padding: EdgeInsets.only(
-                        //       left: 16,
-                        //       right: 16,
-                        //     ),
-                        //     width: MediaQuery.of(context).size.width,
-                        //     decoration: BoxDecoration(
-                        //         border:
-                        //             Border.all(color: Colors.grey, width: 1),
-                        //         borderRadius: BorderRadius.circular(15),
-                        //
-                        //     ),
-                        //     child: DropdownButton(
-                        //       hint: Text("Choose subject: "),
-                        //       // dropdownColor: Colors.,
-                        //       icon: Icon(Icons.arrow_drop_down),
-                        //       iconSize: 36,
-                        //       isExpanded: true,
-                        //       underline: SizedBox(),
-                        //       style: TextStyle(
-                        //         color: Colors.black,
-                        //         fontSize: 17,
-                        //       ),
-                        //       value: valueChoose,
-                        //       onChanged: (newValue) {
-                        //         setState(() {
-                        //           valueChoose = newValue;
-                        //         });
-                        //       },
-                        //       items: listItem.map((valueItem) {
-                        //         return DropdownMenuItem(
-                        //           value: valueItem,
-                        //           child: Text(valueItem),
-                        //         );
-                        //       }).toList(),
-                        //     ),
-                        //   ),
-                        // ),
                         Card(child: buildChoosingSubjects(),)
                       ],
                     ),
@@ -235,9 +196,9 @@ class _BodyState extends State<Body> {
         title,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(color: Colors.black, fontSize: 20),
+        style: TextStyle(color: Color(0xff646465), fontSize: 17),
       ),
-      trailing: Icon(Icons.arrow_drop_down, color: Colors.black),
+      trailing: Icon(Icons.arrow_drop_down, color: Color(0xff646465)),
     );
   }
   Widget buildSubjectPicker({

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
+import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
+import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
 import 'package:flutter_auth/constants.dart';
 
 class NavigationDrawer extends StatelessWidget {
@@ -7,20 +9,12 @@ class NavigationDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name ='Nguyen Phuc Dat';
-    final email = 'dnn8420@gmail.com';
-    final urlImage = 'https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.6435-9/172600480_2894518494156867_1493738166156079949_n.jpg?_nc_cat=106&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=1aMndlcPap0AX85TE5l&_nc_ht=scontent.fsgn5-6.fna&oh=ef2bd4b0b4f5667097fff27829b948d5&oe=60D66539';
     return Drawer(
       child: Material(
         color: kPrimaryColor,
         child: ListView(
           children: <Widget>[
-            buildHeader(
-              urlImage: urlImage,
-              name: name,
-              email: email,
-            ),
-            const SizedBox(height: 48),
+            const SizedBox(height: 60),
             buildMenuItem(
               text: 'Dashboard',
               icon: Icons.filter,
@@ -45,8 +39,15 @@ class NavigationDrawer extends StatelessWidget {
             Divider(color: Colors.white70),
             const SizedBox(height: 24),
             buildMenuItem(
+              text: 'UserProfile',
+              icon: Icons.account_circle,
+              onClicked: () => selectedItem(context, 1),
+            ),
+            const SizedBox(height: 16),
+            buildMenuItem(
               text: 'Logout',
               icon: Icons.logout,
+              onClicked: () => selectedItem(context, 2),
             ),
           ],
         ),
@@ -106,6 +107,16 @@ class NavigationDrawer extends StatelessWidget {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => DashboardScreen(),
+        ));
+        break;
+      case 1:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => UserInfoScreen(),
+        ));
+        break;
+      case 2:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => WelcomeScreen(),
         ));
         break;
     }

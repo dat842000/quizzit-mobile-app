@@ -20,10 +20,10 @@ class Body extends StatelessWidget {
               "WELCOME TO EDU",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: size.height * 0.05),
-            SvgPicture.asset(
-              "assets/icons/chat.svg",
-              height: size.height * 0.25,
+
+            Image.asset(
+              "assets/icons/a3ea4c90a81a5713113fd42e20bb312f-e-learning-logo-design-removebg.png",
+              height: size.height * 0.4,
             ),
             SizedBox(height: size.height * 0.05),
             RoundedButton(
