@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/quiz/constants.dart';
 import 'package:flutter_auth/Screens/quiz/controllers/question_controller.dart';
 import 'package:get/get.dart';
-
 import 'package:flutter_svg/svg.dart';
 
 import 'question_card.dart';
@@ -14,11 +13,10 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // So that we have acccess our controller
     QuestionController _questionController = Get.put(QuestionController());
     return Stack(
       children: [
-        SvgPicture.asset("assets/icons/bg.svg", fit: BoxFit.fill),
+        // SvgPicture.asset("assets/icons/bg.svg", fit: BoxFit.fill),
         SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

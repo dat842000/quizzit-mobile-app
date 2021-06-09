@@ -40,7 +40,7 @@ class QuestionCard extends StatelessWidget {
             (index) => Option(
               index: index,
               text: question.options[index],
-              press: () => {},
+              press: () => {_controller.saveAnswer(question, index)},
             ),
           ),
         ],
