@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth.instance.signOut().then((value) => null);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Auth',
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: DashboardScreen(),
+      home: FirebaseAuth.instance.currentUser==null?WelcomeScreen():DashboardScreen(),
     );
   }
 }

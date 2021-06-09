@@ -1,7 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
+
+import '../Codable.dart';
 part 'ProblemDetails.g.dart';
 @JsonSerializable()
-class ProblemDetails {
+class ProblemDetails implements Decodable{
   String? type;
   String? title;
   String? message;

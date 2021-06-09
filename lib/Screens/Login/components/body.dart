@@ -6,13 +6,13 @@ import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/Screens/ForgotPassword/forgot_password.dart';
 import 'package:flutter_auth/Screens/Login/components/or_divider.dart';
 import 'package:flutter_auth/Screens/Login/components/social_icon.dart';
-import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
 import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
 import 'package:flutter_auth/components/already_have_an_account_acheck.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
 import 'package:flutter_auth/components/rounded_input_field.dart';
 import 'package:flutter_auth/components/rounded_password_field.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/models/login/LoginModel.dart';
 import 'package:flutter_auth/models/login/LoginResponse.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
@@ -28,24 +28,17 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  String _username="";
-  String _password="";
-
-  void setUsername(String username) => this._username = username;
-
-  void setPassword(String password) => this._password = password;
+  LoginRequest _loginRequest = new LoginRequest("", "");
 
   void save() {
-    if (_username == 'admin' && _password == "123") {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) {
-            return DashboardScreen();
-          },
-        ),
-      );
-    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return DashboardScreen();
+        },
+      ),
+    );
   }
 
   @override
@@ -74,12 +67,12 @@ class _BodyState extends State<Body> {
             RoundedInputField(
               hintText: "Username",
               onChanged: (value) {
-                this._username = value;
+                this._loginRequest.username = value;
               },
             ),
             RoundedPasswordField(
               onChanged: (value) {
-                this._password = value;
+                this._loginRequest.password = value;
               },
             ),
             Padding(
@@ -107,16 +100,17 @@ class _BodyState extends State<Body> {
             RoundedButton(
               text: "LOGIN",
               press: () async {
-                var response = await fetch(Host.login, HttpMethod.POST,
-                    {'username':_username,'password':_password}, null);
+                var response = await fetch(
+                    Host.login, HttpMethod.POST, _loginRequest, null);
                 print(response.body);
                 var Json = json.decode(response.body);
-                if(response.statusCode.isOk()){
+                if (response.statusCode.isOk()) {
                   var tokenObject = LoginResponse.fromJson(Json);
                   print(tokenObject.customToken);
                   var firebase = FirebaseAuth.instance;
-                  if(firebase.currentUser!=null) await firebase.signOut();
-                  var fbResponse = await firebase.signInWithCustomToken(tokenObject.customToken);
+                  if (firebase.currentUser != null) await firebase.signOut();
+                  var fbResponse = await firebase
+                      .signInWithCustomToken(tokenObject.customToken);
                   var name = fbResponse.user!.displayName;
                   showDialog<String>(
                     context: context,
@@ -125,17 +119,13 @@ class _BodyState extends State<Body> {
                       content: Text(name!),
                       actions: <Widget>[
                         TextButton(
-                          onPressed: () => Navigator.pop(context, 'Cancel'),
-                          child: const Text('Cancel'),
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 'OK'),
+                          onPressed: () => save(),
                           child: const Text('OK'),
                         ),
                       ],
                     ),
                   );
-                }else{
+                } else {
                   var problem = ProblemDetails.fromJson(Json);
                   showDialog<String>(
                     context: context,
@@ -143,10 +133,6 @@ class _BodyState extends State<Body> {
                       title: const Text('Login Failed'),
                       content: Text(problem.title!),
                       actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 'Cancel'),
-                          child: const Text('Cancel'),
-                        ),
                         TextButton(
                           onPressed: () => Navigator.pop(context, 'OK'),
                           child: const Text('OK'),

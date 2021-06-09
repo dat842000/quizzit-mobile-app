@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_auth/models/Codable.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_auth/constants.dart';
 
 Future<http.Response> fetch(String endpoint, HttpMethod method,
-    Map<String, dynamic>? data, Map<String, String>? params) {
+    Encodable? data, Map<String, String>? params) {
   if (endpoint == null) throw new ArgumentError("Invalid Url");
   var uri = Uri.https("${Host.name}:${Host.port}", "$endpoint", params);
   var headers = {
@@ -12,7 +13,7 @@ Future<http.Response> fetch(String endpoint, HttpMethod method,
     HttpHeaders.contentTypeHeader: "application/json",
     HttpHeaders.acceptEncodingHeader: "application/json"
   };
-  var body = json.encode(data);
+  var body = json.encode(data?.toJson());
   switch (method) {
     case HttpMethod.GET:
       return http.get(uri, headers: headers);
