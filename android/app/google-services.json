@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "218080389510",
+    "project_id": "groupsharingblogadminauth",
+    "storage_bucket": "groupsharingblogadminauth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218080389510:android:ea5a1c08ea737cae31a407",
+        "android_client_info": {
+          "package_name": "com.quizgroup.quizzit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "218080389510-s0ibgbmmkqs55i5vj3tsfi9dfqt0fn79.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOI-LBsNIAbwT4lYnmD6HidoHzYDHc-fo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "218080389510-s0ibgbmmkqs55i5vj3tsfi9dfqt0fn79.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -55,10 +55,10 @@ class NavigationDrawer extends StatelessWidget {
     );
   }
   Widget buildHeader({
-    String name,
-    String urlImage,
-    String email,
-    VoidCallback onClicked,
+    String name="",
+    String urlImage="",
+    String email="",
+    VoidCallback? onClicked,
   }) =>
       InkWell(
         onTap: onClicked,
@@ -87,9 +87,9 @@ class NavigationDrawer extends StatelessWidget {
         ),
       );
   Widget buildMenuItem({
-    String text,
-    IconData icon,
-    VoidCallback onClicked,
+    String text="",
+    IconData? icon,
+    VoidCallback? onClicked,
   }) {
     final color = Colors.white;
     final hoverColor = Colors.white70;

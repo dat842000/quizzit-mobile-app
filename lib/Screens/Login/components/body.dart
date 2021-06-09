@@ -13,7 +13,7 @@ import 'package:flutter_svg/svg.dart';
 
 class Body extends StatefulWidget {
   const Body({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -21,8 +21,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  String _username;
-  String _password;
+  String _username="";
+  String _password="";
 
   void setUsername(String username) => this._username = username;
 

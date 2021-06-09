@@ -50,6 +50,7 @@ class BuildSettings extends StatelessWidget {
               child: FlatButton(
                 // padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                 color: kPrimaryColor,
+                onPressed: () {  },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

@@ -8,13 +8,13 @@ class QuestionController extends GetxController
     with SingleGetTickerProviderMixin {
   // Lets animated our progress bar
 
-  AnimationController _animationController;
-  Animation _animation;
+  AnimationController? _animationController;
+  Animation? _animation;
   // so that we can access our animation outside
-  Animation get animation => this._animation;
+  Animation? get animation => this._animation;
 
-  PageController _pageController;
-  PageController get pageController => this._pageController;
+  PageController? _pageController;
+  PageController? get pageController => this._pageController;
 
   List<Question> _questions = sample_data
       .map(
@@ -30,10 +30,10 @@ class QuestionController extends GetxController
   bool _isAnswered = false;
   bool get isAnswered => this._isAnswered;
 
-  int _correctAns;
+  int _correctAns=0;
   int get correctAns => this._correctAns;
 
-  int _selectedAns;
+  int _selectedAns=0;
   int get selectedAns => this._selectedAns;
 
   // for more about obs please check documentation
@@ -50,7 +50,7 @@ class QuestionController extends GetxController
     // so our plan is to fill the progress bar within 60s
     _animationController =
         AnimationController(duration: Duration(seconds: 60), vsync: this);
-    _animation = Tween<double>(begin: 0, end: 1).animate(_animationController)
+    _animation = Tween<double>(begin: 0, end: 1).animate(_animationController!)
       ..addListener(() {
         // update like setState
         update();
@@ -58,7 +58,7 @@ class QuestionController extends GetxController
 
     // start our animation
     // Once 60s is completed go to the next qn
-    _animationController.forward().whenComplete(nextQuestion);
+    _animationController!.forward().whenComplete(nextQuestion);
     _pageController = PageController();
     super.onInit();
   }
@@ -67,8 +67,8 @@ class QuestionController extends GetxController
   @override
   void onClose() {
     super.onClose();
-    _animationController.dispose();
-    _pageController.dispose();
+    _animationController!.dispose();
+    _pageController!.dispose();
   }
 
   void checkAns(Question question, int selectedIndex) {
@@ -80,7 +80,7 @@ class QuestionController extends GetxController
     if (_correctAns == _selectedAns) _numOfCorrectAns++;
 
     // It will stop the counter
-    _animationController.stop();
+    _animationController!.stop();
     update();
 
     // Once user select an ans after 3s it will go to the next qn
@@ -92,12 +92,12 @@ class QuestionController extends GetxController
   void nextQuestion() {
     if (_questionNumber.value != _questions.length) {
       _isAnswered = false;
-      _pageController.nextPage(
+      _pageController!.nextPage(
           duration: Duration(milliseconds: 250), curve: Curves.ease);
 
       // Reset the counter
-      _animationController.reset();
-      _animationController.forward().whenComplete(nextQuestion);
+      _animationController!.reset();
+      _animationController!.forward().whenComplete(nextQuestion);
     } else {
       // Get package provide us simple way to naviigate another page
       Get.to(LoginScreen());
@@ -106,12 +106,12 @@ class QuestionController extends GetxController
 
   void prevQuestion() {
       _isAnswered = false;
-      _pageController.previousPage(
+      _pageController!.previousPage(
           duration: Duration(milliseconds: 250), curve: Curves.ease);
 
       // Reset the counter
-      _animationController.reset();
-      _animationController.forward().whenComplete(nextQuestion);
+      _animationController!.reset();
+      _animationController!.forward().whenComplete(nextQuestion);
   }
 
   void updateTheQnNum(int index) {
