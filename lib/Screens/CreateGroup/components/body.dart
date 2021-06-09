@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 
 class Body extends StatefulWidget {
   const Body({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -16,7 +16,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  String groupName , valueChoose;
+  String groupName="" , valueChoose="";
   dynamic quizSize;
   List listItem = [
     "Toan",
@@ -32,16 +32,17 @@ class _BodyState extends State<Body> {
     "Ngu Van",
     "GDQP"
   ];
-  String subject;
-  File selectedImage;
+  String subject="";
+  File? selectedImage;
   bool _isLoading = false;
   List<String> subjects = [];
 
   Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var picker = new ImagePicker();
+    var image = await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
-      selectedImage = image;
+      selectedImage = image as File;
     });
   }
 
@@ -113,7 +114,7 @@ class _BodyState extends State<Body> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: Image.file(
-                                  selectedImage,
+                                  selectedImage!,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -185,9 +186,9 @@ class _BodyState extends State<Body> {
     );
   }
   Widget buildListTile({
-    @required String title,
-    @required VoidCallback onTap,
-    Widget leading,
+    required String title,
+    required VoidCallback onTap,
+    Widget? leading,
   }) {
     return ListTile(
       onTap: onTap,
@@ -202,8 +203,8 @@ class _BodyState extends State<Body> {
     );
   }
   Widget buildSubjectPicker({
-    @required String title,
-    @required Widget child,
+    required String title,
+    required Widget child,
 }) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,

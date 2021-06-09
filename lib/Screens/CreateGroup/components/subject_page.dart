@@ -4,7 +4,7 @@ import 'package:flutter_auth/Screens/CreateGroup/components/subject_listtitle_wi
 class SubjectPage extends StatefulWidget {
   final List<String> subjects;
   const SubjectPage({
-    Key key,
+    Key? key,
     this.subjects = const[],
   }) : super(key: key);
 

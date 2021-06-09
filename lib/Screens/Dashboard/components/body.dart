@@ -96,6 +96,7 @@ class _BodyState extends State<Body> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        onPressed: () {  },
         child: IconButton(
           icon: Icon(
             Icons.add,
@@ -122,7 +123,7 @@ class _BodyState extends State<Body> {
 class Tag extends StatelessWidget {
   String text;
 
-  Tag({@required this.text});
+  Tag({required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +143,7 @@ class Tag extends StatelessWidget {
 class ContinueTag extends StatelessWidget {
   String text;
 
-  ContinueTag({@required this.text});
+  ContinueTag({required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -166,9 +167,9 @@ class GroupsTitle extends StatelessWidget {
   String imgUrl, title, description;
 
   GroupsTitle(
-      {@required this.imgUrl,
-      @required this.title,
-      @required this.description});
+      {required this.imgUrl,
+      required this.title,
+      required this.description});
 
   @override
   Widget build(BuildContext context) {

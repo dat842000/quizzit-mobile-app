@@ -10,11 +10,11 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  String _email;
-  String _username;
-  String _password;
-  String _confirmedPassword;
-  DateTime _birthday;
+  String _email="";
+  String _username="";
+  String _password="";
+  String _confirmedPassword="";
+  DateTime _birthday=DateTime.now();
 
   void setEmail(String email) => this._email = email;
 
@@ -66,7 +66,7 @@ class _BodyState extends State<Body> {
                 children: <Widget>[
                   SizedBox(height: 10),
                   inputFile(label: "Email", exp: setEmail),
-                  inputFile(label: "Fullname"),
+                  // inputFile(label: "Fullname", exp: null),
                   inputFile(label: "Username", exp: setUsername),
                   inputFile(
                       label: "Password", obscureText: true, exp: setPassword),
@@ -100,7 +100,7 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Widget inputFile({label, obscureText = false, Function exp}) {
+  Widget inputFile({label, obscureText = false, required Function exp}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -118,10 +118,10 @@ class _BodyState extends State<Body> {
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey[400]),
+                  borderSide: BorderSide(color: Colors.grey[400]!),
                 ),
                 border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[400]))),
+                    borderSide: BorderSide(color: Colors.grey[400]!))),
             onChanged: (value) => exp(value)),
         SizedBox(
           height: 10,
@@ -140,8 +140,8 @@ class _BodyState extends State<Body> {
       );
 
   Widget buildTitle({
-    @required String title,
-    @required Widget child,
+    required String title,
+    required Widget child,
   }) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

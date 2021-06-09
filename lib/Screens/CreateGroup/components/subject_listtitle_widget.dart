@@ -6,10 +6,10 @@ class SubjectListTitleWidget extends StatelessWidget {
   final ValueChanged<String> onSelectedSubject;
 
   const SubjectListTitleWidget({
-    Key key,
-    @required this.subject,
-    @required this.isSelected,
-    @required this.onSelectedSubject,
+    Key? key,
+    required this.subject,
+    required this.isSelected,
+    required this.onSelectedSubject,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

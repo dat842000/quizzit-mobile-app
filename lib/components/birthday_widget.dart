@@ -7,9 +7,9 @@ class BirthdayWidget extends StatefulWidget {
   final ValueChanged<DateTime> onChangedBirthday;
 
   const BirthdayWidget({
-    Key key,
-    @required this.birthday,
-    @required this.onChangedBirthday,
+    Key? key,
+    required this.birthday,
+    required this.onChangedBirthday,
   }) : super(key: key);
 
   @override
@@ -56,7 +56,7 @@ class _BirthdayWidgetState extends State<BirthdayWidget> {
         builder: (hasFocus) =>
             TextFormField(
               controller: controller,
-              validator: (value) => value.isEmpty ? 'Is Required' : null,
+              validator: (value) => value!.isEmpty ? 'Is Required' : null,
 
               decoration: InputDecoration(
                   prefixText: ' ',
@@ -65,17 +65,17 @@ class _BirthdayWidgetState extends State<BirthdayWidget> {
                   contentPadding:
                   EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[400]),
+                    borderSide: BorderSide(color: Colors.grey[400]!),
                   ),
                   border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey[400]))),
+                      borderSide: BorderSide(color: Colors.grey[400]!))),
             ),
       );
 
   Future selectDate(BuildContext context) async {
     final birthday = await showDatePicker(
       context: context,
-      initialDate: widget.birthday ?? DateTime.now(),
+      initialDate: widget.birthday,
       firstDate: DateTime(1950),
       lastDate: DateTime(2100),
     );
@@ -92,10 +92,10 @@ class FocusBuilder extends StatefulWidget {
   final ValueChanged<bool> onChangeVisibility;
 
   const FocusBuilder({
-    @required this.focusNode,
-    @required this.builder,
-    @required this.onChangeVisibility,
-    Key key,
+    required this.focusNode,
+    required this.builder,
+    required this.onChangeVisibility,
+    Key? key,
   }) : super(key: key);
 
   @override

@@ -81,10 +81,10 @@ class _BodyState extends State<Body> {
   }
 
   Widget buildHeader({
-    String name,
-    String urlImage,
-    String email,
-    VoidCallback onClicked,
+    String name="",
+    String urlImage="",
+    String email="",
+    VoidCallback? onClicked,
   }) =>
       Container(
         child: Center(

@@ -10,7 +10,7 @@ class Question {
     _choice = value;
   }
 
-  Question({this.id, this.question, this.answer, this.options});
+  Question({required this.id, required this.question, required this.answer, required this.options});
 }
 
 const List sample_data = [
