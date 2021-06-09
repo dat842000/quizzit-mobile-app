@@ -1,11 +1,10 @@
+import 'package:json_annotation/json_annotation.dart';
+part 'LoginModel.g.dart';
+@JsonSerializable()
 class LoginRequest {
-  String _username="";
-  String _password="";
+  String username="";
+  String password="";
 
-  Map<String, String> toJson() =>
-      {'username': _username, 'password': _password};
+  LoginRequest(this.username, this.password);
 
-  String get password => _password;
-
-  String get username => _username;
 }
