@@ -23,23 +23,68 @@ class Body extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
+  _login(BuildContext context, LoginRequest loginRequest) async {
+    var response = await fetch(Host.login, HttpMethod.POST, loginRequest, null);
+    var Json = json.decode(response.body);
+    if (response.statusCode.isOk()) {
+      var tokenObject = LoginResponse.fromJson(Json);
+      var firebase = FirebaseAuth.instance;
+      if (firebase.currentUser != null) await firebase.signOut();
+      var fbResponse =
+          await firebase.signInWithCustomToken(tokenObject.customToken);
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Login Success'),
+          content: Text(
+              "User ${fbResponse.user!.displayName!} has logged in successfully"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return DashboardScreen();
+                  },
+                ),
+              ),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } else {
+      var problem = ProblemDetails.fromJson(Json);
+      String error = problem.title!;
+      if (problem.errors != null) {
+        var usernameProblem = problem.errors!['username'];
+        var passwordProblem = problem.errors!['password'];
+        if (usernameProblem != null)
+          error = usernameProblem[0];
+        else if (passwordProblem != null) error = passwordProblem[0];
+      } else if (problem.message != null) error = problem.message!;
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Login Failed'),
+          content: Text(error),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
   LoginRequest _loginRequest = new LoginRequest("", "");
-
-  void save() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) {
-          return DashboardScreen();
-        },
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,50 +144,9 @@ class _BodyState extends State<Body> {
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () async {
-                var response = await fetch(
-                    Host.login, HttpMethod.POST, _loginRequest, null);
-                print(response.body);
-                var Json = json.decode(response.body);
-                if (response.statusCode.isOk()) {
-                  var tokenObject = LoginResponse.fromJson(Json);
-                  print(tokenObject.customToken);
-                  var firebase = FirebaseAuth.instance;
-                  if (firebase.currentUser != null) await firebase.signOut();
-                  var fbResponse = await firebase
-                      .signInWithCustomToken(tokenObject.customToken);
-                  var name = fbResponse.user!.displayName;
-                  showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Login Success'),
-                      content: Text(name!),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => save(),
-                          child: const Text('OK'),
-                        ),
-                      ],
-                    ),
-                  );
-                } else {
-                  var problem = ProblemDetails.fromJson(Json);
-                  showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Login Failed'),
-                      content: Text(problem.title!),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 'OK'),
-                          child: const Text('OK'),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-                // save();
-              },
+              press: () => widget._login(
+                context,_loginRequest
+              ),
             ),
             SizedBox(height: size.height * 0.001),
             AlreadyHaveAnAccountCheck(
