@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/components/api/UserApi.dart';
 import 'package:flutter_auth/components/birthday_widget.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
 import 'package:flutter_auth/constants.dart';

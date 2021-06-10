@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
+import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
 import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
 import 'package:flutter_auth/constants.dart';
+
+import 'Screens/CreateGroup/create_group_screen.dart';
 
 void main() => runApp(MyApp());
 

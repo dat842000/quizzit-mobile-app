@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
 import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
+import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
 import 'package:flutter_auth/constants.dart';
 
 class NavigationDrawer extends StatelessWidget {
@@ -29,6 +30,7 @@ class NavigationDrawer extends StatelessWidget {
             buildMenuItem(
               text: 'Quiz',
               icon: Icons.message,
+              onClicked: () => selectedItem(context, 3),
             ),
             const SizedBox(height: 16),
             buildMenuItem(
@@ -117,6 +119,11 @@ class NavigationDrawer extends StatelessWidget {
       case 2:
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => WelcomeScreen(),
+        ));
+        break;
+      case 3:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => QuizScreen(),
         ));
         break;
     }

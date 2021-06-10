@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/quiz/constants.dart';
 import 'package:flutter_auth/Screens/quiz/controllers/question_controller.dart';
@@ -16,7 +17,7 @@ class Body extends StatelessWidget {
     QuestionController _questionController = Get.put(QuestionController());
     return Stack(
       children: [
-        // SvgPicture.asset("assets/icons/bg.svg", fit: BoxFit.fill),
+
         SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

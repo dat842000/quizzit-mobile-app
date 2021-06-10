@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
-import 'package:flutter_auth/Screens/Dashboard/components/devider.dart';
+import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
 import 'package:flutter_auth/components/navigation_drawer_widget.ws.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:http/http.dart';
+import 'package:flutter_auth/dtos/Group.dart';
+import 'package:intl/intl.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -13,6 +14,39 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  List<Group> itemsData = [
+    Group(
+        "Math Group",
+        "https://scontent-sin6-3.xx.fbcdn.net/v/t1.6435-9/90954431_1582148621924471_7611655305281142784_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=825194&_nc_ohc=jgOg1-97daQAX--nxb2&_nc_ht=scontent-sin6-3.xx&oh=e405c37b9c016426c7052451ae7a161d&oe=60D913F0",
+        DateTime.now(),
+        ["Ly", "Hoa"],
+        12),
+    Group(
+        "Physics Group",
+        "https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.18169-9/28379844_10156181840423126_2758359348106619364_n.jpg?_nc_cat=106&ccb=1-3&_nc_sid=825194&_nc_ohc=P2ycqfZHNUUAX-pPnZK&_nc_ht=scontent.fsgn5-6.fna&oh=cafbc3bcc1801c35a918915e1ce4011f&oe=60DB12E0",
+        DateTime.now(),
+        ["Ly", "Hoa"],
+        10),
+    Group(
+        "PRJ303_Survice",
+        "https://image.shutterstock.com/image-vector/maths-hand-drawn-vector-illustration-260nw-460780561.jpg",
+        DateTime.now(),
+        ["Ly", "Hoa"],
+        16),
+    Group(
+        "Math Group",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREVI19c8BieX1brqjOdMKlt1mRINsKuLK6JA&usqp=CAU",
+        DateTime.now(),
+        ["Ly", "Hoa"],
+        20),
+    Group(
+        "Math Group",
+        "https://tr-images.condecdn.net/image/V2n9Jj303ye/crop/405/f/pamukkale-turkey-gettyimages-1223155251.jpg",
+        DateTime.now(),
+        ["Ly", "Hoa"],
+        14),
+  ];
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -25,7 +59,11 @@ class _BodyState extends State<Body> {
         iconTheme: IconThemeData(color: kPrimaryColor),
         actions: <Widget>[
           PopupMenuButton<String>(
-            icon: Icon(FontAwesomeIcons.sortAmountDown, color: kPrimaryColor, size: 20,),
+            icon: Icon(
+              FontAwesomeIcons.sortAmountDown,
+              color: kPrimaryColor,
+              size: 20,
+            ),
             onSelected: choiceAction,
             itemBuilder: (BuildContext context) {
               return Constants.choices.map((String choice) {
@@ -58,42 +96,18 @@ class _BodyState extends State<Body> {
         ),
       ),
       drawer: NavigationDrawer(),
-      body: Center(
-        child: ListView(
-          children: <Widget>[
-            SizedBox(height: 20),
-            GroupsTitle(
-              imgUrl:
-                  'https://scontent-sin6-3.xx.fbcdn.net/v/t1.6435-9/90954431_1582148621924471_7611655305281142784_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=825194&_nc_ohc=jgOg1-97daQAX--nxb2&_nc_ht=scontent-sin6-3.xx&oh=e405c37b9c016426c7052451ae7a161d&oe=60D913F0',
-              title: 'Math Group',
-              description: 'Toan',
+      body: Column(
+        children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: itemsData.length,
+                physics: BouncingScrollPhysics(),
+                itemBuilder: (context, index) => GroupsTitle(
+                  group: itemsData[index],
+                ),
+              ),
             ),
-            GroupsTitle(
-              imgUrl:
-                  'https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.18169-9/28379844_10156181840423126_2758359348106619364_n.jpg?_nc_cat=106&ccb=1-3&_nc_sid=825194&_nc_ohc=P2ycqfZHNUUAX-pPnZK&_nc_ht=scontent.fsgn5-6.fna&oh=cafbc3bcc1801c35a918915e1ce4011f&oe=60DB12E0',
-              title: 'Physics Group',
-              description: 'Ly',
-            ),
-            GroupsTitle(
-              imgUrl:
-                  'https://image.shutterstock.com/image-vector/maths-hand-drawn-vector-illustration-260nw-460780561.jpg',
-              title: 'PRJ303_Survice',
-              description: 'Hoa',
-            ),
-            GroupsTitle(
-              imgUrl:
-                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREVI19c8BieX1brqjOdMKlt1mRINsKuLK6JA&usqp=CAU',
-              title: 'Math Group',
-              description: 'none',
-            ),
-            GroupsTitle(
-              imgUrl:
-                  'https://tr-images.condecdn.net/image/V2n9Jj303ye/crop/405/f/pamukkale-turkey-gettyimages-1223155251.jpg',
-              title: 'Math Group',
-              description: 'none',
-            ),
-          ],
-        ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {  },
@@ -141,10 +155,6 @@ class Tag extends StatelessWidget {
 }
 
 class ContinueTag extends StatelessWidget {
-  String text;
-
-  ContinueTag({required this.text});
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -156,7 +166,7 @@ class ContinueTag extends StatelessWidget {
       ),
       alignment: Alignment.center,
       child: Text(
-        text,
+        '...',
         style: TextStyle(fontWeight: FontWeight.w700),
       ),
     );
@@ -164,143 +174,146 @@ class ContinueTag extends StatelessWidget {
 }
 
 class GroupsTitle extends StatelessWidget {
-  String imgUrl, title, description;
+  Group group;
 
   GroupsTitle(
-      {required this.imgUrl,
-      required this.title,
-      required this.description});
+      {required this.group});
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Wrap(
         children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(bottom: 20),
-            width: MediaQuery.of(context).size.width - 50,
-            height: 240,
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(20)),
-            child: Stack(
-              children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(20.0)),
-                  child: CachedNetworkImage(
-                    imageUrl: imgUrl,
-                    height: 135,
-                    width: MediaQuery.of(context).size.width - 50,
-                    fit: BoxFit.cover,
+          InkWell(
+            onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UserViewScreen(group))
+            );
+            },
+            child: Container(
+              margin: EdgeInsets.only(bottom: 20),
+              width: MediaQuery.of(context).size.width - 50,
+              height: 240,
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
+              child: Stack(
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20.0),
+                        topRight: Radius.circular(20.0)),
+                    child: CachedNetworkImage(
+                      imageUrl: group.imgUrl,
+                      height: 135,
+                      width: MediaQuery.of(context).size.width - 50,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width - 50,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 12,
-                          top: 10,
-                          bottom: 0,
-                        ),
-                        child: Text(
-                          title,
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w700,
+                  Container(
+                    width: MediaQuery.of(context).size.width - 50,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 12,
+                            top: 10,
+                            bottom: 0,
+                          ),
+                          child: Text(
+                            group.name,
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
-                      ),
 
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 12,
-                          top: 3,
-                          bottom: 7,
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 12,
+                            top: 3,
+                            bottom: 7,
+                          ),
+                          child: Row(
+                            children: <Widget>[
+                              // ignore: sdk_version_ui_as_code
+                              ...List.generate(
+                                  group.subjects.length,
+                                  (index) => Row(
+                                        children: [
+                                          Tag(text: group.subjects[index]),
+                                          const SizedBox(
+                                            width: 5,
+                                          )
+                                        ],
+                                      )),
+                              ContinueTag()
+                            ],
+                          ),
                         ),
-                        child: Row(
-                          children: <Widget>[
-                            Tag(
-                              text: description,
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Tag(
-                              text: 'Ly',
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            ContinueTag(
-                              text: '...',
-                            ),
-                          ],
+                        Divider(
+                          color: Color(0xfff3f4fb),
+                          height: 0,
+                          thickness: 2,
                         ),
-                      ),
-                      Divider(
-                        color: Color(0xfff3f4fb),
-                        height: 0,
-                        thickness: 2,
-                      ),
-                      // SizedBox(
-                      //   height: 2,
-                      // ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 12,
-                          top: 12,
-                          bottom: 12,
-                          right: 5,
-                        ),
-                        child: Wrap(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Icon(
-                                Icons.calendar_today_outlined,
-                                size: 18,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 14.0),
-                              child: Text(
-                                "Tue 4 February 2021",
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w500,
+                        // SizedBox(
+                        //   height: 2,
+                        // ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 12,
+                            top: 12,
+                            bottom: 12,
+                            right: 5,
+                          ),
+                          child: Wrap(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Icon(
+                                  Icons.calendar_today_outlined,
+                                  size: 18,
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 4.0),
-                              child: Icon(
-                                Icons.account_circle_outlined,
-                                size: 20,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 14.0),
-                              child: Text(
-                                "18",
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.w500,
+                              Padding(
+                                padding: const EdgeInsets.only(right: 14.0),
+                                child: Text(
+                                  DateFormat('EEE d MMM yyyy').format(group.createdDate),
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
+                              Padding(
+                                padding: const EdgeInsets.only(right: 4.0),
+                                child: Icon(
+                                  Icons.account_circle_outlined,
+                                  size: 20,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 14.0),
+                                child: Text(
+                                  group.numberMember.toString(),
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ],

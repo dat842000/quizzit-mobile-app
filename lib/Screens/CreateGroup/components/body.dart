@@ -139,16 +139,25 @@ class _BodyState extends State<Body> {
                     margin: EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       children: <Widget>[
-                        TextField(
-                          decoration: InputDecoration(hintText: "Group Name"),
-                          onChanged: (val) {
-                            groupName = val;
-                          },
+                        Padding(
+                          padding: const EdgeInsets.only(bottom:8.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: "Group Name",
+                              border: OutlineInputBorder(),
+                            ),
+                            onChanged: (val) {
+                              groupName = val;
+                            },
+                          ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
+                          padding: const EdgeInsets.only(bottom: 8.0),
                           child: TextField(
-                            decoration: InputDecoration(hintText: "Quiz Size"),
+                            decoration: InputDecoration(
+                              hintText: "Quiz Size",
+                              border: OutlineInputBorder(),
+                            ),
                             keyboardType: TextInputType.number,
                             onChanged: (val) {
                               quizSize = val;
@@ -164,18 +173,19 @@ class _BodyState extends State<Body> {
             ),
     );
   }
-  Widget buildChoosingSubjects(){
+
+  Widget buildChoosingSubjects() {
     final subjectsText = subjects.map((subject) => subject).join(', ');
-    final onTap = () async{
+    final onTap = () async {
       final subjects = await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => SubjectPage(
-              subjects: List.of(this.subjects),
+          builder: (context) => SubjectPage(
+            subjects: List.of(this.subjects),
           ),
         ),
       );
-      if(subjects == null) return;
+      if (subjects == null) return;
       setState(() => this.subjects = subjects);
     };
     return buildSubjectPicker(
@@ -209,8 +219,11 @@ class _BodyState extends State<Body> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-          Card(margin: EdgeInsets.zero, child: child, color: Color(0xffe4e6eb),),
+          Card(
+            margin: EdgeInsets.zero,
+            child: child,
+            color: Color(0xffe4e6eb),
+          ),
         ],
       );
 }

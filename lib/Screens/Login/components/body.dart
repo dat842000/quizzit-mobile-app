@@ -111,7 +111,7 @@ class _BodyState extends State<Body> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return QuizScreen();
+                      return SignUpScreen();
                     },
                   ),
                 );
