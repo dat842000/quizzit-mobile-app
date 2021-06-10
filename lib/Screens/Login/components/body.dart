@@ -1,15 +1,21 @@
+import 'dart:convert';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/Screens/ForgotPassword/forgot_password.dart';
 import 'package:flutter_auth/Screens/Login/components/or_divider.dart';
 import 'package:flutter_auth/Screens/Login/components/social_icon.dart';
-import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
 import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
 import 'package:flutter_auth/components/already_have_an_account_acheck.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
 import 'package:flutter_auth/components/rounded_input_field.dart';
 import 'package:flutter_auth/components/rounded_password_field.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/models/login/LoginModel.dart';
+import 'package:flutter_auth/models/login/LoginResponse.dart';
+import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
+import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Body extends StatefulWidget {
@@ -17,30 +23,68 @@ class Body extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
+  _login(BuildContext context, LoginRequest loginRequest) async {
+    var response = await fetch(Host.login, HttpMethod.POST, loginRequest, null);
+    var Json = json.decode(response.body);
+    if (response.statusCode.isOk()) {
+      var tokenObject = LoginResponse.fromJson(Json);
+      var firebase = FirebaseAuth.instance;
+      if (firebase.currentUser != null) await firebase.signOut();
+      var fbResponse =
+          await firebase.signInWithCustomToken(tokenObject.customToken);
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Login Success'),
+          content: Text(
+              "User ${fbResponse.user!.displayName!} has logged in successfully"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return DashboardScreen();
+                  },
+                ),
+              ),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } else {
+      var problem = ProblemDetails.fromJson(Json);
+      String error = problem.title!;
+      if (problem.errors != null) {
+        var usernameProblem = problem.errors!['username'];
+        var passwordProblem = problem.errors!['password'];
+        if (usernameProblem != null)
+          error = usernameProblem[0];
+        else if (passwordProblem != null) error = passwordProblem[0];
+      } else if (problem.message != null) error = problem.message!;
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Login Failed'),
+          content: Text(error),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
-  String _username="";
-  String _password="";
-
-  void setUsername(String username) => this._username = username;
-
-  void setPassword(String password) => this._password = password;
-
-  void save() {
-    if (_username == 'admin' && _password == "123") {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) {
-            return DashboardScreen();
-          },
-        ),
-      );
-    }
-  }
+  LoginRequest _loginRequest = new LoginRequest("", "");
 
   @override
   Widget build(BuildContext context) {
@@ -68,12 +112,12 @@ class _BodyState extends State<Body> {
             RoundedInputField(
               hintText: "Username",
               onChanged: (value) {
-                this._username = value;
+                this._loginRequest.username = value;
               },
             ),
             RoundedPasswordField(
               onChanged: (value) {
-                this._password = value;
+                this._loginRequest.password = value;
               },
             ),
             Padding(
@@ -100,9 +144,9 @@ class _BodyState extends State<Body> {
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () {
-                save();
-              },
+              press: () => widget._login(
+                context,_loginRequest
+              ),
             ),
             SizedBox(height: size.height * 0.001),
             AlreadyHaveAnAccountCheck(

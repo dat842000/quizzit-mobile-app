@@ -1,11 +1,14 @@
-class LoginRequest {
-  String _username="";
-  String _password="";
+import 'package:flutter_auth/models/Codable.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'LoginModel.g.dart';
+@JsonSerializable()
+class LoginRequest implements Encodable{
+  String username;
+  String password;
 
-  Map<String, String> toJson() =>
-      {'username': _username, 'password': _password};
+  LoginRequest(this.username, this.password);
 
-  String get password => _password;
+  @override
+  Map<String, dynamic> toJson() => _$LoginRequestToJson(this);
 
-  String get username => _username;
 }

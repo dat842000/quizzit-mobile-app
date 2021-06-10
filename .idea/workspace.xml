@@ -20,12 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ba80433-d235-4acd-b7ad-47c56be46df3" name="Default Changelist" comment="login/register">
-      <change afterPath="$PROJECT_DIR$/lib/models/Codable.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/models/login/LoginModel.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/models/paging/Page.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/models/paging/PagingParams.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/models/problemdetails/ProblemDetails.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/utils/ApiUtils.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/5.6.2/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/5.6.2/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/5.6.2/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/5.6.2/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/5.6.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/5.6.2/fileHashes/fileHashes.bin" afterDir="false" />
@@ -37,8 +34,10 @@
       <change beforePath="$PROJECT_DIR$/android/.gradle/5.6.2/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/5.6.2/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/constants.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.m" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,8 +53,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Dart File" />
         <option value="Kotlin Worksheet" />
+        <option value="Dart File" />
       </list>
     </option>
   </component>
@@ -75,8 +74,8 @@
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="show.migrate.to.gradle.popup" value="false" />
@@ -170,14 +169,18 @@
     <option name="LAST_COMMIT_MESSAGE" value="login/register" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="163" y="0" key="#Project_Structure" timestamp="1623258077771">
+    <state x="163" y="0" key="#Project_Structure" timestamp="1623270739807">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="163" y="0" key="#Project_Structure/0.0.1366.728@0.0.1366.728" timestamp="1623258077771" />
+    <state x="163" y="0" key="#Project_Structure/0.0.1366.728@0.0.1366.728" timestamp="1623270739807" />
     <state x="1243" y="313" key="#Web_Browsers" timestamp="1622147769481">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1243" y="313" key="#Web_Browsers/0.0.1920.1040@0.0.1920.1040" timestamp="1622147769481" />
+    <state x="488" y="80" key="#com.intellij.ide.util.MemberChooser" timestamp="1623272153760">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="488" y="80" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1623272153760" />
     <state x="1169" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1621848953715">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -198,25 +201,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1219" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1622054592182" />
-    <state width="661" height="220" key="GridCell.Tab.0.bottom" timestamp="1623258753595">
+    <state width="1323" height="220" key="GridCell.Tab.0.bottom" timestamp="1623316584072">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="661" height="220" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1623258753595" />
+    <state width="1323" height="220" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1623316584072" />
     <state width="914" height="146" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1622299870341" />
-    <state width="661" height="220" key="GridCell.Tab.0.center" timestamp="1623258753594">
+    <state width="1323" height="220" key="GridCell.Tab.0.center" timestamp="1623316584072">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="661" height="220" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1623258753594" />
+    <state width="1323" height="220" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1623316584072" />
     <state width="914" height="146" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1622299870341" />
-    <state width="661" height="220" key="GridCell.Tab.0.left" timestamp="1623258753594">
+    <state width="1323" height="220" key="GridCell.Tab.0.left" timestamp="1623316584072">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="661" height="220" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1623258753594" />
+    <state width="1323" height="220" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1623316584072" />
     <state width="914" height="146" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1622299870341" />
-    <state width="661" height="220" key="GridCell.Tab.0.right" timestamp="1623258753594">
+    <state width="1323" height="220" key="GridCell.Tab.0.right" timestamp="1623316584072">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="661" height="220" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1623258753594" />
+    <state width="1323" height="220" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1623316584072" />
     <state width="914" height="146" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1622299870341" />
     <state x="542" y="222" key="RollbackChangesDialog" timestamp="1622060893621">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -246,9 +249,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1096" y="244" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622144869711" />
-    <state x="1102" y="229" width="672" height="678" key="search.everywhere.popup" timestamp="1622043709588">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="694" y="160" width="672" height="475" key="search.everywhere.popup" timestamp="1623273853684">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="694" y="160" width="672" height="475" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1623273853684" />
     <state x="1102" y="229" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622043709588" />
   </component>
 </project>

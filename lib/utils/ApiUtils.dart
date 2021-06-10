@@ -1,41 +1,23 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_auth/models/Codable.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_auth/constants.dart';
-// import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
-
-void main() async {
-  // await Firebase.initializeApp();
-  // var response = await FirebaseAuth.instance.signInWithEmailAndPassword(email: "haseoleonard@gmail.com",
-  //     password: "14021998");
-  // print(response.additionalUserInfo?.username);
-  // var data = new LoginRequest();
-  // var body = new Map<String, String>();
-  // body.putIfAbsent("username", () => "Admin");
-  // body.putIfAbsent("password", () => "Admin");
-  // var response = await fetch(Host.users, HttpMethod.GET, null, null);
-  // if (response.statusCode >= 200 && response.statusCode <= 299)
-  //   print(response.body);
-  // else{
-  //   var problem = ProblemDetails.fromJson(jsonDecode(response.body));
-  //   print(problem.message);
-  //   if(problem.errors!=null)
-  //     print(problem.errors);
-  //   else if(problem.params!=null)
-  //     print(problem.params);
-  // }
-}
 
 Future<http.Response> fetch(String endpoint, HttpMethod method,
-    Map<String, dynamic>? data, Map<String, String>? params) {
+    Encodable? data, Map<String, String>? params) async {
   if (endpoint == null) throw new ArgumentError("Invalid Url");
   var uri = Uri.https("${Host.name}:${Host.port}", "$endpoint", params);
+  String token = "";
+  if(FirebaseAuth.instance!=null&&FirebaseAuth.instance.currentUser!=null)
+    token = await FirebaseAuth.instance.currentUser!.getIdToken();
   var headers = {
-    HttpHeaders.authorizationHeader: "",
+    HttpHeaders.authorizationHeader: token,
     HttpHeaders.contentTypeHeader: "application/json",
     HttpHeaders.acceptEncodingHeader: "application/json"
   };
-  var body = json.encode(data);
+  var body = json.encode(data?.toJson());
   switch (method) {
     case HttpMethod.GET:
       return http.get(uri, headers: headers);
@@ -46,4 +28,7 @@ Future<http.Response> fetch(String endpoint, HttpMethod method,
     case HttpMethod.DELETE:
       return http.delete(uri, headers: headers, body: body);
   }
+}
+extension StatusMatcher on int{
+  bool isOk() => this>=200&&this<=299;
 }

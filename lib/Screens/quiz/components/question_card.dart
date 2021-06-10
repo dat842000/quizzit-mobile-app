@@ -6,17 +6,23 @@ import 'package:get/get.dart';
 
 import 'option.dart';
 
-class QuestionCard extends StatelessWidget {
+class QuestionCard extends StatefulWidget {
   const QuestionCard({
     Key? key,
     // it means we have to pass this
     required this.question,
   }) : super(key: key);
-
   final Question question;
 
   @override
+    State<StatefulWidget> createState() => new QuestionCards();
+}
+
+class QuestionCards extends State<QuestionCard> {
+
+  @override
   Widget build(BuildContext context) {
+    var question = widget.question;
     QuestionController _controller = Get.put(QuestionController());
     return Container(
       margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -29,7 +35,8 @@ class QuestionCard extends StatelessWidget {
         children: [
           Text(
             question.question,
-            style: Theme.of(context)
+            style: Theme
+                .of(context)
                 .textTheme
                 .headline6!
                 .copyWith(color: kBlackColor),
@@ -37,11 +44,18 @@ class QuestionCard extends StatelessWidget {
           SizedBox(height: kDefaultPadding / 2),
           ...List.generate(
             question.options.length,
-            (index) => Option(
-              index: index,
-              text: question.options[index],
-              press: () => {_controller.saveAnswer(question, index)},
-            ),
+                (index) =>
+                Option(
+                  index: index,
+                  questionIndex: question.id,
+                  text: question.options[index],
+                  press: ()
+                  {
+                    _controller.saveAnswer(question, index);
+                    setState(() {
+                    });
+                  },
+                ),
           ),
         ],
       ),

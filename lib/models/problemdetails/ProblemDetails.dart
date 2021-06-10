@@ -1,24 +1,16 @@
-class ProblemDetails {
-  String _type;
-  String _title;
-  String _message;
-  Map<String, String>? _params;
-  Map<String, dynamic>? _errors;
+import 'package:json_annotation/json_annotation.dart';
 
-  ProblemDetails.fromJson(Map<String, dynamic> json)
-      : _type = json['type'],
-        _title = json['title'],
-        _message = json['message'],
-        _params = json['params'],
-        _errors = json['errors'];
+import '../Codable.dart';
+part 'ProblemDetails.g.dart';
+@JsonSerializable()
+class ProblemDetails implements Decodable{
+  String? type;
+  String? title;
+  String? message;
+  Map<String, String>? params;
+  Map<String, dynamic>? errors;
 
-  Map<String, dynamic>? get errors => _errors;
+  ProblemDetails(this.type, this.title, this.message, this.params, this.errors);
 
-  Map<String, String>? get params => _params;
-
-  String get message => _message;
-
-  String get title => _title;
-
-  String get type => _type;
+  factory ProblemDetails.fromJson(Map<String,dynamic> json)=>_$ProblemDetailsFromJson(json);
 }
