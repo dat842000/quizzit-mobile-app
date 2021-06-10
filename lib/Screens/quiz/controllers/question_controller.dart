@@ -63,9 +63,10 @@ class QuestionController extends GetxController
 
   void saveAnswer(Question question, int selectedIndex) {
     _isAnswered = true;
-    print(questionNumber.value);
+    // print(questionNumber.value);
     // _correctAns = question.answer;
-    questions[questionNumber.value - 1].choice = selectedIndex;
+    questions.firstWhere((element) => element.id==question.id).choice=selectedIndex;
+    // questions[questionNumber.value - 1].choice = selectedIndex;
     // question.choice = selectedIndex;
     // print(questions[questionNumber.value - 1].choice);
 
@@ -79,10 +80,6 @@ class QuestionController extends GetxController
       _isAnswered = false;
       _pageController!.nextPage(
           duration: Duration(milliseconds: 250), curve: Curves.ease);
-
-      // Reset the counter
-      _animationController!.reset();
-      _animationController!.forward().whenComplete(nextQuestion);
     } else {
       // Get package provide us simple way to naviigate another page
       // Get.to(LoginScreen());

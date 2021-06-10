@@ -7,10 +7,12 @@ class Option extends StatelessWidget {
   const Option({
     Key? key,
     required this.text,
+    required this.questionIndex,
     required this.index,
     required this.press,
   }) : super(key: key);
   final String text;
+  final int questionIndex;
   final int index;
   final VoidCallback press;
 
@@ -20,9 +22,7 @@ class Option extends StatelessWidget {
         init: QuestionController(),
         builder: (qnController) {
           Color getTheChooseAnswer() {
-
-              if (qnController.questions[index].choice == index) {
-                print(index);
+              if (qnController.questions.firstWhere((element) => element.id==questionIndex).choice == index) {
                 return kChooseColor;
               }
             return kGrayColor;
