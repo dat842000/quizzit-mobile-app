@@ -7,7 +7,6 @@ import 'package:flutter_auth/Screens/ForgotPassword/forgot_password.dart';
 import 'package:flutter_auth/Screens/Login/components/or_divider.dart';
 import 'package:flutter_auth/Screens/Login/components/social_icon.dart';
 import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
-import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
 import 'package:flutter_auth/components/already_have_an_account_acheck.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
 import 'package:flutter_auth/components/rounded_input_field.dart';
@@ -18,6 +17,8 @@ import 'package:flutter_auth/models/login/LoginResponse.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_svg/svg.dart';
+
+import '../../../global/UserLib.dart' as globals;
 
 class Body extends StatefulWidget {
   const Body({
@@ -33,6 +34,7 @@ class Body extends StatefulWidget {
       if (firebase.currentUser != null) await firebase.signOut();
       var fbResponse =
           await firebase.signInWithCustomToken(tokenObject.customToken);
+      globals.userId = 1;
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -132,7 +134,10 @@ class _BodyState extends State<Body> {
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () => widget._login(context, _loginRequest),
+              press: () {
+                widget._login(context, _loginRequest);
+                // print(FirebaseAuth.instance.currentUser!.uid);
+              },
             ),
             SizedBox(height: size.height * 0.001),
             AlreadyHaveAnAccountCheck(
