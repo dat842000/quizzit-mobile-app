@@ -193,29 +193,6 @@ class Body extends StatelessWidget {
                           ),
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => DashboardScreen(),
-                          ));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                            child: Container(
-                              color: Color(0xFFE46471),
-                              height: 60,
-                              width: 60,
-                              child: Icon(
-                                Icons.logout,
-                                size: 26,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: InkWell(
@@ -241,6 +218,29 @@ class Body extends StatelessWidget {
                               width: 60,
                               child: Icon(
                                 FontAwesomeIcons.video,
+                                size: 26,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => DashboardScreen(),
+                          ));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                            child: Container(
+                              color: Color(0xFFE46471),
+                              height: 60,
+                              width: 60,
+                              child: Icon(
+                                Icons.logout,
                                 size: 26,
                                 color: Colors.white,
                               ),

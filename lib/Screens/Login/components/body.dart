@@ -109,7 +109,7 @@ class _BodyState extends State<Body> {
               },
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 170, bottom: 15),
+              padding: const EdgeInsets.only(left: 170, bottom: 5),
               child: GestureDetector(
                 onTap: () {
                   Navigator.push(

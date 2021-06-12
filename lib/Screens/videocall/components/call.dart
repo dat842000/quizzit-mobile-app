@@ -6,6 +6,7 @@ import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_auth/Screens/videocall/settings.dart';
+import 'package:flutter_auth/constants.dart';
 
 class CallPage extends StatefulWidget {
   /// non-modifiable channel name of the page
@@ -265,7 +266,19 @@ class _CallPageState extends State<CallPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        brightness: Brightness.light,
         title: Text('Group call video'),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: kPrimaryColor,
+            )),
       ),
       backgroundColor: Colors.black,
       body: Center(

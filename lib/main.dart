@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: FirebaseAuth.instance.currentUser==null?WelcomeScreen():DashboardScreen(),
+      home: FirebaseAuth.instance.currentUser==null?DashboardScreen():DashboardScreen(),
     );
   }
 }
