@@ -153,7 +153,7 @@ class Body extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ListUser(),
+                            builder: (context) => ListUser(group: group,),
                           ));
                         },
                         child: Padding(

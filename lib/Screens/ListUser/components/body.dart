@@ -1,18 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/dtos/Group.dart';
 import 'package:flutter_auth/dtos/User.dart';
+
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
+import '../../../global/UserLib.dart' as globals;
 
 class Body extends StatefulWidget {
+  const Body({
+    Key? key,
+    required this.group,
+  }) : super(key: key);
+
+  final Group group;
+
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
+  bool isAdmin = false;
+
   List<User> users = [
     User(
         "Ojisan",
@@ -47,6 +59,7 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    if (globals.userId == widget.group.userCreate) isAdmin = true;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -66,16 +79,37 @@ class _BodyState extends State<Body> {
           "RANK",
           style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
         ),
+        actions: widget.group.userCreate == globals.userId
+            ? <Widget>[
+                PopupMenuButton<String>(
+                  icon: Icon(
+                    FontAwesomeIcons.bars,
+                    color: kPrimaryColor,
+                    size: 20,
+                  ),
+                  onSelected: (choice) {},
+                  itemBuilder: (BuildContext context) {
+                    return Constants.adminManageUser.map((String choice) {
+                      return PopupMenuItem<String>(
+                        value: choice,
+                        child: Text(choice),
+                      );
+                    }).toList();
+                  },
+                )
+              ]
+            : null,
       ),
-      body: ListUser(users),
+      body: ListUser(users, isAdmin),
     );
   }
 }
 
 class ListUser extends StatelessWidget {
   List<User> listUser;
+  bool isAdmin;
 
-  ListUser(this.listUser);
+  ListUser(this.listUser, this.isAdmin);
 
   @override
   Widget build(BuildContext context) {
@@ -84,14 +118,16 @@ class ListUser extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          UserCard(listUser[0], Colors.red[400], 1),
-          UserCard(listUser[1], Colors.yellow[400], 2),
-          UserCard(listUser[2], Colors.blue, 3),
-
+          UserCard(listUser[0], Colors.red[400], 1, isAdmin),
+          UserCard(listUser[1], Colors.yellow[400], 2, isAdmin),
+          UserCard(listUser[2], Colors.blue, 3, isAdmin),
           ...List.generate(
               temp.length,
               (index) => Column(
-                    children: [UserCard(temp[index], Colors.grey[400], index+4)],
+                    children: [
+                      UserCard(
+                          temp[index], Colors.grey[400], index + 4, isAdmin)
+                    ],
                   )),
         ],
       ),
@@ -103,52 +139,81 @@ class UserCard extends StatelessWidget {
   User user;
   Color? color;
   int index;
+  bool isAdmin;
 
-  UserCard(this.user, this.color, this.index);
+  UserCard(this.user, this.color, this.index, this.isAdmin);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
-      child: Slidable(
-        actionPane: SlidableDrawerActionPane(),
-        secondaryActions: <Widget>[
-          IconSlideAction(
-            caption: 'Approve',
-            color: Colors.lightBlue,
-            icon: Icons.check,
-            onTap: (){},
-          ),
-          IconSlideAction(
-            caption: 'Delete',
-            color: Colors.redAccent,
-            icon: Icons.delete,
-            onTap: (){},
-          )
-        ],
-        child: Container(
-            height: 100,
-            decoration: new BoxDecoration(
-                // borderRadius: BorderRadius.circular(10.0),
-                color: color),
-            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              ListTile(
-                leading: CircleAvatar(
-                    radius: 40, backgroundImage: NetworkImage(user.urlImg)),
-                title: Text(user.name,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold)),
-                subtitle: Text('#${index}',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold)),
-              ),
-            ])),
-      ),
+      child: isAdmin
+          ? Slidable(
+              actionPane: SlidableDrawerActionPane(),
+              secondaryActions: <Widget>[
+                IconSlideAction(
+                  caption: 'Approve',
+                  color: Colors.lightBlue,
+                  icon: Icons.check,
+                  onTap: () {},
+                ),
+                IconSlideAction(
+                  caption: 'Delete',
+                  color: Colors.redAccent,
+                  icon: Icons.delete,
+                  onTap: () {},
+                )
+              ],
+              child: Container(
+                  height: 100,
+                  decoration: new BoxDecoration(
+                      // borderRadius: BorderRadius.circular(10.0),
+                      color: color),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ListTile(
+                          leading: CircleAvatar(
+                              radius: 40,
+                              backgroundImage: NetworkImage(user.urlImg)),
+                          title: Text(user.name,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold)),
+                          subtitle: Text('#${index}',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                      ])),
+            )
+          : Container(
+              height: 100,
+              decoration: new BoxDecoration(
+                  // borderRadius: BorderRadius.circular(10.0),
+                  color: color),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ListTile(
+                      leading: CircleAvatar(
+                          radius: 40,
+                          backgroundImage: NetworkImage(user.urlImg)),
+                      title: Text(user.name,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold)),
+                      subtitle: Text('#${index}',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                  ])),
     );
   }
 }
