@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/dtos/Post.dart';
+
 
 class Body extends StatelessWidget {
   final Post post;
@@ -19,7 +21,37 @@ class Body extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: Text(post.title),
+        title: Text(post.title.toUpperCase()),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              post.urlImg.isEmpty
+                  ? Padding(
+                padding:
+                const EdgeInsets.only(top: 8.0, bottom: 8.0),
+              )
+                  : CachedNetworkImage(
+                imageUrl: post.urlImg,
+                height: 225,
+                width:
+                MediaQuery.of(context).size.width ,
+                fit: BoxFit.cover,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top:8.0,bottom: 8.0),
+                child: Align(
+                  child: Text(post.title.toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                  alignment: Alignment.centerLeft,
+                ),
+              ),
+              Text(post.content,style: TextStyle(fontSize: 17),)
+            ],
+          ),
+        ),
       ),
     );
   }

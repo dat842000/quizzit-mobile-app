@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/dtos/User.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:flutter_slidable/flutter_slidable.dart';
+
+
 
 class Body extends StatefulWidget {
   @override
@@ -106,27 +110,45 @@ class UserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
-      child: Container(
-          height: 100,
-          decoration: new BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0), color: color),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            ListTile(
-              leading: CircleAvatar(
-                  radius: 40, backgroundImage: NetworkImage(user.urlImg)),
-              title: Text(user.name,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold)),
-              subtitle: Text('#${index}',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold)),
-            ),
-          ])),
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Slidable(
+        actionPane: SlidableDrawerActionPane(),
+        secondaryActions: <Widget>[
+          IconSlideAction(
+            caption: 'Approve',
+            color: Colors.lightBlue,
+            icon: Icons.check,
+            onTap: (){},
+          ),
+          IconSlideAction(
+            caption: 'Delete',
+            color: Colors.redAccent,
+            icon: Icons.delete,
+            onTap: (){},
+          )
+        ],
+        child: Container(
+            height: 100,
+            decoration: new BoxDecoration(
+                // borderRadius: BorderRadius.circular(10.0),
+                color: color),
+            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              ListTile(
+                leading: CircleAvatar(
+                    radius: 40, backgroundImage: NetworkImage(user.urlImg)),
+                title: Text(user.name,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)),
+                subtitle: Text('#${index}',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold)),
+              ),
+            ])),
+      ),
     );
   }
 }

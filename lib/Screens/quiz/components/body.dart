@@ -61,6 +61,18 @@ class Body extends StatelessWidget {
                       question: _questionController.questions[index]),
                 ),
               ),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  //Center Column contents vertically,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    FlatButton(
+                        onPressed: _questionController.prevQuestion,
+                        child: Icon(Icons.arrow_back_ios)),
+                    FlatButton(
+                        onPressed: _questionController.nextQuestion,
+                        child: Icon(Icons.arrow_forward_ios)),
+                  ]),
             ],
           ),
         )

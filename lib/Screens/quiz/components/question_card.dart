@@ -52,23 +52,6 @@ class QuestionCards extends State<QuestionCard> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 20,
-            ),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                //Center Column contents vertically,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  FlatButton(
-                      onPressed: _controller.prevQuestion,
-                      child: Icon(Icons.arrow_back_ios)),
-                  FlatButton(
-                      onPressed: _controller.nextQuestion,
-                      child: Icon(Icons.arrow_forward_ios)),
-                ]),
-          ),
         ],
       ),
     );
