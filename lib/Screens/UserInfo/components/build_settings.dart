@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -50,17 +51,48 @@ class BuildSettings extends StatelessWidget {
               child: FlatButton(
                 // padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                 color: kPrimaryColor,
-                onPressed: () {  },
+                onPressed: () {},
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Text(
+                      'CHANGE PASSWORD',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     Icon(
                       Icons.app_registration,
                       color: Colors.white,
                     ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              // margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              width: 250,
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(29),
+              ),
+              child: FlatButton(
+                // padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                color: Colors.red,
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => WelcomeScreen(),
+                  ));
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                     Text(
-                      'Change Passwword',
+                      'LOGOUT',
                       style: TextStyle(color: Colors.white),
+                    ),
+                    Icon(
+                      Icons.logout,
+                      color: Colors.white,
                     ),
                   ],
                 ),

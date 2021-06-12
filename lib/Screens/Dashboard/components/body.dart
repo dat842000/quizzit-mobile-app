@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
+import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
 import 'package:flutter_auth/components/navigation_drawer_widget.ws.dart';
 import 'package:flutter_auth/constants.dart';
@@ -57,6 +58,14 @@ class _BodyState extends State<Body> {
         brightness: Brightness.light,
         backgroundColor: Color(0xffe4e6eb),
         iconTheme: IconThemeData(color: kPrimaryColor),
+        leading: InkWell(
+          child: Icon(FontAwesomeIcons.userCircle),
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => UserInfoScreen(),
+            ));
+          },
+        ),
         actions: <Widget>[
           PopupMenuButton<String>(
             icon: Icon(
@@ -95,22 +104,22 @@ class _BodyState extends State<Body> {
           ],
         ),
       ),
-      drawer: NavigationDrawer(),
+      // drawer: NavigationDrawer(),
       body: Column(
         children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: itemsData.length,
-                physics: BouncingScrollPhysics(),
-                itemBuilder: (context, index) => GroupsTitle(
-                  group: itemsData[index],
-                ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: itemsData.length,
+              physics: BouncingScrollPhysics(),
+              itemBuilder: (context, index) => GroupsTitle(
+                group: itemsData[index],
               ),
             ),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {  },
+        onPressed: () {},
         child: IconButton(
           icon: Icon(
             Icons.add,
@@ -176,8 +185,7 @@ class ContinueTag extends StatelessWidget {
 class GroupsTitle extends StatelessWidget {
   Group group;
 
-  GroupsTitle(
-      {required this.group});
+  GroupsTitle({required this.group});
 
   @override
   Widget build(BuildContext context) {
@@ -185,11 +193,11 @@ class GroupsTitle extends StatelessWidget {
       child: Wrap(
         children: <Widget>[
           InkWell(
-            onTap: (){
+            onTap: () {
               Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => UserViewScreen(group))
-            );
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => UserViewScreen(group)));
             },
             child: Container(
               margin: EdgeInsets.only(bottom: 20),
@@ -281,7 +289,8 @@ class GroupsTitle extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(right: 14.0),
                                 child: Text(
-                                  DateFormat('EEE d MMM yyyy').format(group.createdDate),
+                                  DateFormat('EEE d MMM yyyy')
+                                      .format(group.createdDate),
                                   style: TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.w500,

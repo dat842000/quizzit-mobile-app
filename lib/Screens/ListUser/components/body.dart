@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/dtos/User.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -6,10 +9,124 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  List<User> users = [
+    User(
+        "Ojisan",
+        "https://scontent-sin6-1.xx.fbcdn.net/v/t1.6435-1/p720x720/130926059_3586820534716638_8513722166239497233_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=7206a8&_nc_ohc=52M4698X5oYAX9SLPFL&_nc_ht=scontent-sin6-1.xx&tp=6&oh=3b43fb51cf2698aefbd9f2ed29724085&oe=60E7FAEA",
+        "haseoleonard@gmail.com"),
+    User(
+        "Dat Nguyen",
+        "https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.6435-9/172600480_2894518494156867_1493738166156079949_n.jpg?_nc_cat=106&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=1aMndlcPap0AX85TE5l&_nc_ht=scontent.fsgn5-6.fna&oh=ef2bd4b0b4f5667097fff27829b948d5&oe=60D66539",
+        "dnn8420@gmail.com"),
+    User(
+        "Vinh",
+        "https://scontent-sin6-3.xx.fbcdn.net/v/t1.6435-9/62118713_2352579395000621_7361899465210331136_n.jpg?_nc_cat=104&ccb=1-3&_nc_sid=09cbfe&_nc_aid=0&_nc_ohc=oJWBxQjFJMQAX_f7b-f&_nc_ht=scontent-sin6-3.xx&oh=f8a35487883d02632eaff1d2ed88cb17&oe=60E7D745",
+        "Vinh@gmail.com"),
+    User(
+        "Hiep",
+        "https://scontent-sin6-2.xx.fbcdn.net/v/t1.6435-1/s320x320/151666982_1791768614330490_6210226921179657624_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=7206a8&_nc_ohc=riZEuLzCWZwAX8Hy7zS&_nc_ht=scontent-sin6-2.xx&tp=7&oh=113619bd478b4fbc8944260a56e48b14&oe=60C8BF22",
+        "Vinh@gmail.com"),
+    User(
+        "Duong",
+        "https://scontent-sin6-3.xx.fbcdn.net/v/t1.6435-9/186506523_101122005513976_9062523887582103932_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=0Tw1gI98TdwAX_qBMU4&_nc_oc=AQl4sbDLY_GLlKPDP_R8JE1oJ8ICzV70rl7rsYY3QTX2U5VdL7b0r0DLuedw1teqpBi6qWhviKJwoWcc_UE-ZKq5&_nc_ht=scontent-sin6-3.xx&oh=f17fb5d6e0d0f06ebfaeca8ec3511b74&oe=60C8FF2B",
+        "Vinh@gmail.com"),
+    User(
+        "Thang",
+        "https://scontent-sin6-2.xx.fbcdn.net/v/t1.6435-1/p320x320/190761240_1588435718026211_7193804840421773918_n.jpg?_nc_cat=102&ccb=1-3&_nc_sid=7206a8&_nc_ohc=P64l9l9JL9cAX-4Pwc9&_nc_oc=AQmD0dyAZT1VLGrbUnlf4qhXsPjlyxrIt1lGaILImtdiupH7L3YSdGptjQM6UKo9ewE&_nc_ht=scontent-sin6-2.xx&tp=6&oh=8e04e4f955df9d7275a931b7df36df5e&oe=60C9B03E",
+        "Vinh@gmail.com"),
+    User(
+        "Oc cho",
+        "https://scontent-sin6-2.xx.fbcdn.net/v/t1.6435-9/87029316_1110067389336629_8333488988178350080_n.jpg?_nc_cat=102&ccb=1-3&_nc_sid=174925&_nc_ohc=lFZvBWwCh8UAX_N05NZ&_nc_ht=scontent-sin6-2.xx&oh=956c79c35bf60c3f089ea07ee6d4bdbb&oe=60CA1861",
+        "Vinh@gmail.com"),
+  ];
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        brightness: Brightness.light,
+        backgroundColor: Colors.transparent,
+        leading: InkWell(
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: kPrimaryColor,
+          ),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        centerTitle: true,
+        title: Text(
+          "RANK",
+          style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
+        ),
+      ),
+      body: ListUser(users),
+    );
   }
+}
 
+class ListUser extends StatelessWidget {
+  List<User> listUser;
+
+  ListUser(this.listUser);
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    List<User> temp = listUser.sublist(3, listUser.length);
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          UserCard(listUser[0], Colors.red[400], 1),
+          UserCard(listUser[1], Colors.yellow[400], 2),
+          UserCard(listUser[2], Colors.blue, 3),
+
+          ...List.generate(
+              temp.length,
+              (index) => Column(
+                    children: [UserCard(temp[index], Colors.grey[400], index+4)],
+                  )),
+        ],
+      ),
+    );
+  }
+}
+
+class UserCard extends StatelessWidget {
+  User user;
+  Color? color;
+  int index;
+
+  UserCard(this.user, this.color, this.index);
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
+      child: Container(
+          height: 100,
+          decoration: new BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0), color: color),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            ListTile(
+              leading: CircleAvatar(
+                  radius: 40, backgroundImage: NetworkImage(user.urlImg)),
+              title: Text(user.name,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold)),
+              subtitle: Text('#${index}',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold)),
+            ),
+          ])),
+    );
+  }
 }

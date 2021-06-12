@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
+import 'package:flutter_auth/Screens/ListUser/list_user.dart';
 import 'package:flutter_auth/Screens/PostDetail/post_detail.dart';
 import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
 import 'package:flutter_auth/components/text_field_container.dart';
@@ -70,169 +71,184 @@ class Body extends StatelessWidget {
         centerTitle: true,
         title: Text(group.name),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 0),
-        child: Column(
-          children: <Widget>[
-            Stack(
-              children: <Widget>[
-                Container(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.width * 45 / 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(30.0),
-                      bottomRight: Radius.circular(30.0),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: kPrimaryColor,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 0),
+          child: Column(
+            children: <Widget>[
+              Stack(
+                children: <Widget>[
+                  Container(
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.width * 45 / 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(30.0),
+                        bottomRight: Radius.circular(30.0),
                       ),
-                    ],
+                      boxShadow: [
+                        BoxShadow(
+                          color: kPrimaryColor,
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(30.0),
+                        bottomRight: Radius.circular(30.0),
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl: group.imgUrl,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(30.0),
-                      bottomRight: Radius.circular(30.0),
-                    ),
-                    child: CachedNetworkImage(
-                      imageUrl: group.imgUrl,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                // Padding(
-                //   padding:
-                //       EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: <Widget>[
-                //       IconButton(
-                //         icon: Icon(Icons.arrow_back_ios),
-                //         color: Colors.blue,
-                //         iconSize: 20,
-                //         onPressed: () => Navigator.pop(context),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
-              child: Container(
-                color: Colors.white,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                        child: Container(
-                          color: Color(0xFF309398),
-                          height: 60,
-                          width: 60,
-                          child: Icon(
-                            FontAwesomeIcons.plusSquare,
-                            size: 26,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                        child: Container(
-                          color: Color(0xFFF9BE7C),
-                          height: 60,
-                          width: 60,
-                          child: Icon(
-                            FontAwesomeIcons.userAlt,
-                            size: 17,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => QuizScreen(),
-                          ));
-                        },
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                          child: Container(
-                            color: kPrimaryColor,
-                            height: 60,
-                            width: 60,
-                            child: Icon(
-                              FontAwesomeIcons.brain,
-                              size: 26,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => DashboardScreen(),
-                        ));
-                      },
-                      child: Padding(
+                  // Padding(
+                  //   padding:
+                  //       EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: <Widget>[
+                  //       IconButton(
+                  //         icon: Icon(Icons.arrow_back_ios),
+                  //         color: Colors.blue,
+                  //         iconSize: 20,
+                  //         onPressed: () => Navigator.pop(context),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
+                child: Container(
+                  color: Colors.white,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ClipRRect(
                           borderRadius: BorderRadius.all(Radius.circular(25.0)),
                           child: Container(
-                            color: Color(0xFFE46471),
+                            color: Color(0xFF309398),
                             height: 60,
                             width: 60,
                             child: Icon(
-                              Icons.logout,
+                              FontAwesomeIcons.plusSquare,
                               size: 26,
                               color: Colors.white,
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    // Padding(
-                    //   padding: const EdgeInsets.all(8.0),
-                    //   child: ClipRRect(
-                    //     borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                    //     child: Container(
-                    //       color: Color(0xFF8d949e),
-                    //       height: 60,
-                    //       width: 60,
-                    //       child: Icon(
-                    //         FontAwesomeIcons.ellipsisH,
-                    //         size: 26,
-                    //         color: Colors.white,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                  ],
+                      InkWell(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ListUser(),
+                          ));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                            child: Container(
+                              color: Color(0xFFF9BE7C),
+                              height: 60,
+                              width: 60,
+                              child: Icon(
+                                FontAwesomeIcons.userAlt,
+                                size: 17,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => QuizScreen(),
+                            ));
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                            child: Container(
+                              color: kPrimaryColor,
+                              height: 60,
+                              width: 60,
+                              child: Icon(
+                                FontAwesomeIcons.brain,
+                                size: 26,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => DashboardScreen(),
+                          ));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                            child: Container(
+                              color: Color(0xFFE46471),
+                              height: 60,
+                              width: 60,
+                              child: Icon(
+                                Icons.logout,
+                                size: 26,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: ClipRRect(
+                      //     borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                      //     child: Container(
+                      //       color: Color(0xFF8d949e),
+                      //       height: 60,
+                      //       width: 60,
+                      //       child: Icon(
+                      //         FontAwesomeIcons.ellipsisH,
+                      //         size: 26,
+                      //         color: Colors.white,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: posts.length,
-                physics: BouncingScrollPhysics(),
-                itemBuilder: (context, index) => PostCard(
-                  post: posts[index],
-                ),
+              // Expanded(
+              //   child: ListView.builder(
+              //     itemCount: posts.length,
+              //     itemBuilder: (context, index) => PostCard(
+              //       post: posts[index],
+              //     ),
+              //   ),
+              // ),
+              Column(
+                children: <Widget>[
+                  ...posts.map((item){
+                    return PostCard(post: item,);
+                  }).toList(),
+                ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

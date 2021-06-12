@@ -6,6 +6,7 @@ import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/Screens/ForgotPassword/forgot_password.dart';
 import 'package:flutter_auth/Screens/Login/components/or_divider.dart';
 import 'package:flutter_auth/Screens/Login/components/social_icon.dart';
+import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
 import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
 import 'package:flutter_auth/components/already_have_an_account_acheck.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
@@ -32,25 +33,12 @@ class Body extends StatefulWidget {
       if (firebase.currentUser != null) await firebase.signOut();
       var fbResponse =
           await firebase.signInWithCustomToken(tokenObject.customToken);
-      showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('Login Success'),
-          content: Text(
-              "User ${fbResponse.user!.displayName!} has logged in successfully"),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return DashboardScreen();
-                  },
-                ),
-              ),
-              child: const Text('OK'),
-            ),
-          ],
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return DashboardScreen();
+          },
         ),
       );
     } else {
@@ -144,9 +132,7 @@ class _BodyState extends State<Body> {
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () => widget._login(
-                context,_loginRequest
-              ),
+              press: () => widget._login(context, _loginRequest),
             ),
             SizedBox(height: size.height * 0.001),
             AlreadyHaveAnAccountCheck(
