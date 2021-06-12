@@ -1,17 +1,17 @@
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/Screens/ListUser/list_user.dart';
 import 'package:flutter_auth/Screens/PostDetail/post_detail.dart';
 import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
-import 'package:flutter_auth/components/text_field_container.dart';
+import 'package:flutter_auth/Screens/videocall/components/call.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/dtos/Group.dart';
 import 'package:flutter_auth/dtos/Post.dart';
 import 'package:flutter_auth/dtos/User.dart';
-import 'package:http/http.dart';
-import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class Body extends StatelessWidget {
   DateTime date = DateTime.now();
@@ -56,6 +56,10 @@ class Body extends StatelessWidget {
   final Group group;
 
   Body(this.group);
+
+  Future<void> _handleCameraAndMic(Permission permission) async {
+    final status = await permission.request();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -212,22 +216,38 @@ class Body extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(8.0),
-                      //   child: ClipRRect(
-                      //     borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                      //     child: Container(
-                      //       color: Color(0xFF8d949e),
-                      //       height: 60,
-                      //       width: 60,
-                      //       child: Icon(
-                      //         FontAwesomeIcons.ellipsisH,
-                      //         size: 26,
-                      //         color: Colors.white,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () async {
+                            await _handleCameraAndMic(Permission.camera);
+                            await _handleCameraAndMic(Permission.microphone);
+                            // push video page with given channel name
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CallPage(
+                                  channelName: "test",
+                                  role: ClientRole.Broadcaster,
+                                ),
+                              ),
+                            );
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                            child: Container(
+                              color: Color(0xFF8d949e),
+                              height: 60,
+                              width: 60,
+                              child: Icon(
+                                FontAwesomeIcons.video,
+                                size: 26,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

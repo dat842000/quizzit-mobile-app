@@ -15,11 +15,10 @@ class QuestionCard extends StatefulWidget {
   final Question question;
 
   @override
-    State<StatefulWidget> createState() => new QuestionCards();
+  State<StatefulWidget> createState() => new QuestionCards();
 }
 
 class QuestionCards extends State<QuestionCard> {
-
   @override
   Widget build(BuildContext context) {
     var question = widget.question;
@@ -35,8 +34,7 @@ class QuestionCards extends State<QuestionCard> {
         children: [
           Text(
             question.question,
-            style: Theme
-                .of(context)
+            style: Theme.of(context)
                 .textTheme
                 .headline6!
                 .copyWith(color: kBlackColor),
@@ -44,18 +42,32 @@ class QuestionCards extends State<QuestionCard> {
           SizedBox(height: kDefaultPadding / 2),
           ...List.generate(
             question.options.length,
-                (index) =>
-                Option(
-                  index: index,
-                  questionIndex: question.id,
-                  text: question.options[index],
-                  press: ()
-                  {
-                    _controller.saveAnswer(question, index);
-                    setState(() {
-                    });
-                  },
-                ),
+            (index) => Option(
+              index: index,
+              questionIndex: question.id,
+              text: question.options[index],
+              press: () {
+                _controller.saveAnswer(question, index);
+                setState(() {});
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 20,
+            ),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                //Center Column contents vertically,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  FlatButton(
+                      onPressed: _controller.prevQuestion,
+                      child: Icon(Icons.arrow_back_ios)),
+                  FlatButton(
+                      onPressed: _controller.nextQuestion,
+                      child: Icon(Icons.arrow_forward_ios)),
+                ]),
           ),
         ],
       ),
