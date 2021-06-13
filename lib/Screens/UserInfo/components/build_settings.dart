@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
+import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -79,9 +81,7 @@ class BuildSettings extends StatelessWidget {
                 // padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                 color: Colors.red,
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => WelcomeScreen(),
-                  ));
+                  FirebaseAuth.instance.signOut().then((value) => navigate(context,WelcomeScreen()));
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,7 +94,7 @@ class BuildSettings extends StatelessWidget {
                       Icons.logout,
                       color: Colors.white,
                     ),
-                  ],
+                  ]
                 ),
               ),
             ),

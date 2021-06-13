@@ -1,34 +1,56 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/Screens/Login/login_screen.dart';
 import 'package:flutter_auth/components/birthday_widget.dart';
+import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
+import 'package:flutter_auth/models/signup/SignupRequest.dart';
+import 'package:flutter_auth/utils/ApiUtils.dart';
 
 class Body extends StatefulWidget {
   @override
   _BodyState createState() => _BodyState();
+
+  Future signUp(BuildContext context, SignupRequest signupRequest) async {
+    var response =
+    await fetch(Host.users, HttpMethod.POST, signupRequest, null);
+    if (response.statusCode.isOk()) {
+      showAlert(context, "Signup Success", "",
+              (con) => navigate(context, LoginScreen()));
+    } else {
+      var problemDetails = ProblemDetails.fromJson(json.decode(response.body));
+      showAlert(context, "Signup Failed", problemDetails.title!,
+              (context) => Navigator.pop(context, "OK"));
+    }
+  }
 }
 
 class _BodyState extends State<Body> {
-  String _email="";
-  String _username="";
-  String _password="";
-  String _confirmedPassword="";
-  DateTime _birthday=DateTime.now();
+  SignupRequest signupRequest = SignupRequest.empty();
+  String _confirmedPassword = "";
 
-  void setEmail(String email) => this._email = email;
+  void setEmail(String email) => this.signupRequest.email = email;
 
-  void setUsername(String username) => this._username = username;
+  void setUsername(String username) => this.signupRequest.username = username;
 
-  void setPassword(String password) => this._password = password;
+  void setPassword(String password) => this.signupRequest.password = password;
+
+  void setFullName(String fullName) => this.signupRequest.fullName = fullName;
 
   void setConfirmedPassword(String confirmedPassword) =>
       this._confirmedPassword = confirmedPassword;
 
-  void setBirthday(DateTime birthday) => this._birthday = birthday;
+  void setBirthday(DateTime birthday) =>
+      this.signupRequest.dateOfBirth = birthday;
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -44,7 +66,7 @@ class _BodyState extends State<Body> {
               color: kPrimaryColor,
             )),
         centerTitle: true,
-        title:const Text(
+        title: const Text(
           "Sign up",
           style: TextStyle(
             fontSize: 30,
@@ -56,7 +78,10 @@ class _BodyState extends State<Body> {
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 40),
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery
+              .of(context)
+              .size
+              .height,
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -65,7 +90,7 @@ class _BodyState extends State<Body> {
                 children: <Widget>[
                   SizedBox(height: 10),
                   inputFile(label: "Email", exp: setEmail),
-                  // inputFile(label: "Fullname", exp: null),
+                  inputFile(label: "Fullname", exp: setFullName),
                   inputFile(label: "Username", exp: setUsername),
                   inputFile(
                       label: "Password", obscureText: true, exp: setPassword),
@@ -83,13 +108,11 @@ class _BodyState extends State<Body> {
               ),
               RoundedButton(
                 text: "SIGN UP",
-                press: () {
-                  // fetchAlbum().then((value) => print(value.body));
-                  print(_username);
-                  print(_password);
-                  print(_confirmedPassword);
-                  print(_email);
-                  print(_birthday);
+                press: () async {
+                  signupRequest.password.isNotEmpty
+                      &&signupRequest.password == _confirmedPassword ?
+                  await widget.signUp(context, signupRequest) :
+                      showAlert(context,"Signup Failed","Confirmed Password Not Match");
                 },
               ),
             ],
@@ -115,7 +138,7 @@ class _BodyState extends State<Body> {
             obscureText: obscureText,
             decoration: InputDecoration(
                 contentPadding:
-                    EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey[400]!),
                 ),
@@ -129,12 +152,13 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Widget buildBirthday() => buildTitle(
+  Widget buildBirthday() =>
+      buildTitle(
         title: 'Birthday',
         child: BirthdayWidget(
-          birthday: _birthday,
+          birthday: this.signupRequest.dateOfBirth,
           onChangedBirthday: (birthday) =>
-              setState(() => this._birthday = birthday),
+              setState(() => this.signupRequest.dateOfBirth = birthday),
         ),
       );
 
@@ -156,20 +180,4 @@ class _BodyState extends State<Body> {
           child,
         ],
       );
-
-  set username(String value) {
-    _username = value;
-  }
-
-  set password(String value) {
-    _password = value;
-  }
-
-  set confirmedPassword(String value) {
-    _confirmedPassword = value;
-  }
-
-  set birthday(DateTime value) {
-    _birthday = value;
-  }
 }

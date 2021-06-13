@@ -9,6 +9,7 @@ import 'package:flutter_auth/Screens/Login/components/social_icon.dart';
 import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
 import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
 import 'package:flutter_auth/components/already_have_an_account_acheck.dart';
+import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
 import 'package:flutter_auth/components/rounded_input_field.dart';
 import 'package:flutter_auth/components/rounded_password_field.dart';
@@ -33,14 +34,7 @@ class Body extends StatefulWidget {
       if (firebase.currentUser != null) await firebase.signOut();
       var fbResponse =
           await firebase.signInWithCustomToken(tokenObject.customToken);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) {
-            return DashboardScreen();
-          },
-        ),
-      );
+      navigate(context, DashboardScreen());
     } else {
       var problem = ProblemDetails.fromJson(Json);
       String error = problem.title!;
@@ -51,19 +45,7 @@ class Body extends StatefulWidget {
           error = usernameProblem[0];
         else if (passwordProblem != null) error = passwordProblem[0];
       } else if (problem.message != null) error = problem.message!;
-      showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('Login Failed'),
-          content: Text(error),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'OK'),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      );
+      showAlert(context, "Login Failed", error);
     }
   }
 
