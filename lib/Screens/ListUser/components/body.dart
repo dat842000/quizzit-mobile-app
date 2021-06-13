@@ -7,6 +7,7 @@ import 'package:flutter_auth/dtos/User.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:meta/meta.dart';
 
 import '../../../global/UserLib.dart' as globals;
 
@@ -19,11 +20,15 @@ class Body extends StatefulWidget {
   final Group group;
 
   @override
-  _BodyState createState() => _BodyState();
+  _BodyState createState() => _BodyState(group : group);
 }
 
 class _BodyState extends State<Body> {
   bool isAdmin = false;
+  Group group;
+  _BodyState({required this.group}){
+    if (globals.userId == group.userCreate) isAdmin = true;
+  }
 
   List<User> users = [
     User(
@@ -55,11 +60,12 @@ class _BodyState extends State<Body> {
         "https://scontent-sin6-2.xx.fbcdn.net/v/t1.6435-9/87029316_1110067389336629_8333488988178350080_n.jpg?_nc_cat=102&ccb=1-3&_nc_sid=174925&_nc_ohc=lFZvBWwCh8UAX_N05NZ&_nc_ht=scontent-sin6-2.xx&oh=956c79c35bf60c3f089ea07ee6d4bdbb&oe=60CA1861",
         "Vinh@gmail.com"),
   ];
+  String title = "RANK";
+
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    if (globals.userId == widget.group.userCreate) isAdmin = true;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -76,7 +82,7 @@ class _BodyState extends State<Body> {
         ),
         centerTitle: true,
         title: Text(
-          "RANK",
+          isAdmin ? "GROUP USERS" : title,
           style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
         ),
         actions: widget.group.userCreate == globals.userId
@@ -87,7 +93,7 @@ class _BodyState extends State<Body> {
                     color: kPrimaryColor,
                     size: 20,
                   ),
-                  onSelected: (choice) {},
+                  onSelected: choiceAction,
                   itemBuilder: (BuildContext context) {
                     return Constants.adminManageUser.map((String choice) {
                       return PopupMenuItem<String>(
@@ -100,37 +106,62 @@ class _BodyState extends State<Body> {
               ]
             : null,
       ),
-      body: ListUser(users, isAdmin),
+      body: ListUser(users, isAdmin, setState: () {
+        setState(() {});
+      }),
     );
+  }
+  void choiceAction(String choice) {
+    if(choice == "Ranking"){
+      title = "RANK";
+      isAdmin = false;
+    }else{
+      title = "GROUP USERS";
+      isAdmin = true;
+    }
+    setState(() {
+    });
   }
 }
 
 class ListUser extends StatelessWidget {
   List<User> listUser;
   bool isAdmin;
-
-  ListUser(this.listUser, this.isAdmin);
+  Function() setState;
+  ListUser(this.listUser, this.isAdmin, {required this.setState});
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    List<User> temp = listUser.sublist(3, listUser.length);
+    List<User> temp = [...listUser];
+    temp.sublist(3, listUser.length);
     return SingleChildScrollView(
-      child: Column(
+      child: !isAdmin ? Column(
         children: [
-          UserCard(listUser[0], Colors.red[400], 1, isAdmin),
-          UserCard(listUser[1], Colors.yellow[400], 2, isAdmin),
-          UserCard(listUser[2], Colors.blue, 3, isAdmin),
+          UserCard(temp[0], Colors.red[400], 1, isAdmin, listUser, setState: setState),
+          UserCard(temp[1], Colors.yellow[400], 2, isAdmin, listUser, setState: setState),
+          UserCard(temp[2], Colors.blue, 3, isAdmin, listUser, setState: setState),
           ...List.generate(
-              temp.length,
+              temp.length - 3,
               (index) => Column(
                     children: [
                       UserCard(
-                          temp[index], Colors.grey[400], index + 4, isAdmin)
+                          temp[index + 3], Colors.grey[400], index + 4, isAdmin, listUser,  setState: setState)
                     ],
                   )),
         ],
-      ),
+      ): Column(
+          children: [
+          ...List.generate(
+              listUser.length,
+            (index) => Column(
+                children: [
+                  UserCard(
+                      temp[index], Colors.grey[400], index, isAdmin, listUser, setState: setState)
+                ],
+              )),
+          ]
+      )
     );
   }
 }
@@ -140,8 +171,10 @@ class UserCard extends StatelessWidget {
   Color? color;
   int index;
   bool isAdmin;
+  Function() setState;
+  List<User> listUser;
 
-  UserCard(this.user, this.color, this.index, this.isAdmin);
+  UserCard(this.user, this.color, this.index, this.isAdmin, this.listUser, {required this.setState});
 
   @override
   Widget build(BuildContext context) {
@@ -159,10 +192,13 @@ class UserCard extends StatelessWidget {
                   onTap: () {},
                 ),
                 IconSlideAction(
-                  caption: 'Delete',
+                  caption: 'Kick',
                   color: Colors.redAccent,
                   icon: Icons.delete,
-                  onTap: () {},
+                  onTap: () {
+                    listUser.removeAt(index);
+                    setState();
+                  },
                 )
               ],
               child: Container(
@@ -181,11 +217,6 @@ class UserCard extends StatelessWidget {
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.bold)),
-                          subtitle: Text('#${index}',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
                                   fontWeight: FontWeight.bold)),
                         ),
                       ])),

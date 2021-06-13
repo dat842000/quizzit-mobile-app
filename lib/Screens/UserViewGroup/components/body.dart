@@ -153,7 +153,7 @@ class Body extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ListUser(group: group,),
+                            builder: (context) => ListUser(group: group),
                           ));
                         },
                         child: Padding(
@@ -191,7 +191,7 @@ class Body extends StatelessWidget {
                               height: 60,
                               width: 60,
                               child: Icon(
-                                FontAwesomeIcons.brain,
+                                FontAwesomeIcons.question,
                                 size: 26,
                                 color: Colors.white,
                               ),
@@ -214,7 +214,7 @@ class Body extends StatelessWidget {
                               height: 60,
                               width: 60,
                               child: Icon(
-                                FontAwesomeIcons.question,
+                                FontAwesomeIcons.brain,
                                 size: 26,
                                 color: Colors.white,
                               ),
