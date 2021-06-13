@@ -1,17 +1,25 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/UserInfo/components/build_settings.dart';
 import 'package:flutter_auth/Screens/UserInfo/components/build_title.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_auth/utils/ApiUtils.dart';
 
 import '../../../constants.dart';
 
 class Body extends StatefulWidget {
   @override
   _BodyState createState() => _BodyState();
+
+  Future _getUserInfo() async {
+    var user = await fetch(
+        "${Host.users}/${FirebaseAuth.instance.currentUser!.uid}",
+        HttpMethod.GET);
+  }
 }
 
 class _BodyState extends State<Body> {
   final padding = EdgeInsets.symmetric(horizontal: 20);
+  final _firebaseAuth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +53,11 @@ class _BodyState extends State<Body> {
                         Padding(
                           padding: const EdgeInsets.only(top: 60.0),
                           child: buildHeader(
-                            urlImage:
-                                'https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.6435-9/172600480_2894518494156867_1493738166156079949_n.jpg?_nc_cat=106&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=1aMndlcPap0AX85TE5l&_nc_ht=scontent.fsgn5-6.fna&oh=ef2bd4b0b4f5667097fff27829b948d5&oe=60D66539',
-                            name: 'Nguyen Phuc Dat',
-                            email: 'dnn8420@gmail.com',
+                            urlImage: _firebaseAuth.currentUser!.photoURL ??
+                                "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png",
+                            name: _firebaseAuth.currentUser!.displayName ??
+                                "Guest",
+                            email: _firebaseAuth.currentUser!.email ?? "",
                           ),
                         ),
                       ],
@@ -81,9 +90,9 @@ class _BodyState extends State<Body> {
   }
 
   Widget buildHeader({
-    String name="",
-    String urlImage="",
-    String email="",
+    String name = "",
+    String urlImage = "",
+    String email = "",
     VoidCallback? onClicked,
   }) =>
       Container(

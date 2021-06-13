@@ -16,7 +16,7 @@ class Body extends StatefulWidget {
 
   Future signUp(BuildContext context, SignupRequest signupRequest) async {
     var response =
-    await fetch(Host.users, HttpMethod.POST, signupRequest, null);
+    await fetch(Host.users, HttpMethod.POST, data: signupRequest);
     if (response.statusCode.isOk()) {
       showAlert(context, "Signup Success", "",
               (con) => navigate(context, LoginScreen()));

@@ -6,12 +6,12 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_auth/constants.dart';
 
 Future<http.Response> fetch(String endpoint, HttpMethod method,
-    Encodable? data, Map<String, String>? params) async {
+{Encodable? data,Map<String, String>? params}) async {
   if (endpoint == null) throw new ArgumentError("Invalid Url");
   var uri = Uri.https("${Host.name}:${Host.port}", "$endpoint", params);
   String token = "";
   if(FirebaseAuth.instance!=null&&FirebaseAuth.instance.currentUser!=null)
-    token = await FirebaseAuth.instance.currentUser!.getIdToken();
+    token = "Bearer ${await FirebaseAuth.instance.currentUser!.getIdToken()}";
   var headers = {
     HttpHeaders.authorizationHeader: token,
     HttpHeaders.contentTypeHeader: "application/json",

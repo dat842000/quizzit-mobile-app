@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth.instance.currentUser!.getIdToken().then((value) => print(value));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Quizit',

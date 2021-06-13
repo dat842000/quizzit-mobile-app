@@ -26,7 +26,7 @@ class Body extends StatefulWidget {
   }) : super(key: key);
 
   _login(BuildContext context, LoginRequest loginRequest) async {
-    var response = await fetch(Host.login, HttpMethod.POST, loginRequest, null);
+    var response = await fetch(Host.login, HttpMethod.POST,data: loginRequest);
     var Json = json.decode(response.body);
     if (response.statusCode.isOk()) {
       var tokenObject = LoginResponse.fromJson(Json);
