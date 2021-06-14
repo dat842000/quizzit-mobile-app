@@ -7,9 +7,9 @@ import 'package:flutter_auth/Screens/PostDetail/post_detail.dart';
 import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
 import 'package:flutter_auth/Screens/videocall/components/call.dart';
 import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/dtos/Group.dart';
 import 'package:flutter_auth/dtos/Post.dart';
 import 'package:flutter_auth/dtos/User.dart';
+import 'package:flutter_auth/models/group/Group.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -103,7 +103,7 @@ class Body extends StatelessWidget {
                         bottomRight: Radius.circular(30.0),
                       ),
                       child: CachedNetworkImage(
-                        imageUrl: group.imgUrl,
+                        imageUrl: group.image??"",
                         fit: BoxFit.cover,
                       ),
                     ),

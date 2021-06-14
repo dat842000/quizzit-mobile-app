@@ -10,14 +10,15 @@ Page<T> _$PageFromJson<T extends Decodable>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
 ) {
-  return Page<T>()
-    ..totalElements = json['totalElements'] as int
-    ..totalPages = json['totalPages'] as int
-    ..isFirst = json['isFirst'] as bool
-    ..isLast = json['isLast'] as bool
-    ..hasNext = json['hasNext'] as bool
-    ..hasPrevious = json['hasPrevious'] as bool
-    ..content = (json['content'] as List<dynamic>).map(fromJsonT).toList();
+  return Page<T>(
+    json['totalElements'] as int,
+    json['totalPages'] as int,
+    json['isFirst'] as bool,
+    json['isLast'] as bool,
+    json['hasNext'] as bool,
+    json['hasPrevious'] as bool,
+    (json['content'] as List<dynamic>).map(fromJsonT).toList(),
+  );
 }
 
 Map<String, dynamic> _$PageToJson<T extends Decodable>(

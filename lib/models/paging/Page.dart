@@ -14,13 +14,9 @@ class Page<T extends Decodable> implements Decodable{
   bool hasPrevious=false;
   List<T> content=<T>[];
 
-  // Page.fromJson(Map<String,dynamic> json){
-  //   _totalElements=json['totalElements'];
-  //   _totalPages=json['totalPages'];
-  //   _isFirst=json['isFirst'];
-  //   _isLast=json['isLast'];
-  //   _hasNext=json['hasNext'];
-  //   _hasPrevious=json['hasPrevious'];
-  //   var content = json['content'];
-  // }
+
+  Page(this.totalElements, this.totalPages, this.isFirst, this.isLast,
+      this.hasNext, this.hasPrevious, this.content);
+
+  factory Page.fromJson(Map<String,dynamic>json,Function fromJsonModel)=>_$PageFromJson(json, (json) => fromJsonModel(json));
 }

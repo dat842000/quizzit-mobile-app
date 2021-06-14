@@ -1,20 +1,38 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
 import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
-import 'package:flutter_auth/components/navigation_drawer_widget.ws.dart';
 import 'package:flutter_auth/constants.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_auth/dtos/Group.dart';
+import 'package:flutter_auth/models/group/Group.dart' as Model;
+import 'package:flutter_auth/models/paging/Page.dart' as Model;
+import 'package:flutter_auth/utils/ApiUtils.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
+Future<Model.Page<Model.Group>> fetchGroupPage() async {
+  var response = await fetch(Host.groups, HttpMethod.GET);
+  var jsonRes = json.decode(response.body);
+  if (response.statusCode.isOk())
+    return Model.Page<Model.Group>.fromJson(
+        jsonRes, Model.Group.fromJsonModel);
+  else
+    throw new Exception(response.body);
+}
+
 class Body extends StatefulWidget {
+
   @override
   _BodyState createState() => _BodyState();
+
+  Body({Key? key}) :super(key: key);
 }
 
 class _BodyState extends State<Body> {
+  late Future<Model.Page<Model.Group>> groupPageFuture;
   List<Group> itemsData = [
     Group(
         "Math Group",
@@ -48,9 +66,24 @@ class _BodyState extends State<Body> {
         14),
   ];
 
+
+  @override
+  void initState() {
+    groupPageFuture = fetchGroupPage();
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(Body oldWidget) {
+    groupPageFuture = fetchGroupPage();
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
+    // return
     return Scaffold(
       backgroundColor: Color(0xffe4e6eb),
       appBar: AppBar(
@@ -107,14 +140,24 @@ class _BodyState extends State<Body> {
       // drawer: NavigationDrawer(),
       body: Column(
         children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: itemsData.length,
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (context, index) => GroupsTitle(
-                group: itemsData[index],
-              ),
-            ),
+          FutureBuilder<Model.Page<Model.Group>>(
+            future: groupPageFuture,
+            builder: (context, snapshot){
+              if(snapshot.hasData)
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: snapshot.data!.content.length,
+                    physics: BouncingScrollPhysics(),
+                    itemBuilder: (context, index) =>
+                        GroupsTitle(
+                          group: snapshot.data!.content[index],
+                        ),
+                  ),
+                );
+              else if(snapshot.hasError)
+                return Text("${snapshot.error}");
+              return CircularProgressIndicator();
+            }
           ),
         ],
       ),
@@ -135,8 +178,10 @@ class _BodyState extends State<Body> {
               ),
             );
           },
-        ),
-      ),
+        )
+        ,
+      )
+      ,
     );
   }
 
@@ -154,7 +199,9 @@ class Tag extends StatelessWidget {
       padding: EdgeInsets.all(5.0),
       width: 60.0,
       decoration: BoxDecoration(
-        color: Theme.of(context).accentColor,
+        color: Theme
+            .of(context)
+            .accentColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
       alignment: Alignment.center,
@@ -170,7 +217,9 @@ class ContinueTag extends StatelessWidget {
       padding: EdgeInsets.all(5.0),
       width: 30.0,
       decoration: BoxDecoration(
-        color: Theme.of(context).accentColor,
+        color: Theme
+            .of(context)
+            .accentColor,
         borderRadius: BorderRadius.circular(20.0),
       ),
       alignment: Alignment.center,
@@ -183,7 +232,7 @@ class ContinueTag extends StatelessWidget {
 }
 
 class GroupsTitle extends StatelessWidget {
-  Group group;
+  Model.Group group;
 
   GroupsTitle({required this.group});
 
@@ -201,7 +250,10 @@ class GroupsTitle extends StatelessWidget {
             },
             child: Container(
               margin: EdgeInsets.only(bottom: 20),
-              width: MediaQuery.of(context).size.width - 50,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width - 50,
               height: 240,
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(20)),
@@ -211,15 +263,22 @@ class GroupsTitle extends StatelessWidget {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20.0),
                         topRight: Radius.circular(20.0)),
-                    child: CachedNetworkImage(
-                      imageUrl: group.imgUrl,
+                    child:
+                    CachedNetworkImage(
+                      imageUrl: group.image??"",
                       height: 135,
-                      width: MediaQuery.of(context).size.width - 50,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width - 50,
                       fit: BoxFit.cover,
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width - 50,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width - 50,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -250,9 +309,10 @@ class GroupsTitle extends StatelessWidget {
                               // ignore: sdk_version_ui_as_code
                               ...List.generate(
                                   group.subjects.length,
-                                  (index) => Row(
+                                      (index) =>
+                                      Row(
                                         children: [
-                                          Tag(text: group.subjects[index]),
+                                          Tag(text: group.subjects[index].name),
                                           const SizedBox(
                                             width: 5,
                                           )
@@ -290,7 +350,7 @@ class GroupsTitle extends StatelessWidget {
                                 padding: const EdgeInsets.only(right: 14.0),
                                 child: Text(
                                   DateFormat('EEE d MMM yyyy')
-                                      .format(group.createdDate),
+                                      .format(group.createAt),
                                   style: TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.w500,
@@ -307,7 +367,7 @@ class GroupsTitle extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(right: 14.0),
                                 child: Text(
-                                  group.numberMember.toString(),
+                                  group.totalMem.toString(),
                                   style: TextStyle(
                                     fontSize: 17,
                                     color: Colors.blue,
