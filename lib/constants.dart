@@ -10,6 +10,9 @@ class Constants{
   static const choices = <String>[
     own,join,suggest
   ];
+  static const adminManageUser = <String>[
+    'Ranking','Users'
+  ];
 }
 enum HttpMethod { GET, POST, PUT, DELETE }
 const GROUPS=[

@@ -1,18 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/dtos/Group.dart';
 import 'package:flutter_auth/dtos/User.dart';
+
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:meta/meta.dart';
 
-
+import '../../../global/UserLib.dart' as globals;
 
 class Body extends StatefulWidget {
+  const Body({
+    Key? key,
+    required this.group,
+  }) : super(key: key);
+
+  final Group group;
+
   @override
-  _BodyState createState() => _BodyState();
+  _BodyState createState() => _BodyState(group : group);
 }
 
 class _BodyState extends State<Body> {
+  bool isAdmin = false;
+  Group group;
+  _BodyState({required this.group}){
+    if (globals.userId == group.userCreate) isAdmin = true;
+  }
+
   List<User> users = [
     User(
         "Ojisan",
@@ -43,6 +60,8 @@ class _BodyState extends State<Body> {
         "https://scontent-sin6-2.xx.fbcdn.net/v/t1.6435-9/87029316_1110067389336629_8333488988178350080_n.jpg?_nc_cat=102&ccb=1-3&_nc_sid=174925&_nc_ohc=lFZvBWwCh8UAX_N05NZ&_nc_ht=scontent-sin6-2.xx&oh=956c79c35bf60c3f089ea07ee6d4bdbb&oe=60CA1861",
         "Vinh@gmail.com"),
   ];
+  String title = "RANK";
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,38 +82,86 @@ class _BodyState extends State<Body> {
         ),
         centerTitle: true,
         title: Text(
-          "RANK",
+          isAdmin ? "GROUP USERS" : title,
           style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
         ),
+        actions: widget.group.userCreate == globals.userId
+            ? <Widget>[
+                PopupMenuButton<String>(
+                  icon: Icon(
+                    FontAwesomeIcons.bars,
+                    color: kPrimaryColor,
+                    size: 20,
+                  ),
+                  onSelected: choiceAction,
+                  itemBuilder: (BuildContext context) {
+                    return Constants.adminManageUser.map((String choice) {
+                      return PopupMenuItem<String>(
+                        value: choice,
+                        child: Text(choice),
+                      );
+                    }).toList();
+                  },
+                )
+              ]
+            : null,
       ),
-      body: ListUser(users),
+      body: ListUser(users, isAdmin, setState: () {
+        setState(() {});
+      }),
     );
+  }
+  void choiceAction(String choice) {
+    if(choice == "Ranking"){
+      title = "RANK";
+      isAdmin = false;
+    }else{
+      title = "GROUP USERS";
+      isAdmin = true;
+    }
+    setState(() {
+    });
   }
 }
 
 class ListUser extends StatelessWidget {
   List<User> listUser;
-
-  ListUser(this.listUser);
+  bool isAdmin;
+  Function() setState;
+  ListUser(this.listUser, this.isAdmin, {required this.setState});
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    List<User> temp = listUser.sublist(3, listUser.length);
+    List<User> temp = [...listUser];
+    temp.sublist(3, listUser.length);
     return SingleChildScrollView(
-      child: Column(
+      child: !isAdmin ? Column(
         children: [
-          UserCard(listUser[0], Colors.red[400], 1),
-          UserCard(listUser[1], Colors.yellow[400], 2),
-          UserCard(listUser[2], Colors.blue, 3),
-
+          UserCard(temp[0], Colors.red[400], 1, isAdmin, listUser, setState: setState),
+          UserCard(temp[1], Colors.yellow[400], 2, isAdmin, listUser, setState: setState),
+          UserCard(temp[2], Colors.blue, 3, isAdmin, listUser, setState: setState),
           ...List.generate(
-              temp.length,
+              temp.length - 3,
               (index) => Column(
-                    children: [UserCard(temp[index], Colors.grey[400], index+4)],
+                    children: [
+                      UserCard(
+                          temp[index + 3], Colors.grey[400], index + 4, isAdmin, listUser,  setState: setState)
+                    ],
                   )),
         ],
-      ),
+      ): Column(
+          children: [
+          ...List.generate(
+              listUser.length,
+            (index) => Column(
+                children: [
+                  UserCard(
+                      temp[index], Colors.grey[400], index, isAdmin, listUser, setState: setState)
+                ],
+              )),
+          ]
+      )
     );
   }
 }
@@ -103,52 +170,81 @@ class UserCard extends StatelessWidget {
   User user;
   Color? color;
   int index;
+  bool isAdmin;
+  Function() setState;
+  List<User> listUser;
 
-  UserCard(this.user, this.color, this.index);
+  UserCard(this.user, this.color, this.index, this.isAdmin, this.listUser, {required this.setState});
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
-      child: Slidable(
-        actionPane: SlidableDrawerActionPane(),
-        secondaryActions: <Widget>[
-          IconSlideAction(
-            caption: 'Approve',
-            color: Colors.lightBlue,
-            icon: Icons.check,
-            onTap: (){},
-          ),
-          IconSlideAction(
-            caption: 'Delete',
-            color: Colors.redAccent,
-            icon: Icons.delete,
-            onTap: (){},
-          )
-        ],
-        child: Container(
-            height: 100,
-            decoration: new BoxDecoration(
-                // borderRadius: BorderRadius.circular(10.0),
-                color: color),
-            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              ListTile(
-                leading: CircleAvatar(
-                    radius: 40, backgroundImage: NetworkImage(user.urlImg)),
-                title: Text(user.name,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold)),
-                subtitle: Text('#${index}',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold)),
-              ),
-            ])),
-      ),
+      child: isAdmin
+          ? Slidable(
+              actionPane: SlidableDrawerActionPane(),
+              secondaryActions: <Widget>[
+                IconSlideAction(
+                  caption: 'Approve',
+                  color: Colors.lightBlue,
+                  icon: Icons.check,
+                  onTap: () {},
+                ),
+                IconSlideAction(
+                  caption: 'Kick',
+                  color: Colors.redAccent,
+                  icon: Icons.delete,
+                  onTap: () {
+                    listUser.removeAt(index);
+                    setState();
+                  },
+                )
+              ],
+              child: Container(
+                  height: 100,
+                  decoration: new BoxDecoration(
+                      // borderRadius: BorderRadius.circular(10.0),
+                      color: color),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ListTile(
+                          leading: CircleAvatar(
+                              radius: 40,
+                              backgroundImage: NetworkImage(user.urlImg)),
+                          title: Text(user.name,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                      ])),
+            )
+          : Container(
+              height: 100,
+              decoration: new BoxDecoration(
+                  // borderRadius: BorderRadius.circular(10.0),
+                  color: color),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ListTile(
+                      leading: CircleAvatar(
+                          radius: 40,
+                          backgroundImage: NetworkImage(user.urlImg)),
+                      title: Text(user.name,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold)),
+                      subtitle: Text('#${index}',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                  ])),
     );
   }
 }

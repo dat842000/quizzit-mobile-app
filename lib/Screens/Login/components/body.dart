@@ -20,6 +20,8 @@ import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../global/UserLib.dart' as globals;
+
 class Body extends StatefulWidget {
   const Body({
     Key? key,
@@ -34,6 +36,7 @@ class Body extends StatefulWidget {
       if (firebase.currentUser != null) await firebase.signOut();
       var fbResponse =
           await firebase.signInWithCustomToken(tokenObject.customToken);
+      globals.userId = 1;
       navigate(context, DashboardScreen());
     } else {
       var problem = ProblemDetails.fromJson(Json);

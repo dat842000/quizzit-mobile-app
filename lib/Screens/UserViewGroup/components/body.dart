@@ -13,6 +13,8 @@ import 'package:flutter_auth/models/group/Group.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../global/UserLib.dart' as globals;
+
 class Body extends StatelessWidget {
   DateTime date = DateTime.now();
   List<Post> posts = [
@@ -151,7 +153,7 @@ class Body extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ListUser(),
+                            builder: (context) => ListUser(group: group),
                           ));
                         },
                         child: Padding(
@@ -172,6 +174,7 @@ class Body extends StatelessWidget {
                           ),
                         ),
                       ),
+                      globals.userId == group.userCreate ?
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: InkWell(
@@ -183,6 +186,29 @@ class Body extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(25.0)),
+                            child: Container(
+                              color: kPrimaryColor,
+                              height: 60,
+                              width: 60,
+                              child: Icon(
+                                FontAwesomeIcons.question,
+                                size: 26,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ) :
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => QuizScreen(),
+                            ));
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(25.0)),
                             child: Container(
                               color: kPrimaryColor,
                               height: 60,
