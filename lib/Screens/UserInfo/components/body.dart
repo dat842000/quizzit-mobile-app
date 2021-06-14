@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/UserInfo/components/build_settings.dart';
 import 'package:flutter_auth/Screens/UserInfo/components/build_title.dart';
+import 'package:flutter_auth/models/user/UserInfo.dart' as Model;
 import 'package:flutter_auth/utils/ApiUtils.dart';
 
 import '../../../constants.dart';
@@ -10,10 +13,11 @@ class Body extends StatefulWidget {
   @override
   _BodyState createState() => _BodyState();
 
-  Future _getUserInfo() async {
-    var user = await fetch(
+  Future<Model.UserInfo?> _getUserInfo() async{
+    var response = await fetch(
         "${Host.users}/${FirebaseAuth.instance.currentUser!.uid}",
         HttpMethod.GET);
+    return response.statusCode.isOk() ? Model.UserInfo.fromJson(json.decode(response.body)):null;
   }
 }
 
@@ -33,7 +37,10 @@ class _BodyState extends State<Body> {
               children: <Widget>[
                 Container(
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.width * 50 / 100,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .width * 50 / 100,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(30.0),
@@ -66,7 +73,7 @@ class _BodyState extends State<Body> {
                 ),
                 Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
+                  EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[

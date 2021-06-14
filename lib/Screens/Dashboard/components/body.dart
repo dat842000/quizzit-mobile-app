@@ -68,7 +68,7 @@ class Body extends StatefulWidget {
   Body({Key? key}) :super(key: key);
 
   @override
-  _BodyState createState() => _BodyState();
+  _BodyState createState() => _BodyState(newList: itemsData);
 }
 
 class _BodyState extends State<Body> {
@@ -82,13 +82,17 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    groupPageFuture = fetchGroupPage();
     super.initState();
+    setState(() {
+      groupPageFuture = fetchGroupPage();
+    });
   }
 
   @override
   void didUpdateWidget(Body oldWidget) {
-    groupPageFuture = fetchGroupPage();
+    setState(() {
+      groupPageFuture = fetchGroupPage();
+    });
   }
 
   @override
@@ -107,6 +111,7 @@ class _BodyState extends State<Body> {
             Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => UserInfoScreen(),
             ));
+            // groupPageFuture=fetchGroupPage();
           },
         ),
         actions: <Widget>[
@@ -153,6 +158,8 @@ class _BodyState extends State<Body> {
           FutureBuilder<Model.Page<Model.Group>>(
             future: groupPageFuture,
             builder: (context, snapshot){
+              if(snapshot.hasError)
+                return Text("${snapshot.error}");
               if(snapshot.hasData)
                 return Expanded(
                   child: ListView.builder(
@@ -164,8 +171,6 @@ class _BodyState extends State<Body> {
                         ),
                   ),
                 );
-              else if(snapshot.hasError)
-                return Text("${snapshot.error}");
               return CircularProgressIndicator();
             }
           ),

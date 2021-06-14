@@ -1,4 +1,5 @@
 import 'package:flutter_auth/models/Codable.dart';
+import 'package:flutter_auth/models/user/UserInfo.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:flutter_auth/models/subject/Subject.dart';
 part 'Group.g.dart';
@@ -12,9 +13,10 @@ class Group implements Decodable{
   DateTime createAt;
   int totalMem;
   List<Subject> subjects;
+  UserInfo owner;
 
   Group(this.id, this.name, this.image, this.quizSize, this.isActive,
-      this.createAt, this.totalMem, this.subjects);
+      this.createAt, this.totalMem, this.subjects, this.owner);
 
   factory Group.fromJson(Map<String,dynamic>json)=>_$GroupFromJson(json);
   static Group fromJsonModel(Map<String, dynamic> json) => Group.fromJson(json);

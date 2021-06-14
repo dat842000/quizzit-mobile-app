@@ -1,13 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/dtos/Group.dart';
 import 'package:flutter_auth/dtos/User.dart';
-
-// ignore: import_of_legacy_library_into_null_safe
+import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:meta/meta.dart';
 
 import '../../../global/UserLib.dart' as globals;
 
@@ -27,7 +24,7 @@ class _BodyState extends State<Body> {
   bool isAdmin = false;
   Group group;
   _BodyState({required this.group}){
-    if (globals.userId == group.userCreate) isAdmin = true;
+    if (globals.userId == group.owner.id) isAdmin = true;
   }
 
   List<User> users = [
@@ -85,7 +82,8 @@ class _BodyState extends State<Body> {
           isAdmin ? "GROUP USERS" : title,
           style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
         ),
-        actions: widget.group.userCreate == globals.userId
+        actions: group.owner.id==globals.userId
+        // widget.group.userCreate == globals.userId
             ? <Widget>[
                 PopupMenuButton<String>(
                   icon: Icon(

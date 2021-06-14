@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
-void showAlert(BuildContext context,String title,String content,[Function(BuildContext)? onPressed=null]){
+void showAlert(BuildContext context,String title,String content,[Function(BuildContext)? onPressed]){
   showDialog<String>(
     context: context,
     builder: (BuildContext context) => AlertDialog(

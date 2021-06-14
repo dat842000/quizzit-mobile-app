@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/PostDetail/components/body.dart';
-import 'package:flutter_auth/dtos/Post.dart';
+import 'package:flutter_auth/models/post/Post.dart';
 
 class PostDetailScreen extends StatelessWidget {
   final Post post;

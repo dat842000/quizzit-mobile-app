@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/dtos/Post.dart';
+import 'package:flutter_auth/models/post/Post.dart';
 
 
 class Body extends StatelessWidget {
@@ -29,13 +29,13 @@ class Body extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              post.urlImg.isEmpty
+              post.image.isEmpty
                   ? Padding(
                 padding:
                 const EdgeInsets.only(top: 8.0, bottom: 8.0),
               )
                   : CachedNetworkImage(
-                imageUrl: post.urlImg,
+                imageUrl: post.image,
                 height: 225,
                 width:
                 MediaQuery.of(context).size.width ,

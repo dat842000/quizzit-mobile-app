@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,6 +21,7 @@ class MyHttpOverrides extends HttpOverrides {
       });
   }
 }
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
@@ -31,7 +33,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    if(FirebaseAuth.instance.currentUser != null) FirebaseAuth.instance.currentUser!.getIdToken().then((value) => print(value));
+    print(FirebaseAuth.instance.currentUser);
+    if (FirebaseAuth.instance.currentUser != null) {
+      FirebaseAuth.instance.currentUser!.reload().then((value) =>
+          FirebaseAuth.instance.currentUser!.getIdToken().then((value) =>
+              log(value)));
+    }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Quizit',
@@ -39,7 +46,9 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: FirebaseAuth.instance.currentUser==null?WelcomeScreen():DashboardScreen(),
+      home: FirebaseAuth.instance.currentUser == null
+          ? WelcomeScreen()
+          : DashboardScreen(),
     );
   }
 }
