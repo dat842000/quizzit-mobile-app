@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/components/subject_page.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/dtos/Subject.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart';
 
@@ -35,7 +36,7 @@ class _BodyState extends State<Body> {
   String subject="";
   File? selectedImage;
   bool _isLoading = false;
-  List<String> subjects = [];
+  List<Subject> subjects = [];
 
   Future getImage() async {
     var picker = new ImagePicker();
@@ -175,7 +176,8 @@ class _BodyState extends State<Body> {
   }
 
   Widget buildChoosingSubjects() {
-    final subjectsText = subjects.map((subject) => subject).join(', ');
+    final subjectsText = subjects.map((subject) => subject.name).join(', ');
+    final ids = subjects.map((subject) => subject.id);
     final onTap = () async {
       final subjects = await Navigator.push(
         context,
