@@ -23,21 +23,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/5.6.2/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/5.6.2/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/5.6.2/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/5.6.2/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/5.6.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/5.6.2/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/5.6.2/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/5.6.2/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/5.6.2/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/5.6.2/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/5.6.2/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/5.6.2/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/5.6.2/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/5.6.2/javaCompile/jarAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/5.6.2/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/5.6.2/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/5.6.2/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/5.6.2/javaCompile/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Flutter/Generated.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/Generated.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,21 +63,21 @@
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Laptrinh\AdroidStudioProject\Welcome-Login-Signup-Page-Flutter-master\lib\Screens\Login\components" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\haseo\Documents\quizzit-mobile-app\lib" />
       <recent name="C:\Users\haseo\Documents\quizzit-mobile-app\android\app" />
       <recent name="D:\Laptrinh\AdroidStudioProject\Welcome-Login-Signup-Page-Flutter-master\assets\images" />
       <recent name="D:\Laptrinh\AdroidStudioProject\Welcome-Login-Signup-Page-Flutter-master\lib\components" />
+      <recent name="D:\Laptrinh\AdroidStudioProject\Welcome-Login-Signup-Page-Flutter-master\lib\Screens\Login\components" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Laptrinh\AdroidStudioProject\Welcome-Login-Signup-Page-Flutter-master\lib\Screens\Login\components" />
     </key>
   </component>
@@ -169,65 +158,96 @@
     <option name="LAST_COMMIT_MESSAGE" value="login/register" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="163" y="0" key="#Project_Structure" timestamp="1623270739807">
+    <state x="163" y="0" key="#Project_Structure" timestamp="1623613645353">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="163" y="0" key="#Project_Structure/0.0.1366.728@0.0.1366.728" timestamp="1623270739807" />
+    <state x="163" y="0" key="#Project_Structure/0.0.1366.728@0.0.1366.728" timestamp="1623613645353" />
     <state x="1243" y="313" key="#Web_Browsers" timestamp="1622147769481">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1243" y="313" key="#Web_Browsers/0.0.1920.1040@0.0.1920.1040" timestamp="1622147769481" />
-    <state x="488" y="80" key="#com.intellij.ide.util.MemberChooser" timestamp="1623272153760">
+    <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1623742203714">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="488" y="80" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1623272153760" />
+    <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1623742203714" />
+    <state x="488" y="80" key="#com.intellij.ide.util.MemberChooser" timestamp="1623672053953">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="488" y="80" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1623672053953" />
     <state x="1169" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1621848953715">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1169" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1621848953715" />
-    <state x="595" y="-13" width="774" height="840" key="AVDManager" timestamp="1622197826110">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="423" y="-9" width="551" height="588" key="AVDManager" timestamp="1623650815039">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="423" y="-9" width="551" height="588" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1623650815039" />
     <state x="595" y="-13" width="774" height="840" key="AVDManager/0.0.1920.1040@0.0.1920.1040" timestamp="1622197826110" />
     <state x="435" y="104" key="CommitChangelistDialog2" timestamp="1622303160779">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="435" y="104" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1622303160779" />
+    <state x="359" y="118" key="DBNavigator.ConnectionFilterSettingsDialog" timestamp="1623657596390">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="359" y="118" key="DBNavigator.ConnectionFilterSettingsDialog/0.0.1366.728@0.0.1366.728" timestamp="1623657596390" />
+    <state x="263" y="79" key="DBNavigator.DatasetFilterDialog" timestamp="1623697150731">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="263" y="79" key="DBNavigator.DatasetFilterDialog/0.0.1366.728@0.0.1366.728" timestamp="1623697150731" />
+    <state x="473" y="295" key="DBNavigator.ObjectNameFilterConditionDialog" timestamp="1623657593734">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="473" y="295" key="DBNavigator.ObjectNameFilterConditionDialog/0.0.1366.728@0.0.1366.728" timestamp="1623657593734" />
+    <state x="213" y="19" key="DBNavigator.ProjectSettingsDialog" timestamp="1623657482772">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="213" y="19" key="DBNavigator.ProjectSettingsDialog/0.0.1366.728@0.0.1366.728" timestamp="1623657482772" />
     <state x="1029" y="100" width="774" height="840" key="DiffContextDialog" timestamp="1622061131821">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1029" y="100" width="774" height="840" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1622061131821" />
-    <state x="1219" y="275" key="FileChooserDialogImpl" timestamp="1622054592182">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="867" y="193" key="FileChooserDialogImpl" timestamp="1623657335635">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="867" y="193" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1623657335635" />
     <state x="1219" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1622054592182" />
-    <state width="1323" height="220" key="GridCell.Tab.0.bottom" timestamp="1623316584072">
+    <state width="1323" height="190" key="GridCell.Tab.0.bottom" timestamp="1623743923035">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="220" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1623316584072" />
+    <state width="1323" height="190" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1623743923035" />
     <state width="914" height="146" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1622299870341" />
-    <state width="1323" height="220" key="GridCell.Tab.0.center" timestamp="1623316584072">
+    <state width="1323" height="190" key="GridCell.Tab.0.center" timestamp="1623743923034">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="220" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1623316584072" />
+    <state width="1323" height="190" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1623743923034" />
     <state width="914" height="146" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1622299870341" />
-    <state width="1323" height="220" key="GridCell.Tab.0.left" timestamp="1623316584072">
+    <state width="1323" height="190" key="GridCell.Tab.0.left" timestamp="1623743923034">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="220" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1623316584072" />
+    <state width="1323" height="190" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1623743923034" />
     <state width="914" height="146" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1622299870341" />
-    <state width="1323" height="220" key="GridCell.Tab.0.right" timestamp="1623316584072">
+    <state width="1323" height="190" key="GridCell.Tab.0.right" timestamp="1623743923035">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="220" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1623316584072" />
+    <state width="1323" height="190" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1623743923035" />
     <state width="914" height="146" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1622299870341" />
+    <state x="70" y="58" width="1233" height="618" key="MergeDialog" timestamp="1623660637100">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="70" y="58" width="1233" height="618" key="MergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1623660637100" />
+    <state x="321" y="125" key="MultipleFileMergeDialog" timestamp="1623660637108">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="321" y="125" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1623660637108" />
     <state x="542" y="222" key="RollbackChangesDialog" timestamp="1622060893621">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="542" y="222" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1622060893621" />
-    <state x="461" y="165" key="SettingsEditor" timestamp="1622042589976">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="328" y="18" key="SettingsEditor" timestamp="1623656478549">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="328" y="18" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1623656478549" />
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1622042589976" />
     <state x="807" y="433" key="VCS.ChangelistChooser" timestamp="1622303112003">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -249,10 +269,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1096" y="244" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622144869711" />
-    <state x="694" y="160" width="672" height="475" key="search.everywhere.popup" timestamp="1623273853684">
+    <state x="694" y="160" width="672" height="475" key="search.everywhere.popup" timestamp="1623661013721">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="694" y="160" width="672" height="475" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1623273853684" />
+    <state x="694" y="160" width="672" height="475" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1623661013721" />
     <state x="1102" y="229" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622043709588" />
   </component>
 </project>
