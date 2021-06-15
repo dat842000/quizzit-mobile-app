@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/dtos/Subject.dart';
 
 class SubjectListTitleWidget extends StatelessWidget {
-  final String subject;
+  final Subject subject;
   final bool isSelected;
-  final ValueChanged<String> onSelectedSubject;
+  final ValueChanged<Subject> onSelectedSubject;
 
   const SubjectListTitleWidget({
     Key? key,
@@ -25,7 +26,7 @@ class SubjectListTitleWidget extends StatelessWidget {
     return ListTile(
       onTap: () => onSelectedSubject(subject),
       title: Text(
-        subject,
+        subject.name,
         style: style,
       ),
       trailing:

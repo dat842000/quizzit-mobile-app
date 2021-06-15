@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/Dashboard/components/body.dart';
+import 'package:flutter_auth/Screens/CreatePost/components/body.dart';
 
-class DashboardScreen extends StatelessWidget {
+class CreatePostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -20,13 +20,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ba80433-d235-4acd-b7ad-47c56be46df3" name="Default Changelist" comment="login/register">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/CreatePost/components/body.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/CreatePost/create_post.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/dtos/Subject.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Flutter/Generated.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/Generated.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/body.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/subject_listtitle_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/subject_listtitle_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/subject_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/subject_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/Dashboard/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Dashboard/components/body.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/Dashboard/dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Dashboard/dashboard_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/ListUser/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/ListUser/components/body.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/dtos/Group.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dtos/Group.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/dtos/User.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dtos/User.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,10 +166,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="login/register" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="163" y="0" key="#Project_Structure" timestamp="1623613645353">
+    <state x="163" y="0" key="#Project_Structure" timestamp="1623770771473">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="163" y="0" key="#Project_Structure/0.0.1366.728@0.0.1366.728" timestamp="1623613645353" />
+    <state x="163" y="0" key="#Project_Structure/0.0.1366.728@0.0.1366.728" timestamp="1623770771473" />
     <state x="1243" y="313" key="#Web_Browsers" timestamp="1622147769481">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -212,34 +220,34 @@
     </state>
     <state x="867" y="193" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1623657335635" />
     <state x="1219" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1622054592182" />
-    <state width="1323" height="190" key="GridCell.Tab.0.bottom" timestamp="1623743923035">
+    <state width="1323" height="190" key="GridCell.Tab.0.bottom" timestamp="1623772759697">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="190" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1623743923035" />
+    <state width="1323" height="190" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1623772759697" />
     <state width="914" height="146" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1622299870341" />
-    <state width="1323" height="190" key="GridCell.Tab.0.center" timestamp="1623743923034">
+    <state width="1323" height="190" key="GridCell.Tab.0.center" timestamp="1623772759696">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="190" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1623743923034" />
+    <state width="1323" height="190" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1623772759696" />
     <state width="914" height="146" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1622299870341" />
-    <state width="1323" height="190" key="GridCell.Tab.0.left" timestamp="1623743923034">
+    <state width="1323" height="190" key="GridCell.Tab.0.left" timestamp="1623772759696">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="190" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1623743923034" />
+    <state width="1323" height="190" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1623772759696" />
     <state width="914" height="146" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1622299870341" />
-    <state width="1323" height="190" key="GridCell.Tab.0.right" timestamp="1623743923035">
+    <state width="1323" height="190" key="GridCell.Tab.0.right" timestamp="1623772759696">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="190" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1623743923035" />
+    <state width="1323" height="190" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1623772759696" />
     <state width="914" height="146" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1622299870341" />
-    <state x="70" y="58" width="1233" height="618" key="MergeDialog" timestamp="1623660637100">
+    <state x="70" y="58" width="1233" height="618" key="MergeDialog" timestamp="1623770759108">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="70" y="58" width="1233" height="618" key="MergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1623660637100" />
-    <state x="321" y="125" key="MultipleFileMergeDialog" timestamp="1623660637108">
+    <state x="70" y="58" width="1233" height="618" key="MergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1623770759108" />
+    <state x="321" y="125" key="MultipleFileMergeDialog" timestamp="1623770759124">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="321" y="125" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1623660637108" />
+    <state x="321" y="125" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1623770759124" />
     <state x="542" y="222" key="RollbackChangesDialog" timestamp="1622060893621">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

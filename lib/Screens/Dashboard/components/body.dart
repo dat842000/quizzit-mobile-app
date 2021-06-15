@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
 import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
 import 'package:flutter_auth/components/navigation_drawer_widget.ws.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/models/user/UserInfo.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_auth/dtos/Group.dart';
 import 'package:flutter_auth/models/group/Group.dart' as Model;
@@ -14,6 +16,7 @@ import 'package:flutter_auth/models/paging/Page.dart' as Model;
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+
 import '../../../global/UserLib.dart' as globals;
 
 Future<Model.Page<Model.Group>> fetchGroupPage() async {
@@ -34,6 +37,7 @@ class Body extends StatefulWidget {
         DateTime.now(),
         ["Ly", "Hoa"],
         12,
+        0,
         0),
     Group(
         "Physics Group",
@@ -41,6 +45,7 @@ class Body extends StatefulWidget {
         DateTime.now(),
         ["Ly", "Hoa"],
         10,
+        1,
         1),
     Group(
         "PRJ303_Survice",
@@ -48,6 +53,7 @@ class Body extends StatefulWidget {
         DateTime.now(),
         ["Ly", "Hoa"],
         16,
+        1,
         1),
     Group(
         "Math Group",
@@ -55,6 +61,7 @@ class Body extends StatefulWidget {
         DateTime.now(),
         ["Ly", "Hoa"],
         20,
+        1,
         1),
     Group(
         "Math Group",
@@ -62,7 +69,8 @@ class Body extends StatefulWidget {
         DateTime.now(),
         ["Ly", "Hoa"],
         14,
-        1),
+        0,
+        2),
   ];
 
   Body({Key? key}) :super(key: key);
@@ -76,6 +84,7 @@ class _BodyState extends State<Body> {
     required this.newList,
   });
   late Future<Model.Page<Model.Group>> groupPageFuture;
+
   List<Group> newList;
   List<Group> itemsData = [];
 
@@ -97,7 +106,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    itemsData = [...widget.itemsData];
     return Scaffold(
       backgroundColor: Color(0xffe4e6eb),
       appBar: AppBar(
@@ -111,7 +120,6 @@ class _BodyState extends State<Body> {
             Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => UserInfoScreen(),
             ));
-            // groupPageFuture=fetchGroupPage();
           },
         ),
         actions: <Widget>[
@@ -155,24 +163,34 @@ class _BodyState extends State<Body> {
       // drawer: NavigationDrawer(),
       body: Column(
         children: [
-          FutureBuilder<Model.Page<Model.Group>>(
-            future: groupPageFuture,
-            builder: (context, snapshot){
-              if(snapshot.hasError)
-                return Text("${snapshot.error}");
-              if(snapshot.hasData)
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.content.length,
-                    physics: BouncingScrollPhysics(),
-                    itemBuilder: (context, index) =>
-                        GroupsTitle(
-                          group: snapshot.data!.content[index],
-                        ),
-                  ),
-                );
-              return CircularProgressIndicator();
-            }
+          Expanded(
+            child: ListView.builder(
+              itemCount: newList.length,
+              physics: BouncingScrollPhysics(),
+              itemBuilder: (context, index) => GroupsTitle(
+                group: newList[index],
+                allGroup : newList,
+                setState: () => setState((){newList[index].isJoin = 2;}),
+              ),
+            ),
+      //     FutureBuilder<Model.Page<Model.Group>>(
+      //       future: groupPageFuture,
+      //       builder: (context, snapshot){
+      //         if(snapshot.hasError)
+      //           return Text("${snapshot.error}");
+      //         if(snapshot.hasData)
+      //           return Expanded(
+      //             child: ListView.builder(
+      //               itemCount: snapshot.data!.content.length,
+      //               physics: BouncingScrollPhysics(),
+      //               itemBuilder: (context, index) =>
+      //                   GroupsTitle(
+      //                     group: snapshot.data!.content[index],
+      //                   ),
+      //             ),
+      //           );
+      //         return CircularProgressIndicator();
+      //       }
           ),
         ],
       ),
@@ -257,160 +275,171 @@ class ContinueTag extends StatelessWidget {
 }
 
 class GroupsTitle extends StatelessWidget {
-  Model.Group group;
+  Group group;
+  Function() setState;
+  List<Group> allGroup;
+  // Model.Group group;
 
-  GroupsTitle({required this.group});
+  GroupsTitle({required this.group, required this.allGroup, required this.setState});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Wrap(
-        children: <Widget>[
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => UserViewScreen(group)));
-            },
-            child: Container(
-              margin: EdgeInsets.only(bottom: 20),
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width - 50,
-              height: 240,
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
-              child: Stack(
-                children: <Widget>[
-                  ClipRRect(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20.0),
-                        topRight: Radius.circular(20.0)),
-                    child:
-                    CachedNetworkImage(
-                      imageUrl: group.image??"",
-                      height: 135,
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width - 50,
-                      fit: BoxFit.cover,
+    return Padding(
+      padding: allGroup.last == group ?  const EdgeInsets.only(bottom: 45) : const EdgeInsets.only(),
+      child: Center(
+        child: Wrap(
+          children: <Widget>[
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => UserViewScreen(new Model.Group(0, "name", "image", 10, true, DateTime.now(), 1, [], new UserInfo(1, "username", "fullName", "avatar", "email", DateTime.now(), 0, 0)))));
+              },
+              child: Container(
+                margin: EdgeInsets.only(bottom: 20),
+                width: MediaQuery.of(context).size.width - 50,
+                height: 240,
+                decoration: BoxDecoration(
+                    color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                child: Stack(
+                  children: <Widget>[
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.0),
+                          topRight: Radius.circular(20.0)),
+                      child: CachedNetworkImage(
+                        imageUrl: group.imgUrl,
+                        height: 135,
+                        width: MediaQuery.of(context).size.width - 50,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width - 50,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 12,
-                            top: 10,
-                            bottom: 0,
-                          ),
-                          child: Text(
-                            group.name,
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w700,
+                    Container(
+                      width: MediaQuery.of(context).size.width - 50,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 12,
+                              top: 10,
+                              bottom: 0,
+                            ),
+                            child: Text(
+                              group.name,
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
-                        ),
 
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 12,
-                            top: 3,
-                            bottom: 7,
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 12,
+                              top: 3,
+                              bottom: 7,
+                            ),
+                            child: Row(
+                              children: <Widget>[
+                                // ignore: sdk_version_ui_as_code
+                                ...List.generate(
+                                    group.subjects.length,
+                                    (index) => Row(
+                                          children: [
+                                            Tag(text: group.subjects[index]),
+                                            const SizedBox(
+                                              width: 5,
+                                            )
+                                          ],
+                                        )),
+                                ContinueTag()
+                              ],
+                            ),
                           ),
-                          child: Row(
-                            children: <Widget>[
-                              // ignore: sdk_version_ui_as_code
-                              ...List.generate(
-                                  group.subjects.length,
-                                      (index) =>
-                                      Row(
-                                        children: [
-                                          Tag(text: group.subjects[index].name),
-                                          const SizedBox(
-                                            width: 5,
-                                          )
-                                        ],
-                                      )),
-                              ContinueTag()
-                            ],
+                          Divider(
+                            color: Color(0xfff3f4fb),
+                            height: 0,
+                            thickness: 2,
                           ),
-                        ),
-                        Divider(
-                          color: Color(0xfff3f4fb),
-                          height: 0,
-                          thickness: 2,
-                        ),
-                        // SizedBox(
-                        //   height: 2,
-                        // ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 12,
-                            top: 12,
-                            bottom: 12,
-                            right: 5,
-                          ),
-                          child: Wrap(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: Icon(
-                                  Icons.calendar_today_outlined,
-                                  size: 18,
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 12,
+                              top: 12,
+                              bottom: 12,
+                              right: 5,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Wrap(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 8.0),
+                                      child: Icon(
+                                        Icons.calendar_today_outlined,
+                                        size: 18,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 14.0),
+                                      child: Text(
+                                        DateFormat('EEE d MMM yyyy')
+                                            .format(group.createdDate),
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 4.0),
+                                      child: Icon(
+                                        Icons.account_circle_outlined,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 14.0),
+                                      child: Text(
+                                        group.numberMember.toString(),
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          color: Colors.blue,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 14.0),
-                                child: Text(
-                                  DateFormat('EEE d MMM yyyy')
-                                      .format(group.createAt),
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: group.isJoin == 0 ? InkWell(
+                                    child: Icon(FontAwesomeIcons.plusCircle, color: Colors.blue[500],),
+                                    onTap: (){
+                                      setState();
+                                    },
+                                  ) : group.isJoin == 2 ? InkWell(
+                                      child: Icon(FontAwesomeIcons.clock, color: Colors.blue[500],),
+                                      onTap: (){
+                                        setState();
+                                      },
+                                    ) : null,
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 4.0),
-                                child: Icon(
-                                  Icons.account_circle_outlined,
-                                  size: 20,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 14.0),
-                                child: Text(
-                                  group.totalMem.toString(),
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
