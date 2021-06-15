@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
 import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
@@ -18,6 +19,7 @@ class Body extends StatefulWidget {
         DateTime.now(),
         ["Ly", "Hoa"],
         12,
+        0,
         0),
     Group(
         "Physics Group",
@@ -25,6 +27,7 @@ class Body extends StatefulWidget {
         DateTime.now(),
         ["Ly", "Hoa"],
         10,
+        1,
         1),
     Group(
         "PRJ303_Survice",
@@ -32,6 +35,7 @@ class Body extends StatefulWidget {
         DateTime.now(),
         ["Ly", "Hoa"],
         16,
+        1,
         1),
     Group(
         "Math Group",
@@ -39,6 +43,7 @@ class Body extends StatefulWidget {
         DateTime.now(),
         ["Ly", "Hoa"],
         20,
+        1,
         1),
     Group(
         "Math Group",
@@ -46,7 +51,8 @@ class Body extends StatefulWidget {
         DateTime.now(),
         ["Ly", "Hoa"],
         14,
-        1),
+        0,
+        2),
   ];
 
   @override
@@ -57,8 +63,10 @@ class _BodyState extends State<Body> {
   _BodyState({
     required this.newList,
   });
+
   List<Group> newList;
   List<Group> itemsData = [];
+
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +133,8 @@ class _BodyState extends State<Body> {
               physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) => GroupsTitle(
                 group: newList[index],
+                allGroup : newList,
+                setState: () => setState((){newList[index].isJoin = 2;}),
               ),
             ),
           ),
@@ -155,7 +165,9 @@ class _BodyState extends State<Body> {
   void choiceAction(String choice) {
     List<Group> temp = [];
     if (choice == Constants.own) {
-      newList.forEach((element) {if(element.userCreate == globals.userId) temp.add(element); });
+      newList.forEach((element) {
+        if (element.userCreate == globals.userId) temp.add(element);
+      });
     } else if (choice == Constants.suggest) {
       temp = [...itemsData];
     } else if (choice == Constants.join) {
@@ -208,148 +220,169 @@ class ContinueTag extends StatelessWidget {
 
 class GroupsTitle extends StatelessWidget {
   Group group;
+  Function() setState;
+  List<Group> allGroup;
 
-  GroupsTitle({required this.group});
+  GroupsTitle({required this.group, required this.allGroup, required this.setState});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Wrap(
-        children: <Widget>[
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => UserViewScreen(group)));
-            },
-            child: Container(
-              margin: EdgeInsets.only(bottom: 20),
-              width: MediaQuery.of(context).size.width - 50,
-              height: 240,
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
-              child: Stack(
-                children: <Widget>[
-                  ClipRRect(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20.0),
-                        topRight: Radius.circular(20.0)),
-                    child: CachedNetworkImage(
-                      imageUrl: group.imgUrl,
-                      height: 135,
-                      width: MediaQuery.of(context).size.width - 50,
-                      fit: BoxFit.cover,
+    return Padding(
+      padding: allGroup.last == group ?  const EdgeInsets.only(bottom: 45) : const EdgeInsets.only(),
+      child: Center(
+        child: Wrap(
+          children: <Widget>[
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => UserViewScreen(group)));
+              },
+              child: Container(
+                margin: EdgeInsets.only(bottom: 20),
+                width: MediaQuery.of(context).size.width - 50,
+                height: 240,
+                decoration: BoxDecoration(
+                    color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                child: Stack(
+                  children: <Widget>[
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.0),
+                          topRight: Radius.circular(20.0)),
+                      child: CachedNetworkImage(
+                        imageUrl: group.imgUrl,
+                        height: 135,
+                        width: MediaQuery.of(context).size.width - 50,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width - 50,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 12,
-                            top: 10,
-                            bottom: 0,
-                          ),
-                          child: Text(
-                            group.name,
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w700,
+                    Container(
+                      width: MediaQuery.of(context).size.width - 50,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 12,
+                              top: 10,
+                              bottom: 0,
+                            ),
+                            child: Text(
+                              group.name,
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
-                        ),
 
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 12,
-                            top: 3,
-                            bottom: 7,
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 12,
+                              top: 3,
+                              bottom: 7,
+                            ),
+                            child: Row(
+                              children: <Widget>[
+                                // ignore: sdk_version_ui_as_code
+                                ...List.generate(
+                                    group.subjects.length,
+                                    (index) => Row(
+                                          children: [
+                                            Tag(text: group.subjects[index]),
+                                            const SizedBox(
+                                              width: 5,
+                                            )
+                                          ],
+                                        )),
+                                ContinueTag()
+                              ],
+                            ),
                           ),
-                          child: Row(
-                            children: <Widget>[
-                              // ignore: sdk_version_ui_as_code
-                              ...List.generate(
-                                  group.subjects.length,
-                                  (index) => Row(
-                                        children: [
-                                          Tag(text: group.subjects[index]),
-                                          const SizedBox(
-                                            width: 5,
-                                          )
-                                        ],
-                                      )),
-                              ContinueTag()
-                            ],
+                          Divider(
+                            color: Color(0xfff3f4fb),
+                            height: 0,
+                            thickness: 2,
                           ),
-                        ),
-                        Divider(
-                          color: Color(0xfff3f4fb),
-                          height: 0,
-                          thickness: 2,
-                        ),
-                        // SizedBox(
-                        //   height: 2,
-                        // ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 12,
-                            top: 12,
-                            bottom: 12,
-                            right: 5,
-                          ),
-                          child: Wrap(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: Icon(
-                                  Icons.calendar_today_outlined,
-                                  size: 18,
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 12,
+                              top: 12,
+                              bottom: 12,
+                              right: 5,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Wrap(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 8.0),
+                                      child: Icon(
+                                        Icons.calendar_today_outlined,
+                                        size: 18,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 14.0),
+                                      child: Text(
+                                        DateFormat('EEE d MMM yyyy')
+                                            .format(group.createdDate),
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 4.0),
+                                      child: Icon(
+                                        Icons.account_circle_outlined,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 14.0),
+                                      child: Text(
+                                        group.numberMember.toString(),
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          color: Colors.blue,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 14.0),
-                                child: Text(
-                                  DateFormat('EEE d MMM yyyy')
-                                      .format(group.createdDate),
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: group.isJoin == 0 ? InkWell(
+                                    child: Icon(FontAwesomeIcons.plusCircle, color: Colors.blue[500],),
+                                    onTap: (){
+                                      setState();
+                                    },
+                                  ) : group.isJoin == 2 ? InkWell(
+                                      child: Icon(FontAwesomeIcons.clock, color: Colors.blue[500],),
+                                      onTap: (){
+                                        setState();
+                                      },
+                                    ) : null,
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 4.0),
-                                child: Icon(
-                                  Icons.account_circle_outlined,
-                                  size: 20,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 14.0),
-                                child: Text(
-                                  group.numberMember.toString(),
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
