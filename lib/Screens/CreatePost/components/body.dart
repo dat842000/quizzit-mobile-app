@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_quill/flutter_quill.dart';
+import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:image_picker/image_picker.dart';
 
 class Body extends StatefulWidget {
@@ -11,14 +11,18 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   File? selectedImage;
-  QuillController _controller = QuillController.basic();
+  quill.QuillController _controller = quill.QuillController.basic();
   bool _isLoading = false;
   Future getImage() async {
     var picker = new ImagePicker();
     var image = await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
-      selectedImage = image as File;
+      if (image != null) {
+        selectedImage = File(image.path);
+      } else {
+        print('No image selected.');
+      }
     });
   }
 
@@ -36,6 +40,7 @@ class _BodyState extends State<Body> {
               size: 20,
             )),
         elevation: 0.0,
+        title: Text('Create Post'),
         actions: <Widget>[
           GestureDetector(
             onTap: () {
@@ -92,14 +97,17 @@ class _BodyState extends State<Body> {
                   SizedBox(
                     height: 8,
                   ),
-                  QuillToolbar.basic(controller: _controller),
-                  Column(
-                    children:[
-                      QuillEditor.basic(
-                        controller: _controller,
-                        readOnly: false, // true for view only mode
-                      ),
-                    ],
+                  quill.QuillToolbar.basic(controller: _controller),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children:[
+                        quill.QuillEditor.basic(
+                          controller: _controller,
+                          readOnly: false, // true for view only mode
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
