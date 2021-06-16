@@ -65,7 +65,6 @@ class _BodyState extends State<Body> {
                 children: <Widget>[
                   SizedBox(height: 10),
                   inputFile(label: "Email", exp: setEmail),
-                  // inputFile(label: "Fullname", exp: null),
                   inputFile(label: "Username", exp: setUsername),
                   inputFile(
                       label: "Password", obscureText: true, exp: setPassword),
@@ -157,19 +156,4 @@ class _BodyState extends State<Body> {
         ],
       );
 
-  set username(String value) {
-    _username = value;
-  }
-
-  set password(String value) {
-    _password = value;
-  }
-
-  set confirmedPassword(String value) {
-    _confirmedPassword = value;
-  }
-
-  set birthday(DateTime value) {
-    _birthday = value;
-  }
 }
