@@ -7,12 +7,14 @@ import 'package:flutter_auth/Screens/ListUser/list_user.dart';
 import 'package:flutter_auth/Screens/PostDetail/post_detail.dart';
 import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
 import 'package:flutter_auth/Screens/videocall/components/call.dart';
+import 'package:flutter_auth/Screens/videocall/components/chat.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/dtos/Group.dart';
 import 'package:flutter_auth/dtos/Post.dart';
 import 'package:flutter_auth/dtos/User.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../../videocall/model/user_model.dart' as us;
 
 import '../../../global/UserLib.dart' as globals;
 
@@ -64,10 +66,6 @@ class Body extends StatelessWidget {
   final Group group;
 
   Body(this.group);
-
-  Future<void> _handleCameraAndMic(Permission permission) async {
-    final status = await permission.request();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -236,19 +234,10 @@ class Body extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: InkWell(
-                            onTap: () async {
-                              await _handleCameraAndMic(Permission.camera);
-                              await _handleCameraAndMic(Permission.microphone);
-                              // push video page with given channel name
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CallPage(
-                                    channelName: "test",
-                                    role: ClientRole.Broadcaster,
-                                  ),
-                                ),
-                              );
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ChatScreen(user: us.ironMan),
+                              ));
                             },
                             child: ClipRRect(
                               borderRadius:
@@ -258,7 +247,7 @@ class Body extends StatelessWidget {
                                 height: 60,
                                 width: 60,
                                 child: Icon(
-                                  FontAwesomeIcons.video,
+                                  FontAwesomeIcons.comment,
                                   size: 26,
                                   color: Colors.white,
                                 ),
