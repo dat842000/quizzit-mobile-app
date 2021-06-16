@@ -5,7 +5,6 @@ import 'package:flutter_auth/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 AppBar buildAppBar(BuildContext context) {
-  final icon = CupertinoIcons.moon_stars;
 
   return AppBar(
     leading: InkWell(
@@ -18,11 +17,5 @@ AppBar buildAppBar(BuildContext context) {
     ),
     backgroundColor: Colors.transparent,
     elevation: 0,
-    actions: [
-      IconButton(
-        icon: Icon(icon),
-        onPressed: () {},
-      ),
-    ],
   );
 }

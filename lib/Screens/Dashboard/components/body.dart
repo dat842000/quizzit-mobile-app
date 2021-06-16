@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
+import 'package:flutter_auth/Screens/Dashboard/components/search_widget.dart';
 import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
 import 'package:flutter_auth/constants.dart';
@@ -63,7 +64,7 @@ class _BodyState extends State<Body> {
   _BodyState({
     required this.newList,
   });
-
+  String query ="";
   List<Group> newList;
   List<Group> itemsData = [];
 
@@ -127,6 +128,7 @@ class _BodyState extends State<Body> {
       // drawer: NavigationDrawer(),
       body: Column(
         children: [
+          buildSearch(),
           Expanded(
             child: ListView.builder(
               itemCount: newList.length,
@@ -160,6 +162,28 @@ class _BodyState extends State<Body> {
         ),
       ),
     );
+  }
+  Widget buildSearch() => SearchWidget(
+    text: query,
+    hintText: 'Title or Author Name',
+    onChanged: searchGroup,
+  );
+  void searchGroup(String query) {
+    var groups = [...itemsData];
+    if(!query.isEmpty) {
+      groups = newList.where((group) {
+        final nameLower = group.name.toLowerCase();
+        // final authorLower = group..toLowerCase();
+        final searchLower = query.toLowerCase();
+
+        return nameLower.contains(searchLower);
+        // || authorLower.contains(searchLower);
+      }).toList();
+    }
+    setState(() {
+      this.query = query;
+      this.newList = [...groups];
+    });
   }
 
   void choiceAction(String choice) {
