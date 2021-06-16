@@ -35,13 +35,13 @@ List<Message> messages = [
     unread: true,
   ),
   Message(
-    sender: ironMan,
+    sender: anotherGuy,
     time: '3:15 PM',
     text: 'I\'m always proud of her and blessed to have both of them.',
     unread: true,
   ),
   Message(
-    sender: currentUser,
+    sender: anotherGuy,
     time: '2:30 PM',
     text: 'But that spider kid is having some difficulties due his identity reveal by a blog called daily bugle.',
     unread: true,
