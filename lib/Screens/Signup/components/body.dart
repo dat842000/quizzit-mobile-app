@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Login/login_screen.dart';
 import 'package:flutter_auth/components/birthday_widget.dart';
+import 'package:flutter_auth/components/gender_choice.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/models/signup/SignupRequest.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
@@ -29,22 +31,21 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  int _gender = 0; //0:Female,1:Male,2:Other
   SignupRequest signupRequest = SignupRequest.empty();
   String _confirmedPassword = "";
 
-  void setEmail(String email) => this.signupRequest.email = email;
+  set username(String value) => this.signupRequest.username = value;
 
-  void setUsername(String username) => this.signupRequest.username = username;
+  set email(String value) => this.signupRequest.email = value;
 
-  void setPassword(String password) => this.signupRequest.password = password;
+  set password(String value) => this.signupRequest.password = value;
 
-  void setFullName(String fullName) => this.signupRequest.fullName = fullName;
+  set confirmedPassword(String value) => _confirmedPassword = value;
 
-  void setConfirmedPassword(String confirmedPassword) =>
-      this._confirmedPassword = confirmedPassword;
+  set fullName(String value) => this.signupRequest.fullName = value;
 
-  void setBirthday(DateTime birthday) =>
-      this.signupRequest.dateOfBirth = birthday;
+  set birthday(DateTime value) => this.signupRequest.dateOfBirth = value;
 
   @override
   Widget build(BuildContext context) {
@@ -77,11 +78,9 @@ class _BodyState extends State<Body> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 40),
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          // height: MediaQuery.of(context).size.height,
+          height: 700,
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -89,17 +88,32 @@ class _BodyState extends State<Body> {
               Column(
                 children: <Widget>[
                   SizedBox(height: 10),
-                  inputFile(label: "Email", exp: setEmail),
-                  inputFile(label: "Fullname", exp: setFullName),
-                  inputFile(label: "Username", exp: setUsername),
                   inputFile(
-                      label: "Password", obscureText: true, exp: setPassword),
+                      label: "Email",
+                      isRequired: true,
+                      exp: (value) => email = value),
                   inputFile(
-                      label: "Confirm Password ",
+                      label: "Username",
+                      isRequired: true,
+                      exp: (value) => username = value),
+                  inputFile(
+                      label: "Fullname",
+                      isRequired: true,
+                      exp: (value) => fullName = value),
+                  inputFile(
+                      label: "Password",
+                      isRequired: true,
                       obscureText: true,
-                      exp: setConfirmedPassword),
+                      exp: (value) => password = value),
+                  inputFile(
+                      label: "Confirm Password",
+                      isRequired: true,
+                      obscureText: true,
+                      exp: (value) => confirmedPassword = value),
                   buildBirthday(),
-                  SizedBox(height: 20),
+                  GenderChoice(
+                      isRequired: true, onSelected: (value) => _gender = value),
+                  SizedBox(height: 10),
                   Text(
                     "Create an account, It's free ",
                     style: TextStyle(fontSize: 15, color: Colors.grey[700]),
@@ -122,15 +136,32 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Widget inputFile({label, obscureText = false, required Function exp}) {
+  Widget inputFile(
+      {label,
+      bool isRequired = false,
+      obscureText = false,
+      required Function exp}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          label,
-          style: TextStyle(
-              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
-        ),
+        Row(children: [
+          Text(
+            label,
+            style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w400,
+                color: Colors.black87),
+          ),
+          isRequired
+              ? Text(
+                  "*",
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.red),
+                )
+              : SizedBox()
+        ]),
         SizedBox(
           height: 5,
         ),
@@ -169,15 +200,25 @@ class _BodyState extends State<Body> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            title,
-            style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w400,
-                color: Colors.black87),
-          ),
+          Row(children: [
+            Text(
+              title,
+              style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black87),
+            ),
+            Text(
+              "*",
+              style: TextStyle(
+                  fontSize: 15, fontWeight: FontWeight.w400, color: Colors.red),
+            )
+          ]),
           const SizedBox(height: 8),
           child,
+          SizedBox(
+            height: 10,
+          )
         ],
       );
 }

@@ -41,7 +41,7 @@ class _BodyState extends State<Body> {
   Future getImage() async {
     var picker = new ImagePicker();
     var image = await picker.getImage(source: ImageSource.gallery);
-
+    image!.readAsBytes().then((value) => selectedImage = File.fromRawPath(value));
     setState(() {
       selectedImage = image as File;
     });

@@ -4,15 +4,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
+import 'package:flutter_auth/Screens/Dashboard/components/search_widget.dart';
 import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
-import 'package:flutter_auth/components/navigation_drawer_widget.ws.dart';
 import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/models/user/UserInfo.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_auth/dtos/Group.dart';
 import 'package:flutter_auth/models/group/Group.dart' as Model;
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
+import 'package:flutter_auth/models/user/UserInfo.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -85,6 +84,7 @@ class _BodyState extends State<Body> {
   });
   late Future<Model.Page<Model.Group>> groupPageFuture;
 
+  String query ="";
   List<Group> newList;
   List<Group> itemsData = [];
 
@@ -163,6 +163,7 @@ class _BodyState extends State<Body> {
       // drawer: NavigationDrawer(),
       body: Column(
         children: [
+          buildSearch(),
           Expanded(
             child: ListView.builder(
               itemCount: newList.length,
@@ -215,11 +216,35 @@ class _BodyState extends State<Body> {
       ),
     );
   }
+  Widget buildSearch() => SearchWidget(
+    text: query,
+    hintText: 'Title or Author Name',
+    onChanged: searchGroup,
+  );
+  void searchGroup(String query) {
+    var groups = [...itemsData];
+    if(!query.isEmpty) {
+      groups = newList.where((group) {
+        final nameLower = group.name.toLowerCase();
+        // final authorLower = group..toLowerCase();
+        final searchLower = query.toLowerCase();
+
+        return nameLower.contains(searchLower);
+        // || authorLower.contains(searchLower);
+      }).toList();
+    }
+    setState(() {
+      this.query = query;
+      this.newList = [...groups];
+    });
+  }
 
   void choiceAction(String choice) {
     List<Group> temp = [];
     if (choice == Constants.own) {
-      newList.forEach((element) {if(element.userCreate == globals.userId) temp.add(element); });
+      newList.forEach((element) {
+        if (element.userCreate == globals.userId) temp.add(element);
+      });
     } else if (choice == Constants.suggest) {
       temp = [...itemsData];
     } else if (choice == Constants.join) {

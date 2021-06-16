@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AutoImportSettings">
-    <option name="autoReloadType" value="NONE" />
+    <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="BranchesTreeState">
     <expand>
@@ -9,48 +9,62 @@
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
       </path>
-    </expand>
-    <select>
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:master" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
       </path>
-    </select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ba80433-d235-4acd-b7ad-47c56be46df3" name="Default Changelist" comment="login/register">
-      <change afterPath="$PROJECT_DIR$/lib/Screens/CreatePost/components/body.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Screens/CreatePost/create_post.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/dtos/Subject.dart" afterDir="false" />
+    <list default="true" id="373d570e-2bf5-4ec3-9fb5-3c88bd31a6dc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/lib/Screens/ChangePassword/change_password.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/ChangePassword/components/body.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/Dashboard/components/search_widget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/EditUserProfile/components/birthday_edit_widget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/EditUserProfile/components/body.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/EditUserProfile/edit_user_profile.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/UserInfo/components/appbar_widget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/UserInfo/components/numbers_widget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/UserInfo/components/profile_page.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/UserInfo/components/profile_widget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/videocall/components/chat.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/videocall/model/message_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/videocall/model/user_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/components/gender_choice.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/components/rounded_image.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/components/textfield_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/body.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/subject_listtitle_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/subject_listtitle_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/subject_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/subject_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/Dashboard/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Dashboard/components/body.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Dashboard/dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Dashboard/dashboard_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/ListUser/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/ListUser/components/body.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dtos/Group.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dtos/Group.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/Signup/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Signup/components/body.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/UserInfo/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/UserInfo/components/body.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/UserInfo/components/build_settings.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/UserInfo/components/build_title.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/UserViewGroup/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/UserViewGroup/components/body.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/videocall/settings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/videocall/settings.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/components/rounded_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/components/rounded_button.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/dtos/User.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dtos/User.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ChangesViewManager" show_ignored="true">
-    <option name="groupingKeys">
-      <option value="directory" />
-    </option>
-  </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@C:\Users\haseo\.android\avd\Galaxy_Nexus_API_28.avd]" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Worksheet" />
         <option value="Dart File" />
       </list>
     </option>
@@ -58,77 +72,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1sshSBmjGszrxsjThPESW4tGywG" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
   <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="show.migrate.to.gradle.popup" value="false" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\haseo\Documents\quizzit-mobile-app\lib" />
-      <recent name="C:\Users\haseo\Documents\quizzit-mobile-app\android\app" />
-      <recent name="D:\Laptrinh\AdroidStudioProject\Welcome-Login-Signup-Page-Flutter-master\assets\images" />
-      <recent name="D:\Laptrinh\AdroidStudioProject\Welcome-Login-Signup-Page-Flutter-master\lib\components" />
-      <recent name="D:\Laptrinh\AdroidStudioProject\Welcome-Login-Signup-Page-Flutter-master\lib\Screens\Login\components" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Laptrinh\AdroidStudioProject\Welcome-Login-Signup-Page-Flutter-master\lib\Screens\Login\components" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
-      <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
-      <method v="2" />
-    </configuration>
-  </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
-  <component name="SvnConfiguration">
-    <configuration />
   </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="0ba80433-d235-4acd-b7ad-47c56be46df3" name="Default Changelist" comment="" />
-      <created>1621667201819</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1621667201819</updated>
-    </task>
-    <task id="LOCAL-00001" summary="login/register">
-      <created>1622043878379</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1622043878379</updated>
-    </task>
-    <task id="LOCAL-00002" summary="login prototype">
-      <created>1622148802330</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1622148802330</updated>
-    </task>
-    <task id="LOCAL-00003" summary="login/register">
-      <created>1622303078733</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1622303078733</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -136,151 +84,53 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="CUSTOM_BOOLEAN_PROPERTIES">
-                <map>
-                  <entry key="Show.Git.Branches" value="true" />
-                </map>
-              </option>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="master" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="login prototype" />
-    <MESSAGE value="login/register" />
-    <option name="LAST_COMMIT_MESSAGE" value="login/register" />
-  </component>
   <component name="WindowStateProjectService">
-    <state x="163" y="0" key="#Project_Structure" timestamp="1623770771473">
+    <state x="488" y="80" key="#com.intellij.ide.util.MemberChooser" timestamp="1623874390301">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="163" y="0" key="#Project_Structure/0.0.1366.728@0.0.1366.728" timestamp="1623770771473" />
-    <state x="1243" y="313" key="#Web_Browsers" timestamp="1622147769481">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="1243" y="313" key="#Web_Browsers/0.0.1920.1040@0.0.1920.1040" timestamp="1622147769481" />
-    <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1623742203714">
+    <state x="488" y="80" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1623874390301" />
+    <state x="92" y="92" width="1182" height="544" key="AVDManager" timestamp="1623871195559">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1623742203714" />
-    <state x="488" y="80" key="#com.intellij.ide.util.MemberChooser" timestamp="1623672053953">
+    <state x="92" y="92" width="1182" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1623871195559" />
+    <state x="126" y="32" key="DiffContextDialog" timestamp="1623872025966">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="488" y="80" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1623672053953" />
-    <state x="1169" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1621848953715">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="1169" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1621848953715" />
-    <state x="423" y="-9" width="551" height="588" key="AVDManager" timestamp="1623650815039">
+    <state x="126" y="32" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1623872025966" />
+    <state width="1323" height="417" key="GridCell.Tab.0.bottom" timestamp="1623875850546">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="423" y="-9" width="551" height="588" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1623650815039" />
-    <state x="595" y="-13" width="774" height="840" key="AVDManager/0.0.1920.1040@0.0.1920.1040" timestamp="1622197826110" />
-    <state x="435" y="104" key="CommitChangelistDialog2" timestamp="1622303160779">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="435" y="104" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1622303160779" />
-    <state x="359" y="118" key="DBNavigator.ConnectionFilterSettingsDialog" timestamp="1623657596390">
+    <state width="1323" height="417" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1623875850546" />
+    <state width="1323" height="417" key="GridCell.Tab.0.center" timestamp="1623875850545">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="359" y="118" key="DBNavigator.ConnectionFilterSettingsDialog/0.0.1366.728@0.0.1366.728" timestamp="1623657596390" />
-    <state x="263" y="79" key="DBNavigator.DatasetFilterDialog" timestamp="1623697150731">
+    <state width="1323" height="417" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1623875850545" />
+    <state width="1323" height="417" key="GridCell.Tab.0.left" timestamp="1623875850545">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="263" y="79" key="DBNavigator.DatasetFilterDialog/0.0.1366.728@0.0.1366.728" timestamp="1623697150731" />
-    <state x="473" y="295" key="DBNavigator.ObjectNameFilterConditionDialog" timestamp="1623657593734">
+    <state width="1323" height="417" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1623875850545" />
+    <state width="1323" height="417" key="GridCell.Tab.0.right" timestamp="1623875850546">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="473" y="295" key="DBNavigator.ObjectNameFilterConditionDialog/0.0.1366.728@0.0.1366.728" timestamp="1623657593734" />
-    <state x="213" y="19" key="DBNavigator.ProjectSettingsDialog" timestamp="1623657482772">
+    <state width="1323" height="417" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1623875850546" />
+    <state x="60" y="32" width="1240" height="618" key="MergeDialog" timestamp="1623872030325">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="213" y="19" key="DBNavigator.ProjectSettingsDialog/0.0.1366.728@0.0.1366.728" timestamp="1623657482772" />
-    <state x="1029" y="100" width="774" height="840" key="DiffContextDialog" timestamp="1622061131821">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="1029" y="100" width="774" height="840" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1622061131821" />
-    <state x="867" y="193" key="FileChooserDialogImpl" timestamp="1623657335635">
+    <state x="60" y="32" width="1240" height="618" key="MergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1623872030325" />
+    <state x="321" y="125" key="MultipleFileMergeDialog" timestamp="1623872034530">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="867" y="193" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1623657335635" />
-    <state x="1219" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1622054592182" />
-    <state width="1323" height="190" key="GridCell.Tab.0.bottom" timestamp="1623772759697">
+    <state x="321" y="125" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1623872034530" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1623879276165">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="190" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1623772759697" />
-    <state width="914" height="146" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1622299870341" />
-    <state width="1323" height="190" key="GridCell.Tab.0.center" timestamp="1623772759696">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="190" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1623772759696" />
-    <state width="914" height="146" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1622299870341" />
-    <state width="1323" height="190" key="GridCell.Tab.0.left" timestamp="1623772759696">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="190" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1623772759696" />
-    <state width="914" height="146" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1622299870341" />
-    <state width="1323" height="190" key="GridCell.Tab.0.right" timestamp="1623772759696">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="190" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1623772759696" />
-    <state width="914" height="146" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1622299870341" />
-    <state x="70" y="58" width="1233" height="618" key="MergeDialog" timestamp="1623770759108">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="70" y="58" width="1233" height="618" key="MergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1623770759108" />
-    <state x="321" y="125" key="MultipleFileMergeDialog" timestamp="1623770759124">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="321" y="125" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1623770759124" />
-    <state x="542" y="222" key="RollbackChangesDialog" timestamp="1622060893621">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="542" y="222" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1622060893621" />
-    <state x="328" y="18" key="SettingsEditor" timestamp="1623656478549">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="328" y="18" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1623656478549" />
-    <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1622042589976" />
-    <state x="807" y="433" key="VCS.ChangelistChooser" timestamp="1622303112003">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="807" y="433" key="VCS.ChangelistChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1622303112003" />
-    <state x="846" y="434" key="VCS.EditChangelistDialog" timestamp="1622303120727">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="846" y="434" key="VCS.EditChangelistDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1622303120727" />
-    <state x="780" y="282" key="Vcs.Push.Dialog.v2" timestamp="1622148816887">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="780" y="282" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1622148816887" />
-    <state x="1014" y="312" key="git4idea.merge.GitPullDialog" timestamp="1622060909337">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="1014" y="312" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1622060909337" />
-    <state x="1096" y="244" key="run.anything.popup" timestamp="1622144869711">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="1096" y="244" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622144869711" />
-    <state x="694" y="160" width="672" height="475" key="search.everywhere.popup" timestamp="1623661013721">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="694" y="160" width="672" height="475" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1623661013721" />
-    <state x="1102" y="229" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622043709588" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1623879276165" />
   </component>
 </project>

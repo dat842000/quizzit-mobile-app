@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/constants.dart';
 
@@ -7,6 +5,7 @@ class RoundedButton extends StatelessWidget {
   final String text;
   final VoidCallback press;
   final Color color, textColor;
+
   const RoundedButton({
     Key? key,
     required this.text,
