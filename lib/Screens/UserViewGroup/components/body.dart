@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreatePost/create_post.dart';
@@ -12,7 +10,6 @@ import 'package:flutter_auth/Screens/videocall/components/chat.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/dtos/Group.dart';
 import 'package:flutter_auth/dtos/Post.dart';
-import 'package:flutter_auth/dtos/User.dart';
 import 'package:flutter_auth/global/ListPost.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../videocall/model/user_model.dart' as us;
@@ -99,7 +96,7 @@ class _BodyState extends State<Body> {
                           child: InkWell(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => CreatePostScreen(),
+                                builder: (context) => CreatePostScreen(group),
                               ));
                             },
                             child: Padding(
@@ -311,7 +308,7 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String subContent = post.content.substring(0, 100) + "...";
+    String subContent = post.content.length > 100 ? post.content.substring(0, 100) + "..." : post.content;
     // TODO: implement build
     return InkWell(
       onTap: () {
