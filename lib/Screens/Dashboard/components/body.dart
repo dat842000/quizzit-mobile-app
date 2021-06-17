@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/SwitchGroupOption/switch_group_option.dart';
+import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
+import 'package:flutter_auth/Screens/Dashboard/components/search_widget.dart';
 import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
 import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/dtos/Group.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_auth/dtos/Group.dart';
 import 'package:intl/intl.dart';
 
 import '../../../global/UserLib.dart' as globals;
@@ -18,6 +21,7 @@ class Body extends StatefulWidget {
         DateTime.now(),
         ["Ly", "Hoa"],
         12,
+        0,
         0),
     Group(
         "Physics Group",
@@ -25,6 +29,7 @@ class Body extends StatefulWidget {
         DateTime.now(),
         ["Ly", "Hoa"],
         10,
+        1,
         1),
     Group(
         "PRJ303_Survice",
@@ -32,6 +37,7 @@ class Body extends StatefulWidget {
         DateTime.now(),
         ["Ly", "Hoa"],
         16,
+        1,
         1),
     Group(
         "Math Group",
@@ -39,6 +45,7 @@ class Body extends StatefulWidget {
         DateTime.now(),
         ["Ly", "Hoa"],
         20,
+        1,
         1),
     Group(
         "Math Group",
@@ -46,7 +53,8 @@ class Body extends StatefulWidget {
         DateTime.now(),
         ["Ly", "Hoa"],
         14,
-        1),
+        0,
+        2),
   ];
 
   @override
@@ -142,7 +150,7 @@ class _BodyState extends State<Body> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return SwitchGroupOption();
+                  return CreateGroupScreen();
                 },
               ),
             );

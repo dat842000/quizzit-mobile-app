@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/components/subject_listtitle_widget.dart';
+import 'package:flutter_auth/dtos/Subject.dart';
 
 class SubjectPage extends StatefulWidget {
-  final List<String> subjects;
+  final List<Subject> subjects;
   const SubjectPage({
     Key? key,
     this.subjects = const[],
@@ -13,20 +14,32 @@ class SubjectPage extends StatefulWidget {
 }
 
 class _SubjectPageState extends State<SubjectPage> {
-  List<String> selectedSubjects = [];
-  List listSubject = [
-    "Toan",
-    "Ly",
-    "Hoa",
-    "Su",
-    "Dia",
-    "Sinh hoc",
-    "Anh van",
-    "Cong nghe",
-    "Tin hoc",
-    "GDCD",
-    "Ngu Van",
-    "GDQP"
+  List<Subject> selectedSubjects = [];
+  List<Subject> listSubject = [
+    // "Toan",
+    // "Ly",
+    // "Hoa",
+    // "Su",
+    // "Dia",
+    // "Sinh hoc",
+    // "Anh van",
+    // "Cong nghe",
+    // "Tin hoc",
+    // "GDCD",
+    // "Ngu Van",
+    // "GDQP"
+    Subject(1, "Toan"),
+    Subject(2, "Ly"),
+    Subject(3, "Hoa"),
+    Subject(4, "Su"),
+    Subject(5, "Dia"),
+    Subject(6, "Sinh hoc"),
+    Subject(7, "Anh van"),
+    Subject(8, "Cong nghe"),
+    Subject(9, "Tin hoc"),
+    Subject(10, "GDCD"),
+    Subject(11, "Ngu Van"),
+    Subject(12, "GDQP"),
   ];
 
   @override
@@ -75,7 +88,7 @@ class _SubjectPageState extends State<SubjectPage> {
     );
   }
 
-  void selectSubject(String subject) {
+  void selectSubject(Subject subject) {
     final isSelected = selectedSubjects.contains(subject);
     setState(() => isSelected
         ? selectedSubjects.remove(subject)

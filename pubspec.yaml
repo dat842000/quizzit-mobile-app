@@ -22,6 +22,7 @@ dependencies:
   json_annotation: ^4.0.0
   firebase_core: ^1.2.1
   firebase_auth: ^1.3.0
+  flutter_quill: ^1.3.3
   shared_preferences: ^2.0.6
   flutter:
     sdk: flutter
@@ -31,7 +32,7 @@ dependencies:
   cupertino_icons: ^1.0.3
   flutter_svg: ^0.22.0
   cached_network_image: ^3.0.0
-  image_picker: ^0.8.0+3
+  image_picker: ^0.7.3
   font_awesome_flutter: ^9.1.0
   flutter_slidable: ^0.6.0
 
