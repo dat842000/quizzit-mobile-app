@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/components/subject_page.dart';
-import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
+import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/dtos/Group.dart';
 import 'package:flutter_auth/dtos/Subject.dart';
@@ -59,6 +59,10 @@ class _BodyState extends State<Body> {
     subjects.forEach((element) {subject.add(element.name);});
     Group newGroup = new Group(groupName, selectedImage!.path, DateTime.now(), subject, int.parse(quizSize), 1, 1);
     globals.itemsData.add(newGroup);
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => UserViewScreen(newGroup)));
   }
 
   @override
@@ -94,14 +98,6 @@ class _BodyState extends State<Body> {
           GestureDetector(
             onTap: () {
               createGroup();
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return DashboardScreen();
-                  },
-                ),
-              );
             },
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16),

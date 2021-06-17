@@ -46,7 +46,12 @@ class _BodyState extends State<Body> {
           icon: Icon(Icons.arrow_back_ios),
           color: Colors.white,
           iconSize: 20,
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.pop(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DashboardScreen()
+            ),
+          ),
         ),
         centerTitle: true,
         title: Text(group.name),
