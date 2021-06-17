@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/components/textfield_widget.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:image_picker/image_picker.dart';
+import '../../../global/PostLib.dart' as globals;
 
 class Body extends StatefulWidget {
   @override
@@ -25,7 +28,10 @@ class _BodyState extends State<Body> {
       }
     });
   }
-
+  void createPost(){
+    var json = jsonEncode(_controller.document.toDelta().toJson());
+    globals.content = json;
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -44,7 +50,7 @@ class _BodyState extends State<Body> {
         actions: <Widget>[
           GestureDetector(
             onTap: () {
-
+              createPost();
             },
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16),
@@ -62,6 +68,11 @@ class _BodyState extends State<Body> {
           : SingleChildScrollView(
               child: Column(
                 children: <Widget>[
+                  Container(
+                      margin: EdgeInsets.symmetric(horizontal: 16),
+                      width: MediaQuery.of(context).size.width,
+                      child: TextFieldWidget(label: "",onChanged: (name){},text: "Post title",)),
+
                   SizedBox(
                     height: 10,
                   ),

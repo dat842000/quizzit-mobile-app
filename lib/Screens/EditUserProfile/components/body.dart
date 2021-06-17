@@ -1,10 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/EditUserProfile/components/birthday_edit_widget.dart';
-import 'package:flutter_auth/Screens/UserInfo/components/appbar_widget.dart';
 import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
-
-import 'package:flutter_auth/components/rounded_button.dart';
 import 'package:flutter_auth/components/textfield_widget.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/dtos/User.dart';
