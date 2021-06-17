@@ -13,6 +13,7 @@ import 'package:flutter_auth/models/user/UserInfo.dart' as Model;
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../constants.dart';
 import 'numbers_widget.dart';
@@ -22,10 +23,10 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 
   Future<Model.UserInfo> _getUserInfo() async {
+    await FirebaseAuth.instance.currentUser!.reload();
     var response = await fetch(
         "${Host.users}/${FirebaseAuth.instance.currentUser!.uid}",
         HttpMethod.GET);
-    print(response.body);
     if (response.statusCode.isOk())
       return Model.UserInfo.fromJson(json.decode(response.body));
     else
@@ -36,6 +37,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final _firebaseAuth = FirebaseAuth.instance;
   late Future<Model.UserInfo> userInfoFuture;
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
   @override
   void initState() {
@@ -59,76 +62,87 @@ class _ProfilePageState extends State<ProfilePage> {
     // );
 
     return Scaffold(
-      appBar: buildAppBar(context),
-      body: FutureBuilder(
-          future: userInfoFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState != ConnectionState.done)
-              return CircularProgressIndicator();
-            if (snapshot.hasError) return Text(snapshot.error.toString());
-            var user = snapshot.data as Model.UserInfo;
-            return ListView(
-              physics: BouncingScrollPhysics(),
-              children: [
-                ProfileWidget(
-                  imagePath: _firebaseAuth.currentUser!.photoURL ?? "",
-                  onClicked: () async {},
-                ),
-                const SizedBox(height: 12),
-                buildName(_firebaseAuth.currentUser!.displayName!),
-                // const SizedBox(height: 24),
-                // Center(child: buildUpgradeButton()),
-                const SizedBox(height: 12),
-                NumbersWidget(user),
-                const SizedBox(height: 24),
-                buildAbout(
-                    _firebaseAuth.currentUser!.email!, Icons.email, "Email"),
-
-                const SizedBox(height: 24),
-                buildAbout(
-                    DateFormat(DateFormat.YEAR_MONTH_DAY)
-                        .format(user.dateOfBirth),
-                    Icons.cake,
-                    "Date of birth"),
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: 48, right: 48, top: 24, bottom: 0),
-                  child: Row(
+        appBar: buildAppBar(context),
+        body: FutureBuilder(
+            future: userInfoFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done)
+                return Center(child: CircularProgressIndicator());
+              if (snapshot.hasError) return Text(snapshot.error.toString());
+              var user = snapshot.data as Model.UserInfo;
+              return SmartRefresher(
+                  header: WaterDropHeader(),
+                  enablePullDown: true,
+                  enablePullUp: false,
+                  onRefresh: () {
+                    setState(() {
+                      this.userInfoFuture = widget._getUserInfo();
+                    });
+                  },
+                  controller: _refreshController,
+                  child: ListView(
+                    physics: BouncingScrollPhysics(),
                     children: [
-                      Icon(Icons.settings),
-                      SizedBox(
-                        width: 5,
+                      ProfileWidget(
+                        imagePath: _firebaseAuth.currentUser!.photoURL ?? "",
+                        onClicked: () async {},
                       ),
-                      Text(
-                        "Settings",
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+                      const SizedBox(height: 12),
+                      buildName(_firebaseAuth.currentUser!.displayName!),
+                      // const SizedBox(height: 24),
+                      // Center(child: buildUpgradeButton()),
+                      const SizedBox(height: 12),
+                      NumbersWidget(user),
+                      const SizedBox(height: 24),
+                      buildAbout(_firebaseAuth.currentUser!.email!, Icons.email,
+                          "Email"),
+
+                      const SizedBox(height: 24),
+                      buildAbout(
+                          DateFormat(DateFormat.YEAR_MONTH_DAY)
+                              .format(user.dateOfBirth),
+                          Icons.cake,
+                          "Date of birth"),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: 48, right: 48, top: 24, bottom: 0),
+                        child: Row(
+                          children: [
+                            Icon(Icons.settings),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "Settings",
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
+                      Container(
+                        padding: EdgeInsets.only(
+                            left: 48, right: 48, top: 5, bottom: 0),
+                        child: Divider(
+                          height: 15,
+                          thickness: 2,
+                        ),
+                      ),
+                      buildAccountOptionRow(
+                          "Edit User Info",
+                          Icons.app_registration,
+                          () => navigate(context, EditUserScreen(user))),
+                      buildAccountOptionRow(
+                          "Change Password",
+                          FontAwesomeIcons.fingerprint,
+                          () => navigate(context, ChangePasswordScreen())),
+                      buildAccountOptionRow("Logout", Icons.logout, () async {
+                        await _firebaseAuth.signOut();
+                        navigate(context, WelcomeScreen());
+                      }),
                     ],
-                  ),
-                ),
-                Container(
-                  padding:
-                      EdgeInsets.only(left: 48, right: 48, top: 5, bottom: 0),
-                  child: Divider(
-                    height: 15,
-                    thickness: 2,
-                  ),
-                ),
-                buildAccountOptionRow("Edit User Info", Icons.app_registration,
-                    () => navigate(context, EditUserScreen(user))),
-                buildAccountOptionRow(
-                    "Change Password",
-                    FontAwesomeIcons.fingerprint,
-                    () => navigate(context, ChangePasswordScreen())),
-                buildAccountOptionRow("Logout", Icons.logout, () async {
-                  await _firebaseAuth.signOut();
-                  navigate(context, WelcomeScreen());
-                }),
-              ],
-            );
-          }),
-    );
+                  ));
+            }));
   }
 
   Widget buildName(String name) => Column(

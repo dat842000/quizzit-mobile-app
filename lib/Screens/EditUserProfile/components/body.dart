@@ -11,7 +11,7 @@ class Body extends StatefulWidget {
   const Body(this._user);
 
   final UserInfo _user;
-
+  
   @override
   _BodyState createState() => _BodyState(_user);
 }
@@ -19,16 +19,6 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   _BodyState(this._user);
   final UserInfo _user;
-  // static User user = User(
-  //     1,
-  //     "Dat Nguyen",
-  //     "https://scontent-xsp1-2.xx.fbcdn.net/v/t1.6435-9/172600480_2894518494156867_1493738166156079949_n.jpg?_nc_cat=106&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=o7u6HzTD-XMAX-k52z6&_nc_ht=scontent-xsp1-2.xx&oh=aa00602c45fc35d0e12abc438d2a8dcb&oe=60CE7C39",
-  //     "dnn8420@gmail.com",
-  //     DateTime.now());
-  // DateTime _birthday = user.dateOfBirth;
-  //
-  // void setBirthday(DateTime birthday) => this._birthday = birthday;
-
 
   @override
   Widget build(BuildContext context) => Builder(

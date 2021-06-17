@@ -6,6 +6,8 @@ class UpdatePasswordRequest implements Encodable{
   String oldPassword="";
   String newPassword="";
 
+  UpdatePasswordRequest(this.oldPassword, this.newPassword);
+
   @override
   Map<String, dynamic> toJson() => _$UpdatePasswordRequestToJson(this);
 }

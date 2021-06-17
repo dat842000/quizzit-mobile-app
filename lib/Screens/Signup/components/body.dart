@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Login/login_screen.dart';
 import 'package:flutter_auth/components/birthday_widget.dart';
 import 'package:flutter_auth/components/gender_choice.dart';
+import 'package:flutter_auth/components/inputField.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
 import 'package:flutter_auth/constants.dart';
@@ -88,24 +89,24 @@ class _BodyState extends State<Body> {
               Column(
                 children: <Widget>[
                   SizedBox(height: 10),
-                  inputFile(
+                  inputField(
                       label: "Email",
                       isRequired: true,
                       exp: (value) => email = value),
-                  inputFile(
+                  inputField(
                       label: "Username",
                       isRequired: true,
                       exp: (value) => username = value),
-                  inputFile(
+                  inputField(
                       label: "Fullname",
                       isRequired: true,
                       exp: (value) => fullName = value),
-                  inputFile(
+                  inputField(
                       label: "Password",
                       isRequired: true,
                       obscureText: true,
                       exp: (value) => password = value),
-                  inputFile(
+                  inputField(
                       label: "Confirm Password",
                       isRequired: true,
                       obscureText: true,
@@ -133,53 +134,6 @@ class _BodyState extends State<Body> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget inputFile(
-      {label,
-      bool isRequired = false,
-      obscureText = false,
-      required Function exp}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Row(children: [
-          Text(
-            label,
-            style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w400,
-                color: Colors.black87),
-          ),
-          isRequired
-              ? Text(
-                  "*",
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.red),
-                )
-              : SizedBox()
-        ]),
-        SizedBox(
-          height: 5,
-        ),
-        TextFormField(
-            obscureText: obscureText,
-            decoration: InputDecoration(
-                contentPadding:
-                EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey[400]!),
-                ),
-                border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[400]!))),
-            onChanged: (value) => exp(value)),
-        SizedBox(
-          height: 10,
-        )
-      ],
     );
   }
 

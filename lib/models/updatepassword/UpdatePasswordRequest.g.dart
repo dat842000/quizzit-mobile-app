@@ -8,9 +8,10 @@ part of 'UpdatePasswordRequest.dart';
 
 UpdatePasswordRequest _$UpdatePasswordRequestFromJson(
     Map<String, dynamic> json) {
-  return UpdatePasswordRequest()
-    ..oldPassword = json['oldPassword'] as String
-    ..newPassword = json['newPassword'] as String;
+  return UpdatePasswordRequest(
+    json['oldPassword'] as String,
+    json['newPassword'] as String,
+  );
 }
 
 Map<String, dynamic> _$UpdatePasswordRequestToJson(
