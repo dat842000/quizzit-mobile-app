@@ -65,7 +65,7 @@ class _BodyState extends State<Body> {
   _BodyState({
     required this.newList,
   });
-  List<Group> newList;
+  String query ="";  List<Group> newList;
   List<Group> itemsData = [];
 
   @override
@@ -159,6 +159,20 @@ class _BodyState extends State<Body> {
       ),
     );
   }
+        final searchLower = query.toLowerCase();
+  Widget buildSearch() => SearchWidget(
+        text: query,
+        hintText: 'Title or Author Name',
+        onChanged: searchGroup,
+      );
+
+  void searchGroup(String query) {
+    var groups = [...itemsData];
+    if (!query.isEmpty) {
+      groups = newList.where((group) {
+        final nameLower = group.name.toLowerCase();
+        // final authorLower = group..toLowerCase();
+        final searchLower = query.toLowerCase();
 
   void choiceAction(String choice) {
     List<Group> temp = [];
@@ -217,38 +231,42 @@ class ContinueTag extends StatelessWidget {
 class GroupsTitle extends StatelessWidget {
   Group group;
 
-  GroupsTitle({required this.group});
-
+  GroupsTitle({required this.group, required this.allGroup, required this.setState});
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Wrap(
-        children: <Widget>[
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => UserViewScreen(group)));
-            },
-            child: Container(
-              margin: EdgeInsets.only(bottom: 20),
-              width: MediaQuery.of(context).size.width - 50,
-              height: 240,
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
-              child: Stack(
-                children: <Widget>[
-                  ClipRRect(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20.0),
-                        topRight: Radius.circular(20.0)),
-                    child: CachedNetworkImage(
-                      imageUrl: group.imgUrl,
-                      height: 135,
-                      width: MediaQuery.of(context).size.width - 50,
-                      fit: BoxFit.cover,
-                    ),
+return Padding(
+      padding: allGroup.last == group
+          ? const EdgeInsets.only(bottom: 45)
+          : const EdgeInsets.only(),
+      child: Center(
+        child: Wrap(
+          children: <Widget>[
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => UserViewScreen(group)));
+              },
+              child: Container(
+                margin: EdgeInsets.only(bottom: 20),
+                width: MediaQuery.of(context).size.width - 50,
+                height: 240,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20)),
+                child: Stack(
+                  children: <Widget>[
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.0),
+                          topRight: Radius.circular(20.0)),
+                      child: CachedNetworkImage(
+                        imageUrl: group.imgUrl,
+                        height: 135,
+                        width: MediaQuery.of(context).size.width - 50,
+                        fit: BoxFit.cover,
+                      ),                    ),
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width - 50,
@@ -269,8 +287,6 @@ class GroupsTitle extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                        ),
-
                         Padding(
                           padding: const EdgeInsets.only(
                             left: 12,
@@ -293,41 +309,82 @@ class GroupsTitle extends StatelessWidget {
                               ContinueTag()
                             ],
                           ),
-                        ),
-                        Divider(
-                          color: Color(0xfff3f4fb),
-                          height: 0,
-                          thickness: 2,
-                        ),
-                        // SizedBox(
-                        //   height: 2,
-                        // ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 12,
-                            top: 12,
-                            bottom: 12,
-                            right: 5,
-                          ),
-                          child: Wrap(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: Icon(
-                                  Icons.calendar_today_outlined,
-                                  size: 18,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 14.0),
-                                child: Text(
-                                  DateFormat('EEE d MMM yyyy')
-                                      .format(group.createdDate),
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 12,
+                              top: 12,
+                              bottom: 12,
+                              right: 5,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Wrap(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
+                                      child: Icon(
+                                        Icons.calendar_today_outlined,
+                                        size: 18,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 14.0),
+                                      child: Text(
+                                        DateFormat('EEE d MMM yyyy')
+                                            .format(group.createdDate),
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 4.0),
+                                      child: Icon(
+                                        Icons.account_circle_outlined,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 14.0),
+                                      child: Text(
+                                        group.numberMember.toString(),
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          color: Colors.blue,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    )
+                                  ],                                ),
+Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: group.isJoin == 0
+                                      ? InkWell(
+                                          child: Icon(
+                                            FontAwesomeIcons.plusCircle,
+                                            color: Colors.blue[500],
+                                          ),
+                                          onTap: () {
+                                            setState();
+                                          },
+                                        )
+                                      : group.isJoin == 2
+                                          ? InkWell(
+                                              child: Icon(
+                                                FontAwesomeIcons.clock,
+                                                color: Colors.blue[500],
+                                              ),
+                                              onTap: () {
+                                                setState();
+                                              },
+                                            )
+                                          : null,                                ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(right: 4.0),
