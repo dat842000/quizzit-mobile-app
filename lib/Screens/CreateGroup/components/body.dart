@@ -2,10 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/components/subject_page.dart';
+import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/dtos/Group.dart';
 import 'package:flutter_auth/dtos/Subject.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart';
+
+import '../../../global/UserLib.dart' as globals;
 
 class Body extends StatefulWidget {
   const Body({
@@ -50,7 +54,12 @@ class _BodyState extends State<Body> {
     });
   }
 
-  uploadBlog() async {}
+  createGroup() {
+    List<String> subject = [];
+    subjects.forEach((element) {subject.add(element.name);});
+    Group newGroup = new Group(groupName, selectedImage!.path, DateTime.now(), subject, int.parse(quizSize), 1, 1);
+    globals.itemsData.add(newGroup);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +93,15 @@ class _BodyState extends State<Body> {
         actions: <Widget>[
           GestureDetector(
             onTap: () {
-              uploadBlog();
+              createGroup();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return DashboardScreen();
+                  },
+                ),
+              );
             },
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16),
@@ -108,7 +125,7 @@ class _BodyState extends State<Body> {
                   ),
                   GestureDetector(
                       onTap: () {
-                        getImage().then((value) { print("1");
+                        getImage().then((value) {
                             print(selectedImage);});
 
                       },
@@ -161,7 +178,7 @@ class _BodyState extends State<Body> {
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: TextField(
                             decoration: InputDecoration(
-                              hintText: "Quiz Size",
+                              hintText: "Member Size",
                               border: OutlineInputBorder(),
                             ),
                             keyboardType: TextInputType.number,
@@ -194,6 +211,7 @@ class _BodyState extends State<Body> {
       );
       if (subjects == null) return;
       setState(() => this.subjects = subjects);
+
     };
     return buildSubjectPicker(
       title: 'SelectSubjects',

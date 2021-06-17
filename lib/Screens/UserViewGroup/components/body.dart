@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreatePost/create_post.dart';
@@ -75,8 +77,11 @@ class _BodyState extends State<Body> {
                         bottomLeft: Radius.circular(30.0),
                         bottomRight: Radius.circular(30.0),
                       ),
-                      child: CachedNetworkImage(
+                      child: group.imgUrl.startsWith("http" , 0) ? CachedNetworkImage(
                         imageUrl: group.imgUrl,
+                        fit: BoxFit.cover,
+                      ) : Image.file(
+                        File(group.imgUrl),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -143,7 +148,7 @@ class _BodyState extends State<Body> {
                             ),
                           ),
                         ),
-                        globals.userId == group.userCreate
+                        /* globals.userId == group.userCreate
                             ? Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: InkWell(
@@ -193,7 +198,7 @@ class _BodyState extends State<Body> {
                                     ),
                                   ),
                                 ),
-                              ),
+                              ), */
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: InkWell(
@@ -280,7 +285,9 @@ class _BodyState extends State<Body> {
               //     ),
               //   ),
               // ),
-              Column(
+
+              // Demo nếu xài file hình trong máy thì là tạo group và ko có post nào
+              group.imgUrl.startsWith("http" , 0) ? Column(
                 children: <Widget>[
                   ...posts.map((item) {
                     return PostCard(
@@ -288,7 +295,7 @@ class _BodyState extends State<Body> {
                     );
                   }).toList(),
                 ],
-              ),
+              ) : Text("No post here"),
             ],
           ),
         ),
