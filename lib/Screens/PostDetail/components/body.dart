@@ -88,17 +88,21 @@ class PostDetail extends State<Body> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          post.urlImg.isEmpty
+                          post.urlImg == null
                               ? Padding(
                                   padding: const EdgeInsets.only(
                                       top: 8.0, bottom: 8.0),
                                 )
-                              : CachedNetworkImage(
-                                  imageUrl: post.urlImg,
-                                  height: 225,
-                                  width: MediaQuery.of(context).size.width,
-                                  fit: BoxFit.cover,
-                                ),
+                              // : CachedNetworkImage(
+                              //     imageUrl: post.urlImg,
+                              //     height: 225,
+                              //     width: MediaQuery.of(context).size.width,
+                              //     fit: BoxFit.cover,
+                              //   ),
+                                :  Image.file(
+                            post.urlImg!,
+                            fit: BoxFit.cover,
+                          ),
                           Padding(
                             padding:
                                 const EdgeInsets.only(top: 8.0, bottom: 8.0),

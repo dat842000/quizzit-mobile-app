@@ -9,7 +9,7 @@ class UserViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Body(group),
+      body: Body(group: group),
     );
   }
 }
