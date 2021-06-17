@@ -1,11 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
-import 'package:flutter_auth/Screens/JoinGroup/components/subject_page.dart';
 import 'package:flutter_auth/constants.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:flutter/services.dart';
 
 class Body extends StatefulWidget {
   const Body({
