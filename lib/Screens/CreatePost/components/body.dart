@@ -40,13 +40,14 @@ class _BodyState extends State<Body> {
   }
   void createPost(){
     var json = jsonEncode(_controller.document.toDelta().toJson());
-    globals.content = json;
+    var plainText = _controller.document.toPlainText();
+    print(json);
     var post = new Post(title, DateTime.now(), selectedImage, json, User(
         1,
         "Dat Nguyen",
         "https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.6435-9/172600480_2894518494156867_1493738166156079949_n.jpg?_nc_cat=106&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=1aMndlcPap0AX85TE5l&_nc_ht=scontent.fsgn5-6.fna&oh=ef2bd4b0b4f5667097fff27829b948d5&oe=60D66539",
         "dnn8420@gmail.com",
-        DateTime.now()));
+        DateTime.now()),plainText);
     ListPost.listPost.add(post);
   }
   @override

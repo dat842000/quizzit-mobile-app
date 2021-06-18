@@ -7,9 +7,9 @@ class NumbersWidget extends StatelessWidget {
         children: <Widget>[
           // buildButton(context, '4.8', 'Ranking'),
           // buildDivider(),
-          buildButton(context, '35', 'Join Group'),
+          buildButton(context, '3', 'Join Group'),
           buildDivider(),
-          buildButton(context, '50', 'Own Group'),
+          buildButton(context, '1', 'Own Group'),
         ],
       );
   Widget buildDivider() => Container(

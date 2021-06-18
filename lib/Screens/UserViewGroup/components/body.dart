@@ -325,9 +325,9 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String subContent = post.content.length > 100
-        ? post.content.substring(0, 100) + "..."
-        : post.content;
+    String subContent = post.plainText.length > 100
+        ? post.plainText.substring(0, 100) + "..."
+        : post.plainText;
     // TODO: implement build
     return InkWell(
       onTap: () {

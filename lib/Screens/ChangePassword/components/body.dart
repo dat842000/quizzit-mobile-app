@@ -68,7 +68,7 @@ class _BodyState extends State<Body> {
               inputFile(
                   label: "New Password", obscureText: true, exp: setNewPassword),
               inputFile(
-                  label: "Confirm Password ",
+                  label: "Confirm Password",
                   obscureText: true,
                   exp: setConfirmedPassword),
 
@@ -91,7 +91,7 @@ class _BodyState extends State<Body> {
                       );
                     },
                     child: Text(
-                      "Send new pass to your email",
+                      "Send confirm link to your email",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -135,10 +135,22 @@ Widget inputFile({label, obscureText = false, required Function exp}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
-      Text(
-        label,
-        style: TextStyle(
-            fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
+      Row(
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+                fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
+          ),
+          SizedBox(width: 5,),
+          Text(
+            "*",
+            style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w400,
+                color: Colors.red),
+          ),
+        ],
       ),
       SizedBox(
         height: 5,

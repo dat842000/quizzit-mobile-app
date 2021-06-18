@@ -179,7 +179,7 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   }
   Widget buildSearch() => SearchWidget(
     text: query,
-    hintText: 'Title or Author Name',
+    hintText: 'Group Name',
     onChanged: searchGroup,
   );
   void searchGroup(String query) {
