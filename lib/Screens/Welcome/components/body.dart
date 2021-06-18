@@ -16,16 +16,17 @@ class Body extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              "WELCOME TO EDU",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+
 
             Image.asset(
               "assets/icons/a3ea4c90a81a5713113fd42e20bb312f-e-learning-logo-design-removebg.png",
-              height: size.height * 0.4,
+              height: size.height * 0.35,
             ),
-            SizedBox(height: size.height * 0.05),
+            Text(
+              "WELCOME TO GROUP LEARNING",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20,),
             RoundedButton(
               text: "LOGIN",
               press: () {

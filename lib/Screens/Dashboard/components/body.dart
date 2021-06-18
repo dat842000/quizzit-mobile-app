@@ -1,12 +1,11 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-// import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
 import 'package:flutter_auth/Screens/Dashboard/components/search_widget.dart';
 import 'package:flutter_auth/Screens/JoinGroup/join_group_screen.dart';
-import 'package:flutter_auth/Screens/SwitchGroupOption/switch_group_option.dart';
 import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
 import 'package:flutter_auth/constants.dart';
@@ -75,7 +74,7 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   Widget buttonJoin() {
     return Container(child: FloatingActionButton(onPressed: () {Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => JoinGroupScreen(),
-    ));},tooltip: "Join Group",child: Icon(Icons.face_retouching_natural_rounded),),);
+    ));},tooltip: "Join Group",child: Icon(FontAwesomeIcons.signInAlt),),);
   }
   Widget buttonToggle() {
     return Container(child: FloatingActionButton(backgroundColor: _buttonColor.value,
