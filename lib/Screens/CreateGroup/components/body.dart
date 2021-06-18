@@ -41,9 +41,12 @@ class _BodyState extends State<Body> {
   Future getImage() async {
     var picker = new ImagePicker();
     var image = await picker.getImage(source: ImageSource.gallery);
-    image!.readAsBytes().then((value) => selectedImage = File.fromRawPath(value));
     setState(() {
-      selectedImage = image as File;
+      if (image != null) {
+        selectedImage = File(image.path);
+      } else {
+        print('No image selected.');
+      }
     });
   }
 
@@ -105,7 +108,9 @@ class _BodyState extends State<Body> {
                   ),
                   GestureDetector(
                       onTap: () {
-                        getImage();
+                        getImage().then((value) { print("1");
+                            print(selectedImage);});
+
                       },
                       child: selectedImage != null
                           ? Container(

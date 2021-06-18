@@ -13,6 +13,9 @@ class Constants{
   static const adminManageUser = <String>[
     'Ranking','Users'
   ];
+  static const postSetting= <String>[
+    'Edit','Delete'
+  ];
 }
 enum HttpMethod { GET, POST, PUT, DELETE }
 const GROUPS=[

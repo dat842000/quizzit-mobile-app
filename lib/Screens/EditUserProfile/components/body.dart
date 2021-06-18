@@ -11,7 +11,7 @@ class Body extends StatefulWidget {
   const Body(this._user);
 
   final UserInfo _user;
-  
+
   @override
   _BodyState createState() => _BodyState(_user);
 }
@@ -42,7 +42,6 @@ class _BodyState extends State<Body> {
             padding: EdgeInsets.symmetric(horizontal: 32),
             physics: BouncingScrollPhysics(),
             children: [
-              // buildImage(imagePath: this._user.avatar),
               CircleAvatar(
                 radius: 60,
                 backgroundImage: NetworkImage(this._user.avatar),

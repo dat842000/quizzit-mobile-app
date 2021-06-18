@@ -14,9 +14,20 @@ class Group implements Decodable{
   int totalMem;
   List<Subject> subjects;
   UserInfo owner;
+  int currentMemberStatus;
 
-  Group(this.id, this.name, this.image, this.quizSize, this.isActive,
-      this.createAt, this.totalMem, this.subjects, this.owner);
+
+  Group(
+      this.id,
+      this.name,
+      this.image,
+      this.quizSize,
+      this.isActive,
+      this.createAt,
+      this.totalMem,
+      this.subjects,
+      this.owner,
+      this.currentMemberStatus);
 
   factory Group.fromJson(Map<String,dynamic>json)=>_$GroupFromJson(json);
   static Group fromJsonModel(Map<String, dynamic> json) => Group.fromJson(json);

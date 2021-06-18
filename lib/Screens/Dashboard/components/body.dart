@@ -3,110 +3,80 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
 import 'package:flutter_auth/Screens/Dashboard/components/search_widget.dart';
+import 'package:flutter_auth/Screens/SwitchGroupOption/switch_group_option.dart';
 import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
+import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/dtos/Group.dart';
 import 'package:flutter_auth/models/group/Group.dart' as Model;
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
-import 'package:flutter_auth/models/user/UserInfo.dart';
+import 'package:flutter_auth/models/paging/PagingParams.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '../../../global/UserLib.dart' as globals;
-
-Future<Model.Page<Model.Group>> fetchGroupPage() async {
-  var response = await fetch(Host.groups, HttpMethod.GET);
+Future<Model.Page<Model.Group>> fetchGroupPage({String nameSearch="",int status=0,int page=1}) async {
+  var paging = PagingParam(page, 3, "id_asc");
+  Map<String,String> params = {...paging.Build(),...{"StatusId":status.toString()}};
+  print(params);
+  var response = await fetch(Host.groups, HttpMethod.GET,params: params);
   var jsonRes = json.decode(response.body);
+  print(response.body);
   if (response.statusCode.isOk())
-    return Model.Page<Model.Group>.fromJson(
-        jsonRes, Model.Group.fromJsonModel);
+    return Model.Page<Model.Group>.fromJson(jsonRes, Model.Group.fromJsonModel);
   else
     throw new Exception(response.body);
 }
 
 class Body extends StatefulWidget {
-  final List<Group> itemsData = [
-    Group(
-        "Math Group",
-        "https://scontent-sin6-3.xx.fbcdn.net/v/t1.6435-9/90954431_1582148621924471_7611655305281142784_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=825194&_nc_ohc=jgOg1-97daQAX--nxb2&_nc_ht=scontent-sin6-3.xx&oh=e405c37b9c016426c7052451ae7a161d&oe=60D913F0",
-        DateTime.now(),
-        ["Ly", "Hoa"],
-        12,
-        0,
-        0),
-    Group(
-        "Physics Group",
-        "https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.18169-9/28379844_10156181840423126_2758359348106619364_n.jpg?_nc_cat=106&ccb=1-3&_nc_sid=825194&_nc_ohc=P2ycqfZHNUUAX-pPnZK&_nc_ht=scontent.fsgn5-6.fna&oh=cafbc3bcc1801c35a918915e1ce4011f&oe=60DB12E0",
-        DateTime.now(),
-        ["Ly", "Hoa"],
-        10,
-        1,
-        1),
-    Group(
-        "PRJ303_Survice",
-        "https://image.shutterstock.com/image-vector/maths-hand-drawn-vector-illustration-260nw-460780561.jpg",
-        DateTime.now(),
-        ["Ly", "Hoa"],
-        16,
-        1,
-        1),
-    Group(
-        "Math Group",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREVI19c8BieX1brqjOdMKlt1mRINsKuLK6JA&usqp=CAU",
-        DateTime.now(),
-        ["Ly", "Hoa"],
-        20,
-        1,
-        1),
-    Group(
-        "Math Group",
-        "https://tr-images.condecdn.net/image/V2n9Jj303ye/crop/405/f/pamukkale-turkey-gettyimages-1223155251.jpg",
-        DateTime.now(),
-        ["Ly", "Hoa"],
-        14,
-        0,
-        2),
-  ];
-
-  Body({Key? key}) :super(key: key);
+  Body({Key? key}) : super(key: key);
 
   @override
-  _BodyState createState() => _BodyState(newList: itemsData);
+  _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
-  _BodyState({
-    required this.newList,
-  });
   late Future<Model.Page<Model.Group>> groupPageFuture;
-
-  String query ="";
-  List<Group> newList;
-  List<Group> itemsData = [];
-
+  RefreshController _refreshController = RefreshController(initialRefresh: false);
+  int _currentPage = 1;
+  String query = "";
 
   @override
   void initState() {
     super.initState();
     setState(() {
-      groupPageFuture = fetchGroupPage();
+      groupPageFuture = fetchGroupPage(page: 1);
     });
   }
 
   @override
   void didUpdateWidget(Body oldWidget) {
+    super.didUpdateWidget(oldWidget);
     setState(() {
-      groupPageFuture = fetchGroupPage();
+      groupPageFuture = fetchGroupPage(page: 1);
     });
+  }
+
+  void _onRefresh() async{
+    await Future.delayed(Duration(milliseconds: 1000));
+    setState(() {
+      this.groupPageFuture = fetchGroupPage(page: 1);
+    });
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async{
+    await Future.delayed(Duration(milliseconds: 1000));
+    setState(() {
+      this.groupPageFuture = fetchGroupPage(page:++_currentPage);
+    });
+    _refreshController.loadComplete();
   }
 
   @override
   Widget build(BuildContext context) {
-    itemsData = [...widget.itemsData];
     return Scaffold(
       backgroundColor: Color(0xffe4e6eb),
       appBar: AppBar(
@@ -117,9 +87,7 @@ class _BodyState extends State<Body> {
         leading: InkWell(
           child: Icon(FontAwesomeIcons.userCircle),
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => UserInfoScreen(),
-            ));
+            navigate(context, UserInfoScreen());
           },
         ),
         actions: <Widget>[
@@ -165,34 +133,30 @@ class _BodyState extends State<Body> {
         children: [
           buildSearch(),
           Expanded(
-            child: ListView.builder(
-              itemCount: newList.length,
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (context, index) => GroupsTitle(
-                group: newList[index],
-                allGroup : newList,
-                setState: () => setState((){newList[index].isJoin = 2;}),
-              ),
-            ),
-      //     FutureBuilder<Model.Page<Model.Group>>(
-      //       future: groupPageFuture,
-      //       builder: (context, snapshot){
-      //         if(snapshot.hasError)
-      //           return Text("${snapshot.error}");
-      //         if(snapshot.hasData)
-      //           return Expanded(
-      //             child: ListView.builder(
-      //               itemCount: snapshot.data!.content.length,
-      //               physics: BouncingScrollPhysics(),
-      //               itemBuilder: (context, index) =>
-      //                   GroupsTitle(
-      //                     group: snapshot.data!.content[index],
-      //                   ),
-      //             ),
-      //           );
-      //         return CircularProgressIndicator();
-      //       }
-          ),
+            child: FutureBuilder<Model.Page<Model.Group>>(
+                future: groupPageFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) return Text("${snapshot.error}");
+                  if (snapshot.hasData)
+                    return SmartRefresher(
+                      enablePullDown: true,
+                      enablePullUp: true,
+                      onRefresh: _onRefresh,
+                      onLoading: _onLoading,
+                      header: WaterDropHeader(),
+                      controller: _refreshController,
+                      child: ListView.builder(
+                        itemCount: snapshot.data!.content.length,
+                        physics: BouncingScrollPhysics(),
+                        itemBuilder: (context, index) => GroupsTitle(
+                            snapshot.data!.content[index],
+                            isLast: snapshot.data!.isLast &&
+                                index == snapshot.data!.totalElements),
+                      ),
+                    );
+                  return Center(child: CircularProgressIndicator());
+                }),
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -207,7 +171,7 @@ class _BodyState extends State<Body> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return CreateGroupScreen();
+                  return SwitchGroupOption();
                 },
               ),
             );
@@ -216,43 +180,19 @@ class _BodyState extends State<Body> {
       ),
     );
   }
-  Widget buildSearch() => SearchWidget(
-    text: query,
-    hintText: 'Title or Author Name',
-    onChanged: searchGroup,
-  );
-  void searchGroup(String query) {
-    var groups = [...itemsData];
-    if(!query.isEmpty) {
-      groups = newList.where((group) {
-        final nameLower = group.name.toLowerCase();
-        // final authorLower = group..toLowerCase();
-        final searchLower = query.toLowerCase();
 
-        return nameLower.contains(searchLower);
-        // || authorLower.contains(searchLower);
-      }).toList();
-    }
-    setState(() {
-      this.query = query;
-      this.newList = [...groups];
-    });
+  Widget buildSearch() => SearchWidget(
+        text: query,
+        hintText: 'Title or Author Name',
+        onChanged: searchGroup,
+      );
+
+  void searchGroup(String query) {
+    //TODO SearchGroup
   }
 
   void choiceAction(String choice) {
-    List<Group> temp = [];
-    if (choice == Constants.own) {
-      newList.forEach((element) {
-        if (element.userCreate == globals.userId) temp.add(element);
-      });
-    } else if (choice == Constants.suggest) {
-      temp = [...itemsData];
-    } else if (choice == Constants.join) {
-      temp = [...itemsData];
-    }
-    setState(() {
-      newList = [...temp];
-    });
+    //TODO Filter
   }
 }
 
@@ -267,9 +207,7 @@ class Tag extends StatelessWidget {
       padding: EdgeInsets.all(5.0),
       width: 60.0,
       decoration: BoxDecoration(
-        color: Theme
-            .of(context)
-            .accentColor,
+        color: Theme.of(context).accentColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
       alignment: Alignment.center,
@@ -285,9 +223,7 @@ class ContinueTag extends StatelessWidget {
       padding: EdgeInsets.all(5.0),
       width: 30.0,
       decoration: BoxDecoration(
-        color: Theme
-            .of(context)
-            .accentColor,
+        color: Theme.of(context).accentColor,
         borderRadius: BorderRadius.circular(20.0),
       ),
       alignment: Alignment.center,
@@ -300,33 +236,30 @@ class ContinueTag extends StatelessWidget {
 }
 
 class GroupsTitle extends StatelessWidget {
-  Group group;
-  Function() setState;
-  List<Group> allGroup;
-  // Model.Group group;
+  final Model.Group _group;
+  final bool isLast;
 
-  GroupsTitle({required this.group, required this.allGroup, required this.setState});
+  GroupsTitle(this._group, {this.isLast = false});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: allGroup.last == group ?  const EdgeInsets.only(bottom: 45) : const EdgeInsets.only(),
+      padding:
+          isLast ? const EdgeInsets.only(bottom: 45) : const EdgeInsets.only(),
       child: Center(
         child: Wrap(
           children: <Widget>[
             InkWell(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => UserViewScreen(new Model.Group(0, "name", "image", 10, true, DateTime.now(), 1, [], new UserInfo(1, "username", "fullName", "avatar", "email", DateTime.now(), 0, 0)))));
+                navigate(context, UserViewScreen(this._group));
               },
               child: Container(
                 margin: EdgeInsets.only(bottom: 20),
                 width: MediaQuery.of(context).size.width - 50,
                 height: 240,
                 decoration: BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20)),
                 child: Stack(
                   children: <Widget>[
                     ClipRRect(
@@ -334,7 +267,7 @@ class GroupsTitle extends StatelessWidget {
                           topLeft: Radius.circular(20.0),
                           topRight: Radius.circular(20.0)),
                       child: CachedNetworkImage(
-                        imageUrl: group.imgUrl,
+                        imageUrl: this._group.image ?? "",
                         height: 135,
                         width: MediaQuery.of(context).size.width - 50,
                         fit: BoxFit.cover,
@@ -353,14 +286,13 @@ class GroupsTitle extends StatelessWidget {
                               bottom: 0,
                             ),
                             child: Text(
-                              group.name,
+                              this._group.name,
                               style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
                           ),
-
                           Padding(
                             padding: const EdgeInsets.only(
                               left: 12,
@@ -371,10 +303,14 @@ class GroupsTitle extends StatelessWidget {
                               children: <Widget>[
                                 // ignore: sdk_version_ui_as_code
                                 ...List.generate(
-                                    group.subjects.length,
+                                    this._group.subjects.length,
                                     (index) => Row(
                                           children: [
-                                            Tag(text: group.subjects[index]),
+                                            Tag(
+                                                text: this
+                                                    ._group
+                                                    .subjects[index]
+                                                    .name),
                                             const SizedBox(
                                               width: 5,
                                             )
@@ -402,17 +338,19 @@ class GroupsTitle extends StatelessWidget {
                                 Wrap(
                                   children: <Widget>[
                                     Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
                                       child: Icon(
                                         Icons.calendar_today_outlined,
                                         size: 18,
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(right: 14.0),
+                                      padding:
+                                          const EdgeInsets.only(right: 14.0),
                                       child: Text(
                                         DateFormat('EEE d MMM yyyy')
-                                            .format(group.createdDate),
+                                            .format(this._group.createAt),
                                         style: TextStyle(
                                           fontSize: 17,
                                           fontWeight: FontWeight.w500,
@@ -420,16 +358,18 @@ class GroupsTitle extends StatelessWidget {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(right: 4.0),
+                                      padding:
+                                          const EdgeInsets.only(right: 4.0),
                                       child: Icon(
                                         Icons.account_circle_outlined,
                                         size: 20,
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(right: 14.0),
+                                      padding:
+                                          const EdgeInsets.only(right: 14.0),
                                       child: Text(
-                                        group.numberMember.toString(),
+                                        this._group.totalMem.toString(),
                                         style: TextStyle(
                                           fontSize: 17,
                                           color: Colors.blue,
@@ -441,17 +381,27 @@ class GroupsTitle extends StatelessWidget {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 10),
-                                  child: group.isJoin == 0 ? InkWell(
-                                    child: Icon(FontAwesomeIcons.plusCircle, color: Colors.blue[500],),
-                                    onTap: (){
-                                      setState();
-                                    },
-                                  ) : group.isJoin == 2 ? InkWell(
-                                      child: Icon(FontAwesomeIcons.clock, color: Colors.blue[500],),
-                                      onTap: (){
-                                        setState();
-                                      },
-                                    ) : null,
+                                  child: this._group.currentMemberStatus == 0
+                                      ? InkWell(
+                                          child: Icon(
+                                            FontAwesomeIcons.plusCircle,
+                                            color: Colors.blue[500],
+                                          ),
+                                          onTap: () {
+                                            //TODO JoinGroupAPI
+                                          },
+                                        )
+                                      : this._group.currentMemberStatus == 1
+                                          ? InkWell(
+                                              child: Icon(
+                                                FontAwesomeIcons.clock,
+                                                color: Colors.blue[500],
+                                              ),
+                                              onTap: () {
+                                                //TODO Cancel Join Group
+                                              },
+                                            )
+                                          : null,
                                 ),
                               ],
                             ),

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/ChangePassword/change_password.dart';
 import 'package:flutter_auth/Screens/EditUserProfile/edit_user_profile.dart';
+import 'package:flutter_auth/Screens/Login/login_screen.dart';
 import 'package:flutter_auth/Screens/UserInfo/components/appbar_widget.dart';
 import 'package:flutter_auth/Screens/UserInfo/components/profile_widget.dart';
 import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
@@ -19,6 +20,7 @@ import '../../../constants.dart';
 import 'numbers_widget.dart';
 
 class ProfilePage extends StatefulWidget {
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 
@@ -35,6 +37,11 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  _ProfilePageState(){
+    if (_firebaseAuth.currentUser == null)
+      navigate(context,LoginScreen());
+  }
+
   final _firebaseAuth = FirebaseAuth.instance;
   late Future<Model.UserInfo> userInfoFuture;
   RefreshController _refreshController =
@@ -43,12 +50,16 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    userInfoFuture = widget._getUserInfo();
+    if (_firebaseAuth.currentUser != null)
+      userInfoFuture = widget._getUserInfo();
+    else
+      navigate(context, LoginScreen());
   }
 
   @override
   void didUpdateWidget(ProfilePage oldWidget) {
-    userInfoFuture = widget._getUserInfo();
+    if (_firebaseAuth.currentUser != null)
+      userInfoFuture = widget._getUserInfo();
     super.didUpdateWidget(oldWidget);
   }
 

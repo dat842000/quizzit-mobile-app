@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreatePost/create_post.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
+import 'package:flutter_auth/Screens/EditPost/edit_post.dart';
 import 'package:flutter_auth/Screens/ListUser/list_user.dart';
 import 'package:flutter_auth/Screens/PostDetail/post_detail.dart';
 import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
@@ -114,25 +117,10 @@ class _BodyState extends State<Body> {
                       ),
                     ),
                   ),
-                  // Padding(
-                  //   padding:
-                  //       EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: <Widget>[
-                  //       IconButton(
-                  //         icon: Icon(Icons.arrow_back_ios),
-                  //         color: Colors.blue,
-                  //         iconSize: 20,
-                  //         onPressed: () => Navigator.pop(context),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
                 ],
               ),
               InkWell(
-                onTap: () {
+                onTap: (){
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => CreatePostScreen(),
                   ));
@@ -141,22 +129,33 @@ class _BodyState extends State<Body> {
                   padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
                   child: Container(
                     color: Colors.white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    height: 76,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ClipRRect(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(25.0)),
-                            child: Container(
-                              color: Color(0xFF309398),
-                              height: 60,
-                              width: 60,
-                              child: Icon(
-                                FontAwesomeIcons.plusSquare,
-                                size: 26,
-                                color: Colors.white,
+                        Container(
+
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => CreatePostScreen(),
+                              ));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(left:16.0,right: 8.0,top:8,bottom: 8),
+                              child: ClipRRect(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(25.0)),
+                                child: Container(
+                                  color: Color(0xFF309398),
+                                  height: 60,
+                                  width: 60,
+                                  child: Icon(
+                                    FontAwesomeIcons.plusSquare,
+                                    size: 26,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -249,7 +248,7 @@ class _BodyState extends State<Body> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(25.0)),
                               child: Container(
-                                color: Color(0xFF8d949e),
+                                color: Color(0xFFE46471),
                                 height: 60,
                                 width: 60,
                                 child: Icon(
@@ -273,7 +272,7 @@ class _BodyState extends State<Body> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(25.0)),
                               child: Container(
-                                color: Color(0xFFE46471),
+                                color: Colors.redAccent,
                                 height: 60,
                                 width: 60,
                                 child: Icon(
@@ -285,11 +284,35 @@ class _BodyState extends State<Body> {
                             ),
                           ),
                         ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => DashboardScreen(),
+                            ));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(left:8.0,right:16,top:8,bottom: 8),
+                            child: ClipRRect(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(25.0)),
+                              child: Container(
+                                color: Colors.grey,
+                                height: 60,
+                                width: 60,
+                                child: Icon(
+                                  FontAwesomeIcons.link,
+                                  size: 26,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
-              ),
+
               // Expanded(
               //   child: ListView.builder(
               //     itemCount: posts.length,
@@ -298,14 +321,14 @@ class _BodyState extends State<Body> {
               //     ),
               //   ),
               // ),
-              Column(
-                children: <Widget>[
-                  // ...posts.map((item) {
-                  //   return PostCard(
-                  //     post: item,
-                  //   );
-                  // }).toList(),
-                ],
+              // Column(
+              //   children: <Widget>[
+              //     ...posts.map((item) {
+              //       return PostCard(
+              //         post: item,
+              //       );
+              //     }).toList(),
+              //   ],
               ),
             ],
           ),
@@ -316,9 +339,13 @@ class _BodyState extends State<Body> {
 }
 
 class PostCard extends StatelessWidget {
-  Post post;
+  final Post post;
 
-  PostCard({required this.post});
+  const PostCard({required this.post});
+
+  void choiceAction(String choice) {
+    if (choice == "") {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -342,22 +369,50 @@ class PostCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    CircleAvatar(
-                        radius: 22,
-                        backgroundImage: NetworkImage(post.user.avatar)),
-                    SizedBox(width: 15),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
                       children: [
-                        Text(
-                          post.user.fullName,
-                          style: TextStyle(fontSize: 17, color: Colors.black),
+                        CircleAvatar(
+                            radius: 22,
+                            backgroundImage: NetworkImage(post.user.avatar)),
+                        SizedBox(width: 15),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              post.user.fullName,
+                              style:
+                                  TextStyle(fontSize: 17, color: Colors.black),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              post.user.email,
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                            )
+                          ],
                         ),
-                        const SizedBox(height: 2),
-                        Text(
-                          post.user.email,
-                          style: TextStyle(fontSize: 15, color: Colors.black),
-                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        post.user.id == globals.userId
+                            ? PopupMenuButton<String>(
+                                icon: Icon(
+                                  FontAwesomeIcons.ellipsisH,
+                                  color: kPrimaryColor,
+                                  size: 20,
+                                ),
+                                onSelected: choiceAction,
+                                itemBuilder: (BuildContext context) {
+                                  return Constants.postSetting
+                                      .map((String choice) {
+                                    return PopupMenuItem<String>(
+                                        value: choice,
+                                        child: popupButton(text: choice,context: context));
+                                  }).toList();
+                                },
+                              )
+                            : SizedBox()
                       ],
                     ),
                   ],
@@ -399,5 +454,30 @@ class PostCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget popupButton({text,context}) {
+    return Container(
+        child: text == "Edit"
+            ? InkWell(
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => EditPostScreen(),
+                ));
+              },
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [Text(text,style:TextStyle(color: kPrimaryColor) ,), Icon(Icons.app_registration,color: kPrimaryColor,)],
+                ),
+            )
+            : InkWell(
+              onTap: (){
+
+              },
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [Text(text,style:TextStyle(color: Colors.redAccent) ,), Icon(Icons.delete,color: Colors.redAccent,)],
+                ),
+            ));
   }
 }

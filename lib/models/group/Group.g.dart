@@ -19,6 +19,7 @@ Group _$GroupFromJson(Map<String, dynamic> json) {
         .map((e) => Subject.fromJson(e as Map<String, dynamic>))
         .toList(),
     UserInfo.fromJson(json['owner'] as Map<String, dynamic>),
+    json['currentMemberStatus'] as int,
   );
 }
 
@@ -32,4 +33,5 @@ Map<String, dynamic> _$GroupToJson(Group instance) => <String, dynamic>{
       'totalMem': instance.totalMem,
       'subjects': instance.subjects,
       'owner': instance.owner,
+      'currentMemberStatus': instance.currentMemberStatus,
     };
