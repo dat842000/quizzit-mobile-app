@@ -26,10 +26,10 @@ class Body extends StatefulWidget {
   final Group group;
 
   @override
-  _BodyState createState() => _BodyState(group : group);
+  _BodyState createState() => _BodyState(group: group);
 }
-class _BodyState extends State<Body> {
 
+class _BodyState extends State<Body> {
   DateTime date = DateTime.now();
   List<Post> posts = ListPost.listPost;
 
@@ -46,11 +46,9 @@ class _BodyState extends State<Body> {
           icon: Icon(Icons.arrow_back_ios),
           color: Colors.white,
           iconSize: 20,
-          onPressed: () => Navigator.pop(
+          onPressed: () => Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => DashboardScreen()
-            ),
+            MaterialPageRoute(builder: (context) => DashboardScreen()),
           ),
         ),
         centerTitle: true,
@@ -82,205 +80,208 @@ class _BodyState extends State<Body> {
                         bottomLeft: Radius.circular(30.0),
                         bottomRight: Radius.circular(30.0),
                       ),
-                      child: group.imgUrl.startsWith("http" , 0) ? CachedNetworkImage(
-                        imageUrl: group.imgUrl,
-                        fit: BoxFit.cover,
-                      ) : Image.file(
-                        File(group.imgUrl),
-                        fit: BoxFit.cover,
-                      ),
+                      child: group.imgUrl.startsWith("http", 0)
+                          ? CachedNetworkImage(
+                              imageUrl: group.imgUrl,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.file(
+                              File(group.imgUrl),
+                              fit: BoxFit.cover,
+                            ),
                     ),
                   ),
                 ],
               ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
-                  child: Container(
-                    color: Colors.white,
-                    height: 76,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        Container(
-
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => CreatePostScreen(group),
-                              ));
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(left:16.0,right: 8.0,top:8,bottom: 8),
-                              child: ClipRRect(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25.0)),
-                                child: Container(
-                                  color: Color(0xFF309398),
-                                  height: 60,
-                                  width: 60,
-                                  child: Icon(
-                                    FontAwesomeIcons.plusSquare,
-                                    size: 26,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          // width: 62,
-                        ),
-                        InkWell(
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
+                child: Container(
+                  color: Colors.white,
+                  height: 76,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      Container(
+                        child: InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ListUser(group: group),
+                              builder: (context) => CreatePostScreen(group),
                             ));
                           },
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.only(
+                                left: 16.0, right: 8.0, top: 8, bottom: 8),
                             child: ClipRRect(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(25.0)),
                               child: Container(
-                                color: Color(0xFFF9BE7C),
+                                color: Color(0xFF309398),
                                 height: 60,
                                 width: 60,
                                 child: Icon(
-                                  FontAwesomeIcons.userAlt,
-                                  size: 17,
+                                  FontAwesomeIcons.plusSquare,
+                                  size: 26,
                                   color: Colors.white,
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        /* globals.userId == group.userCreate
-                            ? Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) => QuizScreen(),
-                                    ));
-                                  },
-                                  child: ClipRRect(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(25.0)),
-                                    child: Container(
-                                      color: kPrimaryColor,
-                                      height: 60,
-                                      width: 60,
-                                      child: Icon(
-                                        FontAwesomeIcons.question,
-                                        size: 26,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) => QuizScreen(),
-                                    ));
-                                  },
-                                  child: ClipRRect(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(25.0)),
-                                    child: Container(
-                                      color: kPrimaryColor,
-                                      height: 60,
-                                      width: 60,
-                                      child: Icon(
-                                        FontAwesomeIcons.brain,
-                                        size: 26,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ), */
-                        Padding(
+                        // width: 62,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ListUser(group: group),
+                          ));
+                        },
+                        child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    ChatScreen(user: us.ironMan),
-                              ));
-                            },
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(25.0)),
-                              child: Container(
-                                color: Color(0xFFE46471),
-                                height: 60,
-                                width: 60,
-                                child: Icon(
-                                  FontAwesomeIcons.comment,
-                                  size: 26,
-                                  color: Colors.white,
-                                ),
+                          child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25.0)),
+                            child: Container(
+                              color: Color(0xFFF9BE7C),
+                              height: 60,
+                              width: 60,
+                              child: Icon(
+                                FontAwesomeIcons.userAlt,
+                                size: 17,
+                                color: Colors.white,
                               ),
                             ),
                           ),
                         ),
-                        InkWell(
+                      ),
+                      // globals.userId == group.userCreate
+                      //     ? Padding(
+                      //         padding: const EdgeInsets.all(8.0),
+                      //         child: InkWell(
+                      //           onTap: () {
+                      //             Navigator.of(context)
+                      //                 .push(MaterialPageRoute(
+                      //               builder: (context) => QuizScreen(),
+                      //             ));
+                      //           },
+                      //           child: ClipRRect(
+                      //             borderRadius:
+                      //                 BorderRadius.all(Radius.circular(25.0)),
+                      //             child: Container(
+                      //               color: kPrimaryColor,
+                      //               height: 60,
+                      //               width: 60,
+                      //               child: Icon(
+                      //                 FontAwesomeIcons.question,
+                      //                 size: 26,
+                      //                 color: Colors.white,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       )
+
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => DashboardScreen(),
+                              builder: (context) =>
+                                  ChatScreen(user: us.ironMan),
                             ));
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(25.0)),
-                              child: Container(
-                                color: Colors.redAccent,
-                                height: 60,
-                                width: 60,
-                                child: Icon(
-                                  Icons.logout,
-                                  size: 26,
-                                  color: Colors.white,
-                                ),
+                          child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25.0)),
+                            child: Container(
+                              color: Color(0xFFE46471),
+                              height: 60,
+                              width: 60,
+                              child: Icon(
+                                FontAwesomeIcons.comment,
+                                size: 26,
+                                color: Colors.white,
                               ),
                             ),
                           ),
                         ),
-                        InkWell(
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => DashboardScreen(),
+                          ));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25.0)),
+                            child: Container(
+                              color: Colors.redAccent,
+                              height: 60,
+                              width: 60,
+                              child: Icon(
+                                Icons.logout,
+                                size: 26,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => DashboardScreen(),
-                            ));
+                            //   Navigator.of(context).push(MaterialPageRoute(
+                            //     builder: (context) => QuizScreen(),
+                            //   ));
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left:8.0,right:16,top:8,bottom: 8),
-                            child: ClipRRect(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(25.0)),
-                              child: Container(
-                                color: Colors.grey,
-                                height: 60,
-                                width: 60,
-                                child: Icon(
-                                  FontAwesomeIcons.link,
-                                  size: 26,
-                                  color: Colors.white,
-                                ),
+                          child: ClipRRect(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(25.0)),
+                            child: Container(
+                              color: kPrimaryColor,
+                              height: 60,
+                              width: 60,
+                              child: Icon(
+                                FontAwesomeIcons.info,
+                                size: 26,
+                                color: Colors.white,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => DashboardScreen(),
+                          ));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 8.0, right: 16, top: 8, bottom: 8),
+                          child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25.0)),
+                            child: Container(
+                              color: Colors.grey,
+                              height: 60,
+                              width: 60,
+                              child: Icon(
+                                FontAwesomeIcons.link,
+                                size: 26,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+              ),
 
               // Expanded(
               //   child: ListView.builder(
@@ -292,15 +293,18 @@ class _BodyState extends State<Body> {
               // ),
 
               // Demo nếu xài file hình trong máy thì là tạo group và ko có post nào
-              group.imgUrl.startsWith("http" , 0) ? Column(
-                children: <Widget>[
-                  ...posts.map((item) {
-                    return PostCard(
-                      post: item,
-                    );
-                  }).toList(),
-                ],
-              ) : Text("No post here"),
+              group.imgUrl.startsWith("http", 0)
+                  ? Column(
+                      children: <Widget>[
+                        ...posts.map((item) {
+                          return PostCard(
+                            post: item,
+                            group: group,
+                          );
+                        }).toList(),
+                      ],
+                    )
+                  : Text("No post here"),
             ],
           ),
         ),
@@ -311,8 +315,9 @@ class _BodyState extends State<Body> {
 
 class PostCard extends StatelessWidget {
   Post post;
+  Group group;
 
-  PostCard({required this.post});
+  PostCard({required this.post, required this.group});
 
   void choiceAction(String choice) {
     if (choice == "") {}
@@ -320,7 +325,9 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String subContent = post.content.length > 100 ? post.content.substring(0, 100) + "..." : post.content;
+    String subContent = post.content.length > 100
+        ? post.content.substring(0, 100) + "..."
+        : post.content;
     // TODO: implement build
     return InkWell(
       onTap: () {
@@ -377,7 +384,8 @@ class PostCard extends StatelessWidget {
                                       .map((String choice) {
                                     return PopupMenuItem<String>(
                                         value: choice,
-                                        child: popupButton(text: choice,context: context));
+                                        child: settingPost(text: choice,post: post,group: group,
+                                            ));
                                   }).toList();
                                 },
                               )
@@ -424,29 +432,51 @@ class PostCard extends StatelessWidget {
       ),
     );
   }
+}
+class settingPost extends StatelessWidget {
+  Group group;
+  Post post;
+  String text;
+  settingPost({required this.group,required this.post,required this.text});
 
-  Widget popupButton({text,context}) {
+  @override
+  Widget build(BuildContext context) {
     return Container(
         child: text == "Edit"
             ? InkWell(
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => EditPostScreen(),
-                ));
-              },
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text(text,style:TextStyle(color: kPrimaryColor) ,), Icon(Icons.app_registration,color: kPrimaryColor,)],
-                ),
-            )
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => EditPostScreen(group,post),));
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                text,
+                style: TextStyle(color: kPrimaryColor),
+              ),
+              Icon(
+                Icons.app_registration,
+                color: kPrimaryColor,
+              )
+            ],
+          ),
+        )
             : InkWell(
-              onTap: (){
-
-              },
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text(text,style:TextStyle(color: Colors.redAccent) ,), Icon(Icons.delete,color: Colors.redAccent,)],
-                ),
-            ));
+          onTap: () {},
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                text,
+                style: TextStyle(color: Colors.redAccent),
+              ),
+              Icon(
+                Icons.delete,
+                color: Colors.redAccent,
+              )
+            ],
+          ),
+        ));
   }
 }

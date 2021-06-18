@@ -1,9 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/PostDetail/components/comment.dart';
 import 'package:flutter_auth/Screens/PostDetail/model/comments_data.dart'
     as comments;
 import 'package:flutter_auth/dtos/Post.dart';
+import 'package:flutter_quill/flutter_quill.dart' as quill;
+import 'package:flutter_quill/widgets/simple_viewer.dart';
+
 
 class Body extends StatefulWidget{
   final Post post;
@@ -17,10 +21,12 @@ class PostDetail extends State<Body> {
   List<comments.Comment> list = comments.list;
   final Post post;
 
+
   PostDetail({required this.post});
 
   TextEditingController controller = new TextEditingController();
   Widget _buildTextComposer() {
+
     return IconTheme(
       data: IconThemeData(color: Colors.blue[300]),
       child: Container(
@@ -59,6 +65,8 @@ class PostDetail extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    quill.QuillController _controller = quill.QuillController.basic();
+    var myJSON = jsonDecode(post.content);
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
@@ -109,19 +117,21 @@ class PostDetail extends State<Body> {
                             child: Align(
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 5, bottom: 3),
-                                child: Text(
-                                  post.title.toUpperCase(),
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 22),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    post.title.toUpperCase(),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold, fontSize: 22),
+                                  ),
                                 ),
                               ),
                               alignment: Alignment.centerLeft,
                             ),
                           ),
-                          Text(
-                            post.content,
-                            style: TextStyle(fontSize: 18),
-                          ),
+                          QuillSimpleViewer(controller: _controller = quill.QuillController(
+                              document: quill.Document.fromJson(myJSON),
+                              selection: TextSelection.collapsed(offset: 0)),)
                         ],
                       ),
                     ),
