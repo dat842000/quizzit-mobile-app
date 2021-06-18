@@ -44,7 +44,7 @@ class _BodyState extends State<Body> {
             children: [
               CircleAvatar(
                 radius: 60,
-                backgroundImage: NetworkImage(this._user.avatar),
+                backgroundImage: NetworkImage(this._user.avatar??defaultAvatar),
               ),
               const SizedBox(height: 24),
               TextFieldWidget(

@@ -18,9 +18,12 @@ import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 Future<Model.Page<Model.Group>> fetchGroupPage({String nameSearch="",int status=0,int page=1}) async {
-  var paging = PagingParam(page, 3, "id_asc");
-  Map<String,String> params = {...paging.Build(),...{"StatusId":status.toString()}};
-  print(params);
+  var paging = PagingParam(page, 3, "createAt_desc");
+  Map<String,String> params = {
+    ...paging.Build(),
+    ...{"GroupName":nameSearch},
+    ...{"StatusId":status.toString()}
+  };
   var response = await fetch(Host.groups, HttpMethod.GET,params: params);
   var jsonRes = json.decode(response.body);
   print(response.body);

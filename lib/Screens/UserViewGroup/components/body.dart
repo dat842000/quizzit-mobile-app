@@ -352,7 +352,6 @@ class PostCard extends StatelessWidget {
     String subContent = post.content.length > 100
         ? post.content.substring(0, 100) + "..."
         : post.content;
-    // TODO: implement build
     return InkWell(
       onTap: () {
         Navigator.push(context,
@@ -373,7 +372,7 @@ class PostCard extends StatelessWidget {
                       children: [
                         CircleAvatar(
                             radius: 22,
-                            backgroundImage: NetworkImage(post.user.avatar)),
+                            backgroundImage: NetworkImage(post.user.avatar??defaultAvatar)),
                         SizedBox(width: 15),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

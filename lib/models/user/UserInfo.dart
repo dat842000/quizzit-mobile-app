@@ -6,7 +6,7 @@ class UserInfo implements Decodable{
   int id;
   String username;
   String fullName;
-  String avatar;
+  String? avatar;
   String email;
   DateTime dateOfBirth;
   int totalOwnedGroup;

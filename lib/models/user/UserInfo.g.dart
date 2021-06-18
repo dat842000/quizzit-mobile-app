@@ -11,7 +11,7 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
     json['id'] as int,
     json['username'] as String,
     json['fullName'] as String,
-    json['avatar'] as String,
+    json['avatar'] as String?,
     json['email'] as String,
     DateTime.parse(json['dateOfBirth'] as String),
     json['totalOwnedGroup'] as int,
