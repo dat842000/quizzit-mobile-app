@@ -4,7 +4,7 @@ import 'package:flutter_auth/dtos/Group.dart';
 
 int userId = -1;
 
-final List<Group> itemsData = [
+List<Group> itemsData = [
   Group(
       "Math Group",
       "https://scontent-sin6-3.xx.fbcdn.net/v/t1.6435-9/90954431_1582148621924471_7611655305281142784_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=825194&_nc_ohc=jgOg1-97daQAX--nxb2&_nc_ht=scontent-sin6-3.xx&oh=e405c37b9c016426c7052451ae7a161d&oe=60D913F0",
