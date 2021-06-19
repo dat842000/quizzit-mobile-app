@@ -160,7 +160,9 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
               itemBuilder: (context, index) => GroupsTitle(
                 group: newList[index],
                 allGroup : newList,
-                setState: () => setState((){newList[index].isJoin = 2;}),
+                setState: () => setState((){newList[index].isJoin == 2
+                    ? newList[index].isJoin = 0
+                    : newList[index].isJoin = 2;}),
               ),
             ),
           ),
