@@ -18,9 +18,9 @@ import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 Future<Model.Page<Model.Group>> fetchGroupPage({String nameSearch="",int status=0,int page=1}) async {
-  var paging = PagingParam(page, 3, "createAt_desc");
+  var paging = PagingParam(page:page,sort: "createAt_desc");
   Map<String,String> params = {
-    ...paging.Build(),
+    ...paging.build(),
     ...{"GroupName":nameSearch},
     ...{"StatusId":status.toString()}
   };
