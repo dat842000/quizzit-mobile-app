@@ -14,6 +14,7 @@ import 'package:flutter_auth/dtos/Group.dart';
 import 'package:intl/intl.dart';
 
 import '../../../global/UserLib.dart' as globals;
+import 'alert_widget.dart';
 
 class Body extends StatefulWidget {
   final List<Group> itemsData = globals.itemsData;
@@ -263,6 +264,27 @@ class GroupsTitle extends StatelessWidget {
 
   GroupsTitle({required this.group, required this.allGroup, required this.setState});
 
+  _showDialog(BuildContext context) {
+
+    VoidCallback continueCallBack = () => {
+      Navigator.of(context).pop(),
+      // code on continue comes here
+      setState()
+
+    };
+    BlurryDialog  alert = BlurryDialog("Application",
+        "Tell us the reason why you want to join this group?",
+        continueCallBack);
+
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -405,7 +427,7 @@ class GroupsTitle extends StatelessWidget {
                                   child: group.isJoin == 0 ? InkWell(
                                     child: Icon(FontAwesomeIcons.plusCircle, color: Colors.blue[500],),
                                     onTap: (){
-                                      setState();
+                                      _showDialog(context);
                                     },
                                   ) : group.isJoin == 2 ? InkWell(
                                       child: Icon(FontAwesomeIcons.clock, color: Colors.blue[500],),
