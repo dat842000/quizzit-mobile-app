@@ -20,12 +20,12 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String subContent = post.content.length > 100
-        ? post.content.substring(0, 100) + "..."
-        : post.content;
+    String subContent = this.post.content.length > 100
+        ? this.post.content.substring(0, 100) + "..."
+        : this.post.content;
     return InkWell(
       onTap: () {
-        navigate(context, PostDetailScreen(post));
+        navigate(context, PostDetailScreen(this.post));
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16.0),
@@ -43,13 +43,13 @@ class PostCard extends StatelessWidget {
                         CircleAvatar(
                             radius: 22,
                             backgroundImage: NetworkImage(
-                                post.user.avatar ?? defaultAvatar)),
+                                this.post.user.avatar ?? defaultAvatar)),
                         SizedBox(width: 15),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              post.user.fullName,
+                              this.post.user.fullName,
                               style:
                               TextStyle(fontSize: 17, color: Colors.black),
                             ),
@@ -65,7 +65,7 @@ class PostCard extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        post.user.id == int.parse(FirebaseAuth.instance.currentUser!.uid)
+                        this.post.user.id == int.parse(FirebaseAuth.instance.currentUser!.uid)
                             ? PopupMenuButton<String>(
                           icon: Icon(
                             FontAwesomeIcons.ellipsisH,
@@ -93,13 +93,13 @@ class PostCard extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      post.image.isEmpty
+                      this.post.image.isEmpty
                           ? Padding(
                         padding:
                         const EdgeInsets.only(top: 8.0, bottom: 8.0),
                       )
                           : CachedNetworkImage(
-                        imageUrl: post.image,
+                        imageUrl: this.post.image,
                         height: 200,
                         width:
                         MediaQuery
@@ -112,7 +112,7 @@ class PostCard extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
                         child: Align(
                           child: Text(
-                            post.title.toUpperCase(),
+                            this.post.title.toUpperCase(),
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           alignment: Alignment.centerLeft,

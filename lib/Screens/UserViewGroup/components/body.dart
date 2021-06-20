@@ -26,7 +26,7 @@ class Body extends StatefulWidget {
         "${Host.groups}/${group.id}/posts", HttpMethod.GET,
         params: params);
     var body = json.decode(response.body);
-    log(response.body);
+    // log(response.body);
     if (response.statusCode.isOk()) {
       return Model.Page.fromJson(body, Post.fromJsonModel);
     } else {

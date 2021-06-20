@@ -26,7 +26,7 @@ Future<Model.Page<Model.Group>> fetchGroupPage({String nameSearch="",int status=
   };
   var response = await fetch(Host.groups, HttpMethod.GET,params: params);
   var jsonRes = json.decode(response.body);
-  print(response.body);
+  // print(response.body);
   if (response.statusCode.isOk())
     return Model.Page<Model.Group>.fromJson(jsonRes, Model.Group.fromJsonModel);
   else
