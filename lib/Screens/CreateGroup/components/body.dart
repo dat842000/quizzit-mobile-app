@@ -158,11 +158,30 @@ class _BodyState extends State<Body> {
                     margin: EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text("Group Name ",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            Text("*",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.red,
+                                ))
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom:8.0),
+                          padding: const EdgeInsets.only(bottom: 8.0),
                           child: TextField(
                             decoration: InputDecoration(
-                              hintText: "Group Name",
+                              hintText: "Group Name...",
                               border: OutlineInputBorder(),
                             ),
                             onChanged: (val) {
@@ -170,11 +189,30 @@ class _BodyState extends State<Body> {
                             },
                           ),
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text("Member Size ",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            Text("*",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.red,
+                                ))
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: TextField(
                             decoration: InputDecoration(
-                              hintText: "Member Size",
+                              hintText: "Member Size...",
                               border: OutlineInputBorder(),
                             ),
                             keyboardType: TextInputType.number,
@@ -183,7 +221,28 @@ class _BodyState extends State<Body> {
                             },
                           ),
                         ),
-                        Card(child: buildChoosingSubjects(),)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text("Subjects ",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            Text("*",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.red,
+                                ))
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Card(
+                          child: buildChoosingSubjects(),
+                        )
                       ],
                     ),
                   )
