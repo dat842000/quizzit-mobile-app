@@ -24,10 +24,10 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  bool isAdmin = false;
+  bool isAdmin = true;
   Group group;
   _BodyState({required this.group}){
-    if (globals.userId == group.userCreate) isAdmin = true;
+    // if (globals.userId == group.userCreate) isAdmin = true;
   }
 
   List<User> users = [
@@ -176,7 +176,7 @@ class ListUser extends StatelessWidget {
               ) : Column(
               children: [
                 UserCard(
-                    temp[index], Colors.grey[400], index, isAdmin, listUser, "I really want to join", setState: setState)
+                    temp[index], Colors.grey[400], index, isAdmin, listUser, "", setState: setState)
               ],
             )),
           ]

@@ -65,7 +65,7 @@ class _ParticipantsPageState extends State<ParticipantsPage> {
                       ),
                       Text(
                         participants[index]['name'],
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: 16,color: Colors.white),
                       )
                     ],
                   ),
@@ -85,7 +85,7 @@ class _ParticipantsPageState extends State<ParticipantsPage> {
                         color: index == 0 ? grey : red,
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

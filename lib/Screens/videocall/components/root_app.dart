@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
+import 'package:flutter_auth/Screens/videocall/components/participants_page.dart';
 import 'package:flutter_auth/Screens/videocall/json/root_app_json.dart';
 import 'package:flutter_auth/Screens/videocall/theme/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -13,6 +14,18 @@ class RootApp extends StatefulWidget {
 
 class _RootAppState extends State<RootApp> {
   int pageIndex = 2;
+  List<String> url = [
+    "https://www.androidcentral.com/sites/androidcentral.com/files/styles/xlarge/public/article_images/2020/07/android-11-screen-record-how-to-1.jpg",
+    "https://scontent-sin6-2.xx.fbcdn.net/v/t1.15752-9/200182092_927178697847529_5932800466410330319_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=ae9488&_nc_ohc=dbRh5rbXgK8AX9XybRJ&_nc_ht=scontent-sin6-2.xx&oh=84f1c4a23badcdd719bb24ac262efee7&oe=60D34C57"
+  ];
+  var linkUrl="https://www.androidcentral.com/sites/androidcentral.com/files/styles/xlarge/public/article_images/2020/07/android-11-screen-record-how-to-1.jpg";
+
+  void onDataChange(val) {
+    setState(() {
+      linkUrl = val;
+      print(linkUrl);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +78,7 @@ class _RootAppState extends State<RootApp> {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (_) => DashboardScreen()),
-                        (route) => false);
+                    (route) => false);
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -84,18 +97,28 @@ class _RootAppState extends State<RootApp> {
           ],
         ),
       ),
-      body: getBody(),
-      bottomNavigationBar: getFooter(),
+      body: getBody(linkUrl: linkUrl),
+      bottomNavigationBar:
+          getFooter(linkUrl: linkUrl, callback: (val) => onDataChange(val)),
     );
   }
 
-  Widget getBody() {
+  Widget getBody({linkUrl}) {
     var size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
       height: size.height,
       child: Stack(
         children: [
+          Center(
+            child: Container(
+              width: 600,
+              height: 515,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(linkUrl == null ? url[0]: linkUrl), fit: BoxFit.cover)),
+            ),
+          ),
           Positioned(
             top: 15,
             right: 15,
@@ -106,27 +129,27 @@ class _RootAppState extends State<RootApp> {
                   borderRadius: BorderRadius.circular(12),
                   image: DecorationImage(
                       image: NetworkImage(
-                          "https://images.unsplash.com/photo-1543486958-d783bfbf7f8e?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8c2VsZmllfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"),
+                          "https://scontent-xsp1-3.xx.fbcdn.net/v/t1.6435-9/130926059_3586820534716638_8513722166239497233_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=IkscVKj289wAX-YL6B9&tn=SFmiPOEzDm-lJIPX&_nc_ht=scontent-xsp1-3.xx&oh=decaa20159161e5e460dae58eb70ca90&oe=60D39191"),
                       fit: BoxFit.cover)),
             ),
           ),
-          Center(
-            child: Container(
-              width: 150,
-              height: 150,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          "https://yt3.ggpht.com/yti/ANoDKi7t8UDpIBhR4vFhxH8woiUdojAZ-8kqhQKj3kki7g=s108-c-k-c0x00ffffff-no-rj"),
-                      fit: BoxFit.cover)),
-            ),
-          )
         ],
       ),
     );
   }
 
-  Widget getFooter() {
+  Widget getFooter({linkUrl, callback}) {
+    void onDataChange(val) {
+      setState(() {
+        linkUrl = val;
+      });
+    }
+    void change() {
+      setState(() {
+        print(linkUrl);
+        callback(linkUrl);
+      });
+    }
     return Container(
       width: double.infinity,
       height: 90,
@@ -144,6 +167,20 @@ class _RootAppState extends State<RootApp> {
             return InkWell(
                 onTap: () {
                   selectedTab(index);
+                  if(index == 2){
+                    if(linkUrl == url[0]){
+                      linkUrl = url[1];
+                    }else{
+                      linkUrl = url[0];
+                    }
+                    if(colorItems[2] == green){
+                      colorItems[2] = grey;
+                    }else{
+                      colorItems[2] = green;
+                    }
+                  }
+                  change();
+
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -172,12 +209,21 @@ class _RootAppState extends State<RootApp> {
     setState(() {
       pageIndex = index;
     });
-
+    if (index == 0) {
+      bottomItems[0] == FontAwesomeIcons.microphone
+          ? bottomItems[0] = FontAwesomeIcons.microphoneSlash
+          : bottomItems[0] = FontAwesomeIcons.microphone;
+    }
+    if (index == 1) {
+      bottomItems[1] == FontAwesomeIcons.video
+          ? bottomItems[1] = FontAwesomeIcons.videoSlash
+          : bottomItems[1] = FontAwesomeIcons.video;
+    }
     if (index == 3) {
       Navigator.push(
           context,
           MaterialPageRoute(
-              fullscreenDialog: true, builder: (_) => DashboardScreen()));
+              fullscreenDialog: true, builder: (_) => ParticipantsPage()));
     }
     if (index == 4) {
       getBottomSheet();
