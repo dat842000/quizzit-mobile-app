@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/components/subject_page.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/dtos/Subject.dart';
+import 'package:flutter_auth/utils/FirebaseUtils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart';
 
@@ -50,7 +51,10 @@ class _BodyState extends State<Body> {
     });
   }
 
-  uploadBlog() async {}
+  uploadBlog() async {
+    if(selectedImage!=null)
+    await FirebaseUtils.uploadImage(selectedImage!, (imageUrl) => print(imageUrl));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +114,6 @@ class _BodyState extends State<Body> {
                       onTap: () {
                         getImage().then((value) { print("1");
                             print(selectedImage);});
-
                       },
                       child: selectedImage != null
                           ? Container(

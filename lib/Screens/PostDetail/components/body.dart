@@ -71,8 +71,7 @@ class PostDetail extends State<Body> {
   void _onLoading() async {
     await Future.delayed(Duration(milliseconds: 1000));
     setState(() {
-      this._futurePageComment =
-          _loadComments(this.post.id, page: ++_currPage);
+      this._futurePageComment = _loadComments(this.post.id, page: ++_currPage);
     });
     _refreshController.loadComplete();
   }
@@ -205,15 +204,27 @@ class PostDetail extends State<Body> {
                     icon: Icon(Icons.send),
                     onPressed: () {
                       var content = _editingController.text;
-                      widget._createComment(this.post.id, content: content)
+                      widget
+                          ._createComment(this.post.id, content: content)
                           .then((value) {
                         _editingController.text = "";
-                        setState(() {
-                          this._commentList.add(value);
-                        });
+
+                        if (this._commentList.length > 0) {
+                          setState(() {
+                            this._commentList.add(value);
+                          });
+                        } else
+                          setState(() {
+                            this._futurePageComment =
+                                this._loadComments(this.post.id);
+                          });
                       }).catchError((error) {
-                        var problem = ProblemDetails.fromJson(json.decode(error));
-                        showAlert(context, problem.title??"Create Comment Failed", problem.message??"");
+                        var problem =
+                            ProblemDetails.fromJson(json.decode(error));
+                        showAlert(
+                            context,
+                            problem.title ?? "Create Comment Failed",
+                            problem.message ?? "");
                       });
                     }),
               ),
