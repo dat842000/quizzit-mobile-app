@@ -23,44 +23,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="373d570e-2bf5-4ec3-9fb5-3c88bd31a6dc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/Screens/Dashboard/components/alert_widget.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Screens/EditUserProfile/components/gender_choice.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Screens/videocall/components/participants_page.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Screens/videocall/components/root_app.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Screens/videocall/json/home_json.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Screens/videocall/json/participants_json.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Screens/videocall/json/root_app_json.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Screens/videocall/theme/colors.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/models/user/BaseUser.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/icons/a3ea4c90a81a5713113fd42e20bb312f-e-learning-logo-design-removebg.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icons/a3ea4c90a81a5713113fd42e20bb312f-e-learning-logo-design-removebg.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/ChangePassword/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/ChangePassword/components/body.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/body.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/subject_listtitle_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/subject_listtitle_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/subject_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/CreateGroup/components/subject_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/CreatePost/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/CreatePost/components/body.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/CreatePost/create_post.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/CreatePost/create_post.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/Dashboard/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Dashboard/components/body.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/EditPost/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/EditPost/components/body.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/EditPost/edit_post.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/EditPost/edit_post.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/EditUserProfile/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/EditUserProfile/components/body.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/ListUser/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/ListUser/components/body.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/PostDetail/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/PostDetail/components/body.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/EditUserProfile/edit_user_profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/EditUserProfile/edit_user_profile.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/UserInfo/components/profile_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/UserInfo/components/profile_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/UserViewGroup/components/GroupTopBar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/UserViewGroup/components/GroupTopBar.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/UserViewGroup/components/PostCard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/UserViewGroup/components/PostCard.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/UserViewGroup/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/UserViewGroup/components/body.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Welcome/components/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Welcome/components/body.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/videocall/components/chat.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/videocall/components/chat.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/videocall/settings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/videocall/settings.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/components/textfield_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/components/textfield_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dtos/Post.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dtos/Post.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/global/ListPost.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/global/ListPost.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/global/UserLib.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/global/UserLib.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/post/CreatePostModel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/post/CreatePostModel.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/comment/Comment.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/comment/Comment.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/comment/Comment.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/comment/Comment.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/group/Group.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/group/Group.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/group/Group.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/group/Group.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/paging/Page.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/paging/Page.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/post/CreatePostModel.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/post/CreatePostModel.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/post/Post.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/post/Post.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/post/Post.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/post/Post.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/signup/SignupRequest.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/signup/SignupRequest.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/subject/Subject.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/subject/Subject.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/updatepassword/UpdatePasswordRequest.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/updatepassword/UpdatePasswordRequest.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/user/UserInfo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/user/UserInfo.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/user/UserInfo.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/user/UserInfo.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/user/UserInfoUpdateModel.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/user/UserInfoUpdateModel.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/FirebaseUtils.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/FirebaseUtils.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,48 +128,49 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="163" y="0" key="#Project_Structure/0.0.1366.728/-144.-1080.1536.824@0.0.1366.728" timestamp="1624216055084" />
-    <state x="488" y="80" key="#com.intellij.ide.util.MemberChooser" timestamp="1624223086534">
+    <state x="488" y="80" key="#com.intellij.ide.util.MemberChooser" timestamp="1624274469929">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="488" y="80" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728/-144.-1080.1536.824@0.0.1366.728" timestamp="1624223086534" />
-    <state x="488" y="80" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1624114836826" />
+    <state x="488" y="80" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1624274469929" />
     <state x="92" y="92" width="1182" height="544" key="AVDManager" timestamp="1624252845912">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="92" y="92" width="1182" height="544" key="AVDManager/0.0.1366.728/-144.-1080.1536.824@0.0.1366.728" timestamp="1624215667003" />
     <state x="92" y="92" width="1182" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1624252845912" />
-    <state x="263" y="79" key="DBNavigator.DatasetFilterDialog" timestamp="1624121677941">
+    <state x="263" y="79" key="DBNavigator.DatasetFilterDialog" timestamp="1624271579593">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="263" y="79" key="DBNavigator.DatasetFilterDialog/0.0.1366.728/-144.-1080.1536.824@0.0.1366.728" timestamp="1624121677941" />
+    <state x="263" y="79" key="DBNavigator.DatasetFilterDialog/0.0.1366.728@0.0.1366.728" timestamp="1624271579593" />
     <state x="126" y="32" key="DiffContextDialog" timestamp="1623872025966">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="126" y="32" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1623872025966" />
-    <state width="1323" height="243" key="GridCell.Tab.0.bottom" timestamp="1624257730568">
+    <state width="1323" height="314" key="GridCell.Tab.0.bottom" timestamp="1624287621629">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1493" height="196" key="GridCell.Tab.0.bottom/0.0.1366.728/-144.-1080.1536.824@-144.-1080.1536.824" timestamp="1624176729927" />
     <state width="1323" height="243" key="GridCell.Tab.0.bottom/0.0.1366.728/-144.-1080.1536.824@0.0.1366.728" timestamp="1624225387142" />
-    <state width="1323" height="243" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1624257730568" />
-    <state width="1323" height="243" key="GridCell.Tab.0.center" timestamp="1624257730568">
+    <state width="1323" height="314" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1624287621629" />
+    <state width="1323" height="314" key="GridCell.Tab.0.center" timestamp="1624287621629">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1493" height="196" key="GridCell.Tab.0.center/0.0.1366.728/-144.-1080.1536.824@-144.-1080.1536.824" timestamp="1624176729927" />
     <state width="1323" height="243" key="GridCell.Tab.0.center/0.0.1366.728/-144.-1080.1536.824@0.0.1366.728" timestamp="1624225387141" />
-    <state width="1323" height="243" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1624257730568" />
-    <state width="1323" height="243" key="GridCell.Tab.0.left" timestamp="1624257730568">
+    <state width="1323" height="314" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1624287621629" />
+    <state width="1323" height="314" key="GridCell.Tab.0.left" timestamp="1624287621629">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1493" height="196" key="GridCell.Tab.0.left/0.0.1366.728/-144.-1080.1536.824@-144.-1080.1536.824" timestamp="1624176729927" />
     <state width="1323" height="243" key="GridCell.Tab.0.left/0.0.1366.728/-144.-1080.1536.824@0.0.1366.728" timestamp="1624225387141" />
-    <state width="1323" height="243" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1624257730568" />
-    <state width="1323" height="243" key="GridCell.Tab.0.right" timestamp="1624257730568">
+    <state width="1323" height="314" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1624287621629" />
+    <state width="1323" height="314" key="GridCell.Tab.0.right" timestamp="1624287621629">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1493" height="196" key="GridCell.Tab.0.right/0.0.1366.728/-144.-1080.1536.824@-144.-1080.1536.824" timestamp="1624176729927" />
     <state width="1323" height="243" key="GridCell.Tab.0.right/0.0.1366.728/-144.-1080.1536.824@0.0.1366.728" timestamp="1624225387142" />
-    <state width="1323" height="243" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1624257730568" />
+    <state width="1323" height="314" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1624287621629" />
     <state x="-89" y="-1004" width="1476" height="618" key="MergeDialog" timestamp="1624261591986">
       <screen x="-144" y="-1080" width="1536" height="824" />
     </state>

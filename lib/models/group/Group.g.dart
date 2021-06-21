@@ -18,7 +18,7 @@ Group _$GroupFromJson(Map<String, dynamic> json) {
     (json['subjects'] as List<dynamic>)
         .map((e) => Subject.fromJson(e as Map<String, dynamic>))
         .toList(),
-    UserInfo.fromJson(json['owner'] as Map<String, dynamic>),
+    BaseUser.fromJson(json['owner'] as Map<String, dynamic>),
     json['currentMemberStatus'] as int,
   );
 }

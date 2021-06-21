@@ -3,9 +3,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
+import 'package:flutter_auth/components/rounded_input_field.dart';
 import 'package:flutter_auth/components/textfield_widget.dart';
 import 'package:flutter_auth/global/ListPost.dart';
 import 'package:flutter_auth/models/group/Group.dart';
+import 'package:flutter_auth/utils/FirebaseUtils.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:image_picker/image_picker.dart';
 import '../../../global/PostLib.dart' as globals;
@@ -19,9 +21,10 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  String title = "";
-  File? selectedImage;
+  String _title = "";
+  File? _selectedImage;
   quill.QuillController _controller = quill.QuillController.basic();
+  TextEditingController _textEditingController = TextEditingController();
   bool _isLoading = false;
   Future getImage() async {
     var picker = new ImagePicker();
@@ -29,8 +32,8 @@ class _BodyState extends State<Body> {
 
     setState(() {
       if (image != null) {
-        selectedImage = File(image.path);
-        print(selectedImage);
+        _selectedImage = File(image.path);
+        print(_selectedImage);
       } else {
         print('No image selected.');
       }
@@ -84,11 +87,12 @@ class _BodyState extends State<Body> {
                   Container(
                       margin: EdgeInsets.symmetric(horizontal: 16),
                       width: MediaQuery.of(context).size.width,
-                      child: TextFieldWidget(
-                        label: "",onChanged: (name){
-                          this.title = name;
-                      },text: "Post title",
-                      )
+                      child: RoundedInputField(hintText: "Post Title", onChanged: (String value) =>this._title=value,)
+                      // TextFieldWidget(
+                      //   label: "",onChanged: (name){
+                      //     this.title = name;
+                      // },text: "Post title",
+                      // )
                   ),
                   SizedBox(
                     height: 10,
@@ -97,7 +101,7 @@ class _BodyState extends State<Body> {
                       onTap: () {
                         getImage();
                       },
-                      child: selectedImage != null
+                      child: _selectedImage != null
                           ? Container(
                               margin: EdgeInsets.symmetric(horizontal: 16),
                               height: 170,
@@ -105,7 +109,7 @@ class _BodyState extends State<Body> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: Image.file(
-                                  selectedImage!,
+                                  _selectedImage!,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -125,7 +129,7 @@ class _BodyState extends State<Body> {
                   SizedBox(
                     height: 8,
                   ),
-                  quill.QuillToolbar.basic(controller: _controller),
+                  quill.QuillToolbar.basic(controller: _controller,onImagePickCallback: (file)=>FirebaseUtils.uploadImage(file),),
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 16),
                     child: Column(

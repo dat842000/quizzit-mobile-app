@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,18 +18,20 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '../../../global/UserLib.dart' as globals;
 import 'alert_widget.dart';
-Future<Model.Page<Model.Group>> fetchGroupPage({String nameSearch="",int status=0,int page=1}) async {
-  var paging = PagingParam(page:page,sort: "createAt_desc");
-  Map<String,String> params = {
+
+Future<Model.Page<Model.Group>> fetchGroupPage(
+    {String nameSearch = "", int status = 0, int page = 1}) async {
+  var paging = PagingParam(page: page, sort: "createAt_desc");
+  Map<String, String> params = {
     ...paging.build(),
-    ...{"GroupName":nameSearch},
-    ...{"StatusId":status.toString()}
+    ...{"GroupName": nameSearch},
+    ...{"StatusId": status.toString()}
   };
-  var response = await fetch(Host.groups, HttpMethod.GET,params: params);
+  var response = await fetch(Host.groups, HttpMethod.GET, params: params);
+  print(response.body);
   var jsonRes = json.decode(response.body);
-  // print(response.body);
+  print(response.body);
   if (response.statusCode.isOk())
     return Model.Page<Model.Group>.fromJson(jsonRes, Model.Group.fromJsonModel);
   else
@@ -53,34 +55,36 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   late double _fabHeight = 56.0;
 
   late Future<Model.Page<Model.Group>> groupPageFuture;
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   int _currentPage = 1;
   String query = "";
-
 
   @override
   void initState() {
     setState(() {
       groupPageFuture = fetchGroupPage(page: 1);
     });
-    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500))
-    ..addListener(() {setState(() {
-
-    });});
-    _animationIcon = Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
-    _buttonColor =  ColorTween(begin: Colors.blue, end: Colors.red).animate(
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500))
+          ..addListener(() {
+            setState(() {});
+          });
+    _animationIcon =
+        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
+    _buttonColor = ColorTween(begin: Colors.blue, end: Colors.red).animate(
         CurvedAnimation(
             parent: _animationController,
-            curve: Interval(0.00,1.00,curve: Curves.linear))
-        );
+            curve: Interval(0.00, 1.00, curve: Curves.linear)));
 
     _translateButton = Tween<double>(begin: _fabHeight, end: -14.0).animate(
         CurvedAnimation(
             parent: _animationController,
-            curve: Interval(0.0,0.75,curve: _curve)));
+            curve: Interval(0.0, 0.75, curve: _curve)));
 
     super.initState();
   }
+
   @override
   void didUpdateWidget(Body oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -89,7 +93,7 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
     });
   }
 
-  void _onRefresh() async{
+  void _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 1000));
     setState(() {
       this.groupPageFuture = fetchGroupPage(page: 1);
@@ -97,10 +101,10 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
     _refreshController.refreshCompleted();
   }
 
-  void _onLoading() async{
+  void _onLoading() async {
     await Future.delayed(Duration(milliseconds: 1000));
     setState(() {
-      this.groupPageFuture = fetchGroupPage(page:++_currentPage);
+      this.groupPageFuture = fetchGroupPage(page: ++_currentPage);
     });
     _refreshController.loadComplete();
   }
@@ -112,26 +116,54 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   }
 
   Widget buttonCreate() {
-    return Container(child: FloatingActionButton(onPressed: () {Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => CreateGroupScreen(),
-    ));},tooltip: "Create Group",child: Icon(Icons.add),),);
+    return Container(
+      child: FloatingActionButton(
+        heroTag: "createGroup",
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => CreateGroupScreen(),
+          ));
+        },
+        tooltip: "Create Group",
+        child: Icon(Icons.add),
+      ),
+    );
   }
+
   Widget buttonJoin() {
-    return Container(child: FloatingActionButton(onPressed: () {Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => JoinGroupScreen(),
-    ));},tooltip: "Join Group",child: Icon(FontAwesomeIcons.signInAlt),),);
+    return Container(
+      child: FloatingActionButton(
+        heroTag: "joinGroup",
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => JoinGroupScreen(),
+          ));
+        },
+        tooltip: "Join Group",
+        child: Icon(FontAwesomeIcons.signInAlt),
+      ),
+    );
   }
+
   Widget buttonToggle() {
-    return Container(child: FloatingActionButton(backgroundColor: _buttonColor.value,
-      onPressed: animate,
-      tooltip: "Toggle",
-      child: AnimatedIcon(icon: AnimatedIcons.menu_close,progress: _animationIcon,),),);
+    return Container(
+      child: FloatingActionButton(
+        heroTag: "closeMenu",
+        backgroundColor: _buttonColor.value,
+        onPressed: animate,
+        tooltip: "Toggle",
+        child: AnimatedIcon(
+          icon: AnimatedIcons.menu_close,
+          progress: _animationIcon,
+        ),
+      ),
+    );
   }
+
   void animate() {
     if (!isOpen) {
       _animationController.forward();
-    }
-    else {
+    } else {
       _animationController.reverse();
     }
     isOpen = !isOpen;
@@ -224,10 +256,16 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Transform(transform: Matrix4.translationValues(0.0, _translateButton.value * 2.0, 0.0),
-          child: buttonCreate(),),
-          Transform(transform: Matrix4.translationValues(0.0, _translateButton.value, 0.0),
-            child: buttonJoin(),),
+          Transform(
+            transform: Matrix4.translationValues(
+                0.0, _translateButton.value * 2.0, 0.0),
+            child: buttonCreate(),
+          ),
+          Transform(
+            transform:
+                Matrix4.translationValues(0.0, _translateButton.value, 0.0),
+            child: buttonJoin(),
+          ),
           buttonToggle(),
         ],
       ),
@@ -235,10 +273,11 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   }
 
   Widget buildSearch() => SearchWidget(
-    text: query,
-    hintText: 'Group Name',
-    onChanged: searchGroup,
-  );
+        text: query,
+        hintText: 'Group Name',
+        onChanged: searchGroup,
+      );
+
   void searchGroup(String query) {
     //TODO SearchGroup
   }
@@ -294,16 +333,15 @@ class GroupsTitle extends StatelessWidget {
   GroupsTitle(this._group, {this.isLast = false});
 
   _showDialog(BuildContext context) {
-
     VoidCallback continueCallBack = () => {
-      Navigator.of(context).pop(),
-      // code on continue comes here
-      // setState()
-    };
-    BlurryDialog  alert = BlurryDialog("Application",
+          Navigator.of(context).pop(),
+          // code on continue comes here
+          // setState()
+        };
+    BlurryDialog alert = BlurryDialog(
+        "Application",
         "Tell us the reason why you want to join this group?",
         continueCallBack);
-
 
     showDialog(
       context: context,
@@ -330,7 +368,8 @@ class GroupsTitle extends StatelessWidget {
                 width: MediaQuery.of(context).size.width - 50,
                 height: 240,
                 decoration: BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20)),
                 child: Stack(
                   children: <Widget>[
                     ClipRRect(
@@ -409,14 +448,16 @@ class GroupsTitle extends StatelessWidget {
                                 Wrap(
                                   children: <Widget>[
                                     Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
                                       child: Icon(
                                         Icons.calendar_today_outlined,
                                         size: 18,
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(right: 14.0),
+                                      padding:
+                                          const EdgeInsets.only(right: 14.0),
                                       child: Text(
                                         DateFormat('EEE d MMM yyyy')
                                             .format(this._group.createAt),
@@ -427,14 +468,16 @@ class GroupsTitle extends StatelessWidget {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(right: 4.0),
+                                      padding:
+                                          const EdgeInsets.only(right: 4.0),
                                       child: Icon(
                                         Icons.account_circle_outlined,
                                         size: 20,
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(right: 14.0),
+                                      padding:
+                                          const EdgeInsets.only(right: 14.0),
                                       child: Text(
                                         this._group.totalMem.toString(),
                                         style: TextStyle(

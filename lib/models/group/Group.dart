@@ -1,5 +1,5 @@
 import 'package:flutter_auth/models/Codable.dart';
-import 'package:flutter_auth/models/user/UserInfo.dart';
+import 'package:flutter_auth/models/user/BaseUser.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:flutter_auth/models/subject/Subject.dart';
 part 'Group.g.dart';
@@ -13,7 +13,7 @@ class Group implements Decodable{
   DateTime createAt;
   int totalMem;
   List<Subject> subjects;
-  UserInfo owner;
+  BaseUser owner;
   int currentMemberStatus;
 
 

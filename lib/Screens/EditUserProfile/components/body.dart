@@ -5,12 +5,12 @@ import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
 import 'package:flutter_auth/components/rounded_image.dart';
 import 'package:flutter_auth/components/textfield_widget.dart';
 import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/models/user/UserInfo.dart';
+import 'package:flutter_auth/models/user/BaseUser.dart';
 
 class Body extends StatefulWidget {
   const Body(this._user);
 
-  final UserInfo _user;
+  final BaseUser _user;
 
   @override
   _BodyState createState() => _BodyState(_user);
@@ -18,7 +18,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   _BodyState(this._user);
-  final UserInfo _user;
+  final BaseUser _user;
 
   @override
   Widget build(BuildContext context) {
