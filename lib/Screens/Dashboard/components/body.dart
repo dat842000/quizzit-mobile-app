@@ -29,9 +29,8 @@ Future<Model.Page<Model.Group>> fetchGroupPage(
     ...{"StatusId": status.toString()}
   };
   var response = await fetch(Host.groups, HttpMethod.GET, params: params);
-  print(response.body);
+  // print(response.body);
   var jsonRes = json.decode(response.body);
-  print(response.body);
   if (response.statusCode.isOk())
     return Model.Page<Model.Group>.fromJson(jsonRes, Model.Group.fromJsonModel);
   else

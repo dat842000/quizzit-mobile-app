@@ -1,19 +1,24 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/Screens/PostDetail/post_detail.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
+import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/rounded_input_field.dart';
-import 'package:flutter_auth/components/textfield_widget.dart';
-import 'package:flutter_auth/global/ListPost.dart';
+import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart';
+import 'package:flutter_auth/models/post/CreatePostModel.dart';
+import 'package:flutter_auth/models/post/Post.dart';
+import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_auth/utils/FirebaseUtils.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:image_picker/image_picker.dart';
-import '../../../global/PostLib.dart' as globals;
 
 class Body extends StatefulWidget {
   final Group group;
+
   Body(this.group);
 
   @override
@@ -26,6 +31,7 @@ class _BodyState extends State<Body> {
   quill.QuillController _controller = quill.QuillController.basic();
   TextEditingController _textEditingController = TextEditingController();
   bool _isLoading = false;
+
   Future getImage() async {
     var picker = new ImagePicker();
     var image = await picker.getImage(source: ImageSource.gallery);
@@ -33,17 +39,24 @@ class _BodyState extends State<Body> {
     setState(() {
       if (image != null) {
         _selectedImage = File(image.path);
-        print(_selectedImage);
       } else {
         print('No image selected.');
       }
     });
   }
-  void createPost(){
-    var json = jsonEncode(_controller.document.toDelta().toJson());
-    var plainText = _controller.document.toPlainText();
-    print(json);
+
+  Future createPost() async {
+    var image = _selectedImage != null
+        ? await FirebaseUtils.uploadImage(_selectedImage!)
+        : null;
+    CreatePostModel model = CreatePostModel(
+        this._title, jsonEncode(_controller.document.toDelta().toJson()),image: image);
+    fetch(Host.groupPost(groupId: widget.group.id), HttpMethod.POST,data: model)
+      .then((value) {
+        navigate(context, PostDetailScreen(Post.fromJson(json.decode(value.body))));
+      });
   }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -61,12 +74,12 @@ class _BodyState extends State<Body> {
         title: Text('Create Post'),
         actions: <Widget>[
           GestureDetector(
-            onTap: () {
-              createPost();
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => UserViewScreen(widget.group)));
+            onTap: () async{
+              await createPost();
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => UserViewScreen(widget.group)));
             },
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16),
@@ -87,19 +100,23 @@ class _BodyState extends State<Body> {
                   Container(
                       margin: EdgeInsets.symmetric(horizontal: 16),
                       width: MediaQuery.of(context).size.width,
-                      child: RoundedInputField(hintText: "Post Title", onChanged: (String value) =>this._title=value,)
+                      child: RoundedInputField(
+                        icon: Icons.title,
+                        hintText: "Post Title",
+                        onChanged: (String value) => this._title = value,
+                      )
                       // TextFieldWidget(
                       //   label: "",onChanged: (name){
                       //     this.title = name;
                       // },text: "Post title",
                       // )
-                  ),
+                      ),
                   SizedBox(
                     height: 10,
                   ),
                   GestureDetector(
-                      onTap: () {
-                        getImage();
+                      onTap: () async{
+                        await getImage();
                       },
                       child: _selectedImage != null
                           ? Container(
@@ -129,13 +146,27 @@ class _BodyState extends State<Body> {
                   SizedBox(
                     height: 8,
                   ),
-                  quill.QuillToolbar.basic(controller: _controller,onImagePickCallback: (file)=>FirebaseUtils.uploadImage(file),),
+                  quill.QuillToolbar.basic(
+                    controller: _controller,
+                    onImagePickCallback: (file) =>
+                        FirebaseUtils.uploadImage(file),
+                  ),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: kPrimaryColor)),
+                    margin: EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
-                      children:[
-                        quill.QuillEditor.basic(
+                      children: [
+                        quill.QuillEditor(
                           controller: _controller,
+                          focusNode: FocusNode(),
+                          scrollController: ScrollController(),
+                          scrollable: true,
+                          autoFocus: true,
+                          expands: false,
+                          minHeight: 230,
+                          padding: EdgeInsets.all(10),
                           readOnly: false, // true for view only mode
                         ),
                       ],

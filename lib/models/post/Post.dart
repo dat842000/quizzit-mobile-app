@@ -14,7 +14,7 @@ class Post extends CreatePostModel implements Decodable{
   DateTime createdAt;
   BaseUser user;
 
-  Post(this.id,title,content,image, this.isActive, this.createdAt, this.user) : super(title, content, image);
+  Post(this.id,title,content,image, this.isActive, this.createdAt, this.user) : super(title, content, image:image);
   factory Post.fromJson(Map<String,dynamic>json)=>_$PostFromJson(json);
   static fromJsonModel(Map<String,dynamic>json)=>Post.fromJson(json);
 }

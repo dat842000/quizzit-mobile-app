@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_auth/Screens/PostDetail/post_detail.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/post/Post.dart';
+import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../constants.dart';
@@ -23,14 +26,14 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String subContent = _post.content.length > 100
-        ? _post.content.substring(0, 100) + "..."
-        : _post.content;
+    quill.Document document = quill.Document.fromJson(jsonDecode(_post.content));
+    String subContent = document.toPlainText().length > 100
+        ? document.toPlainText().substring(0, 100) + "..."
+        : document.toPlainText();
     // TODO: implement build
     return InkWell(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => PostDetailScreen(_post)));
+        navigate(context, PostDetailScreen(this._post));
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16.0),

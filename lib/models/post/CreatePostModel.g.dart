@@ -10,7 +10,7 @@ CreatePostModel _$CreatePostModelFromJson(Map<String, dynamic> json) {
   return CreatePostModel(
     json['title'] as String,
     json['content'] as String,
-    json['image'] as String?,
+    image: json['image'] as String?,
   );
 }
 

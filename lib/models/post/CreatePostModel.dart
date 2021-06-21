@@ -9,7 +9,7 @@ class CreatePostModel implements Encodable{
   String content;
   String? image;
 
-  CreatePostModel(this.title, this.content, this.image);
+  CreatePostModel(this.title, this.content, {this.image});
 
   @override
   Map<String, dynamic> toJson() => _$CreatePostModelToJson(this);
