@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/PostDetail/components/comment_area.dart';
+import 'package:flutter_auth/Screens/PostDetail/model/comments_data.dart'
+    as comments;
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/comment/Comment.dart';
@@ -12,6 +14,8 @@ import 'package:flutter_auth/models/paging/PagingParams.dart';
 import 'package:flutter_auth/models/post/Post.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
+import 'package:flutter_quill/flutter_quill.dart' as quill;
+import 'package:flutter_quill/widgets/simple_viewer.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Body extends StatefulWidget {
@@ -79,103 +83,78 @@ class PostDetail extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            Icons.arrow_back_ios,
-          ),
-        ),
-        centerTitle: true,
-        title: Text(post.title.toUpperCase()),
-      ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: SmartRefresher(
-              enablePullUp: !_isLast,
-              enablePullDown: false,
-              onLoading: _onLoading,
-              controller: _refreshController,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom:
-                                  BorderSide(color: Colors.black, width: 1.0))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            post.image.isEmpty
-                                ? Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 8.0, bottom: 8.0),
-                                  )
-                                : CachedNetworkImage(
-                                    imageUrl: post.image,
-                                    height: 225,
-                                    width: MediaQuery.of(context).size.width,
-                                    fit: BoxFit.cover,
-                                  ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                              child: Align(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 5, bottom: 3),
-                                  child: Text(
-                                    post.title.toUpperCase(),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 22),
-                                  ),
-                                ),
-                                alignment: Alignment.centerLeft,
-                              ),
-                            ),
-                            Text(
-                              post.content,
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    FutureBuilder<Models.Page<Comment>>(
-                        future: _futurePageComment,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasError)
-                            return Text("${snapshot.error}");
-                          else if (snapshot.hasData) {
-                            this._isLast = snapshot.data!.isLast;
-                            if (!this._commentList.any((element) =>
-                                element.id == snapshot.data!.content[0].id))
-                              this._commentList = [
-                                ...this._commentList,
-                                ...snapshot.data!.content
-                              ];
-                            return CommentArea(this._commentList);
-                          }
-                          return CircularProgressIndicator();
-                        })
-                  ],
-                ),
-              ),
+        appBar: AppBar(
+          leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.arrow_back_ios,
             ),
           ),
+          centerTitle: true,
+          title: Text(post.title.toUpperCase()),
+        ),
+        body: Column(children: <Widget>[
+          Expanded(
+              child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom:
+                                BorderSide(color: Colors.black, width: 1.0))),
+                    child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              post.image == null
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 8.0, bottom: 8.0),
+                                    )
+                                  : CachedNetworkImage(
+                                      imageUrl: post.image??"",
+                                      height: 225,
+                                      width: MediaQuery.of(context).size.width,
+                                      fit: BoxFit.cover,
+                                    ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 8.0, bottom: 8.0),
+                                child: Align(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 5, bottom: 3),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        post.title.toUpperCase(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 22),
+                                      ),
+                                    ),
+                                  ),
+                                  alignment: Alignment.centerLeft,
+                                ),
+                              ),
+                              QuillSimpleViewer(
+                                controller: quill.QuillController(
+                                    document: quill.Document.fromJson(json.decode(this.post.content)),
+                                    selection:
+                                        TextSelection.collapsed(offset: 0)),
+                              ),
+                            ]))),
 
-          ///
-          _buildTextComposer()
-        ],
-      ),
-    );
+                ///
+                _buildTextComposer()
+              ],
+            ),
+          ))
+        ]));
   }
 
   ///

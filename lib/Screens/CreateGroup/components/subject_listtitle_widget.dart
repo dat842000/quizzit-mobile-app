@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/dtos/Subject.dart';
+import 'package:flutter_auth/models/subject/Subject.dart';
 
 class SubjectListTitleWidget extends StatelessWidget {
   final Subject subject;

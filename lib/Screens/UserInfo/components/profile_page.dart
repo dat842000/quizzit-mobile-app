@@ -176,9 +176,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Row(
               children: [
                 Icon(iconTitle),
-                SizedBox(
-                  width: 5,
-                ),
+                SizedBox(width: 5,),
                 Text(
                   title,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),

@@ -7,7 +7,7 @@ part 'CreatePostModel.g.dart';
 class CreatePostModel implements Encodable{
   String title;
   String content;
-  String image;
+  String? image;
 
   CreatePostModel(this.title, this.content, this.image);
 

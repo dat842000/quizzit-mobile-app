@@ -65,25 +65,26 @@ class PostCard extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        this.post.user.id == int.parse(FirebaseAuth.instance.currentUser!.uid)
-                            ? PopupMenuButton<String>(
-                          icon: Icon(
-                            FontAwesomeIcons.ellipsisH,
-                            color: kPrimaryColor,
-                            size: 20,
-                          ),
-                          onSelected: choiceAction,
-                          itemBuilder: (BuildContext context) {
-                            return Constants.postSetting
-                                .map((String choice) {
-                              return PopupMenuItem<String>(
-                                  value: choice,
-                                  child: popupButton(
-                                      text: choice, context: context));
-                            }).toList();
-                          },
-                        )
-                            : SizedBox()
+                        //TODO Recheck
+                        // this.post.user.id == int.parse(FirebaseAuth.instance.currentUser!.uid)
+                        //     ? PopupMenuButton<String>(
+                        //   icon: Icon(
+                        //     FontAwesomeIcons.ellipsisH,
+                        //     color: kPrimaryColor,
+                        //     size: 20,
+                        //   ),
+                        //   onSelected: choiceAction,
+                        //   itemBuilder: (BuildContext context) {
+                        //     return Constants.postSetting
+                        //         .map((String choice) {
+                        //       return PopupMenuItem<String>(
+                        //           value: choice,
+                        //           child: popupButton(
+                        //               text: choice, context: context));
+                        //     }).toList();
+                        //   },
+                        // )
+                        //     : SizedBox()
                       ],
                     ),
                   ],
@@ -93,13 +94,13 @@ class PostCard extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      this.post.image.isEmpty
+                      this.post.image!.isEmpty
                           ? Padding(
                         padding:
                         const EdgeInsets.only(top: 8.0, bottom: 8.0),
                       )
                           : CachedNetworkImage(
-                        imageUrl: this.post.image,
+                        imageUrl: this.post.image!,
                         height: 200,
                         width:
                         MediaQuery
@@ -130,42 +131,42 @@ class PostCard extends StatelessWidget {
     );
   }
 
-  Widget popupButton({text, context}) {
-    return Container(
-        child: text == "Edit"
-            ? InkWell(
-          onTap: () {
-            navigate(context, EditPostScreen());
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                text,
-                style: TextStyle(color: kPrimaryColor),
-              ),
-              Icon(
-                Icons.app_registration,
-                color: kPrimaryColor,
-              )
-            ],
-          ),
-        )
-            : InkWell(
-          onTap: () {},
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                text,
-                style: TextStyle(color: Colors.redAccent),
-              ),
-              Icon(
-                Icons.delete,
-                color: Colors.redAccent,
-              )
-            ],
-          ),
-        ));
-  }
+  // Widget popupButton({text, context}) {
+  //   return Container(
+  //       child: text == "Edit"
+  //           ? InkWell(
+  //         onTap: () {
+  //           navigate(context, EditPostScreen());
+  //         },
+  //         child: Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           children: [
+  //             Text(
+  //               text,
+  //               style: TextStyle(color: kPrimaryColor),
+  //             ),
+  //             Icon(
+  //               Icons.app_registration,
+  //               color: kPrimaryColor,
+  //             )
+  //           ],
+  //         ),
+  //       )
+  //           : InkWell(
+  //         onTap: () {},
+  //         child: Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           children: [
+  //             Text(
+  //               text,
+  //               style: TextStyle(color: Colors.redAccent),
+  //             ),
+  //             Icon(
+  //               Icons.delete,
+  //               color: Colors.redAccent,
+  //             )
+  //           ],
+  //         ),
+  //       ));
+  // }
 }
