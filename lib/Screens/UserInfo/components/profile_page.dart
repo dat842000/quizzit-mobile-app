@@ -63,13 +63,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    // final user = DTO.User(1,
-    //     "Dat Nguyen",
-    //     "https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.6435-9/172600480_2894518494156867_1493738166156079949_n.jpg?_nc_cat=106&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=1aMndlcPap0AX85TE5l&_nc_ht=scontent.fsgn5-6.fna&oh=ef2bd4b0b4f5667097fff27829b948d5&oe=60D66539",
-    //     "dnn8420@gmail.com",
-    //     DateTime.now()
-    // );
-
     return Scaffold(
         appBar: buildAppBar(context),
         body: FutureBuilder(
@@ -176,9 +169,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Row(
               children: [
                 Icon(iconTitle),
-                SizedBox(
-                  width: 5,
-                ),
+                SizedBox(width: 5,),
                 Text(
                   title,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),

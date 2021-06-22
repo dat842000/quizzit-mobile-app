@@ -1,32 +1,34 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/components/GroupTopBar.dart';
-import 'package:flutter_auth/Screens/UserViewGroup/components/PostCard.dart';
+import 'package:flutter_auth/Screens/videocall/components/root_app.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
 import 'package:flutter_auth/models/paging/PagingParams.dart';
 import 'package:flutter_auth/models/post/Post.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class Body extends StatefulWidget {
-  final Group group;
+import 'PostCard.dart';
 
-  Body(this.group);
+class Body extends StatefulWidget {
+  final Group _group;
+
+  Body(this._group);
 
   Future<Model.Page<Post>> _fetchPost(
       {int page = 1, int pageSize = 3, String sort = "createdAt_desc"}) async {
     var paging = PagingParam(page: page, pageSize: pageSize, sort: sort);
     Map<String, String> params = {...paging.build()};
     var response = await fetch(
-        "${Host.groups}/${group.id}/posts", HttpMethod.GET,
+        "${Host.groups}/${_group.id}/posts", HttpMethod.GET,
         params: params);
     var body = json.decode(response.body);
-    // log(response.body);
     if (response.statusCode.isOk()) {
       return Model.Page.fromJson(body, Post.fromJsonModel);
     } else {
@@ -35,19 +37,19 @@ class Body extends StatefulWidget {
   }
 
   @override
-  State createState() => _BodyState(group,List.empty(growable: true));
+  State createState() => _BodyState(_group, List.empty(growable: true));
 }
 
 class _BodyState extends State<Body> {
-  final Group group;
+  final Group _group;
   int _currentPage = 1;
   bool _isLast = false;
   List<PostCard> _postList;
   late Future<Model.Page<Post>> _futurePostPage;
   RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController(initialRefresh: false);
 
-  _BodyState(this.group,this._postList);
+  _BodyState(this._group, this._postList);
 
   @override
   void initState() {
@@ -61,12 +63,11 @@ class _BodyState extends State<Body> {
   }
 
   Future _pullRefresh() async {
-    _postList.clear();
-    _currentPage = 1;
-    _isLast=false;
     await Future.delayed(Duration(milliseconds: 1000));
-    print(_postList);
     setState(() {
+      _postList.clear();
+      _currentPage = 1;
+      _isLast = false;
       _futurePostPage = widget._fetchPost(page: _currentPage);
     });
     _refreshController.refreshCompleted();
@@ -89,15 +90,37 @@ class _BodyState extends State<Body> {
           icon: Icon(Icons.arrow_back_ios),
           color: Colors.white,
           iconSize: 20,
-          onPressed: () => Navigator.pop(context),
+          onPressed: () =>
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DashboardScreen()),
+              ),
         ),
         centerTitle: true,
-        title: Text(group.name),
+        title: Text(_group.name),
+        actions: [
+          IconButton(
+              icon: Icon(
+                FontAwesomeIcons.video,
+                size: 26,
+                color: Colors.white,
+              ),
+              color: Colors.white,
+              onPressed: () async {
+                // await _handleCameraAndMic(Permission.camera);
+                // await _handleCameraAndMic(Permission.microphone);
+                // push video page with given channel name
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RootApp()),
+                );
+              }),
+        ],
       ),
       body: SmartRefresher(
-        enablePullUp: !_isLast,
-        enablePullDown: true,
         controller: _refreshController,
+        enablePullDown: true,
+        enablePullUp: !_isLast,
         onRefresh: _pullRefresh,
         onLoading: _pullLoading,
         header: WaterDropHeader(),
@@ -110,7 +133,10 @@ class _BodyState extends State<Body> {
                   children: <Widget>[
                     Container(
                       width: double.infinity,
-                      height: MediaQuery.of(context).size.width * 45 / 100,
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .width * 45 / 100,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(30.0),
@@ -123,21 +149,18 @@ class _BodyState extends State<Body> {
                         ],
                       ),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(30.0),
-                          bottomRight: Radius.circular(30.0),
-                        ),
-                        child: CachedNetworkImage(
-                          imageUrl: group.image ?? "",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(30.0),
+                            bottomRight: Radius.circular(30.0),
+                          ),
+                          child: CachedNetworkImage(
+                            imageUrl: _group.image!,
+                            fit: BoxFit.cover,
+                          )),
                     ),
                   ],
                 ),
-                GroupTopBar(group: group),
-
-                ///Build Post Cards
+                GroupTopBar(this._group),
                 FutureBuilder<Model.Page<Post>>(
                     future: _futurePostPage,
                     builder: (context, snapshot) {
@@ -146,9 +169,7 @@ class _BodyState extends State<Body> {
                       else if (snapshot.hasData) {
                         _isLast = snapshot.data!.isLast;
                         snapshot.data!.content.map((item) {
-                          var post = PostCard(
-                            post: item,
-                          );
+                          var post = PostCard(item,_group);
                           if (!_postList
                               .any((element) => element.post.id == item.id)) {
                             _postList.add(post);
@@ -161,8 +182,6 @@ class _BodyState extends State<Body> {
                       }
                       return Center(child: CircularProgressIndicator());
                     })
-
-                ///End Post Cards
               ],
             ),
           ),

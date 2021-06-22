@@ -150,15 +150,15 @@ class ListUser extends StatelessWidget {
     return SingleChildScrollView(
       child: !isAdmin ? Column(
         children: [
-          UserCard(temp[0], Colors.red[400], 1, isAdmin, listUser, setState: setState),
-          UserCard(temp[1], Colors.yellow[400], 2, isAdmin, listUser, setState: setState),
-          UserCard(temp[2], Colors.blue, 3, isAdmin, listUser, setState: setState),
+          UserCard(temp[0], Colors.red[400], 1, isAdmin, listUser, "", setState: setState),
+          UserCard(temp[1], Colors.yellow[400], 2, isAdmin, listUser, "", setState: setState),
+          UserCard(temp[2], Colors.blue, 3, isAdmin, listUser, "", setState: setState),
           ...List.generate(
               temp.length - 3,
               (index) => Column(
                     children: [
                       UserCard(
-                          temp[index + 3], Colors.grey[400], index + 4, isAdmin, listUser,  setState: setState)
+                          temp[index + 3], Colors.grey[400], index + 4, isAdmin, listUser, "",  setState: setState)
                     ],
                   )),
         ],
@@ -166,12 +166,17 @@ class ListUser extends StatelessWidget {
           children: [
           ...List.generate(
               listUser.length,
-            (index) => Column(
+            (index) => index!=1 ? Column(
                 children: [
                   UserCard(
-                      temp[index], Colors.grey[400], index, isAdmin, listUser, setState: setState)
+                      temp[index], Colors.grey[400], index, isAdmin, listUser, "", setState: setState)
                 ],
-              )),
+              ) : Column(
+              children: [
+                UserCard(
+                    temp[index], Colors.grey[400], index, isAdmin, listUser, "", setState: setState)
+              ],
+            )),
           ]
       )
     );
@@ -185,8 +190,9 @@ class UserCard extends StatelessWidget {
   bool isAdmin;
   Function() setState;
   List<User> listUser;
+  String reason;
 
-  UserCard(this.user, this.color, this.index, this.isAdmin, this.listUser, {required this.setState});
+  UserCard(this.user, this.color, this.index, this.isAdmin, this.listUser, this.reason, {required this.setState});
 
   @override
   Widget build(BuildContext context) {
@@ -230,7 +236,12 @@ class UserCard extends StatelessWidget {
                                   color: Colors.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold)),
-                        ),
+                          subtitle: Text(
+                            reason,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,)),
+                          ),
                       ])),
             )
           : Container(

@@ -37,7 +37,9 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return Scaffold(
         appBar: buildAppBar(context, UserInfoScreen()),
         body: Container(
@@ -61,21 +63,6 @@ class _BodyState extends State<Body> {
                   SizedBox(
                     height: 25,
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 15, bottom: 15),
-                  //   child: SizedBox(
-                  //     width: size.width * 0.85,
-                  //     child: Text(
-                  //       "Enter your email address and we will send the new password reset to login",
-                  //       textAlign: TextAlign.center,
-                  //       style: TextStyle(
-                  //         fontSize: 18,
-                  //         fontWeight: FontWeight.normal,
-                  //         color: Colors.black,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                   inputField(
                       label: "Current Password",
                       isRequired: true,
@@ -93,53 +80,64 @@ class _BodyState extends State<Body> {
                       exp: setConfirmedPassword),
 
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 30),
+                    margin: EdgeInsets.symmetric(vertical: 10),
                     width: size.width * 0.8,
                     child: ClipRRect(
                       // borderRadius: BorderRadius.circular(29),
                       child: FlatButton(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 40),
                         color: Colors.blue[500],
-                        onPressed: () async {
-                          if (this._updatePasswordRequest.newPassword.isEmpty ||
-                              this._updatePasswordRequest.oldPassword.isEmpty) {
-                            showAlert(context, "Update Failed",
-                                "Some required information is missing");
-                          } else if (this._confirmedPassword !=
-                              this._updatePasswordRequest.newPassword)
-                            showAlert(context, "Update Failed",
-                                "Confirm Password not matched");
-                          var response = await fetch(
-                              "${Host.users}/password", HttpMethod.PUT,
-                              data: this._updatePasswordRequest);
-                          if (response.statusCode.isOk()) {
-                            var token = LoginResponse.fromJson(json.decode(response.body));
-                            showAlert(context, "Update Success",
-                                "Your Password has been updated successfully",
-                                    (ctx)=>{
-                                      FirebaseAuth.instance.signInWithCustomToken(token.customToken)
-                                          .then((value) => navigate(context, UserInfoScreen()))
-                                    });
-                          } else {
-                            var problem = ProblemDetails.fromJson(
-                                json.decode(response.body));
-                            showAlert(
-                                context, problem.title!, problem.message!);
-                          }
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return UserInfoScreen();
+                              },
+                            ),
+                          );
                         },
                         child: Text(
-                          "Update Password",
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
+                          "Send new pass to your email",
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),
                   ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return UserInfoScreen();
+                          },
+                        ),
+                      );
+                    },
+
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.arrow_back_ios, size: 12,
+                          color: kPrimaryColor,),
+                        SizedBox(width: 2,),
+                        Text(
+                          "Back",
+                          style: TextStyle(
+                            color: kPrimaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
           ),
-        ));
+        )
+    );
   }
 }

@@ -14,7 +14,7 @@ Post _$PostFromJson(Map<String, dynamic> json) {
     json['image'],
     json['isActive'] as bool,
     DateTime.parse(json['createdAt'] as String),
-    UserInfo.fromJson(json['user'] as Map<String, dynamic>),
+    BaseUser.fromJson(json['user'] as Map<String, dynamic>),
   );
 }
 

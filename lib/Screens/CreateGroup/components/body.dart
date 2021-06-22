@@ -2,11 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/components/subject_page.dart';
+import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
 import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/dtos/Subject.dart';
+import 'package:flutter_auth/models/group/Group.dart';
+import 'package:flutter_auth/models/subject/Subject.dart';
 import 'package:flutter_auth/utils/FirebaseUtils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart';
+
+import '../../../global/UserLib.dart' as globals;
 
 class Body extends StatefulWidget {
   const Body({
@@ -51,9 +55,12 @@ class _BodyState extends State<Body> {
     });
   }
 
-  uploadBlog() async {
-    if(selectedImage!=null)
-    await FirebaseUtils.uploadImage(selectedImage!, (imageUrl) => print(imageUrl));
+  createGroup() {
+    //TODO CreateGroup
+    // Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => UserViewScreen(newGroup)));
   }
 
   @override
@@ -88,7 +95,7 @@ class _BodyState extends State<Body> {
         actions: <Widget>[
           GestureDetector(
             onTap: () {
-              uploadBlog();
+              createGroup();
             },
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16),
@@ -112,8 +119,9 @@ class _BodyState extends State<Body> {
                   ),
                   GestureDetector(
                       onTap: () {
-                        getImage().then((value) { print("1");
+                        getImage().then((value) {
                             print(selectedImage);});
+
                       },
                       child: selectedImage != null
                           ? Container(
@@ -148,17 +156,55 @@ class _BodyState extends State<Body> {
                     margin: EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text("Group Name ",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            Text("*",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.red,
+                                ))
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom:8.0),
+                          padding: const EdgeInsets.only(bottom: 8.0),
                           child: TextField(
                             decoration: InputDecoration(
-                              hintText: "Group Name",
+                              hintText: "Group Name...",
                               border: OutlineInputBorder(),
                             ),
                             onChanged: (val) {
                               groupName = val;
                             },
                           ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text("Quiz Size ",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            Text("*",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.red,
+                                ))
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
@@ -173,7 +219,28 @@ class _BodyState extends State<Body> {
                             },
                           ),
                         ),
-                        Card(child: buildChoosingSubjects(),)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text("Subjects ",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            Text("*",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.red,
+                                ))
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Card(
+                          child: buildChoosingSubjects(),
+                        )
                       ],
                     ),
                   )
@@ -197,6 +264,7 @@ class _BodyState extends State<Body> {
       );
       if (subjects == null) return;
       setState(() => this.subjects = subjects);
+
     };
     return buildSubjectPicker(
       title: 'SelectSubjects',

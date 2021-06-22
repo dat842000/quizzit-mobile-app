@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/components/subject_listtitle_widget.dart';
-import 'package:flutter_auth/dtos/Subject.dart';
+import 'package:flutter_auth/models/subject/Subject.dart';
 
 class SubjectPage extends StatefulWidget {
   final List<Subject> subjects;

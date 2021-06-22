@@ -12,7 +12,7 @@ Comment _$CommentFromJson(Map<String, dynamic> json) {
     json['content'] as String,
     json['image'] as String?,
     DateTime.parse(json['createdAt'] as String),
-    UserInfo.fromJson(json['user'] as Map<String, dynamic>),
+    BaseUser.fromJson(json['user'] as Map<String, dynamic>),
   );
 }
 

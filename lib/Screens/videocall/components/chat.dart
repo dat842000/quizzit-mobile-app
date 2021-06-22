@@ -1,6 +1,5 @@
-import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/videocall/components/call.dart';
+import 'package:flutter_auth/Screens/videocall/components/root_app.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -185,8 +184,7 @@ class _ChatScreenState extends State<ChatScreen> {
             onPressed: () {
               model.Message mes = new model.Message(
                   sender: currentUser,
-                  time:
-                      "${DateFormat('hh:mm a').format(DateTime.now())}",
+                  time: "${DateFormat('hh:mm a').format(DateTime.now())}",
                   text: controller.text,
                   unread: true);
               model.messages.insert(0, mes);
@@ -229,29 +227,6 @@ class _ChatScreenState extends State<ChatScreen> {
             onPressed: () {
               Navigator.pop(context);
             }),
-        actions: [
-          IconButton(
-              icon: Icon(
-                FontAwesomeIcons.video,
-                size: 26,
-                color: Colors.white,
-              ),
-              color: Colors.white,
-              onPressed: () async {
-                await _handleCameraAndMic(Permission.camera);
-                await _handleCameraAndMic(Permission.microphone);
-                // push video page with given channel name
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CallPage(
-                      channelName: "test",
-                      role: ClientRole.Broadcaster,
-                    ),
-                  ),
-                );
-              }),
-        ],
       ),
       body: Column(
         children: <Widget>[
