@@ -33,6 +33,7 @@ class _RootAppState extends State<RootApp> {
     // TODO: implement initState
     super.initState();
     colorItems[2] = grey;
+    bottomItems[1] = FontAwesomeIcons.video;
   }
 
   @override
