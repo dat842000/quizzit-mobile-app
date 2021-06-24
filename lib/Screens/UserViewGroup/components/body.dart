@@ -54,7 +54,7 @@ class _BodyState extends State<Body> {
           ),
         ),
         centerTitle: true,
-        title: Text(group.name),
+        title: Text(group.name,style: TextStyle(fontWeight: FontWeight.bold),),
         actions: [
           Stack(
             children: [
