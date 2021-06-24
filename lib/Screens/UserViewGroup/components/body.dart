@@ -44,9 +44,10 @@ class _BodyState extends State<Body> {
     return Scaffold(
       backgroundColor: Color(0xffe4e6eb),
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
-          color: Colors.white,
+          color: kPrimaryColor,
           iconSize: 20,
           onPressed: () => Navigator.push(
             context,
@@ -54,7 +55,7 @@ class _BodyState extends State<Body> {
           ),
         ),
         centerTitle: true,
-        title: Text(group.name),
+        title: Text(group.name,style: TextStyle(color: kPrimaryColor,fontWeight: FontWeight.bold),),
         actions: [
           Stack(
             children: [
@@ -62,7 +63,7 @@ class _BodyState extends State<Body> {
                 icon: Icon(
                   FontAwesomeIcons.video,
                   size: 26,
-                  color: Colors.white,
+                  color: kPrimaryColor,
                 ),
                 color: Colors.white,
                 onPressed: () async {
@@ -84,7 +85,7 @@ class _BodyState extends State<Body> {
                     color: Color(0xFF00BF6D),
                     shape: BoxShape.circle,
                     border: Border.all(
-                        color: kPrimaryColor,
+                        color: Colors.white,
                         width: 1),
                   ),
                   child: Center(child: Text("9",style: TextStyle(fontWeight: FontWeight.bold),)),
@@ -114,6 +115,7 @@ class _BodyState extends State<Body> {
                           color: kPrimaryColor,
                         ),
                       ],
+                      // border: Border(bottom: BorderSide(color: Colors.black54, width: 2))
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
@@ -134,40 +136,40 @@ class _BodyState extends State<Body> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
+                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                 child: Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      // border: Border(bottom: BorderSide(color: Colors.black54, width: 2),top: BorderSide(color: Colors.black54, width: 2)),
+                  ),
                   height: 76,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: [
-                      Container(
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => CreatePostScreen(group),
-                            ));
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 16.0, right: 8.0, top: 8, bottom: 8),
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(25.0)),
-                              child: Container(
-                                color: Color(0xFF309398),
-                                height: 60,
-                                width: 60,
-                                child: Icon(
-                                  FontAwesomeIcons.plusSquare,
-                                  size: 26,
-                                  color: Colors.white,
-                                ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => CreatePostScreen(group),
+                          ));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 16.0, right: 8.0, top: 8, bottom: 8),
+                          child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25.0)),
+                            child: Container(
+                              color: Color(0xFF309398),
+                              height: 60,
+                              width: 60,
+                              child: Icon(
+                                FontAwesomeIcons.plusSquare,
+                                size: 26,
+                                color: Colors.white,
                               ),
                             ),
                           ),
                         ),
-                        // width: 62,
                       ),
                       InkWell(
                         onTap: () {

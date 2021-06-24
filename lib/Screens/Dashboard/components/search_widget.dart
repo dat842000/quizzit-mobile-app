@@ -31,7 +31,7 @@ class _SearchWidgetState extends State<SearchWidget> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: Colors.white,
-        border: Border.all(color: Colors.black26),
+        border: Border.all(color: Colors.black54,width: 2),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: TextField(

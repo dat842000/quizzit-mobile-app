@@ -122,11 +122,11 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     itemsData = [...widget.itemsData];
     return Scaffold(
-      backgroundColor: Color(0xffe4e6eb),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         brightness: Brightness.light,
-        backgroundColor: Color(0xffe4e6eb),
+        backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: kPrimaryColor),
         leading: InkWell(
           child: Icon(FontAwesomeIcons.userCircle),
@@ -343,7 +343,9 @@ class GroupsTitle extends StatelessWidget {
                 height: 245,
                 decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(20)),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.black54,width: 2)
+                ),
                 child: Stack(
                   children: <Widget>[
                     ClipRRect(
@@ -528,7 +530,7 @@ class GroupsTitle extends StatelessWidget {
                                       ),
                                       Padding(
                                         padding:
-                                            const EdgeInsets.only(right: 10),
+                                            const EdgeInsets.only(right: 5),
                                         child: group.isJoin == 0
                                             ? FlatButton(
                                                 minWidth: 110,

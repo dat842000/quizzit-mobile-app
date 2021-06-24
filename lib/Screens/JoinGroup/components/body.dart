@@ -16,7 +16,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Color(0xffe4e6eb),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
@@ -40,7 +40,7 @@ class _BodyState extends State<Body> {
             )
           ],
         ),
-        backgroundColor: Color(0xffe4e6eb),
+        backgroundColor: Colors.white,
         elevation: 0.0,
         actions: <Widget>[
           GestureDetector(

@@ -21,7 +21,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  String groupName="" , valueChoose="";
+  String groupName = "", valueChoose = "";
   dynamic quizSize;
   List listItem = [
     "Toan",
@@ -37,7 +37,7 @@ class _BodyState extends State<Body> {
     "Ngu Van",
     "GDQP"
   ];
-  String subject="";
+  String subject = "";
   File? selectedImage;
   bool _isLoading = false;
   List<Subject> subjects = [];
@@ -56,19 +56,20 @@ class _BodyState extends State<Body> {
 
   createGroup() {
     List<String> subject = [];
-    subjects.forEach((element) {subject.add(element.name);});
-    Group newGroup = new Group(groupName, selectedImage!.path, DateTime.now(), subject, int.parse(quizSize), 1, 1);
+    subjects.forEach((element) {
+      subject.add(element.name);
+    });
+    Group newGroup = new Group(groupName, selectedImage!.path, DateTime.now(),
+        subject, int.parse(quizSize), 1, 1);
     globals.itemsData.add(newGroup);
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => UserViewScreen(newGroup)));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => UserViewScreen(newGroup)));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffe4e6eb),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
@@ -92,7 +93,7 @@ class _BodyState extends State<Body> {
             )
           ],
         ),
-        backgroundColor: Color(0xffe4e6eb),
+        backgroundColor: Colors.white,
         elevation: 0.0,
         actions: <Widget>[
           GestureDetector(
@@ -122,8 +123,8 @@ class _BodyState extends State<Body> {
                   GestureDetector(
                       onTap: () {
                         getImage().then((value) {
-                            print(selectedImage);});
-
+                          print(selectedImage);
+                        });
                       },
                       child: selectedImage != null
                           ? Container(
@@ -142,8 +143,10 @@ class _BodyState extends State<Body> {
                               margin: EdgeInsets.symmetric(horizontal: 16),
                               height: 170,
                               decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20)),
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                      color: Colors.black54, width: 2)
+                              ),
                               width: MediaQuery.of(context).size.width,
                               child: Icon(
                                 Icons.add_a_photo,
@@ -240,9 +243,7 @@ class _BodyState extends State<Body> {
                         SizedBox(
                           height: 5,
                         ),
-                        Card(
-                          child: buildChoosingSubjects(),
-                        )
+                        buildChoosingSubjects()
                       ],
                     ),
                   )
@@ -266,7 +267,6 @@ class _BodyState extends State<Body> {
       );
       if (subjects == null) return;
       setState(() => this.subjects = subjects);
-
     };
     return buildSubjectPicker(
       title: 'SelectSubjects',
@@ -275,6 +275,7 @@ class _BodyState extends State<Body> {
           : buildListTile(title: subjectsText, onTap: onTap),
     );
   }
+
   Widget buildListTile({
     required String title,
     required VoidCallback onTap,
@@ -292,17 +293,23 @@ class _BodyState extends State<Body> {
       trailing: Icon(Icons.arrow_drop_down, color: Color(0xff646465)),
     );
   }
+
   Widget buildSubjectPicker({
     required String title,
     required Widget child,
-}) =>
+  }) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Card(
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(
+                    color: Colors.grey, width: 1)
+            ),
             margin: EdgeInsets.zero,
             child: child,
-            color: Color(0xffe4e6eb),
           ),
         ],
       );
