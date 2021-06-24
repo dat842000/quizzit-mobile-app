@@ -27,7 +27,8 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   _BodyState({
     required this.newList,
   });
-  String query ="";
+
+  String query = "";
   List<Group> newList;
   List<Group> itemsData = [];
   bool isOpen = false;
@@ -38,28 +39,27 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   late Curve _curve = Curves.easeOut;
   late double _fabHeight = 56.0;
 
-
   @override
   void initState() {
-    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500))
-    ..addListener(() {setState(() {
-
-    });});
-    _animationIcon = Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
-    _buttonColor =  ColorTween(begin: Colors.blue, end: Colors.red).animate(
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500))
+          ..addListener(() {
+            setState(() {});
+          });
+    _animationIcon =
+        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
+    _buttonColor = ColorTween(begin: Colors.blue, end: Colors.red).animate(
         CurvedAnimation(
             parent: _animationController,
-            curve: Interval(0.00,1.00,curve: Curves.linear))
-        );
+            curve: Interval(0.00, 1.00, curve: Curves.linear)));
 
     _translateButton = Tween<double>(begin: _fabHeight, end: -14.0).animate(
         CurvedAnimation(
             parent: _animationController,
-            curve: Interval(0.0,0.75,curve: _curve)));
+            curve: Interval(0.0, 0.75, curve: _curve)));
 
     super.initState();
   }
-
 
   @override
   void dispose() {
@@ -68,26 +68,51 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   }
 
   Widget buttonCreate() {
-    return Container(child: FloatingActionButton(onPressed: () {Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => CreateGroupScreen(),
-    ));},tooltip: "Create Group",child: Icon(Icons.add),),);
+    return Container(
+      child: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => CreateGroupScreen(),
+          ));
+        },
+        tooltip: "Create Group",
+        child: Icon(Icons.add),
+      ),
+    );
   }
+
   Widget buttonJoin() {
-    return Container(child: FloatingActionButton(onPressed: () {Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => JoinGroupScreen(),
-    ));},tooltip: "Join Group",child: Icon(FontAwesomeIcons.signInAlt),),);
+    return Container(
+      child: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => JoinGroupScreen(),
+          ));
+        },
+        tooltip: "Join Group",
+        child: Icon(FontAwesomeIcons.signInAlt),
+      ),
+    );
   }
+
   Widget buttonToggle() {
-    return Container(child: FloatingActionButton(backgroundColor: _buttonColor.value,
-      onPressed: animate,
-      tooltip: "Toggle",
-      child: AnimatedIcon(icon: AnimatedIcons.menu_close,progress: _animationIcon,),),);
+    return Container(
+      child: FloatingActionButton(
+        backgroundColor: _buttonColor.value,
+        onPressed: animate,
+        tooltip: "Toggle",
+        child: AnimatedIcon(
+          icon: AnimatedIcons.menu_close,
+          progress: _animationIcon,
+        ),
+      ),
+    );
   }
+
   void animate() {
     if (!isOpen) {
       _animationController.forward();
-    }
-    else {
+    } else {
       _animationController.reverse();
     }
     isOpen = !isOpen;
@@ -159,10 +184,12 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
               physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) => GroupsTitle(
                 group: newList[index],
-                allGroup : newList,
-                setState: () => setState((){newList[index].isJoin == 2
-                    ? newList[index].isJoin = 0
-                    : newList[index].isJoin = 2;}),
+                allGroup: newList,
+                setState: () => setState(() {
+                  newList[index].isJoin == 2
+                      ? newList[index].isJoin = 0
+                      : newList[index].isJoin = 2;
+                }),
               ),
             ),
           ),
@@ -171,23 +198,31 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Transform(transform: Matrix4.translationValues(0.0, _translateButton.value * 2.0, 0.0),
-          child: buttonCreate(),),
-          Transform(transform: Matrix4.translationValues(0.0, _translateButton.value, 0.0),
-            child: buttonJoin(),),
+          Transform(
+            transform: Matrix4.translationValues(
+                0.0, _translateButton.value * 2.0, 0.0),
+            child: buttonCreate(),
+          ),
+          Transform(
+            transform:
+                Matrix4.translationValues(0.0, _translateButton.value, 0.0),
+            child: buttonJoin(),
+          ),
           buttonToggle(),
         ],
       ),
     );
   }
+
   Widget buildSearch() => SearchWidget(
-    text: query,
-    hintText: 'Group Name',
-    onChanged: searchGroup,
-  );
+        text: query,
+        hintText: 'Group Name',
+        onChanged: searchGroup,
+      );
+
   void searchGroup(String query) {
     var groups = [...itemsData];
-    if(!query.isEmpty) {
+    if (!query.isEmpty) {
       groups = newList.where((group) {
         final nameLower = group.name.toLowerCase();
         // final authorLower = group..toLowerCase();
@@ -264,20 +299,19 @@ class GroupsTitle extends StatelessWidget {
   Function() setState;
   List<Group> allGroup;
 
-  GroupsTitle({required this.group, required this.allGroup, required this.setState});
+  GroupsTitle(
+      {required this.group, required this.allGroup, required this.setState});
 
   _showDialog(BuildContext context) {
-
     VoidCallback continueCallBack = () => {
-      Navigator.of(context).pop(),
-      // code on continue comes here
-      setState()
-
-    };
-    BlurryDialog  alert = BlurryDialog("Application",
+          Navigator.of(context).pop(),
+          // code on continue comes here
+          setState()
+        };
+    BlurryDialog alert = BlurryDialog(
+        "Application",
         "Tell us the reason why you want to join this group?",
         continueCallBack);
-
 
     showDialog(
       context: context,
@@ -290,7 +324,9 @@ class GroupsTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: allGroup.last == group ?  const EdgeInsets.only(bottom: 45) : const EdgeInsets.only(),
+      padding: allGroup.last == group
+          ? const EdgeInsets.only(bottom: 45)
+          : const EdgeInsets.only(),
       child: Center(
         child: Wrap(
           children: <Widget>[
@@ -304,26 +340,29 @@ class GroupsTitle extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.only(bottom: 20),
                 width: MediaQuery.of(context).size.width - 50,
-                height: 240,
+                height: 245,
                 decoration: BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20)),
                 child: Stack(
                   children: <Widget>[
                     ClipRRect(
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20.0),
                           topRight: Radius.circular(20.0)),
-                      child: group.imgUrl.startsWith("http" , 0) ? CachedNetworkImage(
-                        imageUrl: group.imgUrl,
-                        height: 135,
-                        width: MediaQuery.of(context).size.width - 50,
-                        fit: BoxFit.cover,
-                      ) : Image.file(
-                        File(group.imgUrl),
-                        height: 135,
-                        width: MediaQuery.of(context).size.width - 50,
-                        fit: BoxFit.cover,
-                      ),
+                      child: group.imgUrl.startsWith("http", 0)
+                          ? CachedNetworkImage(
+                              imageUrl: group.imgUrl,
+                              height: 135,
+                              width: MediaQuery.of(context).size.width - 50,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.file(
+                              File(group.imgUrl),
+                              height: 135,
+                              width: MediaQuery.of(context).size.width - 50,
+                              fit: BoxFit.cover,
+                            ),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width - 50,
@@ -345,28 +384,27 @@ class GroupsTitle extends StatelessWidget {
                               ),
                             ),
                           ),
-
                           Padding(
                             padding: const EdgeInsets.only(
                               left: 12,
                               top: 3,
                               bottom: 7,
                             ),
-                            child: Row(
-                              children: <Widget>[
-                                // ignore: sdk_version_ui_as_code
-                                ...List.generate(
-                                    group.subjects.length,
-                                    (index) => Row(
-                                          children: [
-                                            Tag(text: group.subjects[index]),
-                                            const SizedBox(
-                                              width: 5,
-                                            )
-                                          ],
-                                        )),
-                                // ContinueTag()
-                              ],
+                            child: Container(
+                              height:27,
+                              child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                itemCount: group.subjects.length,
+                                physics: BouncingScrollPhysics(),
+                                itemBuilder: (context, index) => Row(
+                                  children: [
+                                    Tag(text: group.subjects[index]),
+                                    const SizedBox(
+                                      width: 5,
+                                    )
+                                  ],
+                                )
+                              ),
                             ),
                           ),
                           Divider(
@@ -374,73 +412,215 @@ class GroupsTitle extends StatelessWidget {
                             height: 0,
                             thickness: 2,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 12,
-                              top: 12,
-                              bottom: 12,
-                              right: 5,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Wrap(
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
-                                      child: Icon(
-                                        Icons.calendar_today_outlined,
-                                        size: 18,
+                          group.isJoin == 1
+                              ? Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 12.4,
+                                    top: 15.5,
+                                    bottom: 15.5,
+                                    right: 0,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Wrap(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 8.0),
+                                            child: Icon(
+                                              Icons.calendar_today_outlined,
+                                              size: 18,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 14.0),
+                                            child: Text(
+                                              DateFormat('EEE d MMM yyyy')
+                                                  .format(group.createdDate),
+                                              style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 4.0),
+                                            child: Icon(
+                                              Icons.account_circle_outlined,
+                                              size: 20,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 14.0),
+                                            child: Text(
+                                              group.numberMember.toString(),
+                                              style: TextStyle(
+                                                fontSize: 17,
+                                                color: Colors.blue,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          )
+                                        ],
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 14.0),
-                                      child: Text(
-                                        DateFormat('EEE d MMM yyyy')
-                                            .format(group.createdDate),
-                                        style: TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                    ],
+                                  ),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 12.4,
+                                    top: 0,
+                                    bottom: 2,
+                                    right: 0,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Wrap(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 8.0),
+                                            child: Icon(
+                                              Icons.calendar_today_outlined,
+                                              size: 18,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 14.0),
+                                            child: Text(
+                                              DateFormat('EEE d MMM yyyy')
+                                                  .format(group.createdDate),
+                                              style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 4.0),
+                                            child: Icon(
+                                              Icons.account_circle_outlined,
+                                              size: 20,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 14.0),
+                                            child: Text(
+                                              group.numberMember.toString(),
+                                              style: TextStyle(
+                                                fontSize: 17,
+                                                color: Colors.blue,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          )
+                                        ],
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 4.0),
-                                      child: Icon(
-                                        Icons.account_circle_outlined,
-                                        size: 20,
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 10),
+                                        child: group.isJoin == 0
+                                            ? FlatButton(
+                                                minWidth: 110,
+                                                onPressed: () {
+                                                  _showDialog(context);
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(0.0),
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.arrow_circle_down,
+                                                        color: kPrimaryColor,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Text(
+                                                        "JOIN",
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: kPrimaryColor,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                                textColor: kPrimaryColor,
+                                                shape: RoundedRectangleBorder(
+                                                    side: BorderSide(
+                                                        color: Colors.blue,
+                                                        width: 2,
+                                                        style:
+                                                            BorderStyle.solid),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                              )
+                                            : group.isJoin == 2
+                                                ? FlatButton(
+                                                    onPressed: () {
+                                                      setState();
+                                                    },
+                                                    color: Colors.redAccent,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              0.0),
+                                                      child: Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons.cancel,
+                                                            color: Colors
+                                                                .grey[200],
+                                                          ),
+                                                          SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          Text(
+                                                            "CANCEL",
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .grey[200]),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    textColor: kPrimaryColor,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            side: BorderSide(
+                                                                color: Colors
+                                                                    .redAccent,
+                                                                width: 2,
+                                                                style:
+                                                                    BorderStyle
+                                                                        .solid),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10)),
+                                                  )
+                                                : null,
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 14.0),
-                                      child: Text(
-                                        group.numberMember.toString(),
-                                        style: TextStyle(
-                                          fontSize: 17,
-                                          color: Colors.blue,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: group.isJoin == 0 ? InkWell(
-                                    child: Icon(FontAwesomeIcons.plusCircle, color: Colors.blue[500],),
-                                    onTap: (){
-                                      _showDialog(context);
-                                    },
-                                  ) : group.isJoin == 2 ? InkWell(
-                                      child: Icon(FontAwesomeIcons.clock, color: Colors.blue[500],),
-                                      onTap: (){
-                                        setState();
-                                      },
-                                    ) : null,
-                                ),
-                              ],
-                            ),
-                          )
+                                    ],
+                                  ),
+                                )
                         ],
                       ),
                     )

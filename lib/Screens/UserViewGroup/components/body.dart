@@ -14,6 +14,7 @@ import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/dtos/Group.dart';
 import 'package:flutter_auth/dtos/Post.dart';
 import 'package:flutter_auth/global/ListPost.dart';
+import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../videocall/model/user_model.dart' as us;
 
@@ -55,22 +56,42 @@ class _BodyState extends State<Body> {
         centerTitle: true,
         title: Text(group.name),
         actions: [
-          IconButton(
-              icon: Icon(
-                FontAwesomeIcons.video,
-                size: 26,
+          Stack(
+            children: [
+              IconButton(
+                icon: Icon(
+                  FontAwesomeIcons.video,
+                  size: 26,
+                  color: Colors.white,
+                ),
                 color: Colors.white,
-              ),
-              color: Colors.white,
-              onPressed: () async {
-                // await _handleCameraAndMic(Permission.camera);
-                // await _handleCameraAndMic(Permission.microphone);
-                // push video page with given channel name
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RootApp()),
-                );
-              }),
+                onPressed: () async {
+                  // await _handleCameraAndMic(Permission.camera);
+                  // await _handleCameraAndMic(Permission.microphone);
+                  // push video page with given channel name
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RootApp()),
+                  );
+                }),
+              Positioned(
+                right: 29,
+                bottom: 12,
+                child: Container(
+                  height: 18,
+                  width: 18,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF00BF6D),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                        color: kPrimaryColor,
+                        width: 1),
+                  ),
+                  child: Center(child: Text("9",style: TextStyle(fontWeight: FontWeight.bold),)),
+                ),
+              )
+            ]
+          ),
         ],
       ),
       body: SingleChildScrollView(

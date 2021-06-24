@@ -16,15 +16,23 @@ class _RootAppState extends State<RootApp> {
   int pageIndex = 2;
   List<String> url = [
     "https://www.androidcentral.com/sites/androidcentral.com/files/styles/xlarge/public/article_images/2020/07/android-11-screen-record-how-to-1.jpg",
-    "https://scontent-sin6-2.xx.fbcdn.net/v/t1.15752-9/200182092_927178697847529_5932800466410330319_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=ae9488&_nc_ohc=dbRh5rbXgK8AX9XybRJ&_nc_ht=scontent-sin6-2.xx&oh=84f1c4a23badcdd719bb24ac262efee7&oe=60D34C57"
+    "https://media.giphy.com/media/UtcBRO8cxulRzkrVLc/giphy.gif",
+    "https://upanh123.com/wp-content/uploads/2020/12/hinh-nen-den-tron1-576x1024.jpg"
   ];
-  var linkUrl="https://www.androidcentral.com/sites/androidcentral.com/files/styles/xlarge/public/article_images/2020/07/android-11-screen-record-how-to-1.jpg";
+  var linkUrl = "https://media.giphy.com/media/UtcBRO8cxulRzkrVLc/giphy.gif";
 
   void onDataChange(val) {
     setState(() {
       linkUrl = val;
       print(linkUrl);
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    colorItems[2] = grey;
   }
 
   @override
@@ -116,7 +124,8 @@ class _RootAppState extends State<RootApp> {
               height: 515,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(linkUrl == null ? url[0]: linkUrl), fit: BoxFit.cover)),
+                      image: NetworkImage(linkUrl == null ? url[0] : linkUrl),
+                      fit: BoxFit.cover)),
             ),
           ),
           Positioned(
@@ -129,7 +138,7 @@ class _RootAppState extends State<RootApp> {
                   borderRadius: BorderRadius.circular(12),
                   image: DecorationImage(
                       image: NetworkImage(
-                          "https://scontent-xsp1-3.xx.fbcdn.net/v/t1.6435-9/130926059_3586820534716638_8513722166239497233_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=IkscVKj289wAX-YL6B9&tn=SFmiPOEzDm-lJIPX&_nc_ht=scontent-xsp1-3.xx&oh=decaa20159161e5e460dae58eb70ca90&oe=60D39191"),
+                          "https://media.giphy.com/media/WoKqL8nGDJfFwGzrmR/giphy.gif"),
                       fit: BoxFit.cover)),
             ),
           ),
@@ -144,12 +153,14 @@ class _RootAppState extends State<RootApp> {
         linkUrl = val;
       });
     }
+
     void change() {
       setState(() {
         print(linkUrl);
         callback(linkUrl);
       });
     }
+
     return Container(
       width: double.infinity,
       height: 90,
@@ -167,20 +178,31 @@ class _RootAppState extends State<RootApp> {
             return InkWell(
                 onTap: () {
                   selectedTab(index);
-                  if(index == 2){
-                    if(linkUrl == url[0]){
+                  if (index == 2) {
+                    if (linkUrl == url[0]) {
                       linkUrl = url[1];
-                    }else{
+                    } else {
                       linkUrl = url[0];
                     }
-                    if(colorItems[2] == green){
+                    if (colorItems[2] == green) {
                       colorItems[2] = grey;
-                    }else{
+                    } else {
                       colorItems[2] = green;
+                    }
+                    if (bottomItems[1] == FontAwesomeIcons.videoSlash) {
+                      bottomItems[1] = FontAwesomeIcons.video;
+                    }
+                  }
+                  if (index == 1) {
+                    if (bottomItems[1] == FontAwesomeIcons.videoSlash) {
+                      colorItems[2] = grey;
+                      linkUrl = url[2];
+                    } else {
+                      colorItems[2] = grey;
+                      linkUrl = url[1];
                     }
                   }
                   change();
-
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -218,6 +240,13 @@ class _RootAppState extends State<RootApp> {
       bottomItems[1] == FontAwesomeIcons.video
           ? bottomItems[1] = FontAwesomeIcons.videoSlash
           : bottomItems[1] = FontAwesomeIcons.video;
+    }
+    if (index == 2) {
+      // if (colorItems[2] == green) {
+      //   bottomItems[1] = FontAwesomeIcons.video;
+      // } else {
+      //   bottomItems[1] = FontAwesomeIcons.videoSlash;
+      // }
     }
     if (index == 3) {
       Navigator.push(

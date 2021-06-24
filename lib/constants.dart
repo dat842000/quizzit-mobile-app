@@ -11,7 +11,7 @@ class Constants{
     own,join,suggest
   ];
   static const adminManageUser = <String>[
-    'Ranking','Users'
+    'Members','New Requests'
   ];
   static const postSetting= <String>[
     'Edit','Delete'
