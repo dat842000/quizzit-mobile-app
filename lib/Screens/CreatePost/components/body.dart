@@ -53,7 +53,7 @@ class _BodyState extends State<Body> {
         this._title, jsonEncode(_controller.document.toDelta().toJson()),image: image);
     fetch(Host.groupPost(groupId: widget.group.id), HttpMethod.POST,data: model)
       .then((value) {
-        navigate(context, PostDetailScreen(Post.fromJson(json.decode(value.body))));
+        Navigate.push(context,PostDetailScreen(Post.fromJson(json.decode(value.body))));
       });
   }
 

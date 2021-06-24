@@ -17,13 +17,20 @@ void showAlert(BuildContext context,String title,String content,[Function(BuildC
     ),
   );
 }
-
-void navigate(BuildContext context,Widget destination){
-  Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (context) {
-        return destination;
-      },
-    ),
-  );
+abstract class Navigate{
+  static void push(BuildContext context,Widget destination){
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => destination
+      ),
+    );
+  }
+  static void pop(BuildContext context, {Widget? destination}){
+    destination!=null?
+    Navigator.of(context).pop(
+      MaterialPageRoute(
+        builder: (context) =>destination
+      ),
+    ):Navigator.of(context).pop();
+  }
 }

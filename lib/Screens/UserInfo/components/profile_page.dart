@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/ChangePassword/change_password.dart';
 import 'package:flutter_auth/Screens/EditUserProfile/edit_user_profile.dart';
 import 'package:flutter_auth/Screens/Login/login_screen.dart';
-import 'package:flutter_auth/Screens/UserInfo/components/appbar_widget.dart';
 import 'package:flutter_auth/Screens/UserInfo/components/profile_widget.dart';
 import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
+import 'package:flutter_auth/components/appbar_widget.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/models/user/UserInfo.dart' as Model;
 import 'package:flutter_auth/utils/ApiUtils.dart';
@@ -37,7 +37,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   _ProfilePageState() {
-    if (_firebaseAuth.currentUser == null) navigate(context, LoginScreen());
+    if (_firebaseAuth.currentUser == null) Navigate.pop(context,destination: LoginScreen());
   }
 
   final _firebaseAuth = FirebaseAuth.instance;
@@ -51,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
     if (_firebaseAuth.currentUser != null)
       userInfoFuture = widget._getUserInfo();
     else
-      navigate(context, LoginScreen());
+      Navigate.pop(context,destination: LoginScreen());
   }
 
   @override
@@ -135,14 +135,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         buildAccountOptionRow(
                             "Edit User Info",
                             Icons.app_registration,
-                            () => navigate(context, EditUserScreen(user))),
+                            () => Navigate.push(context, EditUserScreen(user))),
                         buildAccountOptionRow(
                             "Change Password",
                             FontAwesomeIcons.fingerprint,
-                            () => navigate(context, ChangePasswordScreen())),
+                            () => Navigate.push(context, ChangePasswordScreen())),
                         buildAccountOptionRow("Logout", Icons.logout, () async {
                           await _firebaseAuth.signOut();
-                          navigate(context, WelcomeScreen());
+                          Navigate.push(context, WelcomeScreen());
                         }),
                       ],
                     ));

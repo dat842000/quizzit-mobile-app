@@ -23,7 +23,7 @@ class GroupTopBar extends StatelessWidget {
               Container(
                 child: InkWell(
                   onTap: () {
-                    navigate(context, CreatePostScreen(group));
+                    Navigate.push(context, CreatePostScreen(group));
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -47,7 +47,7 @@ class GroupTopBar extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  navigate(context, ListUser(group: group));
+                  Navigate.push(context, ListUser(group: group));
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),

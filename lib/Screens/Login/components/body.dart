@@ -37,7 +37,7 @@ class Body extends StatefulWidget {
       var fbResponse =
           await firebase.signInWithCustomToken(tokenObject.customToken);
       globals.userId = int.parse(firebase.currentUser!.uid);
-      navigate(context, DashboardScreen());
+      Navigate.push(context, DashboardScreen());
     } else {
       var problem = ProblemDetails.fromJson(Json);
       String error = problem.title!;

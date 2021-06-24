@@ -8,7 +8,6 @@ import 'package:flutter_auth/components/inputField.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
 import 'package:flutter_auth/constants.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/models/signup/SignupRequest.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
@@ -22,7 +21,7 @@ class Body extends StatefulWidget {
     await fetch(Host.users, HttpMethod.POST, data: signupRequest);
     if (response.statusCode.isOk()) {
       showAlert(context, "Signup Success", "",
-              (con) => navigate(context, LoginScreen()));
+              (con) => Navigate.push(context, LoginScreen()));
     } else {
       var problemDetails = ProblemDetails.fromJson(json.decode(response.body));
       showAlert(context, "Signup Failed", problemDetails.title!,

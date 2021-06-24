@@ -11,7 +11,7 @@ class Constants{
     own,join,suggest
   ];
   static const adminManageUser = <String>[
-    'Ranking','Users'
+    'Members','New Requests'
   ];
   static const postSetting= <String>[
     'Edit','Delete'
@@ -45,6 +45,19 @@ const GROUPS=[
     "description": 'none',
   }
 ];
+
+abstract class MemberStatus{
+  static const int notInGroup = 0;
+  static const int pending=1;
+  static const int member=2;
+  static const int owner=3;
+  static const List<int> inGroupStatuses=[member,owner];
+  // static const int
+}
+
+enum MemberStatusConst{
+  NotInGroup,Pending,Member,Owner,Leave,Kicked,Banned
+}
 
 class Host {
   static const String name = "hieulnhcm.ddns.net";
