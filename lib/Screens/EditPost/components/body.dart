@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
 import 'package:flutter_auth/components/textfield_widget.dart';
+import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/dtos/Group.dart';
 import 'package:flutter_auth/dtos/Post.dart';
 import 'package:flutter_auth/dtos/User.dart';
@@ -62,6 +63,7 @@ class _BodyState extends State<Body> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -69,9 +71,9 @@ class _BodyState extends State<Body> {
             icon: Icon(
               Icons.arrow_back_ios,
               size: 20,
+              color: kPrimaryColor,
             )),
-        elevation: 0.0,
-        title: Text('Edit Post'),
+        title: Text('Edit Post',style: TextStyle(color: kPrimaryColor,fontWeight: FontWeight.bold),),
         actions: <Widget>[
           GestureDetector(
             onTap: () {
@@ -85,6 +87,7 @@ class _BodyState extends State<Body> {
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Icon(
                   Icons.file_upload,
+                  color: kPrimaryColor,
                 )),
           )
         ],

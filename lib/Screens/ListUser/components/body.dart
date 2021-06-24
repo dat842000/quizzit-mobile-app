@@ -82,9 +82,8 @@ class _BodyState extends State<Body> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
         brightness: Brightness.light,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         leading: InkWell(
           child: Icon(
             Icons.arrow_back_ios,
