@@ -9,7 +9,7 @@ List bottomItems = [
   FontAwesomeIcons.users,
   Icons.more_horiz
 ];
-List textItems = ["Mute", "Stop Video", "Share Screen", "Participants", "More"];
+List textItems = ["Mute", "Camera", "Share Screen", "Participants", "More"];
 List colorItems = [
   grey,
   grey,

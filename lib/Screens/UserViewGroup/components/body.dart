@@ -4,14 +4,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/components/GroupTopBar.dart';
-import 'package:flutter_auth/Screens/videocall/components/root_app.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
 import 'package:flutter_auth/models/paging/PagingParams.dart';
 import 'package:flutter_auth/models/post/Post.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'PostCard.dart';
@@ -58,6 +56,7 @@ class _BodyState extends State<Body> {
   }
 
   @override
+  // ignore: must_call_super
   void didUpdateWidget(Body oldWidget) {
     _futurePostPage = widget._fetchPost();
   }
@@ -86,9 +85,10 @@ class _BodyState extends State<Body> {
     return Scaffold(
       backgroundColor: Color(0xffe4e6eb),
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
-          color: Colors.white,
+          color: kPrimaryColor,
           iconSize: 20,
           onPressed: () =>
               Navigator.push(
@@ -98,24 +98,6 @@ class _BodyState extends State<Body> {
         ),
         centerTitle: true,
         title: Text(_group.name),
-        actions: [
-          // IconButton(
-          //     icon: Icon(
-          //       FontAwesomeIcons.video,
-          //       size: 26,
-          //       color: Colors.white,
-          //     ),
-          //     color: Colors.white,
-          //     onPressed: () async {
-          //       // await _handleCameraAndMic(Permission.camera);
-          //       // await _handleCameraAndMic(Permission.microphone);
-          //       // push video page with given channel name
-          //       await Navigator.push(
-          //         context,
-          //         MaterialPageRoute(builder: (context) => RootApp()),
-          //       );
-          //     }),
-        ],
       ),
       body: SmartRefresher(
         controller: _refreshController,

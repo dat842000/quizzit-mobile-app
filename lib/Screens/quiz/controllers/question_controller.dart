@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_auth/Screens/Login/login_screen.dart';
 import 'package:flutter_auth/Screens/quiz/models/Questions.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';

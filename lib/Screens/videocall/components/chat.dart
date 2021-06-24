@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/videocall/components/root_app.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../model/message_model.dart' as model;

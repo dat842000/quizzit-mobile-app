@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/PostDetail/post_detail.dart';
-import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/rounded_input_field.dart';
 import 'package:flutter_auth/constants.dart';
@@ -29,9 +27,7 @@ class _BodyState extends State<Body> {
   String _title = "";
   File? _selectedImage;
   quill.QuillController _controller = quill.QuillController.basic();
-  TextEditingController _textEditingController = TextEditingController();
   bool _isLoading = false;
-
   Future getImage() async {
     var picker = new ImagePicker();
     var image = await picker.getImage(source: ImageSource.gallery);
@@ -62,16 +58,18 @@ class _BodyState extends State<Body> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 20,
-            )),
-        elevation: 0.0,
-        title: Text('Create Post'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: 20,
+          ),
+          color: kPrimaryColor,
+        ),
+        title: Text('Create Post',style: TextStyle(color: kPrimaryColor,fontWeight: FontWeight.bold),),
         actions: <Widget>[
           GestureDetector(
             onTap: () async{
@@ -85,7 +83,8 @@ class _BodyState extends State<Body> {
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Icon(
                   Icons.file_upload,
-                )),
+                  color: kPrimaryColor,
+                ),),
           )
         ],
       ),
@@ -157,7 +156,7 @@ class _BodyState extends State<Body> {
                         border: Border.all(color: kPrimaryColor)),
                     margin: EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
-                      children: [
+                      children:[
                         quill.QuillEditor(
                           controller: _controller,
                           focusNode: FocusNode(),

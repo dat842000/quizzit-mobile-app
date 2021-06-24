@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -169,11 +170,11 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffe4e6eb),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         brightness: Brightness.light,
-        backgroundColor: Color(0xffe4e6eb),
+        backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: kPrimaryColor),
         leading: InkWell(
           child: Icon(FontAwesomeIcons.userCircle),
@@ -339,15 +340,18 @@ class GroupsTitle extends StatelessWidget {
           children: <Widget>[
             InkWell(
               onTap: () {
-                navigate(context, UserViewScreen(this._group));
+                // ignore: unnecessary_statements
+                _group.currentMemberStatus == 2 || _group.currentMemberStatus == 3 ? navigate(context, UserViewScreen(this._group)) : null;
               },
               child: Container(
                 margin: EdgeInsets.only(bottom: 20),
                 width: MediaQuery.of(context).size.width - 50,
-                height: 240,
+                height: 245,
                 decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(20)),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.black54,width: 2)
+                ),
                 child: Stack(
                   children: <Widget>[
                     ClipRRect(
@@ -387,26 +391,21 @@ class GroupsTitle extends StatelessWidget {
                               top: 3,
                               bottom: 7,
                             ),
-                            child: Row(
-                              children: <Widget>[
-                                // ignore: sdk_version_ui_as_code
-                                ...List.generate(
-                                    this._group.subjects.length < 5 ? this._group.subjects.length : 4,
-                                    (index) => Row(
-                                          children: [
-                                            index != 3 ?
-                                            Tag(
-                                                text: this
-                                                    ._group
-                                                    .subjects[index]
-                                                    .name) : Tag(text : "..."),
-                                            const SizedBox(
-                                              width: 5,
-                                            )
-                                          ],
-                                        )),
-                                // ContinueTag()
-                              ],
+                            child: Container(
+                              height:27,
+                              child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                itemCount: this._group.subjects.length,
+                                physics: BouncingScrollPhysics(),
+                                itemBuilder: (context, index) => Row(
+                                  children: [
+                                    Tag(text: this._group.subjects[index].name),
+                                    const SizedBox(
+                                      width: 5,
+                                    )
+                                  ],
+                                )
+                              ),
                             ),
                           ),
                           Divider(

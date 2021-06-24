@@ -11,7 +11,7 @@ class Constants{
     own,join,suggest
   ];
   static const adminManageUser = <String>[
-    'Ranking','Users'
+    'Members','New Requests'
   ];
   static const postSetting= <String>[
     'Edit','Delete'
@@ -59,4 +59,5 @@ class Host {
   static String postComment(int postId)=>"$posts/$postId/comments";
   static const String members = "$_root/members";
   static const String questions = "$_root/questions";
+  static String groupOwnerQuestion({required int groupId})=>"$groups/$groupId/questions";
 }
