@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/quiz/controllers/question_controller.dart';
-import 'package:get/get.dart';
 
-import 'components/body.dart';
+import 'package:flutter_auth/Screens/questions/component/body.dart';
 
-class QuizScreen extends StatelessWidget {
+class QuestionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    QuestionController _controller = Get.put(QuestionController());
     return Scaffold(
       extendBodyBehindAppBar: true,
 
@@ -17,17 +14,9 @@ class QuizScreen extends StatelessWidget {
         // ignore: deprecated_member_use
         leading: FlatButton(onPressed:() {
           Navigator.pop(context);
-          _controller.questionNumber.value = 1;
           }
           , child: Icon(Icons.arrow_back)),
         leadingWidth: 75,
-        actions: [
-          // ignore: deprecated_member_use
-          FlatButton(onPressed: () {
-            
-          }
-              , child: Icon(Icons.done)),
-        ],
       ),
       body: Body(),
     );

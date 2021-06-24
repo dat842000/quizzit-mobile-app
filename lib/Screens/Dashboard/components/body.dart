@@ -18,8 +18,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'alert_widget.dart';
-
 Future<Model.Page<Model.Group>> fetchGroupPage(
     {String nameSearch = "", int status = 0, int page = 1}) async {
   var paging = PagingParam(page: page, sort: "createAt_desc");
@@ -331,25 +329,6 @@ class GroupsTitle extends StatelessWidget {
 
   GroupsTitle(this._group, {this.isLast = false});
 
-  _showDialog(BuildContext context) {
-    VoidCallback continueCallBack = () => {
-          Navigator.of(context).pop(),
-          // code on continue comes here
-          // setState()
-        };
-    BlurryDialog alert = BlurryDialog(
-        "Application",
-        "Tell us the reason why you want to join this group?",
-        continueCallBack);
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -412,14 +391,15 @@ class GroupsTitle extends StatelessWidget {
                               children: <Widget>[
                                 // ignore: sdk_version_ui_as_code
                                 ...List.generate(
-                                    this._group.subjects.length,
+                                    this._group.subjects.length < 5 ? this._group.subjects.length : 4,
                                     (index) => Row(
                                           children: [
+                                            index != 3 ?
                                             Tag(
                                                 text: this
                                                     ._group
                                                     .subjects[index]
-                                                    .name),
+                                                    .name) : Tag(text : "..."),
                                             const SizedBox(
                                               width: 5,
                                             )
@@ -487,31 +467,6 @@ class GroupsTitle extends StatelessWidget {
                                       ),
                                     )
                                   ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: this._group.currentMemberStatus == 0
-                                      ? InkWell(
-                                          child: Icon(
-                                            FontAwesomeIcons.plusCircle,
-                                            color: Colors.blue[500],
-                                          ),
-                                          onTap: () {
-                                            //TODO JoinGroupAPI
-                                            _showDialog(context);
-                                          },
-                                        )
-                                      : this._group.currentMemberStatus == 1
-                                          ? InkWell(
-                                              child: Icon(
-                                                FontAwesomeIcons.clock,
-                                                color: Colors.blue[500],
-                                              ),
-                                              onTap: () {
-                                                //TODO Cancel Join Group
-                                              },
-                                            )
-                                          : null,
                                 ),
                               ],
                             ),

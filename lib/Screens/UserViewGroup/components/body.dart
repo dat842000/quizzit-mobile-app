@@ -99,22 +99,22 @@ class _BodyState extends State<Body> {
         centerTitle: true,
         title: Text(_group.name),
         actions: [
-          IconButton(
-              icon: Icon(
-                FontAwesomeIcons.video,
-                size: 26,
-                color: Colors.white,
-              ),
-              color: Colors.white,
-              onPressed: () async {
-                // await _handleCameraAndMic(Permission.camera);
-                // await _handleCameraAndMic(Permission.microphone);
-                // push video page with given channel name
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RootApp()),
-                );
-              }),
+          // IconButton(
+          //     icon: Icon(
+          //       FontAwesomeIcons.video,
+          //       size: 26,
+          //       color: Colors.white,
+          //     ),
+          //     color: Colors.white,
+          //     onPressed: () async {
+          //       // await _handleCameraAndMic(Permission.camera);
+          //       // await _handleCameraAndMic(Permission.microphone);
+          //       // push video page with given channel name
+          //       await Navigator.push(
+          //         context,
+          //         MaterialPageRoute(builder: (context) => RootApp()),
+          //       );
+          //     }),
         ],
       ),
       body: SmartRefresher(
