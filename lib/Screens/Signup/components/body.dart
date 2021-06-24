@@ -21,11 +21,11 @@ class Body extends StatefulWidget {
     await fetch(Host.users, HttpMethod.POST, data: signupRequest);
     if (response.statusCode.isOk()) {
       showAlert(context, "Signup Success", "",
-              (con) => Navigate.push(context, LoginScreen()));
+              onPressed: (con) => Navigate.push(context,LoginScreen()));
     } else {
       var problemDetails = ProblemDetails.fromJson(json.decode(response.body));
       showAlert(context, "Signup Failed", problemDetails.title!,
-              (context) => Navigator.pop(context, "OK"));
+              onPressed: (context) => Navigator.pop(context, "OK"));
     }
   }
 }

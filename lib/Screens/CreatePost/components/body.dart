@@ -59,7 +59,6 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -76,10 +75,6 @@ class _BodyState extends State<Body> {
           GestureDetector(
             onTap: () async{
               await createPost();
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => UserViewScreen(widget.group)));
             },
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16),

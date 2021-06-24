@@ -1,11 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/components/subject_page.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
+import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/models/group/CreateGroupModel.dart';
 import 'package:flutter_auth/models/group/Group.dart';
+import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/models/subject/Subject.dart';
+import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_auth/utils/FirebaseUtils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart';
@@ -22,45 +27,45 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  String groupName="" , valueChoose="";
-  dynamic quizSize;
-  List listItem = [
-    "Toan",
-    "Ly",
-    "Hoa",
-    "Su",
-    "Dia",
-    "Sinh hoc",
-    "Anh van",
-    "Cong nghe",
-    "Tin hoc",
-    "GDCD",
-    "Ngu Van",
-    "GDQP"
-  ];
-  String subject="";
-  File? selectedImage;
+  CreateGroupModel _createGroupModel = new CreateGroupModel("", 10, null, []);
+  File? _selectedImage;
   bool _isLoading = false;
-  List<Subject> subjects = [];
+  List<Subject> _subjects = [];
 
   Future getImage() async {
     var picker = new ImagePicker();
     var image = await picker.getImage(source: ImageSource.gallery);
     setState(() {
       if (image != null) {
-        selectedImage = File(image.path);
+        _selectedImage = File(image.path);
       } else {
         print('No image selected.');
       }
     });
   }
 
-  createGroup() {
+  Future<void> createGroup() async {
     //TODO CreateGroup
-    // Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => UserViewScreen(newGroup)));
+    String? image;
+    if (this._selectedImage != null)
+      image = await FirebaseUtils.uploadImage(_selectedImage!);
+    if (this._subjects.isNotEmpty)
+      _subjects.map((e) => this._createGroupModel.subjectIds.add(e.id));
+    this._createGroupModel.image = image;
+    var response =
+        await fetch(Host.groups, HttpMethod.POST, data: this._createGroupModel);
+    var jsonRes = json.decode(response.body);
+    if (response.statusCode.isOk()) {
+      var newGroup = Group.fromJson(jsonRes);
+      showAlert(context, "Create Group Success",
+          "Your Group has been created success fully",
+          onPressed: (context) =>
+              Navigate.push(context, UserViewScreen(newGroup)));
+    } else {
+      ProblemDetails problem = ProblemDetails.fromJson(jsonRes);
+      showAlert(context, "Create Failed", problem.title!,
+          onPressed: (context) => Navigate.pop(context));
+    }
   }
 
   @override
@@ -120,10 +125,10 @@ class _BodyState extends State<Body> {
                   GestureDetector(
                       onTap: () {
                         getImage().then((value) {
-                            print(selectedImage);});
-
+                          print(_selectedImage);
+                        });
                       },
-                      child: selectedImage != null
+                      child: _selectedImage != null
                           ? Container(
                               margin: EdgeInsets.symmetric(horizontal: 16),
                               height: 170,
@@ -131,7 +136,7 @@ class _BodyState extends State<Body> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: Image.file(
-                                  selectedImage!,
+                                  _selectedImage!,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -183,7 +188,7 @@ class _BodyState extends State<Body> {
                               border: OutlineInputBorder(),
                             ),
                             onChanged: (val) {
-                              groupName = val;
+                              this._createGroupModel.groupName = val;
                             },
                           ),
                         ),
@@ -215,7 +220,7 @@ class _BodyState extends State<Body> {
                             ),
                             keyboardType: TextInputType.number,
                             onChanged: (val) {
-                              quizSize = val;
+                              this._createGroupModel.quizSize = int.parse(val);
                             },
                           ),
                         ),
@@ -251,28 +256,28 @@ class _BodyState extends State<Body> {
   }
 
   Widget buildChoosingSubjects() {
-    final subjectsText = subjects.map((subject) => subject.name).join(', ');
-    final ids = subjects.map((subject) => subject.id);
+    final subjectsText = _subjects.map((subject) => subject.name).join(', ');
+    final ids = _subjects.map((subject) => subject.id);
     final onTap = () async {
       final subjects = await Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => SubjectPage(
-            subjects: List.of(this.subjects),
+            subjects: List.of(this._subjects),
           ),
         ),
       );
       if (subjects == null) return;
-      setState(() => this.subjects = subjects);
-
+      setState(() => this._subjects = subjects);
     };
     return buildSubjectPicker(
       title: 'SelectSubjects',
-      child: subjects.isEmpty
+      child: _subjects.isEmpty
           ? buildListTile(title: 'No Subjects', onTap: onTap)
           : buildListTile(title: subjectsText, onTap: onTap),
     );
   }
+
   Widget buildListTile({
     required String title,
     required VoidCallback onTap,
@@ -290,10 +295,11 @@ class _BodyState extends State<Body> {
       trailing: Icon(Icons.arrow_drop_down, color: Color(0xff646465)),
     );
   }
+
   Widget buildSubjectPicker({
     required String title,
     required Widget child,
-}) =>
+  }) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

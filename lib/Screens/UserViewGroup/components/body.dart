@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/components/GroupTopBar.dart';
 import 'package:flutter_auth/Screens/videocall/components/root_app.dart';
+import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
@@ -27,7 +28,7 @@ class Body extends StatefulWidget {
     var paging = PagingParam(page: page, pageSize: pageSize, sort: sort);
     Map<String, String> params = {...paging.build()};
     var response = await fetch(
-        "${Host.groups}/${_group.id}/posts", HttpMethod.GET,
+        Host.groupPost(groupId: _group.id), HttpMethod.GET,
         params: params);
     var body = json.decode(response.body);
     if (response.statusCode.isOk()) {
@@ -60,6 +61,7 @@ class _BodyState extends State<Body> {
 
   @override
   void didUpdateWidget(Body oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _futurePostPage = widget._fetchPost();
   }
 
@@ -93,51 +95,11 @@ class _BodyState extends State<Body> {
           iconSize: 20,
           onPressed: () =>
               //TODO recheck
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => DashboardScreen()),
-              )
+              Navigate.pop(context)
         ),
         centerTitle: true,
         title: Text(_group.name),
-        actions: [
-          Stack(
-            children: [
-              IconButton(
-                icon: Icon(
-                  FontAwesomeIcons.video,
-                  size: 26,
-                  color: Colors.white,
-                ),
-                color: Colors.white,
-                onPressed: () async {
-                  // await _handleCameraAndMic(Permission.camera);
-                  // await _handleCameraAndMic(Permission.microphone);
-                  // push video page with given channel name
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => RootApp()),
-                  );
-                }),
-              Positioned(
-                right: 29,
-                bottom: 12,
-                child: Container(
-                  height: 18,
-                  width: 18,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF00BF6D),
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                        color: kPrimaryColor,
-                        width: 1),
-                  ),
-                  child: Center(child: Text("9",style: TextStyle(fontWeight: FontWeight.bold),)),
-                ),
-              )
-            ]
-          ),
-        ],
+        actions: [],
       ),
       body: SmartRefresher(
         controller: _refreshController,
