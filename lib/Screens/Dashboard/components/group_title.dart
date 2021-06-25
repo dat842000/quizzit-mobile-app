@@ -1,51 +1,69 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Dashboard/components/status_button.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/models/group/Group.dart';
+import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
+import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:intl/intl.dart';
 
 import '../../../constants.dart';
 import 'Tags.dart';
 import 'alert_widget.dart';
 
-class GroupsTitle extends StatelessWidget {
+class GroupsTitle extends StatefulWidget {
   final Group _group;
   final bool isLast;
 
   GroupsTitle(this._group, {this.isLast = false});
 
-  _showDialog(BuildContext context) {
-    VoidCallback continueCallBack = () => {
-          Navigator.of(context).pop(),
-          // code on continue comes here
-          // setState()
-        };
-    BlurryDialog alert = BlurryDialog(
-        "Application",
-        "Tell us the reason why you want to join this group?",
-        continueCallBack);
+  @override
+  _GroupsTitleState createState() => _GroupsTitleState(this._group);
+}
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
+class _GroupsTitleState extends State<GroupsTitle> {
+  Group _group;
+
+  _GroupsTitleState(this._group);
+
+  Future<void> _joinGroup()async {
+    var response = await fetch("${Host.users}/groups/${this._group.id}",HttpMethod.POST);
+    if(response.statusCode.isOk()){
+      setState(() {
+        this._group.currentMemberStatus=MemberStatus.pending;
+      });
+    }else{
+      ProblemDetails problem = ProblemDetails.fromJson(json.decode(response.body));
+      showOkAlert(context, "Failed to Join Group", problem.title!);
+    }
+  }
+
+  Future<void> _cancelJoinGroup()async {
+    var response = await fetch("${Host.users}/groups/${this._group.id}",HttpMethod.DELETE);
+    if(response.statusCode.isOk()){
+      setState(() {
+        this._group.currentMemberStatus=MemberStatus.notInGroup;
+      });
+    }else{
+      ProblemDetails problem = ProblemDetails.fromJson(json.decode(response.body));
+      showOkAlert(context, "Failed to Cancel Request", problem.title!);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding:
-          isLast ? const EdgeInsets.only(bottom: 45) : const EdgeInsets.only(),
+          widget.isLast ? const EdgeInsets.only(bottom: 45) : const EdgeInsets.only(),
       child: Center(
         child: Wrap(
           children: <Widget>[
             InkWell(
               onTap: () {
-                Navigate.push(context, UserViewScreen(this._group));
+                Navigate.push(context, UserViewScreen(this.widget._group));
               },
               child: Container(
                 margin: EdgeInsets.only(bottom: 20),
@@ -104,7 +122,7 @@ class GroupsTitle extends StatelessWidget {
                                     padding: const EdgeInsets.only(
                                         right: 12.0),
                                     child: Text(
-                                      _group.totalMem.toString(),
+                                      this._group.totalMem.toString(),
                                       style: TextStyle(
                                         fontSize: 17,
                                         color: Colors.blue,
@@ -126,13 +144,13 @@ class GroupsTitle extends StatelessWidget {
                               height: 27,
                               child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: _group.subjects.length,
+                                  itemCount: this._group.subjects.length,
                                   physics: BouncingScrollPhysics(),
                                   itemBuilder: (context, index) => Row(
                                         children: [
                                           Tag(
                                               text:
-                                                  _group.subjects[index].name),
+                                                  this._group.subjects[index].name),
                                           const SizedBox(
                                             width: 5,
                                           )
@@ -146,7 +164,7 @@ class GroupsTitle extends StatelessWidget {
                             thickness: 2,
                           ),
                           MemberStatus.inGroupStatuses
-                                  .contains(_group.currentMemberStatus)
+                                  .contains(this._group.currentMemberStatus)
                               ? Padding(
                                   padding: const EdgeInsets.only(
                                     left: 10.4,
@@ -173,7 +191,7 @@ class GroupsTitle extends StatelessWidget {
                                                 right: 14.0),
                                             child: Text(
                                               DateFormat('EEE d MMM yyyy')
-                                                  .format(_group.createAt),
+                                                  .format(this._group.createAt),
                                               style: TextStyle(
                                                 fontSize: 17,
                                                 fontWeight: FontWeight.w500,
@@ -212,7 +230,7 @@ class GroupsTitle extends StatelessWidget {
                                             child: FittedBox(
                                               child: Text(
                                                 DateFormat('EEE d MMM yyyy')
-                                                    .format(_group.createAt),
+                                                    .format(this._group.createAt),
                                                 style: TextStyle(
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.w500,
@@ -225,14 +243,18 @@ class GroupsTitle extends StatelessWidget {
                                       Padding(
                                           padding:const EdgeInsets.only(right: 0),
                                           child: StatusButton(
-                                            _group.currentMemberStatus,
-                                            onPressed: () {
+                                            this._group.currentMemberStatus,
+                                            onPressed: () async{
                                               switch (
-                                                  _group.currentMemberStatus) {
+                                                  this._group.currentMemberStatus) {
                                                 case MemberStatus.notInGroup:
-                                                  return _showDialog(context);
+                                                  return await _joinGroup();
                                                 case MemberStatus.pending:
-                                                  //TODO Cancel
+                                                  showOkCancelAlert(context,
+                                                      "Cancel Join Group Request",
+                                                      "Are you sure to cancel your request to join this group?",
+                                                    onOkPressed:(ctx) => _cancelJoinGroup().then((value) => Navigate.pop(ctx))
+                                                  );
                                                   break;
                                               }
                                             },

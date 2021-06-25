@@ -48,7 +48,7 @@ class Body extends StatefulWidget {
           error = usernameProblem[0];
         else if (passwordProblem != null) error = passwordProblem[0];
       } else if (problem.message != null) error = problem.message!;
-      showAlert(context, "Login Failed", error);
+      showOkAlert(context, "Login Failed", error);
     }
   }
 

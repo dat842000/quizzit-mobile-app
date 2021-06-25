@@ -20,11 +20,11 @@ class Body extends StatefulWidget {
     var response =
     await fetch(Host.users, HttpMethod.POST, data: signupRequest);
     if (response.statusCode.isOk()) {
-      showAlert(context, "Signup Success", "",
+      showOkAlert(context, "Signup Success", "",
               onPressed: (con) => Navigate.push(context,LoginScreen()));
     } else {
       var problemDetails = ProblemDetails.fromJson(json.decode(response.body));
-      showAlert(context, "Signup Failed", problemDetails.title!,
+      showOkAlert(context, "Signup Failed", problemDetails.title!,
               onPressed: (context) => Navigator.pop(context, "OK"));
     }
   }
@@ -126,7 +126,7 @@ class _BodyState extends State<Body> {
                   signupRequest.password.isNotEmpty
                       &&signupRequest.password == _confirmedPassword ?
                   await widget.signUp(context, signupRequest) :
-                      showAlert(context,"Signup Failed","Confirmed Password Not Match");
+                      showOkAlert(context,"Signup Failed","Confirmed Password Not Match");
                 },
               ),
             ],

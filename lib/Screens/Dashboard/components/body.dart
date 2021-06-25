@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ Future<Model.Page<Model.Group>> fetchGroupPage(
     ...{"StatusId": status.toString()}
   };
   var response = await fetch(Host.groups, HttpMethod.GET, params: params);
-  // print(response.body);
+  // log(response.body);
   var jsonRes = json.decode(response.body);
   if (response.statusCode.isOk())
     return Model.Page<Model.Group>.fromJson(jsonRes, Model.Group.fromJsonModel);

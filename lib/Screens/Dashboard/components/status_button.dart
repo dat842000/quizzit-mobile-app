@@ -37,6 +37,7 @@ class StatusButton extends StatelessWidget{
         );
         this._sizedBoxWidth=5;
         this._borderColor=Colors.redAccent;
+        this._minWidth=null;
       }
     }
   }

@@ -46,13 +46,13 @@ class _BodyState extends State<Body> {
     var jsonRes = json.decode(response.body);
     if (response.statusCode.isOk()) {
       var newGroup = Group.fromJson(jsonRes);
-      showAlert(context, "Create Group Success",
+      showOkAlert(context, "Create Group Success",
           "Your Group has been created success fully",
           onPressed: (context) =>
               Navigate.push(context, UserViewScreen(newGroup)));
     } else {
       ProblemDetails problem = ProblemDetails.fromJson(jsonRes);
-      showAlert(context, "Create Failed", problem.title!,
+      showOkAlert(context, "Create Failed", problem.title!,
           onPressed: (context) => Navigate.pop(context));
     }
   }

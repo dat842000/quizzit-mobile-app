@@ -200,7 +200,7 @@ class PostDetail extends State<Body> {
                       }).catchError((error) {
                         var problem =
                             ProblemDetails.fromJson(json.decode(error));
-                        showAlert(
+                        showOkAlert(
                             context,
                             problem.title ?? "Create Comment Failed",
                             problem.message ?? "");
