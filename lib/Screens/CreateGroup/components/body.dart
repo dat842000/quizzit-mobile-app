@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/components/subject_page.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
+import 'package:flutter_auth/components/show_photo_menu.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/CreateGroupModel.dart';
 import 'package:flutter_auth/models/group/Group.dart';
@@ -31,18 +32,6 @@ class _BodyState extends State<Body> {
   File? _selectedImage;
   bool _isLoading = false;
   List<Subject> _subjects = [];
-
-  Future getImage() async {
-    var picker = new ImagePicker();
-    var image = await picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      if (image != null) {
-        _selectedImage = File(image.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
 
   Future<void> createGroup() async {
     //TODO CreateGroup
@@ -124,8 +113,10 @@ class _BodyState extends State<Body> {
                   ),
                   GestureDetector(
                       onTap: () {
-                        getImage().then((value) {
-                          print(_selectedImage);
+                        buildPhotoPickerMenu(context, onPick: (pickedImage){
+                          setState(() {
+                            this._selectedImage=pickedImage;
+                          });
                         });
                       },
                       child: _selectedImage != null

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,9 +11,13 @@ import 'package:flutter_auth/Screens/UserInfo/components/profile_widget.dart';
 import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
 import 'package:flutter_auth/components/appbar_widget.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
+import 'package:flutter_auth/components/show_photo_menu.dart';
+import 'package:flutter_auth/models/user/AvatarUpdate.dart';
 import 'package:flutter_auth/models/user/UserInfo.dart' as Model;
 import 'package:flutter_auth/utils/ApiUtils.dart';
+import 'package:flutter_auth/utils/FirebaseUtils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -37,13 +42,15 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   _ProfilePageState() {
-    if (_firebaseAuth.currentUser == null) Navigate.pop(context,destination: LoginScreen());
+    if (_firebaseAuth.currentUser == null)
+      Navigate.pop(context, destination: LoginScreen());
   }
 
   final _firebaseAuth = FirebaseAuth.instance;
+  final ImagePicker _picker = new ImagePicker();
   late Future<Model.UserInfo> userInfoFuture;
   RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController(initialRefresh: false);
 
   @override
   void initState() {
@@ -51,7 +58,17 @@ class _ProfilePageState extends State<ProfilePage> {
     if (_firebaseAuth.currentUser != null)
       userInfoFuture = widget._getUserInfo();
     else
-      Navigate.pop(context,destination: LoginScreen());
+      Navigate.pop(context, destination: LoginScreen());
+  }
+
+  void _onImageButtonPressed(File? pickedImage) async {
+    if (pickedImage != null) {
+      var imgUrl = await FirebaseUtils.uploadImage(pickedImage);
+      var response = await fetch("${Host.users}/avatar",HttpMethod.PUT,data:AvatarUpdate(imgUrl));
+      if(response.statusCode.isOk()){
+        setState(() {});
+      }
+    }
   }
 
   @override
@@ -76,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     header: WaterDropHeader(),
                     enablePullDown: true,
                     enablePullUp: false,
-                    onRefresh: () async{
+                    onRefresh: () async {
                       await Future.delayed(Duration(milliseconds: 1000));
                       setState(() {
                         this.userInfoFuture = widget._getUserInfo();
@@ -88,8 +105,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       physics: BouncingScrollPhysics(),
                       children: [
                         ProfileWidget(
-                          imagePath: _firebaseAuth.currentUser!.photoURL ?? defaultAvatar,
-                          onClicked: () async {},
+                          imagePath: _firebaseAuth.currentUser!.photoURL ??
+                              defaultAvatar,
+                          onClicked: () {
+                            buildPhotoPickerMenu(context,onPick: (pickedImage)=>_onImageButtonPressed(pickedImage));
+                          },
                         ),
                         const SizedBox(height: 12),
                         buildName(_firebaseAuth.currentUser!.displayName!),
@@ -132,15 +152,17 @@ class _ProfilePageState extends State<ProfilePage> {
                             thickness: 2,
                           ),
                         ),
-                        buildAccountOptionRow(
+                        buildAccountOptionRow(context,
                             "Edit User Info",
                             Icons.app_registration,
-                            () => Navigate.push(context, EditUserScreen(user))),
-                        buildAccountOptionRow(
+                                () =>
+                                Navigate.push(context, EditUserScreen(user))),
+                        buildAccountOptionRow(context,
                             "Change Password",
                             FontAwesomeIcons.fingerprint,
-                            () => Navigate.push(context, ChangePasswordScreen())),
-                        buildAccountOptionRow("Logout", Icons.logout, () async {
+                                () =>
+                                Navigate.push(context, ChangePasswordScreen())),
+                        buildAccountOptionRow(context,"Logout", Icons.logout, () async {
                           await _firebaseAuth.signOut();
                           Navigate.push(context, WelcomeScreen());
                         }),
@@ -151,7 +173,8 @@ class _ProfilePageState extends State<ProfilePage> {
             }));
   }
 
-  Widget buildName(String name) => Column(
+  Widget buildName(String name) =>
+      Column(
         children: [
           Text(
             name,
@@ -169,7 +192,9 @@ class _ProfilePageState extends State<ProfilePage> {
             Row(
               children: [
                 Icon(iconTitle),
-                SizedBox(width: 5,),
+                SizedBox(
+                  width: 5,
+                ),
                 Text(
                   title,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -186,27 +211,32 @@ class _ProfilePageState extends State<ProfilePage> {
       );
 }
 
-GestureDetector buildAccountOptionRow(
-    String title, IconData icon, VoidCallback onTap) {
-  return GestureDetector(
-    onTap: onTap,
-    child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 48),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.w500, height: 1.4),
+Widget buildAccountOptionRow(BuildContext context,String title, IconData icon,
+    VoidCallback onTap) {
+  return Center(
+    child: Container(
+      width: MediaQuery.of(context).size.width-38,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 28),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w500, height: 1.4),
+                ),
+                Icon(
+                  icon,
+                  color: Colors.black,
+                ),
+              ],
             ),
-            Icon(
-              icon,
-              color: Colors.black,
-            ),
-          ],
+          ),
         ),
       ),
     ),

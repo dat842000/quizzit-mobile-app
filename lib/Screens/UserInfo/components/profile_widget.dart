@@ -1,4 +1,4 @@
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/components/rounded_image.dart';
 
@@ -19,28 +19,30 @@ class ProfileWidget extends StatelessWidget {
     return Center(
       child: Stack(
         children: [
-          buildImage(imagePath: imagePath,onClicked: onClicked),
+          buildImage(imagePath: imagePath),
           Positioned(
             bottom: 0,
             right: 4,
-            child: buildEditIcon(color),
+            child: buildEditIcon(color,onClicked),
           ),
         ],
       ),
     );
   }
 
-  Widget buildEditIcon(Color color) => buildCircle(
+  Widget buildEditIcon(Color color,VoidCallback onTap) => buildCircle(
         color: Colors.white,
         all: 3,
         child: buildCircle(
           color: color,
           all: 8,
-          child: Icon(
-            Icons.edit,
+          child: InkWell(
+            onTap: onTap,
+              child: Icon(
+            CupertinoIcons.camera_fill,
             color: Colors.white,
             size: 20,
-          ),
+          )),
         ),
       );
 

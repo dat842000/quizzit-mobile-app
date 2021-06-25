@@ -1,12 +1,11 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/PostDetail/post_detail.dart';
-import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/rounded_input_field.dart';
+import 'package:flutter_auth/components/show_photo_menu.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/post/CreatePostModel.dart';
@@ -29,7 +28,6 @@ class _BodyState extends State<Body> {
   String _title = "";
   File? _selectedImage;
   quill.QuillController _controller = quill.QuillController.basic();
-  TextEditingController _textEditingController = TextEditingController();
   bool _isLoading = false;
 
   Future getImage() async {
@@ -110,8 +108,12 @@ class _BodyState extends State<Body> {
                     height: 10,
                   ),
                   GestureDetector(
-                      onTap: () async{
-                        await getImage();
+                      onTap: (){
+                        buildPhotoPickerMenu(context, onPick:(pickedImage){
+                          setState(() {
+                            this._selectedImage=pickedImage;
+                          });
+                        });
                       },
                       child: _selectedImage != null
                           ? Container(
