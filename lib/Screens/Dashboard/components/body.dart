@@ -17,23 +17,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'group_title.dart';
 
-Future<Model.Page<Model.Group>> fetchGroupPage(
-    {String nameSearch = "", int status = 0, int page = 1}) async {
-  var paging = PagingParam(page: page, sort: "createAt_desc");
-  Map<String, String> params = {
-    ...paging.build(),
-    ...{"GroupName": nameSearch},
-    ...{"StatusId": status.toString()}
-  };
-  var response = await fetch(Host.groups, HttpMethod.GET, params: params);
-  // log(response.body);
-  var jsonRes = json.decode(response.body);
-  if (response.statusCode.isOk())
-    return Model.Page<Model.Group>.fromJson(jsonRes, Model.Group.fromJsonModel);
-  else
-    throw new Exception(response.body);
-}
-
 class Body extends StatefulWidget {
   Body({Key? key}) : super(key: key);
 
@@ -50,17 +33,18 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   late Curve _curve = Curves.easeOut;
   late double _fabHeight = 56.0;
 
-  late Future<Model.Page<Model.Group>> groupPageFuture;
+  late Future<Model.Page<Model.Group>> _groupPageFuture;
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   int _currentPage = 1;
   bool _isLast = false;
-  String query = "";
+  String _query = "";
+  int _currentChoice=0;
 
   @override
   void initState() {
     setState(() {
-      groupPageFuture = fetchGroupPage(page: 1);
+      _groupPageFuture = _fetchGroupPage(nameSearch:_query,status:_currentChoice,page: 1);
     });
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500))
@@ -84,16 +68,16 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
 
   @override
   void didUpdateWidget(Body oldWidget) {
-    super.didUpdateWidget(oldWidget);
     setState(() {
-      groupPageFuture = fetchGroupPage(page: 1);
+      _groupPageFuture = _fetchGroupPage(nameSearch:_query,status:_currentChoice,page: 1);
     });
+    super.didUpdateWidget(oldWidget);
   }
 
   void _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 1000));
     setState(() {
-      this.groupPageFuture = fetchGroupPage(page: 1);
+      this._groupPageFuture = _fetchGroupPage(nameSearch:_query,status:_currentChoice,page: 1);
     });
     _refreshController.refreshCompleted();
   }
@@ -101,7 +85,7 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   void _onLoading() async {
     await Future.delayed(Duration(milliseconds: 1000));
     setState(() {
-      this.groupPageFuture = fetchGroupPage(page: ++_currentPage);
+      this._groupPageFuture = _fetchGroupPage(nameSearch: _query,status: _currentChoice,page: ++_currentPage);
     });
     _refreshController.loadComplete();
   }
@@ -177,7 +161,7 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
           buildSearch(),
           Expanded(
             child: FutureBuilder<Model.Page<Model.Group>>(
-                future: groupPageFuture,
+                future: _groupPageFuture,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) return Text("${snapshot.error}");
                   if (snapshot.hasData) {
@@ -224,16 +208,52 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   }
 
   Widget buildSearch() => SearchWidget(
-        text: query,
+        text: _query,
         hintText: 'Group Name',
-        onChanged: searchGroup,
+        onCompleted: searchGroup,
       );
 
   void searchGroup(String query) {
-    //TODO SearchGroup
+    this._refreshController.requestRefresh();
+    setState(() {
+      this._query=query;
+    });
   }
 
   void choiceAction(String choice) {
-    //TODO Filter
+    this._refreshController.requestRefresh();
+    setState(() {
+      switch(choice){
+        case Constants.all:
+          this._currentChoice=0;
+          break;
+        case Constants.own:
+          this._currentChoice=3;
+          break;
+        case Constants.join:
+          this._currentChoice=2;
+          break;
+        case Constants.suggest:
+          this._currentChoice=-1;
+          break;
+      }
+    });
+  }
+
+  Future<Model.Page<Model.Group>> _fetchGroupPage(
+      {String nameSearch = "", int status = 0, int page = 1}) async {
+    var paging = PagingParam(page: page, sort: "createAt_desc");
+    Map<String, String> params = {
+      ...paging.build(),
+      ...{"GroupName": nameSearch},
+      ...{"StatusId": status.toString()}
+    };
+    var response = await fetch(Host.groups, HttpMethod.GET, params: params);
+    // log(response.body);
+    var jsonRes = json.decode(response.body);
+    if (response.statusCode.isOk())
+      return Model.Page<Model.Group>.fromJson(jsonRes, Model.Group.fromJsonModel);
+    else
+      throw new Exception(response.body);
   }
 }

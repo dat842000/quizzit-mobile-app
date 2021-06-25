@@ -4,11 +4,12 @@ const kPrimaryColor = Color(0xFF039BE5);
 const kPrimaryLightColor = Color(0xFFE1F5FE);
 const String defaultAvatar = "https://firebasestorage.googleapis.com/v0/b/groupsharingblogadminauth.appspot.com/o/default-avatar-1.png?alt=media&token=50dad4de-11a9-42ef-b53e-ad896fb9b524";
 class Constants{
+  static const all = 'All Group';
   static const own = 'Own Group';
   static const join =  'Join Group';
   static const suggest = 'Suggestion';
   static const choices = <String>[
-    own,join,suggest
+    all,own,join,suggest
   ];
   static const adminManageUser = <String>[
     'Members','New Requests'
@@ -37,6 +38,7 @@ enum MemberStatusConst{
 
 class Host {
   static const String name = "hieulnhcm.ddns.net";
+  // static const String name = "localhost";
   static const int port = 5001;
   static const String _root = "/api";
   static const String login = "$_root/login";

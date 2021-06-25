@@ -12,7 +12,6 @@ import 'package:intl/intl.dart';
 
 import '../../../constants.dart';
 import 'Tags.dart';
-import 'alert_widget.dart';
 
 class GroupsTitle extends StatefulWidget {
   final Group _group;
@@ -61,17 +60,20 @@ class _GroupsTitleState extends State<GroupsTitle> {
       child: Center(
         child: Wrap(
           children: <Widget>[
-            InkWell(
-              onTap: () {
-                Navigate.push(context, UserViewScreen(this.widget._group));
-              },
-              child: Container(
-                margin: EdgeInsets.only(bottom: 20),
-                width: MediaQuery.of(context).size.width - 25,
-                height: 255,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20)),
+            Container(
+              margin: EdgeInsets.only(bottom: 20),
+              width: MediaQuery.of(context).size.width - 25,
+              height: 255,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20)),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(20),
+                onTap: () {
+                  MemberStatus.inGroupStatuses.contains(this._group.currentMemberStatus) ?
+                  Navigate.push(context, UserViewScreen(this.widget._group)):
+                      showOkAlert(context, "Cannot Access this group", "You need to join first in order to view group's content");
+                },
                 child: Stack(
                   children: <Widget>[
                     ClipRRect(
