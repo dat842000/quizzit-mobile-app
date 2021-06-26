@@ -49,16 +49,16 @@ class _Body extends State<Body> {
                   child: ListView.builder(
                     itemCount: snapshot.data!.content.length,
                     physics: BouncingScrollPhysics(),
-                    itemBuilder: (context, index) => QuestionCard(snapshot.data!.content[index]),
+                    itemBuilder: (context, index) => QuestionCard(snapshot.data!.content[index], widget.groupId),
                   ),
                 ),
               ]);
             return Center(child: CircularProgressIndicator());
           });
-
   }
 
   @override
+  // ignore: must_call_super
   void initState() {
     widget.fetchGroupPage(groupId: widget.groupId);
   }

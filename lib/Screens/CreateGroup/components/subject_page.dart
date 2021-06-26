@@ -6,6 +6,8 @@ import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/subject/Subject.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 
+import 'package:flutter_auth/global/Subject.dart' as subject;
+
 class SubjectPage extends StatefulWidget {
   final List<Subject> subjects;
   const SubjectPage({
@@ -37,7 +39,7 @@ class _SubjectPageState extends State<SubjectPage> {
           Expanded(
             child: ListView(
               //TODO Subject
-              children: [].map((subject) {
+              children: subject.subjects.map((subject) {
                 final isSelected = selectedSubjects.contains(subject);
                 return SubjectListTitleWidget(
                   subject: subject,

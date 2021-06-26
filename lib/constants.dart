@@ -51,4 +51,5 @@ class Host {
   static const String members = "$_root/members";
   static const String questions = "$_root/questions";
   static String groupOwnerQuestion({required int groupId})=>"$groups/$groupId/questions";
+  static String groupOwnerUpdateAddQuestion({required int groupId, required int questionId})=>"$groups/$groupId/questions/$questionId";
 }
