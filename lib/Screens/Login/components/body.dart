@@ -37,7 +37,7 @@ class Body extends StatefulWidget {
       var fbResponse =
           await firebase.signInWithCustomToken(tokenObject.customToken);
       globals.userId = int.parse(firebase.currentUser!.uid);
-      navigate(context, DashboardScreen());
+      Navigate.push(context, DashboardScreen());
     } else {
       var problem = ProblemDetails.fromJson(Json);
       String error = problem.title!;
@@ -48,7 +48,7 @@ class Body extends StatefulWidget {
           error = usernameProblem[0];
         else if (passwordProblem != null) error = passwordProblem[0];
       } else if (problem.message != null) error = problem.message!;
-      showAlert(context, "Login Failed", error);
+      showOkAlert(context, "Login Failed", error);
     }
   }
 

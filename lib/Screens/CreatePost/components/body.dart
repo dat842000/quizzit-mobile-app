@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/PostDetail/post_detail.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/rounded_input_field.dart';
+import 'package:flutter_auth/components/show_photo_menu.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/post/CreatePostModel.dart';
@@ -49,13 +50,12 @@ class _BodyState extends State<Body> {
         this._title, jsonEncode(_controller.document.toDelta().toJson()),image: image);
     fetch(Host.groupPost(groupId: widget.group.id), HttpMethod.POST,data: model)
       .then((value) {
-        navigate(context, PostDetailScreen(Post.fromJson(json.decode(value.body))));
+        Navigate.push(context,PostDetailScreen(Post.fromJson(json.decode(value.body))));
       });
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -74,10 +74,6 @@ class _BodyState extends State<Body> {
           GestureDetector(
             onTap: () async{
               await createPost();
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => UserViewScreen(widget.group)));
             },
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16),
@@ -114,8 +110,12 @@ class _BodyState extends State<Body> {
                     height: 10,
                   ),
                   GestureDetector(
-                      onTap: () async{
-                        await getImage();
+                      onTap: (){
+                        buildPhotoPickerMenu(context, onPick:(pickedImage){
+                          setState(() {
+                            this._selectedImage=pickedImage;
+                          });
+                        });
                       },
                       child: _selectedImage != null
                           ? Container(

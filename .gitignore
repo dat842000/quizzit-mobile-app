@@ -13,6 +13,7 @@
 *.iml
 *.ipr
 *.iws
+/.idea/
 .idea/
 
 # The .vscode folder contains launch configuration and tasks you configure in
@@ -28,7 +29,7 @@
 .packages
 .pub-cache/
 .pub/
-/build/
+build/
 
 # Web related
 lib/generated_plugin_registrant.dart

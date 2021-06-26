@@ -4,11 +4,12 @@ const kPrimaryColor = Color(0xFF039BE5);
 const kPrimaryLightColor = Color(0xFFE1F5FE);
 const String defaultAvatar = "https://firebasestorage.googleapis.com/v0/b/groupsharingblogadminauth.appspot.com/o/default-avatar-1.png?alt=media&token=50dad4de-11a9-42ef-b53e-ad896fb9b524";
 class Constants{
+  static const all = 'All Group';
   static const own = 'Own Group';
   static const join =  'Join Group';
   static const suggest = 'Suggestion';
   static const choices = <String>[
-    own,join,suggest
+    all,own,join,suggest
   ];
   static const adminManageUser = <String>[
     'Members','New Requests'
@@ -18,36 +19,26 @@ class Constants{
   ];
 }
 enum HttpMethod { GET, POST, PUT, DELETE }
-const GROUPS=[
-  {
-    "imgUrl":'https://scontent-sin6-3.xx.fbcdn.net/v/t1.6435-9/90954431_1582148621924471_7611655305281142784_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=825194&_nc_ohc=jgOg1-97daQAX--nxb2&_nc_ht=scontent-sin6-3.xx&oh=e405c37b9c016426c7052451ae7a161d&oe=60D913F0',
-    "title":"Math Group",
-    "decription":"Toan",
-  },{
-    "imgUrl":
-    'https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.18169-9/28379844_10156181840423126_2758359348106619364_n.jpg?_nc_cat=106&ccb=1-3&_nc_sid=825194&_nc_ohc=P2ycqfZHNUUAX-pPnZK&_nc_ht=scontent.fsgn5-6.fna&oh=cafbc3bcc1801c35a918915e1ce4011f&oe=60DB12E0',
-    "title": 'Physics Group',
-    "description": 'Ly',
-  },{
-    "imgUrl":
-    'https://image.shutterstock.com/image-vector/maths-hand-drawn-vector-illustration-260nw-460780561.jpg',
-    "title": 'PRJ303_Survice',
-    "description": 'Hoa',
-  },{
-    "imgUrl":
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREVI19c8BieX1brqjOdMKlt1mRINsKuLK6JA&usqp=CAU',
-    "title": 'Math Group',
-    "description": 'none',
-  },{
-    "imgUrl":
-    'https://tr-images.condecdn.net/image/V2n9Jj303ye/crop/405/f/pamukkale-turkey-gettyimages-1223155251.jpg',
-    "title": 'Math Group',
-    "description": 'none',
-  }
-];
+
+abstract class MemberStatus{
+  static const int notInGroup = 0;
+  static const int pending=1;
+  static const int member=2;
+  static const int owner=3;
+  static const int kicked = 4;
+  static const int banned = 5;
+  static const int leave = 6;
+  static const List<int> inGroupStatuses=[member,owner];
+  // static const int
+}
+
+enum MemberStatusConst{
+  NotInGroup,Pending,Member,Owner,Kicked,Banned,Leave
+}
 
 class Host {
   static const String name = "hieulnhcm.ddns.net";
+  // static const String name = "localhost";
   static const int port = 5001;
   static const String _root = "/api";
   static const String login = "$_root/login";

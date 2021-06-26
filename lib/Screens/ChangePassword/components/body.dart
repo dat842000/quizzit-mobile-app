@@ -1,17 +1,11 @@
-import 'dart:convert';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
 import 'package:flutter_auth/components/appbar_widget.dart';
 import 'package:flutter_auth/components/inputField.dart';
-import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/models/login/LoginResponse.dart';
-import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/models/updatepassword/UpdatePasswordRequest.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
 
 class Body extends StatefulWidget {
   const Body({
@@ -41,7 +35,7 @@ class _BodyState extends State<Body> {
         .of(context)
         .size;
     return Scaffold(
-        appBar: buildAppBar(context, UserInfoScreen()),
+        appBar: buildAppBar(context),
         body: Container(
           alignment: Alignment.center,
           child: SingleChildScrollView(

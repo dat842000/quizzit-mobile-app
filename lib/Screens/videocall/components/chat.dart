@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:permission_handler/permission_handler.dart';
 import '../model/message_model.dart' as model;
 import '../model/user_model.dart';
 
@@ -193,11 +192,6 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
   }
-
-  Future<void> _handleCameraAndMic(Permission permission) async {
-    final status = await permission.request();
-  }
-
   @override
   Widget build(BuildContext context) {
     int prevUserId = -1;

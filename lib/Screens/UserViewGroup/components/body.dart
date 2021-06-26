@@ -4,12 +4,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/components/GroupTopBar.dart';
+import 'package:flutter_auth/Screens/videocall/components/root_app.dart';
+import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
 import 'package:flutter_auth/models/paging/PagingParams.dart';
 import 'package:flutter_auth/models/post/Post.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
+import 'package:flutter_quill/flutter_quill.dart' as quill;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'PostCard.dart';
@@ -24,7 +28,7 @@ class Body extends StatefulWidget {
     var paging = PagingParam(page: page, pageSize: pageSize, sort: sort);
     Map<String, String> params = {...paging.build()};
     var response = await fetch(
-        "${Host.groups}/${_group.id}/posts", HttpMethod.GET,
+        Host.groupPost(groupId: _group.id), HttpMethod.GET,
         params: params);
     var body = json.decode(response.body);
     if (response.statusCode.isOk()) {
@@ -56,8 +60,8 @@ class _BodyState extends State<Body> {
   }
 
   @override
-  // ignore: must_call_super
   void didUpdateWidget(Body oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _futurePostPage = widget._fetchPost();
   }
 
@@ -85,19 +89,17 @@ class _BodyState extends State<Body> {
     return Scaffold(
       backgroundColor: Color(0xffe4e6eb),
       appBar: AppBar(
-        backgroundColor: Colors.white,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
-          color: kPrimaryColor,
+          color: Colors.white,
           iconSize: 20,
           onPressed: () =>
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => DashboardScreen()),
-              ),
+              //TODO recheck
+              Navigate.pop(context)
         ),
         centerTitle: true,
         title: Text(_group.name),
+        actions: [],
       ),
       body: SmartRefresher(
         controller: _refreshController,

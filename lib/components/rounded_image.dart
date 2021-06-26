@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget buildImage({required String imagePath, VoidCallback? onClicked}) {
+Widget buildImage({required String imagePath}) {
   final image = NetworkImage(imagePath);
 
   return ClipOval(
@@ -11,7 +11,7 @@ Widget buildImage({required String imagePath, VoidCallback? onClicked}) {
         fit: BoxFit.cover,
         width: 128,
         height: 128,
-        child: InkWell(onTap: onClicked),
+        child: InkWell(),
       ),
     ),
   );

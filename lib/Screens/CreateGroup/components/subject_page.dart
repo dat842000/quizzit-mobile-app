@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/components/subject_listtitle_widget.dart';
+import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/subject/Subject.dart';
+import 'package:flutter_auth/utils/ApiUtils.dart';
 
 class SubjectPage extends StatefulWidget {
   final List<Subject> subjects;
@@ -9,39 +13,19 @@ class SubjectPage extends StatefulWidget {
     this.subjects = const[],
   }) : super(key: key);
 
+  Future<List<Subject>> getSubjects() async{
+    var response = await fetch(Host.subjects, HttpMethod.GET);
+    Iterable i = json.decode(response.body);
+    return List<Subject>.from(i.map((m) => Subject.fromJson(m)));
+  }
+
   @override
   _SubjectPageState createState() => _SubjectPageState();
 }
 
 class _SubjectPageState extends State<SubjectPage> {
   List<Subject> selectedSubjects = [];
-  List<Subject> listSubject = [
-    // "Toan",
-    // "Ly",
-    // "Hoa",
-    // "Su",
-    // "Dia",
-    // "Sinh hoc",
-    // "Anh van",
-    // "Cong nghe",
-    // "Tin hoc",
-    // "GDCD",
-    // "Ngu Van",
-    // "GDQP"
-    Subject(1, "Toan"),
-    Subject(2, "Ly"),
-    Subject(3, "Hoa"),
-    Subject(4, "Su"),
-    Subject(5, "Dia"),
-    Subject(6, "Sinh hoc"),
-    Subject(7, "Anh van"),
-    Subject(8, "Cong nghe"),
-    Subject(9, "Tin hoc"),
-    Subject(10, "GDCD"),
-    Subject(11, "Ngu Van"),
-    Subject(12, "GDQP"),
-  ];
-
+  late Future<List<Subject>> listSubjectFuture;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +36,8 @@ class _SubjectPageState extends State<SubjectPage> {
         children: <Widget>[
           Expanded(
             child: ListView(
-              children: listSubject.map((subject) {
+              //TODO Subject
+              children: [].map((subject) {
                 final isSelected = selectedSubjects.contains(subject);
                 return SubjectListTitleWidget(
                   subject: subject,

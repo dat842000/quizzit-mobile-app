@@ -33,7 +33,7 @@ class PostCard extends StatelessWidget {
     // TODO: implement build
     return InkWell(
       onTap: () {
-        navigate(context, PostDetailScreen(this._post));
+        Navigate.push(context, PostDetailScreen(this._post));
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16.0),

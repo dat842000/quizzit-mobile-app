@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/EditUserProfile/components/birthday_edit_widget.dart';
 import 'package:flutter_auth/Screens/EditUserProfile/components/gender_choice.dart';
 import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
-import 'package:flutter_auth/components/rounded_image.dart';
+import 'package:flutter_auth/components/appbar_widget.dart';
+import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/textfield_widget.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/user/BaseUser.dart';
@@ -24,21 +25,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: InkWell(
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: kPrimaryColor,
-          ),
-          onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => UserInfoScreen(),
-            ));
-          },
-        ),
-      ),
+      appBar: buildAppBar(context),
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 32),
         physics: BouncingScrollPhysics(),
@@ -81,14 +68,8 @@ class _BodyState extends State<Body> {
                 padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                 color: Colors.blue[500],
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return UserInfoScreen();
-                      },
-                    ),
-                  );
+                  //TODO Update UserProfile
+                  Navigate.pop(context);
                 },
                 child: Text(
                   "Save",
