@@ -71,8 +71,8 @@ class _GroupsTitleState extends State<GroupsTitle> {
                 borderRadius: BorderRadius.circular(20),
                 onTap: () {
                   MemberStatus.inGroupStatuses.contains(this._group.currentMemberStatus) ?
-                  Navigate.push(context, UserViewScreen(this.widget._group)):
-                      showOkAlert(context, "Cannot Access this group", "You need to join first in order to view group's content");
+                  Navigate.push(context, UserViewScreen(this.widget._group))
+                      : showOkAlert(context, "Cannot Access this group", "You need to join first in order to view group's content");
                 },
                 child: Stack(
                   children: <Widget>[

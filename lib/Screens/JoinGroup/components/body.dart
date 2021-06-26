@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
+import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/constants.dart';
 
 class Body extends StatefulWidget {
@@ -12,6 +13,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  int? _groupId;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -94,10 +96,11 @@ class _BodyState extends State<Body> {
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: TextField(
                     decoration: InputDecoration(
-                      hintText: "okw-xwna-ccc",
+                      hintText: "1023",
                       border: OutlineInputBorder(),
                     ),
-                    onChanged: (val) {},
+                    keyboardType: TextInputType.number,
+                    onChanged: (val) => this._groupId=int.parse(val),
                   ),
                 ),
                 Padding(
@@ -112,7 +115,7 @@ class _BodyState extends State<Body> {
                               fontWeight: FontWeight.w600),
                         ),
                         Text(
-                          "okw-xwna-ccc",
+                          "1023",
                           style: TextStyle(
                               fontSize: 15,
                               color: Color(0xFF0D253F),
@@ -137,9 +140,9 @@ class _BodyState extends State<Body> {
                 // padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                 color: kPrimaryColor,
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => CreateGroupScreen(),
-                  ));
+                  if(this._groupId!=null){
+                    // Navigate.push(context, destination)
+                  }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
