@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:core';
-import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +16,7 @@ import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter_auth/global/Subject.dart' as subject;
+import 'group_title.dart';
 
 Future<Model.Page<Model.Group>> fetchGroupPage(
     {String nameSearch = "", int status = 0, int page = 1}) async {
@@ -34,8 +34,6 @@ Future<Model.Page<Model.Group>> fetchGroupPage(
   else
     throw new Exception(response.body);
 }
-
-import 'group_title.dart';
 
 Future<List<Subject>> fetchSubject() async {
   var response = await fetch(Host.subjects, HttpMethod.GET);
@@ -191,7 +189,6 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
         children: [
           buildSearch(),
           Expanded(
-<<<<<<<<< Temporary merge branch 1
             child: FutureBuilder<Model.Page<Model.Group>>(
                 future: _groupPageFuture,
                 builder: (context, snapshot) {
