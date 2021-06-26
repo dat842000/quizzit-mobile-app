@@ -1,5 +1,6 @@
 import 'package:flutter_auth/models/Codable.dart';
 import 'package:flutter_auth/models/questions/Answers.dart';
+import 'package:flutter_auth/models/user/BaseUser.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'Question.g.dart';
@@ -9,7 +10,7 @@ class Question implements Decodable{
   String content;
   int inSubject;
   DateTime updateAt;
-  String createdBy;
+  BaseUser createdBy;
   bool isPrivate;
   bool isAdd;
   List<Answer> answers;

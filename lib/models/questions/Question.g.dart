@@ -12,7 +12,7 @@ Question _$QuestionFromJson(Map<String, dynamic> json) {
     json['content'] as String,
     json['inSubject'] as int,
     DateTime.parse(json['updateAt'] as String),
-    json['createdBy'] as String,
+    BaseUser.fromJson(json['createdBy'] as Map<String, dynamic>),
     json['isPrivate'] as bool,
     json['isAdd'] as bool,
     (json['answers'] as List<dynamic>)

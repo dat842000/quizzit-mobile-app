@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+import 'dart:core';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,10 +14,12 @@ import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart' as Model;
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
 import 'package:flutter_auth/models/paging/PagingParams.dart';
+import 'package:flutter_auth/models/subject/Subject.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:flutter_auth/global/Subject.dart' as subject;
 
 Future<Model.Page<Model.Group>> fetchGroupPage(
     {String nameSearch = "", int status = 0, int page = 1}) async {
@@ -32,6 +34,16 @@ Future<Model.Page<Model.Group>> fetchGroupPage(
   var jsonRes = json.decode(response.body);
   if (response.statusCode.isOk())
     return Model.Page<Model.Group>.fromJson(jsonRes, Model.Group.fromJsonModel);
+  else
+    throw new Exception(response.body);
+}
+
+Future<List<Subject>> fetchSubject() async {
+  var response = await fetch(Host.subjects, HttpMethod.GET);
+  // print(response.body);
+  var jsonRes = json.decode(response.body);
+  if (response.statusCode.isOk())
+    return List.from(jsonRes.map((e)=>Subject.fromJson(e)));
   else
     throw new Exception(response.body);
 }
@@ -60,6 +72,7 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
+    fetchSubject().then((value) => subject.subjects = value);
     setState(() {
       groupPageFuture = fetchGroupPage(page: 1);
     });
