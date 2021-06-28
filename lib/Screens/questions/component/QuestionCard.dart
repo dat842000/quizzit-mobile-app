@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/questions/question_info_screen.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/global/Subject.dart' as subject;
+import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/questions/Question.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:intl/intl.dart';
@@ -31,8 +32,8 @@ class QuestionCard extends StatefulWidget {
   }
 
   Question question;
-  final int groupId;
-  QuestionCard(this.question, this.groupId);
+  final Group group;
+  QuestionCard(this.question, this.group);
 
   @override
   _QuestionCard createState() => _QuestionCard(question);
@@ -55,7 +56,7 @@ class _QuestionCard extends State<QuestionCard> {
             InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => QuestionInfoScreen(question, false, widget.groupId),
+                  builder: (context) => QuestionInfoScreen(question, false, widget.group),
                 ));
               },
               child: Container(
@@ -146,7 +147,7 @@ class _QuestionCard extends State<QuestionCard> {
                         // ignore: deprecated_member_use
                         question.isAdd! ? FlatButton(
                           onPressed: () {
-                            widget.deleteQuestionFromGroup(questionId: question.id!, groupId: widget.groupId).then((value) =>
+                            widget.deleteQuestionFromGroup(questionId: question.id!, groupId: widget.group.id).then((value) =>
                                 setState(() {}));
                           },
                           color: Colors.redAccent,
@@ -193,7 +194,7 @@ class _QuestionCard extends State<QuestionCard> {
                         // ignore: deprecated_member_use
                         FlatButton(
                           onPressed: () {
-                            widget.addQuestionToGroup(questionId: question.id!, groupId: widget.groupId).then((value) =>
+                            widget.addQuestionToGroup(questionId: question.id!, groupId: widget.group.id).then((value) =>
                                 setState(() {}));
                           },
                           color: Color(0xFF3AA35C),

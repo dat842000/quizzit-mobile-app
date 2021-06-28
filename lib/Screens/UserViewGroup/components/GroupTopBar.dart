@@ -77,7 +77,7 @@ class GroupTopBar extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context)
                         .push(MaterialPageRoute(
-                      builder: (context) => QuestionScreen(group.id),
+                      builder: (context) => QuestionScreen(group),
                     ));
                   },
                   child: ClipRRect(

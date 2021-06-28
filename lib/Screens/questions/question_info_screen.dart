@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/questions/component/QuestionInfo.dart';
 import 'package:flutter_auth/Screens/questions/question_screen.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/models/group/Group.dart';
 
 import 'package:flutter_auth/models/questions/Question.dart';
 import 'package:flutter_auth/models/questions/QuestionCreate.dart';
@@ -35,9 +36,9 @@ class QuestionInfoScreen extends StatefulWidget {
   }
   Question question;
   bool isNew;
-  int groupId;
+  Group group;
 
-  QuestionInfoScreen(this.question, this.isNew, this.groupId);
+  QuestionInfoScreen(this.question, this.isNew, this.group);
 
   @override
   _QuestionInfoScreen createState() => _QuestionInfoScreen();
@@ -61,12 +62,12 @@ class _QuestionInfoScreen extends State<QuestionInfoScreen> {
         actions: [
           GestureDetector(
             onTap: () async {
-              widget.isNew ? widget.createQuestion(widget.question, widget.groupId):
+              widget.isNew ? widget.createQuestion(widget.question, widget.group.id):
               widget.updateQuestion(widget.question).then((value) => print(value));
               if(widget.isNew) {
                 Navigator.of(context).pop(
                   MaterialPageRoute(
-                      builder: (context) => QuestionScreen(widget.groupId),
+                      builder: (context) => QuestionScreen(widget.group),
                   ),
                 );
               }
@@ -81,7 +82,7 @@ class _QuestionInfoScreen extends State<QuestionInfoScreen> {
           )
         ],
       ),
-      body: QuestionInfo(widget.question, widget.isNew),
+      body: QuestionInfo(widget.question, widget.isNew, widget.group),
     );
   }
 }

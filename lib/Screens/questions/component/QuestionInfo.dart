@@ -3,14 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/quiz/components/answer_row.dart';
 import 'package:flutter_auth/Screens/videocall/theme/colors.dart';
+import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/questions/Answers.dart';
 import 'package:flutter_auth/models/questions/Question.dart';
 
-import 'package:flutter_auth/global/Subject.dart' as subject;
-
 // ignore: must_be_immutable
 class QuestionInfo extends StatefulWidget {
-  QuestionInfo(this.question, this.isNew);
+  QuestionInfo(this.question, this.isNew, this.group);
+
+  Group group;
   bool isNew;
   Question question;
 
@@ -26,7 +27,7 @@ class _QuestionInfo extends State<QuestionInfo> {
   @override
   Widget build(BuildContext context) {
     Answer tempAns = new Answer(0, "", false);
-    List<DropdownMenuItem> items = subject.subjects.map((item) {
+    List<DropdownMenuItem> items = widget.group.subjects.map((item) {
       return DropdownMenuItem<int>(
         child: Text(item.name),
         value: item.id,

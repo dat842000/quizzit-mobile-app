@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/questions/component/QuestionCard.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/paging/PagingParams.dart';
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
 import 'package:flutter_auth/models/questions/Question.dart';
@@ -29,10 +30,10 @@ class Body extends StatefulWidget {
       throw new Exception(response.body);
   }
 
-  final int groupId;
+  final Group group;
   int _currentPage = 1;
 
-  Body(this.groupId);
+  Body(this.group);
 
   @override
   _Body createState() => _Body();
@@ -45,7 +46,7 @@ class _Body extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Model.Page<Question>>(
-        future: widget.fetchQuestionPage(groupId: widget.groupId),
+        future: widget.fetchQuestionPage(groupId: widget.group.id),
         builder: (context, snapshot) {
           if (snapshot.hasError) return Text("${snapshot.error}");
           if (snapshot.hasData)
@@ -60,7 +61,7 @@ class _Body extends State<Body> {
                     itemCount: snapshot.data!.content.length,
                     physics: BouncingScrollPhysics(),
                     itemBuilder: (context, index) => QuestionCard(
-                        snapshot.data!.content[index], widget.groupId),
+                        snapshot.data!.content[index], widget.group),
                   ),
                 ),
               ),
@@ -72,7 +73,7 @@ class _Body extends State<Body> {
   void _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 1000));
     setState(() {
-      widget.fetchQuestionPage(groupId: widget.groupId);
+      widget.fetchQuestionPage(groupId: widget.group.id);
     });
     _refreshController.refreshCompleted();
   }
@@ -80,7 +81,7 @@ class _Body extends State<Body> {
   void _onLoading() async {
     await Future.delayed(Duration(milliseconds: 1000));
     setState(() {
-      widget.fetchQuestionPage(groupId: widget.groupId ,page: ++widget._currentPage);
+      widget.fetchQuestionPage(groupId: widget.group.id ,page: ++widget._currentPage);
     });
     _refreshController.loadComplete();
   }
@@ -88,6 +89,6 @@ class _Body extends State<Body> {
   @override
   // ignore: must_call_super
   void initState() {
-    widget.fetchQuestionPage(groupId: widget.groupId);
+    widget.fetchQuestionPage(groupId: widget.group.id);
   }
 }

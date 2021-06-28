@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_auth/Screens/questions/component/body.dart';
 import 'package:flutter_auth/Screens/questions/question_info_screen.dart';
+import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/questions/Answers.dart';
 import 'package:flutter_auth/models/questions/Question.dart';
 
 class QuestionScreen extends StatelessWidget {
-  final int groupId;
-  QuestionScreen(this.groupId);
+  final Group group;
+  QuestionScreen(this.group);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class QuestionScreen extends StatelessWidget {
               Question question = Question.temp("", 0, true, listAns);
               Navigator.of(context).push(
                 MaterialPageRoute(
-                    builder: (context) => QuestionInfoScreen(question, true, groupId)
+                    builder: (context) => QuestionInfoScreen(question, true, group)
                 ),
               );
             },
@@ -44,7 +45,7 @@ class QuestionScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Body(groupId),
+      body: Body(group),
     );
   }
 }
