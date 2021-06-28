@@ -176,7 +176,7 @@ class _QuestionInfo extends State<QuestionInfo> {
                   ...List.generate(
                     question.answers.length,
                     (index) => Dismissible(
-                        key: Key(index.toString()),
+                        key: Key(UniqueKey().toString()),
                         child:
                             AnswerRow(question, index, () => {setState(() {})}),
                         direction: question.answers.length > 2
