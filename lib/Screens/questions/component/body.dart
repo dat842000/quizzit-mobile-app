@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/questions/component/QuestionCard.dart';
@@ -40,55 +41,67 @@ class Body extends StatefulWidget {
 }
 
 class _Body extends State<Body> {
+  late Future<Model.Page<Question>> _questionFuture;
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
+  bool isLast = false;
+
+  List<Question> listQuestion = [];
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Model.Page<Question>>(
-        future: widget.fetchQuestionPage(groupId: widget.group.id),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) return Text("${snapshot.error}");
-          if (snapshot.hasData)
-            return Column(children: [
-              Expanded(
-                child: SmartRefresher(
-                  controller: _refreshController,
-                  enablePullDown: true,
-                  onRefresh: _onRefresh,
-                  onLoading: _onLoading,
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.content.length,
-                    physics: BouncingScrollPhysics(),
-                    itemBuilder: (context, index) => QuestionCard(
-                        snapshot.data!.content[index], widget.group),
-                  ),
+    return listQuestion.length != 0
+        ? Column(children: [
+            Expanded(
+              child: SmartRefresher(
+                controller: _refreshController,
+                enablePullDown: true,
+                enablePullUp: true,
+                onRefresh: _onRefresh,
+                onLoading: _onLoading,
+                child: ListView.builder(
+                  itemCount: listQuestion.length,
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) =>
+                      QuestionCard(listQuestion[index], widget.group),
                 ),
               ),
-            ]);
-          return Center(child: CircularProgressIndicator());
-        });
+            ),
+          ])
+        : Center(child: CircularProgressIndicator());
   }
 
   void _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 1000));
+    _questionFuture = widget.fetchQuestionPage(groupId: widget.group.id);
+    listQuestion = [];
+    widget._currentPage = 1;
     setState(() {
-      widget.fetchQuestionPage(groupId: widget.group.id);
+      _questionFuture.then((value) => setState(() {
+            listQuestion.addAll(value.content);
+          }));
     });
     _refreshController.refreshCompleted();
   }
 
   void _onLoading() async {
     await Future.delayed(Duration(milliseconds: 1000));
-    setState(() {
-      widget.fetchQuestionPage(groupId: widget.group.id ,page: ++widget._currentPage);
-    });
+    _questionFuture = widget.fetchQuestionPage(
+        groupId: widget.group.id, page: ++widget._currentPage);
+    _questionFuture.then((value) => setState(() {
+          listQuestion.addAll(value.content);
+        }));
+
     _refreshController.loadComplete();
   }
 
   @override
   // ignore: must_call_super
   void initState() {
-    widget.fetchQuestionPage(groupId: widget.group.id);
+    _questionFuture = widget.fetchQuestionPage(groupId: widget.group.id);
+    _questionFuture.then((value) => setState(() {
+          listQuestion.addAll(value.content);
+          // isLast = value.isLast;
+        }));
   }
 }
