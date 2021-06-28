@@ -2,18 +2,15 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/components/GroupTopBar.dart';
-import 'package:flutter_auth/Screens/videocall/components/root_app.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
 import 'package:flutter_auth/models/paging/PagingParams.dart';
 import 'package:flutter_auth/models/post/Post.dart';
+import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
-import 'package:flutter_quill/flutter_quill.dart' as quill;
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'PostCard.dart';
@@ -34,7 +31,7 @@ class Body extends StatefulWidget {
     if (response.statusCode.isOk()) {
       return Model.Page.fromJson(body, Post.fromJsonModel);
     } else {
-      throw new Exception(response.body);
+      return Future.error(ProblemDetails.fromJson(body));
     }
   }
 
@@ -49,7 +46,7 @@ class _BodyState extends State<Body> {
   List<PostCard> _postList;
   late Future<Model.Page<Post>> _futurePostPage;
   RefreshController _refreshController =
-  RefreshController(initialRefresh: false);
+      RefreshController(initialRefresh: false);
 
   _BodyState(this._group, this._postList);
 
@@ -87,16 +84,39 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar:
+          MemberStatus.inGroupStatuses.contains(this._group.currentMemberStatus)
+              ? null
+              : Container(
+                  decoration: BoxDecoration(color: Colors.white),
+                  child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        decoration: BoxDecoration(
+                            color: kPrimaryColor,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: InkWell(
+                                  child: Text("Join"),
+                                ),
+                              ),
+                            ]),
+                      )),
+                ),
       backgroundColor: Color(0xffe4e6eb),
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          color: Colors.white,
-          iconSize: 20,
-          onPressed: () =>
-              //TODO recheck
-              Navigate.pop(context)
-        ),
+            icon: Icon(Icons.arrow_back_ios),
+            color: Colors.white,
+            iconSize: 20,
+            onPressed: () =>
+                //TODO recheck
+                Navigate.pop(context)),
         centerTitle: true,
         title: Text(_group.name),
         actions: [],
@@ -117,10 +137,7 @@ class _BodyState extends State<Body> {
                   children: <Widget>[
                     Container(
                       width: double.infinity,
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 45 / 100,
+                      height: MediaQuery.of(context).size.width * 45 / 100,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(30.0),
@@ -148,12 +165,21 @@ class _BodyState extends State<Body> {
                 FutureBuilder<Model.Page<Post>>(
                     future: _futurePostPage,
                     builder: (context, snapshot) {
-                      if (snapshot.hasError)
-                        return Text("${snapshot.error}");
-                      else if (snapshot.hasData) {
+                      if (snapshot.hasError) {
+                        ProblemDetails problem =
+                            snapshot.error as ProblemDetails;
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children:[ Center(
+                            child:
+                              Text("You are not a member of this group",)
+                          )],
+                        );
+                      } else if (snapshot.hasData) {
                         _isLast = snapshot.data!.isLast;
                         snapshot.data!.content.map((item) {
-                          var post = PostCard(item,_group);
+                          var post = PostCard(item, _group);
                           if (!_postList
                               .any((element) => element.post.id == item.id)) {
                             _postList.add(post);

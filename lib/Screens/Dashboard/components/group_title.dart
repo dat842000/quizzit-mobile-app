@@ -71,8 +71,8 @@ class _GroupsTitleState extends State<GroupsTitle> {
                 borderRadius: BorderRadius.circular(20),
                 onTap: () {
                   MemberStatus.inGroupStatuses.contains(this._group.currentMemberStatus) ?
-                  Navigate.push(context, UserViewScreen(this.widget._group)):
-                      showOkAlert(context, "Cannot Access this group", "You need to join first in order to view group's content");
+                  Navigate.push(context, UserViewScreen(this.widget._group))
+                      : showOkAlert(context, "Cannot Access this group", "You need to join first in order to view group's content");
                 },
                 child: Stack(
                   children: <Widget>[
@@ -165,47 +165,48 @@ class _GroupsTitleState extends State<GroupsTitle> {
                             height: 0,
                             thickness: 2,
                           ),
-                          MemberStatus.inGroupStatuses
-                                  .contains(this._group.currentMemberStatus)
-                              ? Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 10.4,
-                                    top: 10.5,
-                                    bottom: 15.5,
-                                    right: 0,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Wrap(
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 8.0),
-                                            child: Icon(
-                                              Icons.calendar_today_outlined,
-                                              size: 18,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 14.0),
-                                            child: Text(
-                                              DateFormat('EEE d MMM yyyy')
-                                                  .format(this._group.createAt),
-                                              style: TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              : Padding(
+                          // MemberStatus.inGroupStatuses
+                          //         .contains(this._group.currentMemberStatus)
+                          //     ? Padding(
+                          //         padding: const EdgeInsets.only(
+                          //           left: 10.4,
+                          //           top: 10.5,
+                          //           bottom: 15.5,
+                          //           right: 0,
+                          //         ),
+                          //         child: Row(
+                          //           mainAxisAlignment:
+                          //               MainAxisAlignment.spaceBetween,
+                          //           children: [
+                          //             Wrap(
+                          //               children: <Widget>[
+                          //                 Padding(
+                          //                   padding: const EdgeInsets.only(
+                          //                       right: 8.0),
+                          //                   child: Icon(
+                          //                     Icons.calendar_today_outlined,
+                          //                     size: 18,
+                          //                   ),
+                          //                 ),
+                          //                 Padding(
+                          //                   padding: const EdgeInsets.only(
+                          //                       right: 14.0),
+                          //                   child: Text(
+                          //                     DateFormat('EEE d MMM yyyy')
+                          //                         .format(this._group.createAt),
+                          //                     style: TextStyle(
+                          //                       fontSize: 17,
+                          //                       fontWeight: FontWeight.w500,
+                          //                     ),
+                          //                   ),
+                          //                 ),
+                          //               ],
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       )
+                          //     :
+                          Padding(
                                   padding: const EdgeInsets.only(
                                     left: 12.4,
                                     top: 0,
@@ -247,8 +248,9 @@ class _GroupsTitleState extends State<GroupsTitle> {
                                           child: StatusButton(
                                             this._group.currentMemberStatus,
                                             onPressed: () async{
-                                              switch (
-                                                  this._group.currentMemberStatus) {
+                                              switch (this._group.currentMemberStatus) {
+                                                case MemberStatus.kicked:
+                                                case MemberStatus.leave:
                                                 case MemberStatus.notInGroup:
                                                   return await _joinGroup();
                                                 case MemberStatus.pending:
@@ -257,6 +259,12 @@ class _GroupsTitleState extends State<GroupsTitle> {
                                                       "Are you sure to cancel your request to join this group?",
                                                     onOkPressed:(ctx) => _cancelJoinGroup().then((value) => Navigate.pop(ctx))
                                                   );
+                                                  break;
+                                                case MemberStatus.member:
+                                                case MemberStatus.owner:
+                                                  break;
+                                                case MemberStatus.banned:
+                                                  showOkAlert(context, "Cannot Join Group", "You have been banned from this group");
                                                   break;
                                               }
                                             },

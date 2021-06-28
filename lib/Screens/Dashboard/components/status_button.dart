@@ -14,6 +14,8 @@ class StatusButton extends StatelessWidget{
 
   StatusButton(this._currentMemberStatus, {required this.onPressed}){
     switch(this._currentMemberStatus){
+      case MemberStatus.kicked:
+      case MemberStatus.leave:
       case MemberStatus.notInGroup:{
         this._btnColor=null;
         this._btnText="JOIN";
@@ -38,7 +40,33 @@ class StatusButton extends StatelessWidget{
         this._sizedBoxWidth=5;
         this._borderColor=Colors.redAccent;
         this._minWidth=null;
-      }
+        break;
+      }case MemberStatus.banned:{
+      this._btnColor=Colors.redAccent;
+      this._btnText="BANNED";
+      this._textColor=Colors.grey[200];
+      this._icon=Icon(
+        Icons.cancel,
+        color: this._textColor,
+      );
+      this._sizedBoxWidth=5;
+      this._borderColor=Colors.redAccent;
+      this._minWidth=null;
+      break;
+    }
+      case MemberStatus.member:
+      case MemberStatus.owner:
+        this._btnColor=Color(0xFFbada85);
+        this._btnText="JOINED";
+        this._textColor=Colors.grey[200];
+        this._icon=Icon(
+          Icons.check,
+          color: this._textColor,
+        );
+        this._sizedBoxWidth=5;
+        this._borderColor=Color(0xFFbada85);
+        this._minWidth=null;
+        break;
     }
   }
 
