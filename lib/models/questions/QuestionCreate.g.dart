@@ -1,37 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'Question.dart';
+part of 'QuestionCreate.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Question _$QuestionFromJson(Map<String, dynamic> json) {
-  return Question(
-    json['id'] as int?,
+QuestionCreate _$QuestionCreateFromJson(Map<String, dynamic> json) {
+  return QuestionCreate(
     json['content'] as String,
     json['inSubject'] as int,
-    json['updateAt'] == null
-        ? null
-        : DateTime.parse(json['updateAt'] as String),
-    json['createdBy'] == null
-        ? null
-        : BaseUser.fromJson(json['createdBy'] as Map<String, dynamic>),
     json['isPrivate'] as bool?,
-    json['isAdd'] as bool?,
     (json['answers'] as List<dynamic>)
         .map((e) => Answer.fromJson(e as Map<String, dynamic>))
         .toList(),
   );
 }
 
-Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
-      'id': instance.id,
+Map<String, dynamic> _$QuestionCreateToJson(QuestionCreate instance) =>
+    <String, dynamic>{
       'content': instance.content,
       'inSubject': instance.inSubject,
-      'updateAt': instance.updateAt?.toIso8601String(),
-      'createdBy': instance.createdBy,
       'isPrivate': instance.isPrivate,
-      'isAdd': instance.isAdd,
       'answers': instance.answers,
     };

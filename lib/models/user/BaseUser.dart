@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'BaseUser.g.dart';
 
 @JsonSerializable()
-class BaseUser implements Decodable {
+class BaseUser implements Codable {
   int id;
   String username;
   String fullName;
@@ -16,4 +16,9 @@ class BaseUser implements Decodable {
 
   factory BaseUser.fromJson(Map<String, dynamic> json) =>
       _$BaseUserFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$BaseUserToJson(this);
+  }
 }

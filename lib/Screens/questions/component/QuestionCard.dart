@@ -55,7 +55,7 @@ class _QuestionCard extends State<QuestionCard> {
             InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => QuestionInfoScreen(question),
+                  builder: (context) => QuestionInfoScreen(question, false, widget.groupId),
                 ));
               },
               child: Container(
@@ -105,7 +105,7 @@ class _QuestionCard extends State<QuestionCard> {
                               ),
                               child: int.parse(FirebaseAuth
                                           .instance.currentUser!.uid) ==
-                                      question.createdBy.id
+                                      question.createdBy!.id
                                   ? Text(
                                       "Tạo bởi bạn",
                                       style: TextStyle(
@@ -114,7 +114,7 @@ class _QuestionCard extends State<QuestionCard> {
                                       ),
                                     )
                                   : Text(
-                                      "Tạo bởi : ${question.createdBy.fullName}",
+                                      "Tạo bởi : ${question.createdBy!.fullName}",
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w700,
@@ -127,7 +127,7 @@ class _QuestionCard extends State<QuestionCard> {
                               bottom: 7,
                             ),
                             child: Text(
-                              "Thay đổi lần cuối : ${DateFormat('dd/MM/yyyy').format(question.updateAt)}",
+                              "Thay đổi lần cuối : ${DateFormat('dd/MM/yyyy').format(question.updateAt!)}",
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
@@ -144,9 +144,9 @@ class _QuestionCard extends State<QuestionCard> {
                         width: 101,
                         child:
                         // ignore: deprecated_member_use
-                        question.isAdd ? FlatButton(
+                        question.isAdd! ? FlatButton(
                           onPressed: () {
-                            widget.deleteQuestionFromGroup(questionId: question.id, groupId: widget.groupId).then((value) =>
+                            widget.deleteQuestionFromGroup(questionId: question.id!, groupId: widget.groupId).then((value) =>
                                 setState(() {}));
                           },
                           color: Colors.redAccent,
@@ -193,7 +193,7 @@ class _QuestionCard extends State<QuestionCard> {
                         // ignore: deprecated_member_use
                         FlatButton(
                           onPressed: () {
-                            widget.addQuestionToGroup(questionId: question.id, groupId: widget.groupId).then((value) =>
+                            widget.addQuestionToGroup(questionId: question.id!, groupId: widget.groupId).then((value) =>
                                 setState(() {}));
                           },
                           color: Color(0xFF3AA35C),
@@ -256,7 +256,7 @@ class _QuestionCard extends State<QuestionCard> {
                       left: 15,
                       child: Row(children: [
                         Icon(
-                          question.isPrivate
+                          question.isPrivate!
                               ? CupertinoIcons.lock
                               : CupertinoIcons.globe,
                         ),
