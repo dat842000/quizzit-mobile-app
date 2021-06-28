@@ -6,3 +6,5 @@ const Color primary = Color(0xFF0e72ec);
 const Color red = Color(0xFFd72c21);
 const Color green = Color(0xFF22d759);
 const Color grey = Color(0xFFcfcfcf);
+const Color blue = Color(0xFF039BE5);
+const Color white = Colors.white;

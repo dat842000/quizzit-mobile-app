@@ -16,6 +16,9 @@ class Constants{
   static const postSetting= <String>[
     'Edit','Delete'
   ];
+  static const reportPost= <String>[
+    'Report'
+  ];
 }
 enum HttpMethod { GET, POST, PUT, DELETE }
 const GROUPS=[

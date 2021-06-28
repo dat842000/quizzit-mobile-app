@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/components/search_widget.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/dtos/Group.dart';
 import 'package:flutter_auth/dtos/User.dart';
-
+import 'package:flutter_auth/global/ListUsers.dart' as list;
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,7 +17,6 @@ class Body extends StatefulWidget {
     Key? key,
     required this.group,
   }) : super(key: key);
-
   final Group group;
 
   @override
@@ -24,64 +24,27 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  String query = "";
   bool isAdmin = true;
   Group group;
+  String title = "Members";
+  List<User> newList = list.listUser;
+  List<User> temp = list.listUser;
+  List<User> itemsData = [];
 
   _BodyState({required this.group}) {
     // if (globals.userId == group.userCreate) isAdmin = true;
   }
 
-  List<User> users = [
-    User(
-        2,
-        "Ojisan",
-        "https://scontent-sin6-1.xx.fbcdn.net/v/t1.6435-1/p720x720/130926059_3586820534716638_8513722166239497233_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=7206a8&_nc_ohc=52M4698X5oYAX9SLPFL&_nc_ht=scontent-sin6-1.xx&tp=6&oh=3b43fb51cf2698aefbd9f2ed29724085&oe=60E7FAEA",
-        "haseoleonard@gmail.com",
-        DateTime.now()),
-    User(
-        1,
-        "Dat Nguyen",
-        "https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.6435-9/172600480_2894518494156867_1493738166156079949_n.jpg?_nc_cat=106&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=1aMndlcPap0AX85TE5l&_nc_ht=scontent.fsgn5-6.fna&oh=ef2bd4b0b4f5667097fff27829b948d5&oe=60D66539",
-        "dnn8420@gmail.com",
-        DateTime.now()),
-    User(
-        3,
-        "Vinh",
-        "https://scontent-sin6-3.xx.fbcdn.net/v/t1.6435-9/62118713_2352579395000621_7361899465210331136_n.jpg?_nc_cat=104&ccb=1-3&_nc_sid=09cbfe&_nc_aid=0&_nc_ohc=oJWBxQjFJMQAX_f7b-f&_nc_ht=scontent-sin6-3.xx&oh=f8a35487883d02632eaff1d2ed88cb17&oe=60E7D745",
-        "Vinh@gmail.com",
-        DateTime.now()),
-    User(
-        4,
-        "Hiep",
-        "https://scontent-sin6-2.xx.fbcdn.net/v/t1.6435-1/s320x320/151666982_1791768614330490_6210226921179657624_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=7206a8&_nc_ohc=riZEuLzCWZwAX8Hy7zS&_nc_ht=scontent-sin6-2.xx&tp=7&oh=113619bd478b4fbc8944260a56e48b14&oe=60C8BF22",
-        "Vinh@gmail.com",
-        DateTime.now()),
-    User(
-        5,
-        "Duong",
-        "https://scontent-sin6-3.xx.fbcdn.net/v/t1.6435-9/186506523_101122005513976_9062523887582103932_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=0Tw1gI98TdwAX_qBMU4&_nc_oc=AQl4sbDLY_GLlKPDP_R8JE1oJ8ICzV70rl7rsYY3QTX2U5VdL7b0r0DLuedw1teqpBi6qWhviKJwoWcc_UE-ZKq5&_nc_ht=scontent-sin6-3.xx&oh=f17fb5d6e0d0f06ebfaeca8ec3511b74&oe=60C8FF2B",
-        "Vinh@gmail.com",
-        DateTime.now()),
-    User(
-        6,
-        "Thang",
-        "https://scontent-sin6-2.xx.fbcdn.net/v/t1.6435-1/p320x320/190761240_1588435718026211_7193804840421773918_n.jpg?_nc_cat=102&ccb=1-3&_nc_sid=7206a8&_nc_ohc=P64l9l9JL9cAX-4Pwc9&_nc_oc=AQmD0dyAZT1VLGrbUnlf4qhXsPjlyxrIt1lGaILImtdiupH7L3YSdGptjQM6UKo9ewE&_nc_ht=scontent-sin6-2.xx&tp=6&oh=8e04e4f955df9d7275a931b7df36df5e&oe=60C9B03E",
-        "Vinh@gmail.com",
-        DateTime.now()),
-    User(
-        7,
-        "Oc cho",
-        "https://scontent-sin6-2.xx.fbcdn.net/v/t1.6435-9/87029316_1110067389336629_8333488988178350080_n.jpg?_nc_cat=102&ccb=1-3&_nc_sid=174925&_nc_ohc=lFZvBWwCh8UAX_N05NZ&_nc_ht=scontent-sin6-2.xx&oh=956c79c35bf60c3f089ea07ee6d4bdbb&oe=60CA1861",
-        "Vinh@gmail.com",
-        DateTime.now()),
-  ];
-  String title = "Members";
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    itemsData = [...temp];
     return Scaffold(
+      backgroundColor: Color(0xFFf7f7f7),
       appBar: AppBar(
+        elevation: 0,
         brightness: Brightness.light,
         backgroundColor: Colors.white,
         leading: InkWell(
@@ -119,10 +82,43 @@ class _BodyState extends State<Body> {
               ]
             : null,
       ),
-      body: ListUser(users, isAdmin, setState: () {
-        setState(() {});
-      }),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: Container(child: buildSearch(), color: Colors.white,),
+          ),
+          Expanded(
+            child: ListUser(newList, isAdmin, setState: () {
+              setState(() {});
+            }),
+          ),
+        ],
+      ),
     );
+  }
+  Widget buildSearch() => SearchWidget(
+    text: query,
+    hintText: 'User Name',
+    onChanged: searchUser,
+  );
+
+  void searchUser(String query) {
+    var listUsers = [...itemsData];
+    if (!query.isEmpty) {
+      listUsers = newList.where((user) {
+        final nameLower = user.name.toLowerCase();
+        // final authorLower = group..toLowerCase();
+        final searchLower = query.toLowerCase();
+
+        return nameLower.contains(searchLower);
+        // || authorLower.contains(searchLower);
+      }).toList();
+    }
+    setState(() {
+      this.query = query;
+      this.newList = [...listUsers];
+    });
   }
 
   void choiceAction(String choice) {
@@ -148,29 +144,31 @@ class ListUser extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     List<User> temp = [...listUser];
-    temp.sublist(3, listUser.length);
+    // temp.sublist(3, listUser.length);
     return SingleChildScrollView(
-        child: !isAdmin
-            ? Column(
-                children: [
-                  UserCard(temp[0], Colors.white, 1, isAdmin, listUser, "",
-                      setState: setState),
-                  UserCard(temp[1], Colors.white, 2, isAdmin, listUser, "",
-                      setState: setState),
-                  UserCard(temp[2], Colors.white, 3, isAdmin, listUser, "",
-                      setState: setState),
-                  ...List.generate(
-                      temp.length - 3,
-                      (index) => Column(
-                            children: [
-                              UserCard(temp[index + 3], Colors.white, index + 4,
-                                  isAdmin, listUser, "",
-                                  setState: setState)
-                            ],
-                          )),
-                ],
-              )
-            : Column(children: [
+        child:
+        // !isAdmin
+            //     ? Column(
+            //         children: [
+            //           UserCard(temp[0], Colors.white, 1, isAdmin, listUser, "",
+            //               setState: setState),
+            //           UserCard(temp[1], Colors.white, 2, isAdmin, listUser, "",
+            //               setState: setState),
+            //           UserCard(temp[2], Colors.white, 3, isAdmin, listUser, "",
+            //               setState: setState),
+            //           ...List.generate(
+            //               temp.length - 3,
+            //               (index) => Column(
+            //                     children: [
+            //                       UserCard(temp[index + 3], Colors.white, index + 4,
+            //                           isAdmin, listUser, "",
+            //                           setState: setState)
+            //                     ],
+            //                   )),
+            //         ],
+            //       )
+            //     :
+            Column(children: [
                 ...List.generate(
                     listUser.length,
                     (index) => index != 1
@@ -214,6 +212,9 @@ class UserCard extends StatelessWidget {
   UserCard(this.user, this.color, this.index, this.isAdmin, this.listUser,
       this.reason,
       {required this.setState});
+  void choiceAction(String choice) {
+    if (choice == "") {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -245,7 +246,7 @@ class UserCard extends StatelessWidget {
                     color: color,
                     border: Border(
                         bottom:
-                            BorderSide(color: Theme.of(context).dividerColor))),
+                            BorderSide(color: Colors.black54))),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -305,7 +306,50 @@ class UserCard extends StatelessWidget {
                                 color: Colors.grey[600],
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold)),
+                        trailing: PopupMenuButton<String>(
+                          icon: Icon(
+                            FontAwesomeIcons.ellipsisH,
+                            color: kPrimaryColor,
+                            size: 20,
+                          ),
+                          onSelected: choiceAction,
+                          itemBuilder: (BuildContext context) {
+                            return Constants.reportPost
+                                .map((String choice) {
+                              return PopupMenuItem<String>(
+                                  value: choice,
+                                  child: report(
+                                    text: "Report",
+                                  ));
+                            }).toList();
+                          },
+                        ),
                       ),
                     ])));
+  }
+}
+class report extends StatelessWidget {
+  String text;
+  report({required this.text});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: InkWell(
+          onTap: () {},
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                text,
+                style: TextStyle(color: Colors.redAccent),
+              ),
+              Icon(
+                FontAwesomeIcons.exclamation,
+                color: Colors.redAccent,
+              )
+            ],
+          ),
+        )
+    );
   }
 }

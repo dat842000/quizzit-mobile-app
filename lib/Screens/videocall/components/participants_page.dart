@@ -10,6 +10,7 @@ class ParticipantsPage extends StatefulWidget {
 
 class _ParticipantsPageState extends State<ParticipantsPage> {
   var participantsCount = participants.length;
+  var temp = FontAwesomeIcons.microphone;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,18 +72,36 @@ class _ParticipantsPageState extends State<ParticipantsPage> {
                   ),
                   Row(
                     children: [
-                      Icon(
-                        Icons.mic,
-                        color: grey,
+                      InkWell(
+                        onTap: (){
+
+                          setState(() {
+                            if(participants[index]['mic'] == FontAwesomeIcons.microphone){
+                              participants[index]['mic'] = FontAwesomeIcons.microphoneSlash;
+                            }
+                          });
+                        },
+                        child: Icon(
+                          participants[index]['mic'],
+                          color: white,
+                        ),
                       ),
                       SizedBox(
-                        width: 5,
+                        width: 20,
                       ),
-                      Icon(
-                        index == 0
-                            ? FontAwesomeIcons.video
-                            : FontAwesomeIcons.videoSlash,
-                        color: index == 0 ? grey : red,
+                      InkWell(
+                        onTap: (){
+
+                          setState(() {
+                            if(participants[index]['video'] == FontAwesomeIcons.video){
+                              participants[index]['video'] = FontAwesomeIcons.videoSlash;
+                            }
+                          });
+                        },
+                        child: Icon(
+                          participants[index]['video'],
+                          color: white,
+                        ),
                       ),
                     ],
                   ),

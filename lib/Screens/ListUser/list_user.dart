@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_auth/Screens/ListUser/components/body.dart';
 import 'package:flutter_auth/dtos/Group.dart';
+import 'package:flutter_auth/dtos/User.dart';
 
 class ListUser extends StatelessWidget{
   const ListUser({

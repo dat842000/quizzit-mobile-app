@@ -11,11 +11,11 @@ List bottomItems = [
 ];
 List textItems = ["Mute", "Camera", "Share Screen", "Participants", "More"];
 List colorItems = [
-  grey,
-  grey,
+  white,
+  white,
   green,
-  grey,
-  grey,
+  white,
+  white,
 ];
 List sizedItems = [
   30.0,
