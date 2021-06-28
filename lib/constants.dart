@@ -48,6 +48,7 @@ class Host {
   static String groupPost({required int groupId})=>"$groups/$groupId/posts";
   static const String posts = "$_root/posts";
   static String postComment(int postId)=>"$posts/$postId/comments";
+  static String commentWithId(int commentId) => "$_root/comments/$commentId";
   static const String members = "$_root/members";
   static const String questions = "$_root/questions";
 }

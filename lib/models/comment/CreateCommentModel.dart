@@ -1,7 +1,7 @@
 import 'package:flutter_auth/models/Codable.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'CreateCommentModel.g.dart';
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class CreateCommentModel implements Encodable{
   String content;
   String? image;
