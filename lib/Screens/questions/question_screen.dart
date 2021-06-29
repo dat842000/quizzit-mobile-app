@@ -28,7 +28,7 @@ class QuestionScreen extends StatelessWidget {
           GestureDetector(
             onTap: () {
               List<Answer> listAns = [new Answer(0, "", false), new Answer(0, "", false)];
-              Question question = Question.temp("", 0, true, listAns);
+              Question question = Question.temp("", group.subjects[0].id, true, listAns);
               Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: (context) => QuestionInfoScreen(question, true, group)

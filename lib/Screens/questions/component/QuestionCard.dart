@@ -14,7 +14,9 @@ class QuestionCard extends StatefulWidget {
   Future deleteQuestionFromGroup(
       {required int questionId, required int groupId}) async {
     var response = await fetch(
-        Host.groupOwnerUpdateAddQuestion(groupId: groupId, questionId: questionId), HttpMethod.DELETE);
+        Host.groupOwnerUpdateAddQuestion(
+            groupId: groupId, questionId: questionId),
+        HttpMethod.DELETE);
     if (response.statusCode.isOk())
       question.isAdd = false;
     else
@@ -24,7 +26,9 @@ class QuestionCard extends StatefulWidget {
   Future addQuestionToGroup(
       {required int questionId, required int groupId}) async {
     var response = await fetch(
-        Host.groupOwnerUpdateAddQuestion(groupId: groupId, questionId: questionId), HttpMethod.PUT);
+        Host.groupOwnerUpdateAddQuestion(
+            groupId: groupId, questionId: questionId),
+        HttpMethod.PUT);
     if (response.statusCode.isOk())
       question.isAdd = true;
     else
@@ -33,15 +37,16 @@ class QuestionCard extends StatefulWidget {
 
   Question question;
   final Group group;
+
   QuestionCard(this.question, this.group);
 
   @override
   _QuestionCard createState() => _QuestionCard(question);
 }
 
-
 class _QuestionCard extends State<QuestionCard> {
   Question question;
+
   _QuestionCard(this.question);
 
   @override
@@ -56,7 +61,8 @@ class _QuestionCard extends State<QuestionCard> {
             InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => QuestionInfoScreen(question, false, widget.group),
+                  builder: (context) =>
+                      QuestionInfoScreen(question, false, widget.group),
                 ));
               },
               child: Container(
@@ -140,104 +146,107 @@ class _QuestionCard extends State<QuestionCard> {
                       ),
                     ),
                     Positioned(
-                        bottom: 10,
-                        right: 15,
-                        width: 101,
+                        bottom: 6,
+                        right: 8,
+                        width: 76,
                         child:
-                        // ignore: deprecated_member_use
-                        question.isAdd! ? FlatButton(
-                          onPressed: () {
-                            widget.deleteQuestionFromGroup(questionId: question.id!, groupId: widget.group.id).then((value) =>
-                                setState(() {}));
-                          },
-                          color: Colors.redAccent,
-                          child: Padding(
-                            padding:
-                            const EdgeInsets.all(
-                                0.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.check,
-                                  color: Colors
-                                      .grey[200],
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  "Delete",
-                                  style: TextStyle(
-                                      fontWeight:
-                                      FontWeight
-                                          .bold,
-                                      color: Colors
-                                          .grey[100]),
-                                ),
-                              ],
-                            ),
-                          ),
-                          textColor: kPrimaryColor,
-                          shape:
-                          RoundedRectangleBorder(
-                              side: BorderSide(
-                                  color: Colors.redAccent,
-                                  width: 2,
-                                  style:
-                                  BorderStyle
-                                      .solid),
-                              borderRadius:
-                              BorderRadius
-                                  .circular(
-                                  10)),
-                        ) :
-                        // ignore: deprecated_member_use
-                        FlatButton(
-                          onPressed: () {
-                            widget.addQuestionToGroup(questionId: question.id!, groupId: widget.group.id).then((value) =>
-                                setState(() {}));
-                          },
-                          color: Color(0xFF3AA35C),
-                          child: Padding(
-                            padding:
-                            const EdgeInsets.all(
-                                0.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.check,
-                                  color: Colors
-                                      .grey[200],
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  "Add",
-                                  style: TextStyle(
-                                      fontWeight:
-                                      FontWeight
-                                          .bold,
-                                      color: Colors
-                                          .grey[100]),
-                                ),
-                              ],
-                            ),
-                          ),
-                          textColor: kPrimaryColor,
-                          shape:
-                          RoundedRectangleBorder(
-                              side: BorderSide(
-                                  color: Color(0xFF3AA35C),
-                                  width: 2,
-                                  style:
-                                  BorderStyle
-                                      .solid),
-                              borderRadius:
-                              BorderRadius
-                                  .circular(
-                                  10)),
-                        )),
+                            // ignore: deprecated_member_use
+                            question.isAdd!
+                                // ignore: deprecated_member_use
+                                ? TextButton(
+                                    onPressed: () {
+                                      widget
+                                          .deleteQuestionFromGroup(
+                                              questionId: question.id!,
+                                              groupId: widget.group.id)
+                                          .then((value) => setState(() {}));
+                                    },
+                                    // color: Colors.redAccent,
+                                    style: ButtonStyle(
+                                      alignment: Alignment.centerLeft,
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.redAccent),
+                                      foregroundColor:
+                                          MaterialStateProperty.all(
+                                              kPrimaryColor),
+                                      shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                  color: Colors.redAccent,
+                                                  width: 2,
+                                                  style: BorderStyle.solid),
+                                              borderRadius:
+                                                  BorderRadius.circular(10))),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.clear,
+                                          color: Colors.grey[200],
+                                          size: 13.5,
+                                        ),
+                                        SizedBox(
+                                          width: 1.5,
+                                        ),
+                                        Text(
+                                          "Remove",
+                                          style: TextStyle(
+                                              fontSize: 12.5,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.grey[100]),
+                                        ),
+                                      ],
+                                    ),
+                                    // textColor: kPrimaryColor,
+                                    //   shape: RoundedRectangleBorder(
+                                    //       side: BorderSide(
+                                    //           color: Colors.redAccent,
+                                    //           width: 2,
+                                    //           style: BorderStyle.solid),
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(10)),
+                                  )
+                                :
+                                // ignore: deprecated_member_use
+                                FlatButton(
+                                    onPressed: () {
+                                      widget
+                                          .addQuestionToGroup(
+                                              questionId: question.id!,
+                                              groupId: widget.group.id)
+                                          .then((value) => setState(() {}));
+                                    },
+                                    color: Color(0xFF3AA35C),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.check,
+                                          color: Colors.grey[200],
+                                          size: 15,
+                                        ),
+                                        SizedBox(
+                                          width: 3,
+                                        ),
+                                        Text(
+                                          "Add",
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.grey[100]),
+                                        ),
+                                      ],
+                                    ),
+                                    textColor: kPrimaryColor,
+                                    shape: RoundedRectangleBorder(
+                                        side: BorderSide(
+                                            color: Color(0xFF3AA35C),
+                                            width: 2,
+                                            style: BorderStyle.solid),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                  )),
                     Positioned(
                       top: 10,
                       right: 15,

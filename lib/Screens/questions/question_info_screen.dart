@@ -5,6 +5,7 @@ import 'package:flutter_auth/Screens/questions/component/QuestionInfo.dart';
 import 'package:flutter_auth/Screens/questions/question_screen.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart';
+import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 
 import 'package:flutter_auth/models/questions/Question.dart';
 import 'package:flutter_auth/models/questions/QuestionCreate.dart';
@@ -14,26 +15,30 @@ import 'package:flutter_auth/utils/ApiUtils.dart';
 class QuestionInfoScreen extends StatefulWidget {
   Future<Question> updateQuestion(Question question) async {
     var response = await fetch(
-        Host.updateQuestion(questionId: question.id!), HttpMethod.PUT, data: question);
+        Host.updateQuestion(questionId: question.id!), HttpMethod.PUT,
+        data: question);
 
     var jsonRes = json.decode(response.body);
     if (response.statusCode.isOk())
       return Question.fromJson(jsonRes);
     else
-      throw new Exception(response.body);
+      return Future.error(ProblemDetails.fromJson(jsonRes));
   }
 
   Future<Question> createQuestion(Question question, int groupId) async {
-    QuestionCreate questionCreate = new QuestionCreate(question.content, question.inSubject, true, question.answers);
+    QuestionCreate questionCreate = new QuestionCreate(
+        question.content, question.inSubject, true, question.answers);
     var response = await fetch(
-        Host.groupOwnerQuestion(groupId: groupId), HttpMethod.POST, data: questionCreate);
+        Host.groupOwnerQuestion(groupId: groupId), HttpMethod.POST,
+        data: questionCreate);
 
     var jsonRes = json.decode(response.body);
     if (response.statusCode.isOk())
       return Question.fromJson(jsonRes);
     else
-      throw new Exception(response.body);
+      return Future.error(ProblemDetails.fromJson(jsonRes));
   }
+
   Question question;
   bool isNew;
   Group group;
@@ -62,12 +67,17 @@ class _QuestionInfoScreen extends State<QuestionInfoScreen> {
         actions: [
           GestureDetector(
             onTap: () async {
-              widget.isNew ? widget.createQuestion(widget.question, widget.group.id):
-              widget.updateQuestion(widget.question).then((value) => print(value));
-              if(widget.isNew) {
+              widget.isNew
+                  ? await widget.createQuestion(
+                      widget.question, widget.group.id)
+                  : await widget
+                      .updateQuestion(widget.question)
+                      .then((value) => print(""))
+                      .catchError((onError) => {});
+              if (widget.isNew) {
                 Navigator.of(context).pop(
                   MaterialPageRoute(
-                      builder: (context) => QuestionScreen(widget.group),
+                    builder: (context) => QuestionScreen(widget.group),
                   ),
                 );
               }
