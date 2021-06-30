@@ -13,8 +13,6 @@ class QuestionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: false,
-
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -45,6 +43,7 @@ class QuestionScreen extends StatelessWidget {
           )
         ],
       ),
+
       body: Body(group),
     );
   }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/questions/component/QuestionInfo.dart';
 import 'package:flutter_auth/Screens/questions/question_screen.dart';
@@ -10,6 +11,8 @@ import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/models/questions/Question.dart';
 import 'package:flutter_auth/models/questions/QuestionCreate.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
+import 'package:flutter_auth/utils/snackbar.dart';
+
 
 // ignore: must_be_immutable
 class QuestionInfoScreen extends StatefulWidget {
@@ -42,6 +45,7 @@ class QuestionInfoScreen extends StatefulWidget {
   Question question;
   bool isNew;
   Group group;
+  bool isErr = false;
 
   QuestionInfoScreen(this.question, this.isNew, this.group);
 
@@ -68,13 +72,21 @@ class _QuestionInfoScreen extends State<QuestionInfoScreen> {
           GestureDetector(
             onTap: () async {
               widget.isNew
-                  ? await widget.createQuestion(
-                      widget.question, widget.group.id)
+                  ? await widget
+                      .createQuestion(widget.question, widget.group.id)
+                      .then((value) {
+                      widget.isErr = false;
+                      showSuccess(text: "Tạo thành công", context: context);
+                    }).catchError((onError) {
+                      showError(text: (onError as ProblemDetails).title! , context:  context);
+                      widget.isErr = true;
+                    })
                   : await widget
                       .updateQuestion(widget.question)
-                      .then((value) => print(""))
-                      .catchError((onError) => {});
-              if (widget.isNew) {
+                      .then(
+                          (value) => showSuccess(text: "Cập nhật thành công", context: context))
+                      .catchError((onError) => showError(text: (onError as ProblemDetails).title!, context: context));
+              if (widget.isNew && !widget.isErr) {
                 Navigator.of(context).pop(
                   MaterialPageRoute(
                     builder: (context) => QuestionScreen(widget.group),

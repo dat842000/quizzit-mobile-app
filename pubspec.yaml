@@ -43,6 +43,7 @@ dependencies:
 
   collection: ^1.15.0
   dotted_border: ^2.0.0
+  flash: ^2.0.1
 
 dev_dependencies:
   build_runner: ^2.0.0

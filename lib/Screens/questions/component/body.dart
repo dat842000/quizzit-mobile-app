@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/questions/component/QuestionCard.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/paging/PagingParams.dart';
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
+import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/models/questions/Question.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -37,12 +39,13 @@ class _Body extends State<Body> {
     var jsonRes = json.decode(response.body);
     if (response.statusCode.isOk()) {
       setState(() {
-        isLast = Model.Page<Question>.fromJson(jsonRes, Question.fromJsonModel).isLast;
+        isLast = Model.Page<Question>.fromJson(jsonRes, Question.fromJsonModel)
+            .isLast;
       });
 
       return Model.Page<Question>.fromJson(jsonRes, Question.fromJsonModel);
     } else
-      throw new Exception(response.body);
+      return Future.error(ProblemDetails.fromJson(jsonRes));
   }
 
   late Future<Model.Page<Question>> _questionFuture;
@@ -50,6 +53,7 @@ class _Body extends State<Body> {
       RefreshController(initialRefresh: false);
 
   bool isLast = false;
+  bool isEmpty = false;
 
   String _searchQuestion = "";
 
@@ -76,10 +80,15 @@ class _Body extends State<Body> {
               ),
             ),
           ])
-        : Column(children: [
-            buildSearchQuestion(),
-            Center(child: CircularProgressIndicator())
-          ]);
+        : (isEmpty && listQuestion.length == 0)
+            ? Column(children: [
+                buildSearchQuestion(),
+                Center(child: Text("Không có câu hỏi phù hợp với nhóm bạn" , style: TextStyle(fontSize: 20),))
+              ])
+            : Column(children: [
+                buildSearchQuestion(),
+                Center(child: CircularProgressIndicator())
+              ]);
   }
 
   Widget buildSearchQuestion() => SearchQuestion(
@@ -112,7 +121,9 @@ class _Body extends State<Body> {
   void _onLoading() async {
     await Future.delayed(Duration(milliseconds: 1000));
     _questionFuture = fetchQuestionPage(
-        groupId: widget.group.id, page: ++widget._currentPage, content: _searchQuestion);
+        groupId: widget.group.id,
+        page: ++widget._currentPage,
+        content: _searchQuestion);
     _questionFuture.then((value) => setState(() {
           listQuestion.addAll(value.content);
         }));
@@ -123,9 +134,11 @@ class _Body extends State<Body> {
   // ignore: must_call_super
   void initState() {
     _questionFuture = fetchQuestionPage(groupId: widget.group.id);
-    _questionFuture.then((value) => setState(() {
-          listQuestion.addAll(value.content);
-          // isLast = value.isLast;
-        }));
+    _questionFuture.then((value) {
+      if (value.content.length == 0) isEmpty = true;
+      setState(() {
+        listQuestion.addAll(value.content);
+      });
+    });
   }
 }

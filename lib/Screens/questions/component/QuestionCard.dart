@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +7,11 @@ import 'package:flutter_auth/Screens/questions/question_info_screen.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/global/Subject.dart' as subject;
 import 'package:flutter_auth/models/group/Group.dart';
+import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/models/questions/Question.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_auth/utils/snackbar.dart';
 
 // ignore: must_be_immutable
 class QuestionCard extends StatefulWidget {
@@ -20,7 +24,7 @@ class QuestionCard extends StatefulWidget {
     if (response.statusCode.isOk())
       question.isAdd = false;
     else
-      throw new Exception(response.body);
+      return Future.error(ProblemDetails.fromJson(json.decode(response.body)));
   }
 
   Future addQuestionToGroup(
@@ -32,7 +36,7 @@ class QuestionCard extends StatefulWidget {
     if (response.statusCode.isOk())
       question.isAdd = true;
     else
-      throw new Exception(response.body);
+      return Future.error(ProblemDetails.fromJson(json.decode(response.body)));
   }
 
   Question question;
@@ -159,7 +163,12 @@ class _QuestionCard extends State<QuestionCard> {
                                           .deleteQuestionFromGroup(
                                               questionId: question.id!,
                                               groupId: widget.group.id)
-                                          .then((value) => setState(() {}));
+                                          .then((value) {
+                                        setState(() {});
+                                        showSuccess(text: "Xóa khỏi group thành công", context: context);
+                                      }).catchError((onError) {
+                                        showError(text: (onError as ProblemDetails).title! , context:  context);
+                                      });
                                     },
                                     // color: Colors.redAccent,
                                     style: ButtonStyle(
@@ -199,14 +208,6 @@ class _QuestionCard extends State<QuestionCard> {
                                         ),
                                       ],
                                     ),
-                                    // textColor: kPrimaryColor,
-                                    //   shape: RoundedRectangleBorder(
-                                    //       side: BorderSide(
-                                    //           color: Colors.redAccent,
-                                    //           width: 2,
-                                    //           style: BorderStyle.solid),
-                                    //       borderRadius:
-                                    //           BorderRadius.circular(10)),
                                   )
                                 :
                                 // ignore: deprecated_member_use
@@ -216,7 +217,12 @@ class _QuestionCard extends State<QuestionCard> {
                                           .addQuestionToGroup(
                                               questionId: question.id!,
                                               groupId: widget.group.id)
-                                          .then((value) => setState(() {}));
+                                          .then((value) {
+                                        setState(() {});
+                                        showSuccess(text: "Thêm vào group thành công", context: context);
+                                      }).catchError((onError) {
+                                        showError(text: (onError as ProblemDetails).title! , context:  context);
+                                      });
                                     },
                                     color: Color(0xFF3AA35C),
                                     child: Row(
