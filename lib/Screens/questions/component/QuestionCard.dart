@@ -67,7 +67,7 @@ class _QuestionCard extends State<QuestionCard> {
               },
               child: Container(
                 margin: EdgeInsets.only(bottom: 20),
-                width: MediaQuery.of(context).size.width - 50,
+                width: MediaQuery.of(context).size.width - 38,
                 height: 180,
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -76,7 +76,7 @@ class _QuestionCard extends State<QuestionCard> {
                 child: Stack(
                   children: <Widget>[
                     Container(
-                      width: MediaQuery.of(context).size.width - 50,
+                      width: MediaQuery.of(context).size.width - 38,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
