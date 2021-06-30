@@ -148,7 +148,7 @@ class _QuestionCard extends State<QuestionCard> {
                     Positioned(
                         bottom: 6,
                         right: 8,
-                        width: 76,
+                        width: 83,
                         child:
                             // ignore: deprecated_member_use
                             question.isAdd!
