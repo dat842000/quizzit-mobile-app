@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:core';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart' as Model;
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
 import 'package:flutter_auth/models/paging/PagingParams.dart';
+import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/models/subject/Subject.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -21,7 +23,7 @@ Future<List<Subject>> fetchSubject() async {
   // print(response.body);
   var jsonRes = json.decode(response.body);
   if (response.statusCode.isOk())
-    return List.from(jsonRes.map((e)=>Subject.fromJson(e)));
+    return List.from(jsonRes.map((e) => Subject.fromJson(e)));
   else
     throw new Exception(response.body);
 }
@@ -34,38 +36,53 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
-  late Future<Model.Page<Model.Group>> _groupPageFuture;
   RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+      RefreshController(initialRefresh: true);
   int _currentPage = 1;
   bool _isLast = false;
   String _query = "";
   int _currentChoice = 0;
+  int _totalElements = 0;
+  List<Model.Group> _groups = [];
 
+  //
   @override
   void initState() {
-    fetchSubject().then((value) => subject.subjects = value);
-    setState(() {
-      _groupPageFuture =
-          _fetchGroupPage(nameSearch: _query, status: _currentChoice, page: 1);
-    });
     super.initState();
+    fetchSubject().then((value) => subject.subjects = value);
+    _fetchGroupPage(
+            nameSearch: this._query,
+            status: this._currentChoice,
+            page: this._currentPage)
+        .then((value) {
+      setState(() {
+        this._isLast = value.isLast;
+        this._totalElements = value.totalElements;
+        this._groups.addAll(value.content);
+      });
+    });
   }
 
-  @override
-  void didUpdateWidget(Body oldWidget) {
-    setState(() {
-      _groupPageFuture =
-          _fetchGroupPage(nameSearch: _query, status: _currentChoice, page: 1);
-    });
-    super.didUpdateWidget(oldWidget);
-  }
+  // @override
+  // void didUpdateWidget(Body oldWidget) {
+  //   this._groupPageFuture = _fetchGroupPage(
+  //       nameSearch: _query, status: _currentChoice, page: _currentPage);
+  //   super.didUpdateWidget(oldWidget);
+  // }
 
   void _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 1000));
     setState(() {
-      this._groupPageFuture =
-          _fetchGroupPage(nameSearch: _query, status: _currentChoice, page: 1);
+      this._currentPage = 1;
+      this._isLast = false;
+      this._groups.clear();
+      _fetchGroupPage(
+              nameSearch: _query, status: _currentChoice, page: _currentPage)
+          .then((value) {
+        this._isLast = value.isLast;
+        this._totalElements = value.totalElements;
+        this._groups.addAll(value.content);
+      });
     });
     _refreshController.refreshCompleted();
   }
@@ -73,15 +90,15 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   void _onLoading() async {
     await Future.delayed(Duration(milliseconds: 1000));
     setState(() {
-      this._groupPageFuture = _fetchGroupPage(
-          nameSearch: _query, status: _currentChoice, page: ++_currentPage);
+      _fetchGroupPage(
+              nameSearch: _query, status: _currentChoice, page: ++_currentPage)
+          .then((value) {
+        this._isLast = value.isLast;
+        this._totalElements = value.totalElements;
+        this._groups.addAll(value.content);
+      });
     });
     _refreshController.loadComplete();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   Widget buttonCreate() {
@@ -109,31 +126,23 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
         children: [
           buildSearch(),
           Expanded(
-            child: FutureBuilder<Model.Page<Model.Group>>(
-                future: _groupPageFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) return Text("${snapshot.error}");
-                  if (snapshot.hasData) {
-                    this._isLast = snapshot.data!.isLast;
-                      return SmartRefresher(
-                        enablePullDown: true,
-                        enablePullUp: !_isLast,
-                        onRefresh: _onRefresh,
-                        onLoading: _onLoading,
-                        header: WaterDropHeader(),
-                        controller: _refreshController,
-                        child: snapshot.data!.totalElements>0 ? ListView.builder(
-                          itemCount: snapshot.data!.content.length,
-                          physics: BouncingScrollPhysics(),
-                          itemBuilder: (context, index) => GroupsTitle(
-                              snapshot.data!.content[index],
-                              isLast: snapshot.data!.isLast &&
-                                  index == snapshot.data!.totalElements),
-                        ):Center(child: Text("No Group Matches your input")),
-                      );
-                  }
-                  return Center(child: CircularProgressIndicator());
-                }),
+            child: SmartRefresher(
+                enablePullDown: true,
+                enablePullUp: !_isLast,
+                onRefresh: _onRefresh,
+                onLoading: _onLoading,
+                header: WaterDropHeader(),
+                controller: _refreshController,
+                child: this._totalElements > 0
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: _groups.length,
+                        physics: BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return GroupsTitle(_groups[index],
+                              isLast:_isLast && index == this._totalElements - 1);
+                        })
+                    : Center(child: Text("No Group Matches your input"))),
           )
         ],
       ),
@@ -179,7 +188,7 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
 
   Future<Model.Page<Model.Group>> _fetchGroupPage(
       {String nameSearch = "", int status = 0, int page = 1}) async {
-    var paging = PagingParam(page: page, sort: "createAt_desc");
+    var paging = PagingParam(page: page, sort: "id_asc");
     Map<String, String> params = {
       ...paging.build(),
       ...{"GroupName": nameSearch},
@@ -188,10 +197,15 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
     var response = await fetch(Host.groups, HttpMethod.GET, params: params);
     // log(response.body);
     var jsonRes = json.decode(response.body);
-    if (response.statusCode.isOk())
+    if (response.statusCode.isOk()) {
+      setState(() {
+        _isLast =
+            Model.Page<Model.Group>.fromJson(jsonRes, Model.Group.fromJsonModel)
+                .isLast;
+      });
       return Model.Page<Model.Group>.fromJson(
           jsonRes, Model.Group.fromJsonModel);
-    else
-      throw new Exception(response.body);
+    } else
+      return Future.error(ProblemDetails.fromJson(jsonRes));
   }
 }
