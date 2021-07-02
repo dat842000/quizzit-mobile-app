@@ -51,6 +51,8 @@ class _ProfilePageState extends State<ProfilePage> {
   late Future<Model.UserInfo> userInfoFuture;
   RefreshController _refreshController =
   RefreshController(initialRefresh: false);
+  bool _isLoading=false;
+  double _progress = 0;
 
   @override
   void initState() {
@@ -63,7 +65,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void _onImageButtonPressed(File? pickedImage) async {
     if (pickedImage != null) {
-      var imgUrl = await FirebaseUtils.uploadImage(pickedImage);
+      var imgUrl = await FirebaseUtils.uploadImage(pickedImage,
+          whileUpload: (int byteTransfered, int totalBytes) {
+            setState(() {
+              _isLoading=true;
+              _progress=byteTransfered.toDouble()/totalBytes.toDouble();
+            });
+          },
+          onError: (Object? error) {  });
       var response = await fetch("${Host.users}/avatar",HttpMethod.PUT,data:AvatarUpdate(imgUrl));
       if(response.statusCode.isOk()){
         setState(() {});

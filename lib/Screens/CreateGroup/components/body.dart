@@ -3,8 +3,10 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_auth/Screens/CreateGroup/components/subject_page.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
+import 'package:flutter_auth/components/loading_dialog.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/show_photo_menu.dart';
 import 'package:flutter_auth/constants.dart';
@@ -14,10 +16,6 @@ import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/models/subject/Subject.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_auth/utils/FirebaseUtils.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:flutter/services.dart';
-
-import '../../../global/UserLib.dart' as globals;
 
 class Body extends StatefulWidget {
   const Body({
@@ -31,19 +29,34 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   CreateGroupModel _createGroupModel = new CreateGroupModel("", 10, null, List.empty(growable: true));
   File? _selectedImage;
-  bool _isLoading = false;
   List<Subject> _subjects = [];
+  double _progress=0;
+  StateSetter? _setState;
 
   Future<void> createGroup() async {
     //TODO CreateGroup
     String? image;
-    if (this._selectedImage != null)
-      image = await FirebaseUtils.uploadImage(_selectedImage!);
+    if (this._selectedImage != null) {
+      showLoadingDialog(context,_setState);
+      image = await FirebaseUtils.uploadImage(
+        _selectedImage!,
+        whileUpload: (byteTransfered, totalBytes) {
+          // print(byteTransfered);
+          _setState!(() {
+              _progress = byteTransfered.toDouble() / totalBytes.toDouble();
+          });
+        },
+        onError: (Object? error) {
+          log(error!.toString());
+        },
+      );
+    }
     if (this._subjects.isNotEmpty)
       _subjects.forEach((e) => this._createGroupModel.subjectIds.add(e.id));
     this._createGroupModel.image = image;
     var response =
         await fetch(Host.groups, HttpMethod.POST, data: this._createGroupModel);
+    Navigator.pop(context);
     var jsonRes = json.decode(response.body);
     log(response.body);
     if (response.statusCode.isOk()) {
@@ -61,6 +74,8 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    // if(_isLoading)
+    //   _onLoading();
     return Scaffold(
       backgroundColor: Color(0xffe4e6eb),
       appBar: AppBar(
@@ -102,12 +117,7 @@ class _BodyState extends State<Body> {
           )
         ],
       ),
-      body: _isLoading
-          ? Container(
-              alignment: Alignment.center,
-              child: CircularProgressIndicator(),
-            )
-          : SingleChildScrollView(
+      body: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
                   SizedBox(

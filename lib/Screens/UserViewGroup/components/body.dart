@@ -117,7 +117,7 @@ class _BodyState extends State<Body> {
             iconSize: 20,
             onPressed: () =>
                 //TODO recheck
-                Navigator.of(context).push(MaterialPageRoute(
+                Navigator.of(context).pop(MaterialPageRoute(
                   builder: (context) => DashboardScreen(),
                 ))),
         centerTitle: true,
@@ -176,12 +176,10 @@ class _BodyState extends State<Body> {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Center(
-                                child: Text(
-                              "You are not a member of this group",
-                            ))
-                          ],
+                          children:[ Center(
+                            child:
+                              Text(problem.title!,)
+                          )],
                         );
                       } else if (snapshot.hasData) {
                         _isLast = snapshot.data!.isLast;
@@ -193,9 +191,16 @@ class _BodyState extends State<Body> {
                           }
                           return post;
                         }).toList();
-                        return Column(children: <Widget>[
+                        return _postList.isNotEmpty ? Column(children: <Widget>[
                           ..._postList.toList(),
-                        ]);
+                        ]):Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children:[ Center(
+                              child:
+                              Text("No Post in this group yet",)
+                          )],
+                        );
                       }
                       return Center(child: CircularProgressIndicator());
                     })

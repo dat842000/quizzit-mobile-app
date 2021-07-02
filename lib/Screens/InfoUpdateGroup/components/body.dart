@@ -16,42 +16,46 @@ import 'package:flutter_auth/utils/snackbar.dart';
 
 import 'subject_page.dart';
 
-
 class Body extends StatefulWidget {
   final Group group;
   Function update;
-  Body(this.group,this.update);
+  Body(this.group, this.update);
 
   @override
   _BodyState createState() => _BodyState();
 }
 
-class _BodyState extends State<Body>{
+class _BodyState extends State<Body> {
   UpdateGroupModel? _updateGroupModel;
-  File? _selectedImage ;
+  File? _selectedImage;
   bool _isLoading = false;
   List<Subject> _subjects = [];
 
   @override
   void initState() {
-    _subjects=widget.group.subjects;
-    _updateGroupModel = UpdateGroupModel(widget.group.name, widget.group.quizSize, widget.group.image, []);
+    _subjects = widget.group.subjects;
+    _updateGroupModel = UpdateGroupModel(
+        widget.group.name, widget.group.quizSize, widget.group.image, []);
   } // _BodyState({required Group group});
-
 
   Future<void> updateGroup() async {
     //TODO CreateGroup
     String? image;
     if (this._selectedImage != null)
-      image = await FirebaseUtils.uploadImage(_selectedImage!);
+      image = await FirebaseUtils.uploadImage(
+        _selectedImage!,
+        whileUpload: (byteTransfered, totalBytes) {},
+        onError: (error) {},
+      );
     print(_subjects);
-    if (this._subjects.isNotEmpty){
+    if (this._subjects.isNotEmpty) {
       _subjects.forEach((e) => this._updateGroupModel!.subjectIds.add(e.id));
       print(this._updateGroupModel!.subjectIds);
     }
     this._updateGroupModel!.image = image;
-    var response =
-    await fetch(Host.updateGroup(groupId: widget.group.id), HttpMethod.PUT, data: this._updateGroupModel);
+    var response = await fetch(
+        Host.updateGroup(groupId: widget.group.id), HttpMethod.PUT,
+        data: this._updateGroupModel);
     var jsonRes = json.decode(response.body);
     log(response.body);
     if (response.statusCode.isOk()) {
@@ -102,7 +106,6 @@ class _BodyState extends State<Body>{
           GestureDetector(
             onTap: () {
               updateGroup();
-
             },
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16),
@@ -115,147 +118,149 @@ class _BodyState extends State<Body>{
       ),
       body: _isLoading
           ? Container(
-        alignment: Alignment.center,
-        child: CircularProgressIndicator(),
-      )
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(),
+            )
           : SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 10,
-            ),
-            GestureDetector(
-                onTap: () {
-                  buildPhotoPickerMenu(context, onPick: (pickedImage){
-                    setState(() {
-                      this._selectedImage=pickedImage;
-                    });
-                  });
-                },
-                child: widget.group.image != null
-                    ? Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16),
-                  height: 170,
-                  width: MediaQuery.of(context).size.width,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: CachedNetworkImage(
-                      imageUrl: widget.group.image ?? "",
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                )
-                    : Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16),
-                  height: 170,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20)),
-                  width: MediaQuery.of(context).size.width,
-                  child: Icon(
-                    Icons.add_a_photo,
-                    color: Colors.black45,
-                  ),
-                )),
-            SizedBox(
-              height: 8,
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text("Group Name ",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                          )),
-                      Text("*",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.red,
-                          ))
-                    ],
-                  ),
                   SizedBox(
-                    height: 5,
+                    height: 10,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: TextField(
-                      controller: TextEditingController(text: _updateGroupModel!.groupName),
-                      decoration: InputDecoration(
-                        hintText: "Group Name...",
-                        border: OutlineInputBorder(),
-                      ),
-                      onChanged: (val) {
-                         this._updateGroupModel!.groupName = val;
+                  GestureDetector(
+                      onTap: () {
+                        buildPhotoPickerMenu(context, onPick: (pickedImage) {
+                          setState(() {
+                            this._selectedImage = pickedImage;
+                          });
+                        });
                       },
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text("Quiz Size ",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                          )),
-                      Text("*",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.red,
-                          ))
-                    ],
-                  ),
+                      child: widget.group.image != null
+                          ? Container(
+                              margin: EdgeInsets.symmetric(horizontal: 16),
+                              height: 170,
+                              width: MediaQuery.of(context).size.width,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: CachedNetworkImage(
+                                  imageUrl: widget.group.image ?? "",
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          : Container(
+                              margin: EdgeInsets.symmetric(horizontal: 16),
+                              height: 170,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20)),
+                              width: MediaQuery.of(context).size.width,
+                              child: Icon(
+                                Icons.add_a_photo,
+                                color: Colors.black45,
+                              ),
+                            )),
                   SizedBox(
-                    height: 5,
+                    height: 8,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: TextField(
-                      controller: TextEditingController(text: _updateGroupModel!.quizSize.toString()),
-                      decoration: InputDecoration(
-                        hintText: "Quiz Size",
-                        border: OutlineInputBorder(),
-                      ),
-                      keyboardType: TextInputType.number,
-                      onChanged: (val) {
-                         this._updateGroupModel!.quizSize = int.parse(val);
-                      },
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text("Group Name ",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            Text("*",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.red,
+                                ))
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: TextField(
+                            controller: TextEditingController(
+                                text: _updateGroupModel!.groupName),
+                            decoration: InputDecoration(
+                              hintText: "Group Name...",
+                              border: OutlineInputBorder(),
+                            ),
+                            onChanged: (val) {
+                              this._updateGroupModel!.groupName = val;
+                            },
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text("Quiz Size ",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            Text("*",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.red,
+                                ))
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: TextField(
+                            controller: TextEditingController(
+                                text: _updateGroupModel!.quizSize.toString()),
+                            decoration: InputDecoration(
+                              hintText: "Quiz Size",
+                              border: OutlineInputBorder(),
+                            ),
+                            keyboardType: TextInputType.number,
+                            onChanged: (val) {
+                              this._updateGroupModel!.quizSize = int.parse(val);
+                            },
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text("Subjects ",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            Text("*",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.red,
+                                ))
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        buildChoosingSubjects(),
+                      ],
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text("Subjects ",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                          )),
-                      Text("*",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.red,
-                          ))
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  buildChoosingSubjects(),
+                  )
                 ],
               ),
-            )
-          ],
-        ),
-      ),
+            ),
     );
   }
 
@@ -311,9 +316,7 @@ class _BodyState extends State<Body>{
             decoration: BoxDecoration(
                 color: Color(0xffe4e6eb),
                 borderRadius: BorderRadius.circular(5),
-                border: Border.all(
-                    color: Colors.grey, width: 1)
-            ),
+                border: Border.all(color: Colors.grey, width: 1)),
             margin: EdgeInsets.zero,
             child: child,
           ),

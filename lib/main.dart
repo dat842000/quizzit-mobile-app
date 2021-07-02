@@ -40,7 +40,7 @@ Future<void> main() async {
       enableLoadingWhenFailed : true, //In the case of load failure, users can still trigger more loads by gesture pull-up.
       hideFooterWhenNotFull: false, // Disable pull-up to load more functionality when Viewport is less than one screen
       enableBallisticLoad: true, // trigger load more by BallisticScrollActivity
-      child: MaterialApp(
+      child: Container(
       )
   );
   await Firebase.initializeApp();

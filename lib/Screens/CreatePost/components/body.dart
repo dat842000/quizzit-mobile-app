@@ -43,9 +43,11 @@ class _BodyState extends State<Body> {
   }
 
   Future createPost() async {
-    var image = _selectedImage != null
-        ? await FirebaseUtils.uploadImage(_selectedImage!)
-        : null;
+    String? image;
+    if(_selectedImage != null)
+        image = await FirebaseUtils.uploadImage(_selectedImage!,
+        whileUpload: (int byteTransfered, int totalBytes) {  },
+        onError: (Object? error) {  });
     CreatePostModel model = CreatePostModel(
         this._title, jsonEncode(_controller.document.toDelta().toJson()),image: image);
     fetch(Host.groupPost(groupId: widget.group.id), HttpMethod.POST,data: model)
@@ -147,8 +149,10 @@ class _BodyState extends State<Body> {
                   ),
                   quill.QuillToolbar.basic(
                     controller: _controller,
-                    onImagePickCallback: (file) =>
-                        FirebaseUtils.uploadImage(file),
+                    onImagePickCallback: (file) async =>
+                      await FirebaseUtils.uploadImage(file,
+                          whileUpload: (int byteTransfered, int totalBytes) {  },
+                          onError: (Object? error) {  })
                   ),
                   Container(
                     decoration: BoxDecoration(
