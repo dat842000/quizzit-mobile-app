@@ -195,7 +195,7 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
       ...{"StatusId": status.toString()}
     };
     var response = await fetch(Host.groups, HttpMethod.GET, params: params);
-    // log(response.body);
+    log(response.body);
     var jsonRes = json.decode(response.body);
     if (response.statusCode.isOk()) {
       setState(() {

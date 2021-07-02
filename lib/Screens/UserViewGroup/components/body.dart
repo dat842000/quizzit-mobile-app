@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/components/GroupTopBar.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/constants.dart';
@@ -116,7 +117,9 @@ class _BodyState extends State<Body> {
             iconSize: 20,
             onPressed: () =>
                 //TODO recheck
-                Navigate.pop(context)),
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => DashboardScreen(),
+                ))),
         centerTitle: true,
         title: Text(_group.name),
         actions: [],
@@ -155,13 +158,15 @@ class _BodyState extends State<Body> {
                             bottomRight: Radius.circular(30.0),
                           ),
                           child: CachedNetworkImage(
-                            imageUrl: _group.image!,
+                            imageUrl: _group.image ?? "",
                             fit: BoxFit.cover,
                           )),
                     ),
                   ],
                 ),
-                GroupTopBar(this._group),
+                GroupTopBar(this._group, () {
+                  setState(() {});
+                }),
                 FutureBuilder<Model.Page<Post>>(
                     future: _futurePostPage,
                     builder: (context, snapshot) {
@@ -171,10 +176,12 @@ class _BodyState extends State<Body> {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children:[ Center(
-                            child:
-                              Text("You are not a member of this group",)
-                          )],
+                          children: [
+                            Center(
+                                child: Text(
+                              "You are not a member of this group",
+                            ))
+                          ],
                         );
                       } else if (snapshot.hasData) {
                         _isLast = snapshot.data!.isLast;

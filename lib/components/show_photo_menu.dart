@@ -28,7 +28,7 @@ void buildPhotoPickerMenu(BuildContext context, {required Function(File? pickedI
             ),
             CupertinoActionSheetAction(
                 onPressed: () async{
-                  var file = await imageUtils.getImage(ImageSource.camera);
+                  var file = await imageUtils.getImage(ImageSource.gallery);
                   onPick(file);
                 },
                 child:

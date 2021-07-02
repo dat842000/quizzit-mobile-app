@@ -13,8 +13,17 @@ CreateCommentModel _$CreateCommentModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$CreateCommentModelToJson(CreateCommentModel instance) =>
-    <String, dynamic>{
-      'content': instance.content,
-      'image': instance.image,
-    };
+Map<String, dynamic> _$CreateCommentModelToJson(CreateCommentModel instance) {
+  final val = <String, dynamic>{
+    'content': instance.content,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('image', instance.image);
+  return val;
+}

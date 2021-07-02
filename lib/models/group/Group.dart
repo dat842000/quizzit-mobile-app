@@ -29,6 +29,6 @@ class Group implements Decodable{
       this.owner,
       this.currentMemberStatus);
 
-  factory Group.fromJson(Map<String,dynamic>json)=>_$GroupFromJson(json);
+  factory Group.fromJson(Map<String,dynamic> json)=>_$GroupFromJson(json);
   static Group fromJsonModel(Map<String, dynamic> json) => Group.fromJson(json);
 }

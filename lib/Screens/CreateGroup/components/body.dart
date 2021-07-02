@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  CreateGroupModel _createGroupModel = new CreateGroupModel("", 10, null, []);
+  CreateGroupModel _createGroupModel = new CreateGroupModel("", 10, null, List.empty(growable: true));
   File? _selectedImage;
   bool _isLoading = false;
   List<Subject> _subjects = [];
@@ -39,11 +40,12 @@ class _BodyState extends State<Body> {
     if (this._selectedImage != null)
       image = await FirebaseUtils.uploadImage(_selectedImage!);
     if (this._subjects.isNotEmpty)
-      _subjects.map((e) => this._createGroupModel.subjectIds.add(e.id));
+      _subjects.forEach((e) => this._createGroupModel.subjectIds.add(e.id));
     this._createGroupModel.image = image;
     var response =
         await fetch(Host.groups, HttpMethod.POST, data: this._createGroupModel);
     var jsonRes = json.decode(response.body);
+    log(response.body);
     if (response.statusCode.isOk()) {
       var newGroup = Group.fromJson(jsonRes);
       showOkAlert(context, "Create Group Success",
@@ -234,9 +236,7 @@ class _BodyState extends State<Body> {
                         SizedBox(
                           height: 5,
                         ),
-                        Card(
-                          child: buildChoosingSubjects(),
-                        )
+                        buildChoosingSubjects(),
                       ],
                     ),
                   )
@@ -294,10 +294,15 @@ class _BodyState extends State<Body> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Card(
+          Container(
+            decoration: BoxDecoration(
+                color: Color(0xffe4e6eb),
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(
+                    color: Colors.grey, width: 1)
+            ),
             margin: EdgeInsets.zero,
             child: child,
-            color: Color(0xffe4e6eb),
           ),
         ],
       );
