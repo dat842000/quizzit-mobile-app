@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/components/GroupTopBar.dart';
-import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
@@ -117,9 +116,10 @@ class _BodyState extends State<Body> {
             iconSize: 20,
             onPressed: () =>
                 //TODO recheck
-                Navigator.of(context).pop(MaterialPageRoute(
-                  builder: (context) => DashboardScreen(),
-                ))),
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (c) => DashboardScreen()),
+                    (route) => false)
+                ),
         centerTitle: true,
         title: Text(_group.name),
         actions: [],

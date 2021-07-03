@@ -16,6 +16,7 @@ import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/models/subject/Subject.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_auth/utils/FirebaseUtils.dart';
+import 'package:flutter_auth/utils/snackbar.dart';
 
 class Body extends StatefulWidget {
   const Body({
@@ -61,10 +62,8 @@ class _BodyState extends State<Body> {
     log(response.body);
     if (response.statusCode.isOk()) {
       var newGroup = Group.fromJson(jsonRes);
-      showOkAlert(context, "Create Group Success",
-          "Your Group has been created success fully",
-          onPressed: (context) =>
-              Navigate.push(context, UserViewScreen(newGroup)));
+      showSuccess(text: "Create Group Success", context: context);
+      Navigate.push(context, UserViewScreen(newGroup));
     } else {
       ProblemDetails problem = ProblemDetails.fromJson(jsonRes);
       showOkAlert(context, "Create Failed", problem.title!,
