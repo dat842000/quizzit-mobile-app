@@ -18,7 +18,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Body extends StatefulWidget {
   final Post post;
-
   Body(this.post);
 
   Future<Comment> _createComment(int postId,
@@ -33,11 +32,10 @@ class Body extends StatefulWidget {
   }
 
   @override
-  PostDetail createState() => PostDetail(post: post);
+  PostDetail createState() => PostDetail();
 }
 
 class PostDetail extends State<Body> {
-  final Post post;
 
   Future<Models.Page<Comment>> _loadComments(int postId,
       {int page = 1, int pageSize = 3, String sort = "createdAt_desc"}) async {
@@ -62,18 +60,17 @@ class PostDetail extends State<Body> {
       RefreshController(initialRefresh: false);
 
   ///End Comments
-  PostDetail({required this.post});
 
   @override
   void initState() {
     super.initState();
-    this._futurePageComment = _loadComments(this.post.id);
+    this._futurePageComment = _loadComments(widget.post.id);
   }
 
   void _onLoading() async {
     await Future.delayed(Duration(milliseconds: 1000));
     setState(() {
-      this._futurePageComment = _loadComments(this.post.id, page: ++_currPage);
+      this._futurePageComment = _loadComments(widget.post.id, page: ++_currPage);
     });
     _refreshController.loadComplete();
   }
@@ -84,14 +81,14 @@ class PostDetail extends State<Body> {
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
-            Navigator.pop(context);
+            Navigate.pop(context);
           },
           child: Icon(
             Icons.arrow_back_ios,
           ),
         ),
         centerTitle: true,
-        title: Text(post.title.toUpperCase()),
+        title: Text(widget.post.title.toUpperCase()),
       ),
       body: Column(
         children: <Widget>[
@@ -114,13 +111,13 @@ class PostDetail extends State<Body> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            post.image == null || post.image!.isEmpty
+                            widget.post.image == null || widget.post.image!.isEmpty
                                 ? Padding(
                                     padding: const EdgeInsets.only(
                                         top: 8.0, bottom: 8.0),
                                   )
                                 : CachedNetworkImage(
-                                    imageUrl: post.image!,
+                                    imageUrl: widget.post.image!,
                                     height: 225,
                                     width: MediaQuery.of(context).size.width,
                                     fit: BoxFit.cover,
@@ -133,7 +130,7 @@ class PostDetail extends State<Body> {
                                   padding:
                                       const EdgeInsets.only(top: 5, bottom: 3),
                                   child: Text(
-                                    post.title.toUpperCase(),
+                                    widget.post.title.toUpperCase(),
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 22),
@@ -145,7 +142,7 @@ class PostDetail extends State<Body> {
                             QuillSimpleViewer(
                               controller: quill.QuillController(
                                   document: quill.Document.fromJson(
-                                      json.decode(this.post.content)),
+                                      json.decode(widget.post.content)),
                                   selection:
                                       TextSelection.collapsed(offset: 0)),
                             ),
@@ -168,7 +165,7 @@ class PostDetail extends State<Body> {
                                   ...snapshot.data!.content
                                 ];
                             }
-                            return CommentArea(this._commentList);
+                            return CommentArea(context,this._commentList);
                           }
                           return Center(child: CircularProgressIndicator());
                         })
@@ -177,7 +174,6 @@ class PostDetail extends State<Body> {
               ),
             ),
           ),
-
           ///
           _buildTextComposer()
         ],
@@ -228,18 +224,18 @@ class PostDetail extends State<Body> {
                     onPressed: () {
                       var content = _editingController.text;
                       widget
-                          ._createComment(this.post.id, content: content)
+                          ._createComment(widget.post.id, content: content)
                           .then((value) {
                         _editingController.text = "";
                         if (this._commentList.length > 0) {
                           setState(() {
                             this._commentList.add(value);
                           });
-                        } else
-                          setState(() {
-                            this._futurePageComment =
-                                this._loadComments(this.post.id);
-                          });
+                        } else {
+                          this._futurePageComment =
+                              this._loadComments(widget.post.id);
+                          setState(() {});
+                        }
                       }).catchError((error) {
                         var problem =
                             ProblemDetails.fromJson(json.decode(error));
