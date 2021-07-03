@@ -7,7 +7,6 @@ import 'package:flutter_auth/Screens/ForgotPassword/forgot_password.dart';
 import 'package:flutter_auth/Screens/Login/components/or_divider.dart';
 import 'package:flutter_auth/Screens/Login/components/social_icon.dart';
 import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
-import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
 import 'package:flutter_auth/components/already_have_an_account_acheck.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
@@ -28,7 +27,7 @@ class Body extends StatefulWidget {
   }) : super(key: key);
 
   _login(BuildContext context, LoginRequest loginRequest) async {
-    var response = await fetch(Host.login, HttpMethod.POST,data: loginRequest);
+    var response = await fetch(Host.login, HttpMethod.POST, data: loginRequest);
     var Json = json.decode(response.body);
     if (response.statusCode.isOk()) {
       var tokenObject = LoginResponse.fromJson(Json);
@@ -37,7 +36,10 @@ class Body extends StatefulWidget {
       var fbResponse =
           await firebase.signInWithCustomToken(tokenObject.customToken);
       globals.userId = int.parse(firebase.currentUser!.uid);
-      Navigate.push(context, DashboardScreen());
+      // Navigate.push(context, DashboardScreen());
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => DashboardScreen(),
+          settings: RouteSettings(name: "/Dashboard")));
     } else {
       var problem = ProblemDetails.fromJson(Json);
       String error = problem.title!;

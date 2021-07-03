@@ -44,6 +44,7 @@ class _BodyState extends State<Body> {
     if (this._selectedImage != null)
       image = await FirebaseUtils.uploadImage(
         _selectedImage!,
+        uploadLocation: UploadLocation.Groups,
         whileUpload: (byteTransfered, totalBytes) {},
         onError: (error) {},
       );

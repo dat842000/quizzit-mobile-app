@@ -6,14 +6,14 @@ import 'package:flutter_auth/Screens/InfoUpdateGroup/info_update_screen.dart';
 import 'package:flutter_auth/Screens/ListUser/list_user.dart';
 import 'package:flutter_auth/Screens/questions/question_screen.dart';
 import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
-import 'package:flutter_auth/components/popup_alert.dart';
+import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../constants.dart';
 
 class GroupTopBar extends StatelessWidget {
-  GroupTopBar(this.group,this.update);
+  GroupTopBar(this.group, this.update);
   Function update;
   final Group group;
 
@@ -71,56 +71,54 @@ class GroupTopBar extends StatelessWidget {
                   ),
                 ),
               ),
-              FirebaseAuth.instance.currentUser!.uid == group.owner.id.toString()
+              FirebaseAuth.instance.currentUser!.uid ==
+                      group.owner.id.toString()
                   ? Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(
-                      builder: (context) => QuestionScreen(group),
-                    ));
-                  },
-                  child: ClipRRect(
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(25.0)),
-                    child: Container(
-                      color: kPrimaryColor,
-                      height: 60,
-                      width: 60,
-                      child: Icon(
-                        FontAwesomeIcons.question,
-                        size: 26,
-                        color: Colors.white,
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => QuestionScreen(group),
+                          ));
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                          child: Container(
+                            color: kPrimaryColor,
+                            height: 60,
+                            width: 60,
+                            child: Icon(
+                              FontAwesomeIcons.question,
+                              size: 26,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => QuizScreen(),
+                          ));
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                          child: Container(
+                            color: kPrimaryColor,
+                            height: 60,
+                            width: 60,
+                            child: Icon(
+                              FontAwesomeIcons.brain,
+                              size: 26,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ) : Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(
-                      builder: (context) => QuizScreen(),
-                    ));
-                  },
-                  child: ClipRRect(
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(25.0)),
-                    child: Container(
-                      color: kPrimaryColor,
-                      height: 60,
-                      width: 60,
-                      child: Icon(
-                        FontAwesomeIcons.brain,
-                        size: 26,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -148,9 +146,10 @@ class GroupTopBar extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => InfoUpdateGroupScreen(group,update),
-                      ));
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          InfoUpdateGroupScreen(group, update),
+                    ));
                   },
                   child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(25.0)),
@@ -167,8 +166,6 @@ class GroupTopBar extends StatelessWidget {
                   ),
                 ),
               ),
-            ])
-        )
-    );
+            ])));
   }
 }

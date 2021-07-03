@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/EditUserProfile/components/birthday_edit_widget.dart';
 import 'package:flutter_auth/Screens/EditUserProfile/components/gender_choice.dart';
-import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
 import 'package:flutter_auth/components/appbar_widget.dart';
-import 'package:flutter_auth/components/popup_alert.dart';
+import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/components/textfield_widget.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/user/BaseUser.dart';
@@ -32,7 +31,7 @@ class _BodyState extends State<Body> {
         children: [
           CircleAvatar(
             radius: 60,
-            backgroundImage: NetworkImage(this._user.avatar??defaultAvatar),
+            backgroundImage: NetworkImage(this._user.avatar ?? defaultAvatar),
           ),
           const SizedBox(height: 24),
           TextFieldWidget(
@@ -55,9 +54,8 @@ class _BodyState extends State<Body> {
           // ),
           buildBirthday(),
           Padding(
-            padding: const EdgeInsets.only(top:16.0),
-            child: GenderChoice(
-                isRequired: true, onSelected: (value) => {}),
+            padding: const EdgeInsets.only(top: 16.0),
+            child: GenderChoice(isRequired: true, onSelected: (value) => {}),
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 30),

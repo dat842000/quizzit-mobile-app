@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/PostDetail/post_detail.dart';
+import 'package:flutter_auth/components/loading_dialog.dart';
+import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/rounded_input_field.dart';
 import 'package:flutter_auth/components/show_photo_menu.dart';
@@ -16,9 +18,9 @@ import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:image_picker/image_picker.dart';
 
 class Body extends StatefulWidget {
-  final Group group;
+  final Group _group;
 
-  Body(this.group);
+  Body(this._group);
 
   @override
   _BodyState createState() => _BodyState();
@@ -29,6 +31,7 @@ class _BodyState extends State<Body> {
   File? _selectedImage;
   quill.QuillController _controller = quill.QuillController.basic();
   bool _isLoading = false;
+  StateSetter? _stateSetter;
   Future getImage() async {
     var picker = new ImagePicker();
     var image = await picker.getImage(source: ImageSource.gallery);
@@ -44,16 +47,22 @@ class _BodyState extends State<Body> {
 
   Future createPost() async {
     String? image;
-    if(_selectedImage != null)
-        image = await FirebaseUtils.uploadImage(_selectedImage!,
-        whileUpload: (int byteTransfered, int totalBytes) {  },
-        onError: (Object? error) {  });
+    showLoadingDialog(context, _stateSetter);
+    if (_selectedImage != null)
+      image = await FirebaseUtils.uploadImage(_selectedImage!,
+          uploadLocation: UploadLocation.Posts,
+          whileUpload: (int byteTransfered, int totalBytes) {},
+          onError: (Object? error) {});
     CreatePostModel model = CreatePostModel(
-        this._title, jsonEncode(_controller.document.toDelta().toJson()),image: image);
-    fetch(Host.groupPost(groupId: widget.group.id), HttpMethod.POST,data: model)
-      .then((value) {
-        Navigate.push(context,PostDetailScreen(Post.fromJson(json.decode(value.body))));
-      });
+        this._title, jsonEncode(_controller.document.toDelta().toJson()),
+        image: image);
+    fetch(Host.groupPost(groupId: widget._group.id), HttpMethod.POST,
+            data: model)
+        .then((value) {
+      Navigator.pop(context);
+      Navigate.push(
+          context, PostDetailScreen(Post.fromJson(json.decode(value.body)),widget._group.id));
+    });
   }
 
   @override
@@ -71,18 +80,22 @@ class _BodyState extends State<Body> {
           ),
           color: kPrimaryColor,
         ),
-        title: Text('Create Post',style: TextStyle(color: kPrimaryColor,fontWeight: FontWeight.bold),),
+        title: Text(
+          'Create Post',
+          style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
+        ),
         actions: <Widget>[
           GestureDetector(
-            onTap: () async{
+            onTap: () async {
               await createPost();
             },
             child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Icon(
-                  Icons.file_upload,
-                  color: kPrimaryColor,
-                ),),
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Icon(
+                Icons.file_upload,
+                color: kPrimaryColor,
+              ),
+            ),
           )
         ],
       ),
@@ -112,10 +125,10 @@ class _BodyState extends State<Body> {
                     height: 10,
                   ),
                   GestureDetector(
-                      onTap: (){
-                        buildPhotoPickerMenu(context, onPick:(pickedImage){
+                      onTap: () {
+                        buildPhotoPickerMenu(context, onPick: (pickedImage) {
                           setState(() {
-                            this._selectedImage=pickedImage;
+                            this._selectedImage = pickedImage;
                           });
                         });
                       },
@@ -148,19 +161,21 @@ class _BodyState extends State<Body> {
                     height: 8,
                   ),
                   quill.QuillToolbar.basic(
-                    controller: _controller,
-                    onImagePickCallback: (file) async =>
-                      await FirebaseUtils.uploadImage(file,
-                          whileUpload: (int byteTransfered, int totalBytes) {  },
-                          onError: (Object? error) {  })
-                  ),
+                      controller: _controller,
+                      showHorizontalRule: true,
+                      onImagePickCallback: (file) async =>
+                          await FirebaseUtils.uploadImage(file,
+                              uploadLocation: UploadLocation.Posts,
+                              whileUpload:
+                                  (int byteTransfered, int totalBytes) {},
+                              onError: (Object? error) {})),
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(color: kPrimaryColor)),
                     margin: EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
-                      children:[
+                      children: [
                         quill.QuillEditor(
                           controller: _controller,
                           focusNode: FocusNode(),
@@ -171,6 +186,9 @@ class _BodyState extends State<Body> {
                           minHeight: 230,
                           padding: EdgeInsets.all(10),
                           readOnly: false, // true for view only mode
+                          // embedBuilder: (context, node) {
+                          //
+                          // },
                         ),
                       ],
                     ),

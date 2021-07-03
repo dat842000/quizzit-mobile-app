@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_auth/Screens/CreateGroup/components/subject_page.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
 import 'package:flutter_auth/components/loading_dialog.dart';
+import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/show_photo_menu.dart';
 import 'package:flutter_auth/constants.dart';
@@ -41,7 +42,8 @@ class _BodyState extends State<Body> {
       showLoadingDialog(context,_setState);
       image = await FirebaseUtils.uploadImage(
         _selectedImage!,
-        whileUpload: (byteTransfered, totalBytes) {
+          uploadLocation:UploadLocation.Groups,
+          whileUpload: (byteTransfered, totalBytes) {
           // print(byteTransfered);
           _setState!(() {
               _progress = byteTransfered.toDouble() / totalBytes.toDouble();
@@ -80,7 +82,7 @@ class _BodyState extends State<Body> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigate.popToDashboard(context);
             },
             icon: Icon(
               Icons.arrow_back_ios,

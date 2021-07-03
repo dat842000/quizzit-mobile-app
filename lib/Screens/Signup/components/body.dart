@@ -5,6 +5,7 @@ import 'package:flutter_auth/Screens/Login/login_screen.dart';
 import 'package:flutter_auth/components/birthday_widget.dart';
 import 'package:flutter_auth/components/gender_choice.dart';
 import 'package:flutter_auth/components/inputField.dart';
+import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
 import 'package:flutter_auth/constants.dart';

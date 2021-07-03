@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/PostDetail/components/comment_area.dart';
+import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/comment/Comment.dart';
@@ -17,13 +18,14 @@ import 'package:flutter_quill/widgets/simple_viewer.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Body extends StatefulWidget {
-  final Post post;
-  Body(this.post);
+  final Post _post;
+  final int _groupId;
+  Body(this._post,this._groupId);
 
   Future<Comment> _createComment(int postId,
       {required String content, String? image}) async {
     var createCommentModel = CreateCommentModel(content, image: image);
-    var response = await fetch(Host.postComment(this.post.id), HttpMethod.POST,
+    var response = await fetch(Host.postComment(this._post.id), HttpMethod.POST,
         data: createCommentModel);
     if (response.statusCode.isOk())
       return Comment.fromJson(json.decode(response.body));
@@ -64,13 +66,13 @@ class PostDetail extends State<Body> {
   @override
   void initState() {
     super.initState();
-    this._futurePageComment = _loadComments(widget.post.id);
+    this._futurePageComment = _loadComments(widget._post.id);
   }
 
   void _onLoading() async {
     await Future.delayed(Duration(milliseconds: 1000));
     setState(() {
-      this._futurePageComment = _loadComments(widget.post.id, page: ++_currPage);
+      this._futurePageComment = _loadComments(widget._post.id, page: ++_currPage);
     });
     _refreshController.loadComplete();
   }
@@ -81,14 +83,14 @@ class PostDetail extends State<Body> {
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
-            Navigate.pop(context);
+            Navigate.popToGroup(context, widget._groupId);
           },
           child: Icon(
             Icons.arrow_back_ios,
           ),
         ),
         centerTitle: true,
-        title: Text(widget.post.title.toUpperCase()),
+        title: Text(widget._post.title.toUpperCase()),
       ),
       body: Column(
         children: <Widget>[
@@ -111,13 +113,13 @@ class PostDetail extends State<Body> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            widget.post.image == null || widget.post.image!.isEmpty
+                            widget._post.image == null || widget._post.image!.isEmpty
                                 ? Padding(
                                     padding: const EdgeInsets.only(
                                         top: 8.0, bottom: 8.0),
                                   )
                                 : CachedNetworkImage(
-                                    imageUrl: widget.post.image!,
+                                    imageUrl: widget._post.image!,
                                     height: 225,
                                     width: MediaQuery.of(context).size.width,
                                     fit: BoxFit.cover,
@@ -130,7 +132,7 @@ class PostDetail extends State<Body> {
                                   padding:
                                       const EdgeInsets.only(top: 5, bottom: 3),
                                   child: Text(
-                                    widget.post.title.toUpperCase(),
+                                    widget._post.title.toUpperCase(),
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 22),
@@ -142,7 +144,7 @@ class PostDetail extends State<Body> {
                             QuillSimpleViewer(
                               controller: quill.QuillController(
                                   document: quill.Document.fromJson(
-                                      json.decode(widget.post.content)),
+                                      json.decode(widget._post.content)),
                                   selection:
                                       TextSelection.collapsed(offset: 0)),
                             ),
@@ -224,16 +226,15 @@ class PostDetail extends State<Body> {
                     onPressed: () {
                       var content = _editingController.text;
                       widget
-                          ._createComment(widget.post.id, content: content)
+                          ._createComment(widget._post.id, content: content)
                           .then((value) {
                         _editingController.text = "";
                         if (this._commentList.length > 0) {
-                          setState(() {
-                            this._commentList.add(value);
-                          });
+                          this._commentList.add(value);
+                          setState(() {});
                         } else {
                           this._futurePageComment =
-                              this._loadComments(widget.post.id);
+                              this._loadComments(widget._post.id);
                           setState(() {});
                         }
                       }).catchError((error) {

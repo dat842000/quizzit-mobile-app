@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/EditPost/edit_post.dart';
 import 'package:flutter_auth/Screens/PostDetail/post_detail.dart';
+import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/post/Post.dart';
@@ -33,7 +34,7 @@ class PostCard extends StatelessWidget {
     // TODO: implement build
     return InkWell(
       onTap: () {
-        Navigate.push(context, PostDetailScreen(this._post));
+        Navigate.push(context, PostDetailScreen(this._post,this._group.id));
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16.0),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
-import 'package:flutter_auth/components/popup_alert.dart';
+import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class DashboardComponent{
-
-  static PreferredSizeWidget buildAppBar(BuildContext context,Function(String) choiceAction) {
+class DashboardComponent {
+  static PreferredSizeWidget buildAppBar(
+      BuildContext context, Function(String) choiceAction) {
     return AppBar(
       elevation: 0,
       brightness: Brightness.light,

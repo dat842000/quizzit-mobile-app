@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Dashboard/components/status_button.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
+import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
@@ -71,7 +72,12 @@ class _GroupsTitleState extends State<GroupsTitle> {
                 borderRadius: BorderRadius.circular(20),
                 onTap: () {
                   MemberStatus.inGroupStatuses.contains(this._group.currentMemberStatus) ?
-                  Navigate.push(context, UserViewScreen(this.widget._group))
+                      Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => UserViewScreen(widget._group),
+                              settings: RouteSettings(name: "/Groups/${widget._group.id}")
+                          )
+                      )
                       : showOkAlert(context, "Cannot Access this group", "You need to join first in order to view group's content");
                 },
                 child: Stack(

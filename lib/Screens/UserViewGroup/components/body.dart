@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/components/GroupTopBar.dart';
+import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
@@ -116,10 +116,11 @@ class _BodyState extends State<Body> {
             iconSize: 20,
             onPressed: () =>
                 //TODO recheck
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (c) => DashboardScreen()),
-                    (route) => false)
-                ),
+                // Navigator.of(context).pushAndRemoveUntil(
+                //     MaterialPageRoute(builder: (c) => DashboardScreen()),
+                //         (route) => false)
+                //     ),
+                Navigate.popToDashboard(context)),
         centerTitle: true,
         title: Text(_group.name),
         actions: [],
@@ -176,10 +177,12 @@ class _BodyState extends State<Body> {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children:[ Center(
-                            child:
-                              Text(problem.title!,)
-                          )],
+                          children: [
+                            Center(
+                                child: Text(
+                              problem.title!,
+                            ))
+                          ],
                         );
                       } else if (snapshot.hasData) {
                         _isLast = snapshot.data!.isLast;
@@ -191,16 +194,20 @@ class _BodyState extends State<Body> {
                           }
                           return post;
                         }).toList();
-                        return _postList.isNotEmpty ? Column(children: <Widget>[
-                          ..._postList.toList(),
-                        ]):Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children:[ Center(
-                              child:
-                              Text("No Post in this group yet",)
-                          )],
-                        );
+                        return _postList.isNotEmpty
+                            ? Column(children: <Widget>[
+                                ..._postList.toList(),
+                              ])
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Center(
+                                      child: Text(
+                                    "No Post in this group yet",
+                                  ))
+                                ],
+                              );
                       }
                       return Center(child: CircularProgressIndicator());
                     })

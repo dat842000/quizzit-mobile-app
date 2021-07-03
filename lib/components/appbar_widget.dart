@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 
 import '../constants.dart';
+import 'navigate.dart';
 
 AppBar buildAppBar(BuildContext context) {
 
