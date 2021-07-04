@@ -5,15 +5,28 @@ import 'package:get/get.dart';
 
 import 'components/body.dart';
 
-class QuizScreen extends StatelessWidget {
-  Group group;
-
+class QuizScreen extends StatefulWidget {
+  final Group group;
   QuizScreen(this.group);
 
   @override
-  Widget build(BuildContext context) {
-    QuestionController _controller = Get.put(QuestionController());
+  State createState() => _QuizScreenState(this.group);
+}
+class _QuizScreenState extends State<QuizScreen> {
+  Group group;
+  _QuizScreenState(this.group);
+  QuestionController _controller = Get.put(QuestionController());
+
+  @override
+  void initState() {
     _controller.fetchQuestion(group.id);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+
     return Scaffold(
       extendBodyBehindAppBar: true,
 
