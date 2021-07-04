@@ -49,7 +49,7 @@ class QuestionController extends GetxController
     // print(jsonRes);
     // print(response.body);
     var jsonRes = json.decode(response.body);
-    // print(response.body);
+    print(response.body);
     if (response.statusCode.isOk())
       return Model.QuestionsWrapper<Question>.fromJson(jsonRes, Question.fromJsonModel);
     else

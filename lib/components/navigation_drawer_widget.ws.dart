@@ -121,11 +121,6 @@ class NavigationDrawer extends StatelessWidget {
           builder: (context) => WelcomeScreen(),
         ));
         break;
-      case 3:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => QuizScreen(),
-        ));
-        break;
     }
   }
 }

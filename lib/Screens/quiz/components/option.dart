@@ -22,7 +22,7 @@ class Option extends StatelessWidget {
         init: QuestionController(),
         builder: (qnController) {
           Color getTheChooseAnswer() {
-              if (qnController.questions.firstWhere((element) => element.id==questionIndex).choice == index) {
+              if (qnController.listQuestionSubmit.firstWhere((element) => element.id==questionIndex).answerId == index) {
                 return kChooseColor;
               }
             return kGrayColor;

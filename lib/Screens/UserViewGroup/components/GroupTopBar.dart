@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreatePost/create_post.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/Screens/ListUser/list_user.dart';
+import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -122,9 +123,9 @@ class GroupTopBar extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () {
-                    //   Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => QuizScreen(),
-                    //   ));
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => QuizScreen(group),
+                      ));
                   },
                   child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(25.0)),
@@ -133,7 +134,7 @@ class GroupTopBar extends StatelessWidget {
                       height: 60,
                       width: 60,
                       child: Icon(
-                        FontAwesomeIcons.info,
+                        FontAwesomeIcons.book,
                         size: 26,
                         color: Colors.white,
                       ),

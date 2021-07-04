@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/quiz/constants.dart';
 import 'package:flutter_auth/Screens/quiz/controllers/question_controller.dart';
-import 'package:flutter_auth/Screens/quiz/models/Questions.dart';
+import 'package:flutter_auth/models/question/Question.dart';
 import 'package:get/get.dart';
 
 import 'option.dart';
@@ -33,7 +33,7 @@ class QuestionCards extends State<QuestionCard> {
       child: Column(
         children: [
           Text(
-            question.question,
+            question.content,
             style: Theme.of(context)
                 .textTheme
                 .headline6!
@@ -41,13 +41,13 @@ class QuestionCards extends State<QuestionCard> {
           ),
           SizedBox(height: kDefaultPadding / 2),
           ...List.generate(
-            question.options.length,
+            question.answers.length,
             (index) => Option(
-              index: index,
+              index: question.answers.elementAt(index).id,
               questionIndex: question.id,
-              text: question.options[index],
+              text: question.answers.elementAt(index).content,
               press: () {
-                _controller.saveAnswer(question, index);
+                _controller.saveAnswer(question, question.answers.elementAt(index).id);
                 setState(() {});
               },
             ),

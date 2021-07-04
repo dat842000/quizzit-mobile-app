@@ -166,7 +166,7 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
 
   Future<Model.Page<Model.Group>> _fetchGroupPage(
       {String nameSearch = "", int status = 0, int page = 1}) async {
-    var paging = PagingParam(page: page, sort: "createAt_desc");
+    var paging = PagingParam(page: page, sort: "id_asc");
     Map<String, String> params = {
       ...paging.build(),
       ...{"GroupName": nameSearch},
