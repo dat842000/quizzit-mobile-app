@@ -69,6 +69,13 @@ class MyApp extends StatelessWidget {
           .getIdToken()
           .then((value) => log(value)));
     }
+    EasyLoading.instance
+      ..indicatorType = EasyLoadingIndicatorType.threeBounce
+      ..progressColor = Colors.grey[200]
+      ..textColor = Colors.black26
+      ..userInteractions = false
+      ..dismissOnTap = false;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Quizit',

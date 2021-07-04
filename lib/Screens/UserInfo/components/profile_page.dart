@@ -11,12 +11,12 @@ import 'package:flutter_auth/Screens/UserInfo/components/profile_widget.dart';
 import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
 import 'package:flutter_auth/components/appbar_widget.dart';
 import 'package:flutter_auth/components/navigate.dart';
-import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/show_photo_menu.dart';
 import 'package:flutter_auth/models/user/AvatarUpdate.dart';
 import 'package:flutter_auth/models/user/UserInfo.dart' as Model;
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_auth/utils/FirebaseUtils.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -66,6 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void _onImageButtonPressed(File? pickedImage) async {
     if (pickedImage != null) {
+      EasyLoading.show(status: 'Đang thực hiện...');
       var imgUrl = await FirebaseUtils.uploadImage(pickedImage,
           uploadLocation: UploadLocation.Avatars,
           whileUpload: (int byteTransfered, int totalBytes) {
@@ -77,8 +78,9 @@ class _ProfilePageState extends State<ProfilePage> {
           onError: (Object? error) {  });
       var response = await fetch("${Host.users}/avatar",HttpMethod.PUT,data:AvatarUpdate(imgUrl));
       if(response.statusCode.isOk()){
-        setState(() {});
+        setState(() {userInfoFuture = widget._getUserInfo();});
       }
+      EasyLoading.dismiss();
     }
   }
 
