@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
 import 'package:flutter_auth/components/navigate.dart';
@@ -24,17 +26,17 @@ class DashboardComponent {
       actions: <Widget>[
         Padding(
           padding: const EdgeInsets.only(right: 16.0),
-          child: InkWell(
-            child: Container(
-              width: 42,
+          child: Container(
+            width: 42,
+            child: GestureDetector(
+              onTap: () {
+                Navigate.push(context, UserInfoScreen());
+              },
               child: CircleAvatar(
                 backgroundImage: NetworkImage(
-                    "https://scontent-sin6-3.xx.fbcdn.net/v/t1.6435-9/178775876_2830446380551791_7283789377379465271_n.jpg?_nc_cat=104&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=2Tlvo_6lcVcAX-B7D0z&_nc_ht=scontent-sin6-3.xx&oh=f0c6dd1230089f9a80cb98189e9aa817&oe=60E7ADC0"),
+                    FirebaseAuth.instance.currentUser!.photoURL ?? defaultAvatar),
               ),
             ),
-            onTap: () {
-              Navigate.push(context, UserInfoScreen());
-            },
           ),
         ),
       ],
