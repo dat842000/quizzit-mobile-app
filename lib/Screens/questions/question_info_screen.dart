@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_auth/Screens/questions/component/QuestionInfo.dart';
 import 'package:flutter_auth/Screens/questions/question_screen.dart';
 import 'package:flutter_auth/constants.dart';
@@ -71,6 +72,7 @@ class _QuestionInfoScreen extends State<QuestionInfoScreen> {
         actions: [
           GestureDetector(
             onTap: () async {
+              EasyLoading.show(status: 'Đang thực hiện...', maskType: EasyLoadingMaskType.black);
               widget.isNew
                   ? await widget
                       .createQuestion(widget.question, widget.group.id)
@@ -86,6 +88,7 @@ class _QuestionInfoScreen extends State<QuestionInfoScreen> {
                       .then(
                           (value) => showSuccess(text: "Cập nhật thành công", context: context))
                       .catchError((onError) => showError(text: (onError as ProblemDetails).title!, context: context));
+              EasyLoading.dismiss();
               if (widget.isNew && !widget.isErr) {
                 Navigator.of(context).pop(
                   MaterialPageRoute(

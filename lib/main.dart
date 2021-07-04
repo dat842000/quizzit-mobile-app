@@ -9,6 +9,7 @@ import 'package:flutter/physics.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -78,6 +79,7 @@ class MyApp extends StatelessWidget {
       home: FirebaseAuth.instance.currentUser == null
           ? WelcomeScreen()
           : DashboardScreen(),
+      builder: EasyLoading.init(),
     );
   }
 }
