@@ -15,6 +15,7 @@ import 'package:flutter_auth/models/paging/PagingParams.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/models/subject/Subject.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'group_title.dart';
@@ -129,12 +130,58 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffe4e6eb),
+      backgroundColor: Colors.white,
       appBar: DashboardComponent.buildAppBar(context, choiceAction),
       // drawer: NavigationDrawer(),
       body: Column(
         children: [
-          buildSearch(),
+          // Padding(
+          //   padding: const EdgeInsets.all(16.0),
+          //   child: Align(
+          //     alignment: Alignment.bottomLeft,
+          //     child: Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //         // Text("Hi, Dat Nguyen!",style: TextStyle(color: Color(0xff373737),fontWeight: FontWeight.bold,fontSize: 17),),
+          //         // SizedBox(height: 5,),
+          //         // Text("Welcome to Quizzit",style: TextStyle(color: Colors.grey),)
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          SizedBox(height: 10,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              buildSearch(),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: Container(
+                    height: 42,
+                    width: 42,
+                    decoration: BoxDecoration(
+                        color: Color(0xFF232323),
+                        borderRadius: BorderRadius.circular(15),
+                        // border: Border.all(color: Colors.black54, width: 2)
+                        ),
+                    child: PopupMenuButton<String>(
+                      icon: Icon(FontAwesomeIcons.slidersH,size: 17, color: Color(0xFFb0b0b0),),
+                      onSelected: choiceAction,
+                      itemBuilder: (BuildContext context) {
+                        return Constants.choices.map((String choice) {
+                          return PopupMenuItem<String>(
+                            value: choice,
+                            child: Text(choice),
+                          );
+                        }).toList();
+                      },
+                    )
+                    ),
+              ),
+
+            ],
+          ),
+
           Expanded(
             child: SmartRefresher(
                 enablePullDown: true,

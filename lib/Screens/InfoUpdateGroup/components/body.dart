@@ -77,7 +77,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      backgroundColor: Color(0xffe4e6eb),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
@@ -101,7 +101,7 @@ class _BodyState extends State<Body> {
             )
           ],
         ),
-        backgroundColor: Color(0xffe4e6eb),
+        backgroundColor: Colors.white,
         elevation: 0.0,
         actions: <Widget>[
           GestureDetector(
@@ -300,9 +300,9 @@ class _BodyState extends State<Body> {
         title,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(color: Color(0xff646465), fontSize: 17),
+        style: TextStyle(color: Colors.black87, fontSize: 17),
       ),
-      trailing: Icon(Icons.arrow_drop_down, color: Color(0xff646465)),
+      trailing: Icon(Icons.arrow_drop_down, color: Colors.black87),
     );
   }
 
@@ -315,7 +315,7 @@ class _BodyState extends State<Body> {
         children: [
           Container(
             decoration: BoxDecoration(
-                color: Color(0xffe4e6eb),
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(5),
                 border: Border.all(color: Colors.grey, width: 1)),
             margin: EdgeInsets.zero,

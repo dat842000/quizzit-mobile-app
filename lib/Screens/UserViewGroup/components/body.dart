@@ -11,6 +11,7 @@ import 'package:flutter_auth/models/paging/PagingParams.dart';
 import 'package:flutter_auth/models/post/Post.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'PostCard.dart';
@@ -109,22 +110,22 @@ class _BodyState extends State<Body> {
                       )),
                 ),
       backgroundColor: Color(0xffe4e6eb),
-      appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            color: Colors.white,
-            iconSize: 20,
-            onPressed: () =>
-                //TODO recheck
-                // Navigator.of(context).pushAndRemoveUntil(
-                //     MaterialPageRoute(builder: (c) => DashboardScreen()),
-                //         (route) => false)
-                //     ),
-                Navigate.popToDashboard(context)),
-        centerTitle: true,
-        title: Text(_group.name),
-        actions: [],
-      ),
+      // appBar: AppBar(
+      //   leading: IconButton(
+      //       icon: Icon(Icons.arrow_back_ios),
+      //       color: Colors.white,
+      //       iconSize: 20,
+      //       onPressed: () =>
+      //           //TODO recheck
+      //           // Navigator.of(context).pushAndRemoveUntil(
+      //           //     MaterialPageRoute(builder: (c) => DashboardScreen()),
+      //           //         (route) => false)
+      //           //     ),
+      //           Navigate.popToDashboard(context)),
+      //   centerTitle: true,
+      //   title: Text(_group.name),
+      //   actions: [],
+      // ),
       body: SmartRefresher(
         controller: _refreshController,
         enablePullDown: true,
@@ -141,7 +142,7 @@ class _BodyState extends State<Body> {
                   children: <Widget>[
                     Container(
                       width: double.infinity,
-                      height: MediaQuery.of(context).size.width * 45 / 100,
+                      height: MediaQuery.of(context).size.width * 90 / 100,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(30.0),
@@ -162,6 +163,26 @@ class _BodyState extends State<Body> {
                             imageUrl: _group.image ?? "",
                             fit: BoxFit.cover,
                           )),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 35.0),
+                      child: Container(
+                        width: 35,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          color: kPrimaryColor,
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: Center(
+                          child: IconButton(
+                            icon: Icon(Icons.arrow_back),
+                            iconSize: 20.0,
+                            color: Colors.white,
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),

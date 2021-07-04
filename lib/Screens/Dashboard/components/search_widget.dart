@@ -27,11 +27,12 @@ class _SearchWidgetState extends State<SearchWidget> {
 
     return Container(
       height: 42,
-      margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      width: MediaQuery.of(context).size.width - 80,
+      margin: const EdgeInsets.fromLTRB(0, 0, 5, 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: Colors.white,
-        border: Border.all(color: Colors.black54,width: 2),
+        color: Color(0xfff6f6f6),
+        // border: Border.all(color: Colors.black54,width: 2),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: TextField(

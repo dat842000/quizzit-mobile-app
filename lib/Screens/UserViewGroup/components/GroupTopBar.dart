@@ -20,7 +20,7 @@ class GroupTopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
+        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
         child: Container(
             color: Colors.white,
             height: 76,

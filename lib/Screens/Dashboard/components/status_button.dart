@@ -55,7 +55,6 @@ class StatusButton extends StatelessWidget{
       break;
     }
       case MemberStatus.member:
-      case MemberStatus.owner:
         this._btnColor=Color(0xFFbada85);
         this._btnText="JOINED";
         this._textColor=Colors.grey[200];
@@ -65,6 +64,18 @@ class StatusButton extends StatelessWidget{
         );
         this._sizedBoxWidth=5;
         this._borderColor=Color(0xFFbada85);
+        this._minWidth=null;
+        break;
+      case MemberStatus.owner:
+        this._btnColor=Color(0xFFfae451);
+        this._btnText="OWNED";
+        this._textColor=Colors.white;
+        this._icon=Icon(
+          Icons.group,
+          color: this._textColor,
+        );
+        this._sizedBoxWidth=5;
+        this._borderColor=Color(0xFFfae451);
         this._minWidth=null;
         break;
     }
