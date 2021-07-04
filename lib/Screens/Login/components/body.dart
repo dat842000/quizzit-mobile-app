@@ -124,10 +124,11 @@ class _BodyState extends State<Body> {
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () {
+              press: () async {
                 EasyLoading.show(
                     status: 'Login....', maskType: EasyLoadingMaskType.black);
-                widget._login(context, _loginRequest);
+                await widget._login(context, _loginRequest);
+                EasyLoading.dismiss();
               },
             ),
             SizedBox(height: size.height * 0.001),
