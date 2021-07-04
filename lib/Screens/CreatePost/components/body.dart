@@ -12,8 +12,11 @@ import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/post/CreatePostModel.dart';
 import 'package:flutter_auth/models/post/Post.dart';
+import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_auth/utils/FirebaseUtils.dart';
+import 'package:flutter_auth/utils/snackbar.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:image_picker/image_picker.dart';
 
@@ -47,7 +50,7 @@ class _BodyState extends State<Body> {
 
   Future createPost() async {
     String? image;
-    showLoadingDialog(context, _stateSetter);
+
     if (_selectedImage != null)
       image = await FirebaseUtils.uploadImage(_selectedImage!,
           uploadLocation: UploadLocation.Posts,
@@ -59,9 +62,12 @@ class _BodyState extends State<Body> {
     fetch(Host.groupPost(groupId: widget._group.id), HttpMethod.POST,
             data: model)
         .then((value) {
-      Navigator.pop(context);
+      showSuccess(text: "Tạo bài viết mới thành công", context: context);
       Navigate.push(
           context, PostDetailScreen(Post.fromJson(json.decode(value.body)),widget._group.id));
+    }).catchError((onError){
+      showError(
+          text: (onError as ProblemDetails).title!, context: context);
     });
   }
 
@@ -87,7 +93,10 @@ class _BodyState extends State<Body> {
         actions: <Widget>[
           GestureDetector(
             onTap: () async {
+              EasyLoading.show(
+                  status: 'Đang tạo...', maskType: EasyLoadingMaskType.black);
               await createPost();
+              EasyLoading.dismiss();
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16),
