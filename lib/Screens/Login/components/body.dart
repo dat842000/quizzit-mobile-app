@@ -17,6 +17,8 @@ import 'package:flutter_auth/models/login/LoginModel.dart';
 import 'package:flutter_auth/models/login/LoginResponse.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
+import 'package:flutter_auth/utils/snackbar.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../global/UserLib.dart' as globals;
@@ -34,9 +36,10 @@ class Body extends StatefulWidget {
       var firebase = FirebaseAuth.instance;
       if (firebase.currentUser != null) await firebase.signOut();
       var fbResponse =
-          await firebase.signInWithCustomToken(tokenObject.customToken);
+      await firebase.signInWithCustomToken(tokenObject.customToken);
       globals.userId = int.parse(firebase.currentUser!.uid);
       // Navigate.push(context, DashboardScreen());
+      showSuccess(text: "Đăng nhập thành công", context: context);
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => DashboardScreen(),
           settings: RouteSettings(name: "/Dashboard")));
@@ -63,7 +66,9 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return Container(
       alignment: Alignment.center,
       child: SingleChildScrollView(
@@ -119,7 +124,11 @@ class _BodyState extends State<Body> {
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () => widget._login(context, _loginRequest),
+              press: () {
+                EasyLoading.show(
+                    status: 'Login....', maskType: EasyLoadingMaskType.black);
+                widget._login(context, _loginRequest);
+              },
             ),
             SizedBox(height: size.height * 0.001),
             AlreadyHaveAnAccountCheck(
