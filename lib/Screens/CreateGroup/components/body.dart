@@ -59,7 +59,7 @@ class _BodyState extends State<Body> {
     var response =
         await fetch(Host.groups, HttpMethod.POST, data: this._createGroupModel);
     var jsonRes = json.decode(response.body);
-
+    log(response.body);
     if (response.statusCode.isOk()) {
       var newGroup = Group.fromJson(jsonRes);
       return newGroup;

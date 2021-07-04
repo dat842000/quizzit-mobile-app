@@ -8,6 +8,7 @@ import 'package:flutter_auth/Screens/Login/components/or_divider.dart';
 import 'package:flutter_auth/Screens/Login/components/social_icon.dart';
 import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
 import 'package:flutter_auth/components/already_have_an_account_acheck.dart';
+import 'package:flutter_auth/components/loading_dialog.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
 import 'package:flutter_auth/components/rounded_input_field.dart';
@@ -29,8 +30,10 @@ class Body extends StatefulWidget {
   }) : super(key: key);
 
   _login(BuildContext context, LoginRequest loginRequest) async {
+    showLoadingDialog(context, loadingText: "Logging in. Please Wait...");
     var response = await fetch(Host.login, HttpMethod.POST, data: loginRequest);
     var Json = json.decode(response.body);
+    Navigator.pop(context);
     if (response.statusCode.isOk()) {
       var tokenObject = LoginResponse.fromJson(Json);
       var firebase = FirebaseAuth.instance;

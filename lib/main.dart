@@ -7,6 +7,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
+import 'package:flutter_auth/Screens/Login/login_screen.dart';
+import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
 import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -74,8 +76,14 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      initialRoute: FirebaseAuth.instance.currentUser == null?"/Welcome":"/Dashboard",
-      routes: {"/Welcome":(context)=>WelcomeScreen(),"/Dashboard": (context) => DashboardScreen()},
+      initialRoute:
+          FirebaseAuth.instance.currentUser == null ? "/Welcome" : "/Dashboard",
+      routes: {
+        "/Welcome": (context) => WelcomeScreen(),
+        "/Signup": (context) => SignUpScreen(),
+        "/Login": (context) => LoginScreen(),
+        "/Dashboard": (context) => DashboardScreen()
+      },
       home: FirebaseAuth.instance.currentUser == null
           ? WelcomeScreen()
           : DashboardScreen(),

@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'dart:core';
-import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
 import 'package:flutter_auth/Screens/Dashboard/components/component.dart';
 import 'package:flutter_auth/Screens/Dashboard/components/search_widget.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/global/Subject.dart' as subject;
 import 'package:flutter_auth/models/group/Group.dart' as Model;
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
 import 'package:flutter_auth/models/paging/PagingParams.dart';
@@ -15,7 +16,7 @@ import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/models/subject/Subject.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:flutter_auth/global/Subject.dart' as subject;
+
 import 'group_title.dart';
 
 Future<List<Subject>> fetchSubject() async {
@@ -49,6 +50,16 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (user == null) {
+        Navigator.of(context).popUntil(ModalRoute.withName("/Login"));
+      }
+    });
+    FirebaseAuth.instance.userChanges().listen((user) {
+      if (user == null) {
+        Navigator.of(context).popUntil(ModalRoute.withName("/Login"));
+      }
+    });
     fetchSubject().then((value) => subject.subjects = value);
     _fetchGroupPage(
             nameSearch: this._query,
@@ -63,12 +74,11 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
     });
   }
 
-  // @override
-  // void didUpdateWidget(Body oldWidget) {
-  //   this._groupPageFuture = _fetchGroupPage(
-  //       nameSearch: _query, status: _currentChoice, page: _currentPage);
-  //   super.didUpdateWidget(oldWidget);
-  // }
+  @override
+  void didUpdateWidget(Body oldWidget) {
+    FirebaseAuth.instance.currentUser!.reload().then((value) => null);
+    super.didUpdateWidget(oldWidget);
+  }
 
   void _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 1000));
@@ -140,7 +150,8 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
                         physics: BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           return GroupsTitle(_groups[index],
-                              isLast:_isLast && index == this._totalElements - 1);
+                              isLast:
+                                  _isLast && index == this._totalElements - 1);
                         })
                     : Center(child: Text("No Group Matches your input"))),
           )
@@ -195,7 +206,7 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
       ...{"StatusId": status.toString()}
     };
     var response = await fetch(Host.groups, HttpMethod.GET, params: params);
-    log(response.body);
+    // log(response.body);
     var jsonRes = json.decode(response.body);
     if (response.statusCode.isOk()) {
       setState(() {

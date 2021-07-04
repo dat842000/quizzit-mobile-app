@@ -92,7 +92,9 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: buildAppBar(context),
+        appBar: buildAppBar(context,onBackButtonTap: (){
+          Navigate.popToDashboard(context);
+        }),
         body: FutureBuilder(
             future: userInfoFuture,
             builder: (context, snapshot) {

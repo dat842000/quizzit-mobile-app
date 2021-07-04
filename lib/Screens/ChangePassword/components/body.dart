@@ -1,11 +1,17 @@
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
 import 'package:flutter_auth/components/appbar_widget.dart';
 import 'package:flutter_auth/components/inputField.dart';
+import 'package:flutter_auth/components/loading_dialog.dart';
+import 'package:flutter_auth/components/navigate.dart';
+import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/models/updatepassword/UpdatePasswordRequest.dart';
+import 'package:flutter_auth/utils/ApiUtils.dart';
 
 class Body extends StatefulWidget {
   const Body({
@@ -29,13 +35,36 @@ class _BodyState extends State<Body> {
   void setConfirmedPassword(String confirmedPassword) =>
       this._confirmedPassword = confirmedPassword;
 
+  Future<void> _updatePassword() async {
+    showLoadingDialog(context);
+    var response = await fetch("${Host.users}/password", HttpMethod.PUT,
+        data: _updatePasswordRequest);
+    var jsonRes = json.decode(response.body);
+    Navigator.of(context).pop();
+    if (response.statusCode.isOk()) {
+      showOkAlert(
+        context,
+        "Update Password Successfully",
+        "Please Login again to continue",
+        onPressed: (ctx) => Navigator.of(context).pushNamed("/Login"),
+      );
+    } else {
+      var problem = ProblemDetails.fromJson(jsonRes);
+      showOkAlert(context, problem.title!,
+          problem.message ?? "Something Has happened. Please Try Again");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: buildAppBar(context),
+        appBar: buildAppBar(
+          context,
+          onBackButtonTap: () {
+            Navigate.pop(context);
+          },
+        ),
         body: Container(
           alignment: Alignment.center,
           child: SingleChildScrollView(
@@ -72,28 +101,32 @@ class _BodyState extends State<Body> {
                       isRequired: true,
                       obscureText: true,
                       exp: setConfirmedPassword),
-
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 10),
                     width: size.width * 0.8,
                     child: ClipRRect(
                       // borderRadius: BorderRadius.circular(29),
                       child: FlatButton(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 40),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                         color: Colors.blue[500],
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return UserInfoScreen();
-                              },
-                            ),
-                          );
+                        onPressed: () async {
+                          if (this._updatePasswordRequest.oldPassword.isEmpty ||
+                              this._updatePasswordRequest.oldPassword.isEmpty)
+                            showOkAlert(context, "Invalid Input",
+                                "All Field is Required");
+                          else if (this
+                                  ._updatePasswordRequest
+                                  .newPassword
+                                  .compareTo(this._confirmedPassword) !=
+                              0)
+                            showOkAlert(context, "Invalid Input",
+                                "New Password and Confirm Password Not Match");
+                          else
+                            await _updatePassword();
                         },
                         child: Text(
-                          "Send new pass to your email",
+                          "Update Password",
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -110,13 +143,17 @@ class _BodyState extends State<Body> {
                         ),
                       );
                     },
-
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.arrow_back_ios, size: 12,
-                          color: kPrimaryColor,),
-                        SizedBox(width: 2,),
+                        Icon(
+                          Icons.arrow_back_ios,
+                          size: 12,
+                          color: kPrimaryColor,
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
                         Text(
                           "Back",
                           style: TextStyle(
@@ -131,7 +168,6 @@ class _BodyState extends State<Body> {
               ),
             ),
           ),
-        )
-    );
+        ));
   }
 }

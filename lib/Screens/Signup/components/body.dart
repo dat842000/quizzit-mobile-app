@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Login/login_screen.dart';
 import 'package:flutter_auth/components/birthday_widget.dart';
-import 'package:flutter_auth/components/gender_choice.dart';
 import 'package:flutter_auth/components/inputField.dart';
 import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
@@ -17,22 +16,22 @@ class Body extends StatefulWidget {
   @override
   _BodyState createState() => _BodyState();
 
-  Future signUp(BuildContext context, SignupRequest signupRequest) async {
+  Future _signUp(BuildContext context, SignupRequest signupRequest) async {
     var response =
-    await fetch(Host.users, HttpMethod.POST, data: signupRequest);
+        await fetch(Host.users, HttpMethod.POST, data: signupRequest);
     if (response.statusCode.isOk()) {
       showOkAlert(context, "Signup Success", "",
-              onPressed: (con) => Navigate.push(context,LoginScreen()));
+          onPressed: (con) => Navigate.push(context, LoginScreen()));
     } else {
       var problemDetails = ProblemDetails.fromJson(json.decode(response.body));
       showOkAlert(context, "Signup Failed", problemDetails.title!,
-              onPressed: (context) => Navigator.pop(context, "OK"));
+          onPressed: (context) => Navigator.pop(context, "OK"));
     }
   }
 }
 
 class _BodyState extends State<Body> {
-  int _gender = 0; //0:Female,1:Male,2:Other
+  // int _gender = 0; //0:Female,1:Male,2:Other
   SignupRequest signupRequest = SignupRequest.empty();
   String _confirmedPassword = "";
 
@@ -50,9 +49,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -112,8 +109,8 @@ class _BodyState extends State<Body> {
                       obscureText: true,
                       exp: (value) => confirmedPassword = value),
                   buildBirthday(),
-                  GenderChoice(
-                      isRequired: true, onSelected: (value) => _gender = value),
+                  // GenderChoice(
+                  //     isRequired: true, onSelected: (value) => _gender = value),
                   SizedBox(height: 10),
                   Text(
                     "Create an account, It's free ",
@@ -124,10 +121,11 @@ class _BodyState extends State<Body> {
               RoundedButton(
                 text: "SIGN UP",
                 press: () async {
-                  signupRequest.password.isNotEmpty
-                      &&signupRequest.password == _confirmedPassword ?
-                  await widget.signUp(context, signupRequest) :
-                      showOkAlert(context,"Signup Failed","Confirmed Password Not Match");
+                  signupRequest.password.isNotEmpty &&
+                          signupRequest.password == _confirmedPassword
+                      ? await widget._signUp(context, signupRequest)
+                      : showOkAlert(context, "Signup Failed",
+                          "Confirmed Password Not Match");
                 },
               ),
             ],
@@ -137,8 +135,7 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Widget buildBirthday() =>
-      buildTitle(
+  Widget buildBirthday() => buildTitle(
         title: 'Birthday',
         child: BirthdayWidget(
           birthday: this.signupRequest.dateOfBirth,

@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 
-void showLoadingDialog(BuildContext context,StateSetter? stateSetter) {
+void showLoadingDialog(BuildContext context,
+    {StateSetter? stateSetter,
+    String loadingText = "Loading. Please Wait..."}) {
   showDialog(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
         content: StatefulBuilder(
-          builder: (context, setState1){
-            stateSetter=setState1;
+          builder: (context, setState1) {
+            stateSetter = setState1;
             return Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 CircularProgressIndicator(
-                  // value: _progress,
-                ),
+                    // value: _progress,
+                    ),
                 SizedBox(
-                  width: 5,
+                  width: 8,
                 ),
-                Text("Loading. Please Wait"),
+                Text(loadingText),
               ],
             );
           },
