@@ -3,9 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/PostDetail/post_detail.dart';
-import 'package:flutter_auth/components/loading_dialog.dart';
 import 'package:flutter_auth/components/navigate.dart';
-import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/rounded_input_field.dart';
 import 'package:flutter_auth/components/show_photo_menu.dart';
 import 'package:flutter_auth/constants.dart';
