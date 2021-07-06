@@ -168,11 +168,11 @@ class _BodyState extends State<Body> {
                       padding: EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 35.0),
                       child: Container(
-                        width: 35,
-                        height: 35,
+                        width: 38,
+                        height: 38,
                         decoration: BoxDecoration(
                           color: kPrimaryColor,
-                          borderRadius: BorderRadius.circular(10)
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: Center(
                           child: IconButton(

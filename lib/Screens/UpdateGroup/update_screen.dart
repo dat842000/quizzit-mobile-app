@@ -5,10 +5,10 @@ import 'components/body.dart';
 
 
 
-class InfoUpdateGroupScreen extends StatelessWidget {
+class UpdateGroupScreen extends StatelessWidget {
   final Group group;
   Function update;
-  InfoUpdateGroupScreen(this.group,this.update);
+  UpdateGroupScreen(this.group,this.update);
   @override
   Widget build(BuildContext context) {
 

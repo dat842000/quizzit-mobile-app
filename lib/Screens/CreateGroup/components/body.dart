@@ -71,8 +71,9 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffe4e6eb),
+      backgroundColor: Colors.white,
       appBar: AppBar(
+
         leading: IconButton(
             onPressed: () {
               Navigate.popToDashboard(context);
@@ -95,7 +96,7 @@ class _BodyState extends State<Body> {
             )
           ],
         ),
-        backgroundColor: Color(0xffe4e6eb),
+        backgroundColor: Colors.white,
         elevation: 0.0,
         actions: <Widget>[
           GestureDetector(
@@ -309,7 +310,7 @@ class _BodyState extends State<Body> {
         children: [
           Container(
             decoration: BoxDecoration(
-                color: Color(0xffe4e6eb),
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(5),
                 border: Border.all(color: Colors.grey, width: 1)),
             margin: EdgeInsets.zero,

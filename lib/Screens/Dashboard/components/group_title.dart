@@ -12,7 +12,7 @@ import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:intl/intl.dart';
 
 import '../../../constants.dart';
-import 'Tags.dart';
+import '../../../components/Tags.dart';
 
 class GroupsTitle extends StatefulWidget {
   final Group _group;

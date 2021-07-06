@@ -2,7 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreatePost/create_post.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
-import 'package:flutter_auth/Screens/InfoUpdateGroup/info_update_screen.dart';
+import 'package:flutter_auth/Screens/GroupInfo/group_info_screen.dart';
+import 'package:flutter_auth/Screens/UpdateGroup/update_screen.dart';
 import 'package:flutter_auth/Screens/ListUser/list_user.dart';
 import 'package:flutter_auth/Screens/questions/question_screen.dart';
 import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
@@ -148,7 +149,8 @@ class GroupTopBar extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) =>
-                          InfoUpdateGroupScreen(group, update),
+                          // UpdateGroupScreen(group, update),
+                          GroupInfoScreen(group,update),
                     ));
                   },
                   child: ClipRRect(
