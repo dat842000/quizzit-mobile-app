@@ -50,12 +50,12 @@ class Host {
   static const String subjects = "$_root/subjects";
   static const String users = "$_root/users";
   static const String groups = "$_root/groups";
+  static const String members = "$_root/members";
   static String updateGroup({required int groupId}) => "$groups/$groupId";
   static String groupPost({required int groupId}) => "$groups/$groupId/posts";
   static const String posts = "$_root/posts";
   static String postComment(int postId) => "$posts/$postId/comments";
   static String commentWithId(int commentId) => "$_root/comments/$commentId";
-  static const String members = "$_root/members";
   static const String questions = "$_root/questions";
   static String updateQuestion({required int questionId}) =>
       "$questions/$questionId";
@@ -64,4 +64,6 @@ class Host {
   static String groupOwnerUpdateAddQuestion(
           {required int groupId, required int questionId}) =>
       "$groups/$groupId/questions/$questionId";
+  static String getMemeberInGroup({required int groupId}) => "$groups/$groupId/members";
+  static String updateMemeberStatus({required int memberId}) => "$members/$memberId";
 }
