@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
@@ -46,7 +47,8 @@ class _BodyState extends State<Body> {
         context,
         "Update Password Successfully",
         "Please Login again to continue",
-        onPressed: (ctx) => Navigator.of(context).pushNamed("/Login"),
+        onPressed: (ctx) async =>
+            await FirebaseAuth.instance.currentUser!.reload(),
       );
     } else {
       var problem = ProblemDetails.fromJson(jsonRes);

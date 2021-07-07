@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/EditUserProfile/components/birthday_edit_widget.dart';
 import 'package:flutter_auth/components/appbar_widget.dart';
@@ -25,6 +26,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   _BodyState(this._user);
+
   BaseUser _user;
 
   Future<void> _updateUserProfile() async {
@@ -38,10 +40,10 @@ class _BodyState extends State<Body> {
     print(response.body);
     if (response.statusCode.isOk()) {
       // var newToken = LoginResponse.fromJson(jsonRes);
-      showOkAlert(
-          context, "Update User Profile Success", "Please Login to continue",
-          onPressed: (ctx) {
-        Navigator.of(context).popUntil(ModalRoute.withName("/Login"));
+      showOkAlert(context, "Update User Profile Success", "",
+          onPressed: (ctx) async {
+        Navigator.of(ctx).popUntil(ModalRoute.withName("/UserInfo"));
+        await FirebaseAuth.instance.currentUser!.reload();
       });
     } else {
       ProblemDetails problem = ProblemDetails.fromJson(jsonRes);

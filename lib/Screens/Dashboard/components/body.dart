@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
 import 'package:flutter_auth/Screens/Dashboard/components/component.dart';
 import 'package:flutter_auth/Screens/Dashboard/components/search_widget.dart';
+import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/global/Subject.dart' as subject;
 import 'package:flutter_auth/models/group/Group.dart' as Model;
@@ -53,12 +54,18 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
     super.initState();
     FirebaseAuth.instance.authStateChanges().listen((user) {
       if (user == null) {
-        Navigator.of(context).popUntil(ModalRoute.withName("/Login"));
+        showOkAlert(context, "You Have Been Logged Out",
+            "Please Login again to continue",
+            onPressed: (ctx) =>
+                Navigator.of(context).popUntil(ModalRoute.withName("/")));
       }
     });
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user == null) {
-        Navigator.of(context).popUntil(ModalRoute.withName("/Login"));
+        showOkAlert(context, "You Have Been Logged Out",
+            "Please Login again to continue",
+            onPressed: (ctx) =>
+                Navigator.of(context).popUntil(ModalRoute.withName("/")));
       }
     });
     fetchSubject().then((value) => subject.subjects = value);
@@ -149,7 +156,9 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
           //     ),
           //   ),
           // ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -160,12 +169,16 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
                     height: 42,
                     width: 42,
                     decoration: BoxDecoration(
-                        color: Color(0xFF232323),
-                        borderRadius: BorderRadius.circular(15),
-                        // border: Border.all(color: Colors.black54, width: 2)
-                        ),
+                      color: Color(0xFF232323),
+                      borderRadius: BorderRadius.circular(15),
+                      // border: Border.all(color: Colors.black54, width: 2)
+                    ),
                     child: PopupMenuButton<String>(
-                      icon: Icon(FontAwesomeIcons.slidersH,size: 17, color: Color(0xFFb0b0b0),),
+                      icon: Icon(
+                        FontAwesomeIcons.slidersH,
+                        size: 17,
+                        color: Color(0xFFb0b0b0),
+                      ),
                       onSelected: choiceAction,
                       itemBuilder: (BuildContext context) {
                         return Constants.choices.map((String choice) {
@@ -175,10 +188,8 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
                           );
                         }).toList();
                       },
-                    )
-                    ),
+                    )),
               ),
-
             ],
           ),
 
