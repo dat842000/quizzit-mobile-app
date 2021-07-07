@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/ListUser/components/UserCard.dart';
@@ -29,14 +28,14 @@ class _ListUser extends State<ListUser> {
   List<Member> members = [];
   bool isLast = false;
   bool isEmpty = false;
-  bool isErr = false;
+
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   int _currentPage = 1;
 
   Future<Model.Page<Member>> fetchMemberInGroup(
       {String content = "", int page = 1, int status = 2}) async {
-    var paging = PagingParam(page: page, pageSize: 3, sort: "id_asc");
+    var paging = PagingParam(page: page, pageSize: 7, sort: "id_asc");
 
     Map<String, String> params = {
       ...paging.build(),
@@ -46,7 +45,7 @@ class _ListUser extends State<ListUser> {
     var response = await fetch(
         Host.getMemeberInGroup(groupId: widget.group.id), HttpMethod.GET,
         params: params);
-    log(response.body);
+
     var jsonRes = json.decode(response.body);
     if (response.statusCode.isOk()) {
       setState(() {
@@ -83,9 +82,6 @@ class _ListUser extends State<ListUser> {
       });
     }).catchError((onError) {
       showError(text: (onError as ProblemDetails).title!, context: context);
-      setState(() {
-        isErr = true;
-      });
     });
   }
 
@@ -104,7 +100,7 @@ class _ListUser extends State<ListUser> {
                   itemBuilder: (context, index) => Column(
                         children: [
                           UserCard(members[index], Colors.white, index, members,
-                              setState, widget.group)
+                              (isEmpty) => setState(() {this.isEmpty = isEmpty;}), widget.group)
                         ],
                       )),
             ),
@@ -117,16 +113,7 @@ class _ListUser extends State<ListUser> {
                   style: TextStyle(fontSize: 20),
                 ))
               ])
-            : (isErr)
-                ? Column(children: [
-                    Center(
-                        child: Text(
-                      "Có lỗi xảy ra",
-                      style: TextStyle(fontSize: 20),
-                    ))
-                  ])
-                : Column(
-                    children: [Center(child: CircularProgressIndicator())]);
+            : Column(children: [Center(child: CircularProgressIndicator())]);
   }
 
   void _onLoading() async {
