@@ -1,14 +1,17 @@
 import 'package:flutter_auth/models/Codable.dart';
 import 'package:flutter_auth/models/questions/Answers.dart';
 import 'package:flutter_auth/models/user/BaseUser.dart';
+import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'Question.g.dart';
+
 @JsonSerializable()
-class Question implements Codable{
+class Question implements Codable {
   int? id;
   String content;
   int inSubject;
+  @JsonKey(fromJson: fromJsonUTC)
   DateTime? updateAt;
   BaseUser? createdBy;
   bool? isPrivate;
@@ -20,8 +23,10 @@ class Question implements Codable{
 
   Question.temp(this.content, this.inSubject, this.isPrivate, this.answers);
 
-  factory Question.fromJson(Map<String,dynamic>json)=>_$QuestionFromJson(json);
-  static Question fromJsonModel(Map<String, dynamic> json) => Question.fromJson(json);
+  factory Question.fromJson(Map<String, dynamic> json) =>
+      _$QuestionFromJson(json);
+  static Question fromJsonModel(Map<String, dynamic> json) =>
+      Question.fromJson(json);
 
   @override
   Map<String, dynamic> toJson() {

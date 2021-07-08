@@ -5,11 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
-import 'package:flutter_auth/Screens/Dashboard/components/component.dart';
 import 'package:flutter_auth/Screens/Dashboard/components/search_widget.dart';
-import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
 import 'package:flutter_auth/components/navigate.dart';
+import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/global/Subject.dart' as subject;
 import 'package:flutter_auth/models/group/Group.dart' as Model;
@@ -19,7 +18,6 @@ import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/models/subject/Subject.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'group_title.dart';
@@ -51,7 +49,6 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   int _totalElements = 0;
   List<Model.Group> _groups = [];
 
-  //
   @override
   void initState() {
     super.initState();
@@ -184,9 +181,9 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
                         Padding(
                           padding: const EdgeInsets.only(top: 75.0),
                           child: PopupMenuButton<String>(
-
                             child: Container(
-                              child: SvgPicture.asset("assets/icons/filter_icon.svg"),
+                              child: SvgPicture.asset(
+                                  "assets/icons/filter_icon.svg"),
                             ),
                             onSelected: choiceAction,
                             itemBuilder: (BuildContext context) {
@@ -204,24 +201,23 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
                   ),
                 ),
               ],
-          body: Expanded(
-              child: SmartRefresher(
-                  enablePullDown: true,
-                  enablePullUp: !_isLast,
-                  onRefresh: _onRefresh,
-                  onLoading: _onLoading,
-                  controller: _refreshController,
-                  child: this._totalElements > 0
-                      ? ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: _groups.length,
-                          physics: BouncingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return GroupsTitle(_groups[index],
-                                isLast: _isLast &&
-                                    index == this._totalElements - 1);
-                          })
-                      : Center(child: Text("No Group Matches your input"))))),
+          body: SmartRefresher(
+              enablePullDown: true,
+              enablePullUp: !_isLast,
+              onRefresh: _onRefresh,
+              onLoading: _onLoading,
+              controller: _refreshController,
+              child: this._totalElements > 0
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: _groups.length,
+                      physics: BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return GroupsTitle(_groups[index],
+                            isLast:
+                                _isLast && index == this._totalElements - 1);
+                      })
+                  : Center(child: Text("No Group Matches your input")))),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[buttonCreate()],

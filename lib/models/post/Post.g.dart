@@ -13,7 +13,7 @@ Post _$PostFromJson(Map<String, dynamic> json) {
     json['content'],
     json['image'],
     json['isActive'] as bool,
-    DateTime.parse(json['createdAt'] as String),
+    fromJsonUTC(json['createdAt'] as String),
     BaseUser.fromJson(json['user'] as Map<String, dynamic>),
   );
 }

@@ -195,7 +195,8 @@ class _CommentWidgetState extends State<CommentWidget> {
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           contentPadding: EdgeInsets.all(7)),
-                                      controller: new TextEditingController(text: widget._comment.content),
+                                      controller: new TextEditingController(
+                                          text: widget._comment.content),
                                       readOnly: true,
                                       expands: true,
                                       minLines: null,
@@ -230,11 +231,12 @@ class _CommentWidgetState extends State<CommentWidget> {
           CupertinoActionSheetAction(
               onPressed: () {
                 Navigate.pop(context);
-                showOkCancelAlert(context,
-                    "Delete Confirm",
+                showOkCancelAlert(context, "Delete Confirm",
                     "Are you sure to permanently delete this Comment ?",
-                    onOkPressed:widget.onDelete(widget._comment.id)
-                );
+                    onOkPressed: (ctx) {
+                  widget.onDelete(widget._comment.id);
+                  Navigate.pop(ctx);
+                });
               },
               child: Center(
                 child: const Text(

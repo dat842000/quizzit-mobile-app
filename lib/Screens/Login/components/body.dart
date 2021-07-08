@@ -8,7 +8,6 @@ import 'package:flutter_auth/Screens/Login/components/or_divider.dart';
 import 'package:flutter_auth/Screens/Login/components/social_icon.dart';
 import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
 import 'package:flutter_auth/components/already_have_an_account_acheck.dart';
-import 'package:flutter_auth/components/loading_dialog.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
 import 'package:flutter_auth/components/rounded_input_field.dart';
@@ -19,7 +18,6 @@ import 'package:flutter_auth/models/login/LoginResponse.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_auth/utils/snackbar.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../global/UserLib.dart' as globals;
@@ -30,16 +28,19 @@ class Body extends StatefulWidget {
   }) : super(key: key);
 
   _login(BuildContext context, LoginRequest loginRequest) async {
-    showLoadingDialog(context, loadingText: "Logging in. Please Wait...");
+    // showLoadingDialog(context, loadingText: "Logging in. Please Wait...");
+    var controller =
+        showLoadingFlash(context, title: "Logging in. Please Wait...");
     var response = await fetch(Host.login, HttpMethod.POST, data: loginRequest);
     var Json = json.decode(response.body);
-    Navigator.pop(context);
+    // Navigator.pop(context);
+    controller.dismiss();
     if (response.statusCode.isOk()) {
       var tokenObject = LoginResponse.fromJson(Json);
       var firebase = FirebaseAuth.instance;
       if (firebase.currentUser != null) await firebase.signOut();
       var fbResponse =
-      await firebase.signInWithCustomToken(tokenObject.customToken);
+          await firebase.signInWithCustomToken(tokenObject.customToken);
       globals.userId = int.parse(firebase.currentUser!.uid);
       // Navigate.push(context, DashboardScreen());
       showSuccess(text: "Đăng nhập thành công", context: context);
@@ -69,9 +70,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return Container(
       alignment: Alignment.center,
       child: SingleChildScrollView(
@@ -128,10 +127,10 @@ class _BodyState extends State<Body> {
             RoundedButton(
               text: "LOGIN",
               press: () async {
-                EasyLoading.show(
-                    status: 'Login....', maskType: EasyLoadingMaskType.black);
+                // EasyLoading.show(
+                //     status: 'Login....', maskType: EasyLoadingMaskType.black);
                 await widget._login(context, _loginRequest);
-                EasyLoading.dismiss();
+                // EasyLoading.dismiss();
               },
             ),
             SizedBox(height: size.height * 0.001),

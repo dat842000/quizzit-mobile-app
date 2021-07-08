@@ -11,7 +11,7 @@ Comment _$CommentFromJson(Map<String, dynamic> json) {
     json['id'] as int,
     json['content'] as String,
     json['image'] as String?,
-    DateTime.parse(json['createdAt'] as String),
+    fromJsonUTC(json['createdAt'] as String),
     BaseUser.fromJson(json['user'] as Map<String, dynamic>),
   );
 }

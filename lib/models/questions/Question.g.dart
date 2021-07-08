@@ -11,9 +11,7 @@ Question _$QuestionFromJson(Map<String, dynamic> json) {
     json['id'] as int?,
     json['content'] as String,
     json['inSubject'] as int,
-    json['updateAt'] == null
-        ? null
-        : DateTime.parse(json['updateAt'] as String),
+    fromJsonUTC(json['updateAt'] as String),
     json['createdBy'] == null
         ? null
         : BaseUser.fromJson(json['createdBy'] as Map<String, dynamic>),

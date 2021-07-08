@@ -13,7 +13,7 @@ GroupInfo _$GroupInfoFromJson(Map<String, dynamic> json) {
     json['image'] as String?,
     json['quizSize'] as int,
     json['isActive'] as bool,
-    DateTime.parse(json['createAt'] as String),
+    fromJsonUTC(json['createAt'] as String),
     json['totalMem'] as int,
     (json['subjects'] as List<dynamic>)
         .map((e) => Subject.fromJson(e as Map<String, dynamic>))
