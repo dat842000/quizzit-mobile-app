@@ -17,6 +17,7 @@ import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_auth/utils/FirebaseUtils.dart';
 import 'package:flutter_auth/utils/snackbar.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Body extends StatefulWidget {
   const Body({
@@ -73,7 +74,6 @@ class _BodyState extends State<Body> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-
         leading: IconButton(
             onPressed: () {
               Navigate.popToDashboard(context);
@@ -136,18 +136,27 @@ class _BodyState extends State<Body> {
                   });
                 },
                 child: _selectedImage != null
-                    ? Container(
-                        margin: EdgeInsets.symmetric(horizontal: 16),
-                        height: 170,
-                        width: MediaQuery.of(context).size.width,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.file(
-                            _selectedImage!,
-                            fit: BoxFit.cover,
+                    ? Stack(children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 16),
+                          height: 170,
+                          width: MediaQuery.of(context).size.width,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.file(
+                              _selectedImage!,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      )
+                        Positioned(
+                            top: 10,
+                            right: 25,
+                            child: InkWell(
+                                onTap:(){setState(() {
+                                  _selectedImage = null;
+                                });},child: Icon(Icons.cancel,color: Colors.redAccent,size: 20,)))
+                      ])
                     : Container(
                         margin: EdgeInsets.symmetric(horizontal: 16),
                         height: 170,

@@ -1,10 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
-import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/constants.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DashboardComponent {
   static PreferredSizeWidget buildAppBar(
@@ -17,11 +13,12 @@ class DashboardComponent {
       iconTheme: IconThemeData(color: kPrimaryColor),
       title: Padding(
         padding: const EdgeInsets.only(top: 2.0),
-        child: Row(
-            children: <Widget>[
-              Image.asset('assets/icons/logoAppbar.png',height: 45,),
-            ]
-        ),
+        child: Row(children: <Widget>[
+          Image.asset(
+            'assets/icons/logoAppbar.png',
+            height: 45,
+          ),
+        ]),
       ),
       actions: <Widget>[
         Padding(
@@ -30,11 +27,12 @@ class DashboardComponent {
             width: 42,
             child: GestureDetector(
               onTap: () {
-                Navigate.push(context, UserInfoScreen());
+                Navigator.of(context).pushNamed("/UserInfo");
               },
               child: CircleAvatar(
                 backgroundImage: NetworkImage(
-                    FirebaseAuth.instance.currentUser!.photoURL ?? defaultAvatar),
+                    FirebaseAuth.instance.currentUser!.photoURL ??
+                        defaultAvatar),
               ),
             ),
           ),

@@ -132,7 +132,6 @@ class _BodyState extends State<Body> {
         enablePullUp: !_isLast,
         onRefresh: _pullRefresh,
         onLoading: _pullLoading,
-        header: WaterDropHeader(),
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(top: 0),

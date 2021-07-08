@@ -17,6 +17,7 @@ class Group implements Decodable{
   int currentMemberStatus;
 
 
+
   Group(
       this.id,
       this.name,

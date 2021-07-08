@@ -8,8 +8,6 @@ import 'package:flutter_auth/Screens/ChangePassword/change_password.dart';
 import 'package:flutter_auth/Screens/EditUserProfile/edit_user_profile.dart';
 import 'package:flutter_auth/Screens/Login/login_screen.dart';
 import 'package:flutter_auth/Screens/UserInfo/components/profile_widget.dart';
-import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
-import 'package:flutter_auth/components/appbar_widget.dart';
 import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/components/show_photo_menu.dart';
 import 'package:flutter_auth/models/user/AvatarUpdate.dart';
@@ -42,10 +40,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  _ProfilePageState() {
-    if (_firebaseAuth.currentUser == null)
-      Navigate.pop(context, destination: LoginScreen());
-  }
 
   final _firebaseAuth = FirebaseAuth.instance;
   final ImagePicker _picker = new ImagePicker();
@@ -70,10 +64,6 @@ class _ProfilePageState extends State<ProfilePage> {
       var imgUrl = await FirebaseUtils.uploadImage(pickedImage,
           uploadLocation: UploadLocation.Avatars,
           whileUpload: (int byteTransfered, int totalBytes) {
-        setState(() {
-          _isLoading = true;
-          _progress = byteTransfered.toDouble() / totalBytes.toDouble();
-        });
       }, onError: (Object? error) {});
       var response = await fetch("${Host.users}/avatar", HttpMethod.PUT,
           data: AvatarUpdate(imgUrl));
@@ -122,8 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     physics: BouncingScrollPhysics(),
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(
-                            left: 20.0, top: 35.0),
+                        padding: EdgeInsets.only(left: 20.0, top: 35.0),
                         child: Wrap(
                           children: [
                             InkWell(
@@ -163,8 +152,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       // const SizedBox(height: 12),
                       NumbersWidget(user),
                       const SizedBox(height: 24),
-                      buildAbout(_firebaseAuth.currentUser!.email!,
-                          Icons.email, "Email"),
+                      buildAbout(_firebaseAuth.currentUser!.email!, Icons.email,
+                          "Email"),
 
                       const SizedBox(height: 24),
                       buildAbout(
@@ -206,12 +195,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           context,
                           "Change Password",
                           FontAwesomeIcons.fingerprint,
-                          () =>
-                              Navigate.push(context, ChangePasswordScreen())),
+                          () => Navigate.push(context, ChangePasswordScreen())),
                       buildAccountOptionRow(context, "Logout", Icons.logout,
                           () async {
                         await _firebaseAuth.signOut();
-                        Navigate.push(context, WelcomeScreen());
+                        // Navigator.of(context)
+                        //     .popUntil(ModalRoute.withName("/"));
                       }),
                     ],
                   ),
