@@ -25,7 +25,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   bool isAdmin = false;
   Group group;
-  String choice = "";
+  String choice = "Members";
   int activeMenu = 0;
   List menu = ["Members", "Requests", "Banned"];
 

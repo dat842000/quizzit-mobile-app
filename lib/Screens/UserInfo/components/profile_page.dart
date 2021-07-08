@@ -40,10 +40,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  _ProfilePageState() {
-    if (_firebaseAuth.currentUser == null)
-      Navigate.pop(context, destination: LoginScreen());
-  }
 
   final _firebaseAuth = FirebaseAuth.instance;
   final ImagePicker _picker = new ImagePicker();
@@ -68,10 +64,6 @@ class _ProfilePageState extends State<ProfilePage> {
       var imgUrl = await FirebaseUtils.uploadImage(pickedImage,
           uploadLocation: UploadLocation.Avatars,
           whileUpload: (int byteTransfered, int totalBytes) {
-        setState(() {
-          _isLoading = true;
-          _progress = byteTransfered.toDouble() / totalBytes.toDouble();
-        });
       }, onError: (Object? error) {});
       var response = await fetch("${Host.users}/avatar", HttpMethod.PUT,
           data: AvatarUpdate(imgUrl));

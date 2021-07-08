@@ -8,6 +8,8 @@ import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
 import 'package:flutter_auth/Screens/Dashboard/components/component.dart';
 import 'package:flutter_auth/Screens/Dashboard/components/search_widget.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
+import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
+import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/global/Subject.dart' as subject;
 import 'package:flutter_auth/models/group/Group.dart' as Model;
@@ -16,6 +18,7 @@ import 'package:flutter_auth/models/paging/PagingParams.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/models/subject/Subject.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -138,83 +141,87 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: DashboardComponent.buildAppBar(context, choiceAction),
-      // drawer: NavigationDrawer(),
-      body: Column(
-        children: [
-          // Padding(
-          //   padding: const EdgeInsets.all(16.0),
-          //   child: Align(
-          //     alignment: Alignment.bottomLeft,
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: [
-          //         // Text("Hi, Dat Nguyen!",style: TextStyle(color: Color(0xff373737),fontWeight: FontWeight.bold,fontSize: 17),),
-          //         // SizedBox(height: 5,),
-          //         // Text("Welcome to Quizzit",style: TextStyle(color: Colors.grey),)
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              buildSearch(),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
-                child: Container(
-                    height: 42,
-                    width: 42,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF232323),
-                      borderRadius: BorderRadius.circular(15),
-                      // border: Border.all(color: Colors.black54, width: 2)
-                    ),
-                    child: PopupMenuButton<String>(
-                      icon: Icon(
-                        FontAwesomeIcons.slidersH,
-                        size: 17,
-                        color: Color(0xFFb0b0b0),
+      body: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxScrolled) => [
+                SliverAppBar(
+                  backgroundColor: Colors.white,
+                  elevation: 0,
+                  pinned: true,
+                  automaticallyImplyLeading: false,
+                  title: Padding(
+                    padding: const EdgeInsets.only(top: 2.0),
+                    child: Row(children: <Widget>[
+                      Image.asset(
+                        'assets/icons/logoAppbar.png',
+                        height: 45,
                       ),
-                      onSelected: choiceAction,
-                      itemBuilder: (BuildContext context) {
-                        return Constants.choices.map((String choice) {
-                          return PopupMenuItem<String>(
-                            value: choice,
-                            child: Text(choice),
-                          );
-                        }).toList();
-                      },
-                    )),
-              ),
-            ],
-          ),
+                    ]),
+                  ),
+                  actions: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16.0),
+                      child: Container(
+                        width: 42,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigate.push(context, UserInfoScreen());
+                          },
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                FirebaseAuth.instance.currentUser!.photoURL ??
+                                    defaultAvatar),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                  expandedHeight: 120,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        buildSearch(),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 75.0),
+                          child: PopupMenuButton<String>(
 
-          Expanded(
-            child: SmartRefresher(
-                enablePullDown: true,
-                enablePullUp: !_isLast,
-                onRefresh: _onRefresh,
-                onLoading: _onLoading,
-                header: WaterDropHeader(),
-                controller: _refreshController,
-                child: this._totalElements > 0
-                    ? ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: _groups.length,
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return GroupsTitle(_groups[index],
-                              isLast:
-                                  _isLast && index == this._totalElements - 1);
-                        })
-                    : Center(child: Text("No Group Matches your input"))),
-          )
-        ],
-      ),
+                            child: Container(
+                              child: SvgPicture.asset("assets/icons/filter_icon.svg"),
+                            ),
+                            onSelected: choiceAction,
+                            itemBuilder: (BuildContext context) {
+                              return Constants.choices.map((String choice) {
+                                return PopupMenuItem<String>(
+                                  value: choice,
+                                  child: Text(choice),
+                                );
+                              }).toList();
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+          body: Expanded(
+              child: SmartRefresher(
+                  enablePullDown: true,
+                  enablePullUp: !_isLast,
+                  onRefresh: _onRefresh,
+                  onLoading: _onLoading,
+                  controller: _refreshController,
+                  child: this._totalElements > 0
+                      ? ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _groups.length,
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return GroupsTitle(_groups[index],
+                                isLast: _isLast &&
+                                    index == this._totalElements - 1);
+                          })
+                      : Center(child: Text("No Group Matches your input"))))),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[buttonCreate()],
