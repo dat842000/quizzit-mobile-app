@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -14,11 +13,12 @@ import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_auth/utils/FirebaseUtils.dart';
 import 'package:flutter_auth/utils/snackbar.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_auth/global/Subject.dart' as state;
 
 import 'subject_page.dart';
 
 class Body extends StatefulWidget {
-  final Group group;
+  Group group;
   Function update;
 
   Body(this.group, this.update);
@@ -39,6 +39,7 @@ class _BodyState extends State<Body> {
     _subjects = widget.group.subjects;
     _updateGroupModel = UpdateGroupModel(
         widget.group.name, widget.group.quizSize, widget.group.image, []);
+    super.initState();
   } // _BodyState({required Group group});
 
   Future<void> updateGroup() async {
@@ -65,9 +66,12 @@ class _BodyState extends State<Body> {
     var jsonRes = json.decode(response.body);
     if (response.statusCode.isOk()) {
       var newGroup = Group.fromJson(jsonRes);
-
       widget.group.name = newGroup.name;
-      widget.update();
+      widget.group.subjects = newGroup.subjects;
+      widget.group.quizSize = newGroup.quizSize;
+      widget.group.image = newGroup.image;
+      widget.update(widget.group);
+      state.setState[1].call(widget.group);
       showSuccess(text: "Cập nhật group thành công", context: context);
     } else {
       ProblemDetails problem = ProblemDetails.fromJson(jsonRes);

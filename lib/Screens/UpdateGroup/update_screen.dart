@@ -7,7 +7,7 @@ import 'components/body.dart';
 
 class UpdateGroupScreen extends StatelessWidget {
   final Group group;
-  Function update;
+  final Function update;
   UpdateGroupScreen(this.group,this.update);
   @override
   Widget build(BuildContext context) {

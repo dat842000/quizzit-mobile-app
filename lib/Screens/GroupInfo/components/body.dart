@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/GroupInfo/components/Tags.dart';
 import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
 import 'package:flutter_auth/Screens/UpdateGroup/update_screen.dart';
-
+import 'package:flutter_auth/global/Subject.dart' as state;
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/dtos/User.dart';
 import 'package:flutter_auth/models/group/Group.dart';
@@ -15,7 +15,7 @@ import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Body extends StatefulWidget {
-  final Group group;
+  Group group;
   Function update;
   List<User> users = [
     User(
@@ -66,7 +66,9 @@ class Body extends StatefulWidget {
     var response =
         await fetch(Host.updateGroup(groupId: group.id), HttpMethod.GET);
     if (response.statusCode.isOk()) {
-      return GroupInfo.fromJson(json.decode(response.body));
+      var group = GroupInfo.fromJson(json.decode(response.body));
+      this.group = group;
+      return group;
     } else
       throw new Exception(response.body);
   }
@@ -84,6 +86,7 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     groupInfoFuture = widget._getGroupInfo();
+    widget.update = (newGroup) => setState(() {widget.group = newGroup;});
   }
 
   @override
@@ -117,13 +120,17 @@ class _BodyState extends State<Body> {
                                   icon: Icon(Icons.arrow_back),
                                   iconSize: 20.0,
                                   color: Colors.white,
-                                  onPressed: () => Navigator.pop(context),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    state.setState[0].call(widget.group);
+                                    },
                                 ),
                               ),
                             ),
                           ),
                           Text(
-                            snapshot.data!.name,
+                            // snapshot.data!.name,
+                            widget.group.name,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 17),
                           ),
@@ -132,7 +139,7 @@ class _BodyState extends State<Body> {
                             child: widget.group.currentMemberStatus == 3
                                 ? InkWell(
                                     onTap: () {
-                                      Navigator.of(context)
+                                          Navigator.of(context)
                                           .push(MaterialPageRoute(
                                         builder: (context) => UpdateGroupScreen(
                                             widget.group, widget.update),
@@ -412,7 +419,7 @@ Widget buildSettings(BuildContext context, Group group) => Container(
       ]),
     );
 
-Widget buildAboutInfo(IconData iconTitle,GroupInfo group) => Container(
+Widget buildAboutInfo(IconData iconTitle, GroupInfo group) => Container(
       padding: EdgeInsets.only(top: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
