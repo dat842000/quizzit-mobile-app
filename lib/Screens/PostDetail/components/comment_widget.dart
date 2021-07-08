@@ -185,21 +185,25 @@ class _CommentWidgetState extends State<CommentWidget> {
                                 ),
                               ),
                               SizedBox(
-                                height: 4,
+                                height: 3.5,
                               ),
                               Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 2.0),
+                                    const EdgeInsets.symmetric(horizontal: 1.5),
                                 child: IntrinsicHeight(
                                   child: TextField(
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        contentPadding: EdgeInsets.all(7)),
+                                        contentPadding: EdgeInsets.all(5)),
                                     controller: new TextEditingController(
                                         text: widget._comment.content),
+                                    style: TextStyle(
+                                      fontSize: 16.5,
+                                    ),
                                     readOnly: true,
                                     expands: true,
                                     minLines: null,
+                                    enabled: false,
                                     maxLines: null,
                                   ),
                                 ),
