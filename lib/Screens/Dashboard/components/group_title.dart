@@ -10,6 +10,7 @@ import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_auth/global/Subject.dart' as state;
 
 import '../../../constants.dart';
 import '../../../components/Tags.dart';
@@ -69,11 +70,12 @@ class _GroupsTitleState extends State<GroupsTitle> {
             InkWell(
               borderRadius: BorderRadius.circular(20),
               onTap: () {
+                state.setState.add((newGroup) => setState((){_group = newGroup;}));
                 MemberStatus.inGroupStatuses.contains(
                     this._group.currentMemberStatus) ?
                 Navigator.of(context).push(
                     MaterialPageRoute(
-                        builder: (context) => UserViewScreen(widget._group),
+                        builder: (context) => UserViewScreen(this._group),
                         settings: RouteSettings(
                             name: "/Groups/${widget._group.id}")
                     )

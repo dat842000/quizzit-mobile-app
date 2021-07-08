@@ -3,15 +3,14 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/components/GroupTopBar.dart';
-import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
+import 'package:flutter_auth/global/Subject.dart' as state;
 import 'package:flutter_auth/models/paging/PagingParams.dart';
 import 'package:flutter_auth/models/post/Post.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'PostCard.dart';
@@ -41,7 +40,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  final Group _group;
+  Group _group;
   int _currentPage = 1;
   bool _isLast = false;
   List<PostCard> _postList;
@@ -55,6 +54,7 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     _futurePostPage = widget._fetchPost();
+    state.setState.add((newGroup) => setState((){_group = newGroup;}));
   }
 
   @override
@@ -178,7 +178,10 @@ class _BodyState extends State<Body> {
                             icon: Icon(Icons.arrow_back),
                             iconSize: 20.0,
                             color: Colors.white,
-                            onPressed: () => Navigator.pop(context),
+                            onPressed: () {
+                              state.setState.clear();
+                              Navigator.pop(context);
+                            },
                           ),
                         ),
                       ),
