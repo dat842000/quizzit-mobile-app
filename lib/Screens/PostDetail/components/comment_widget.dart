@@ -72,6 +72,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
+                          // ignore: deprecated_member_use
                           FlatButton(
                             minWidth: 80,
                             onPressed: () {
@@ -110,6 +111,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                                 borderRadius: BorderRadius.circular(10)),
                           ),
                           SizedBox(width: 4),
+                          // ignore: deprecated_member_use
                           FlatButton(
                             minWidth: 80,
                             onPressed: () {
@@ -188,14 +190,17 @@ class _CommentWidgetState extends State<CommentWidget> {
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 4.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(widget._comment.content,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w300,
-                                              fontSize: 18)),
-                                    ],
+                                  child: IntrinsicHeight(
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          contentPadding: EdgeInsets.all(7)),
+                                      controller: new TextEditingController(text: widget._comment.content),
+                                      expands: true,
+                                      minLines: null,
+                                      maxLines: null,
+                                      // widget._comment.content,,
+                                    ),
                                   ),
                                 )
                               ],

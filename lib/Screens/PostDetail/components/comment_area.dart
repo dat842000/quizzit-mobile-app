@@ -9,9 +9,8 @@ import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 
 class CommentArea extends StatefulWidget{
-  final BuildContext _context;
   final List<Comment> _commentList;
-  CommentArea(this._context,this._commentList);
+  CommentArea(this._commentList);
 
   @override
   State<StatefulWidget> createState() =>CommentAreaState(_commentList);

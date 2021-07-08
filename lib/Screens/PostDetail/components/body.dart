@@ -57,7 +57,7 @@ class PostDetail extends State<Body> {
   late Future<Models.Page<Comment>> _futurePageComment;
   bool _isLast = true;
   int _currPage = 1;
-  List<Comment> _commentList = List.empty(growable: true);
+  List<Comment> _commentList = [];
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
@@ -153,6 +153,7 @@ class PostDetail extends State<Body> {
                       ),
                     ),
                     FutureBuilder<Models.Page<Comment>>(
+
                         future: _futurePageComment,
                         builder: (context, snapshot) {
                           if (snapshot.hasError)
@@ -167,7 +168,7 @@ class PostDetail extends State<Body> {
                                   ...snapshot.data!.content
                                 ];
                             }
-                            return CommentArea(context,this._commentList);
+                            return CommentArea(this._commentList);
                           }
                           return Center(child: CircularProgressIndicator());
                         })
@@ -228,15 +229,8 @@ class PostDetail extends State<Body> {
                       widget
                           ._createComment(widget._post.id, content: content)
                           .then((value) {
-                        _editingController.text = "";
-                        if (this._commentList.length > 0) {
-                          this._commentList.add(value);
-                          setState(() {});
-                        } else {
-                          this._futurePageComment =
-                              this._loadComments(widget._post.id);
-                          setState(() {});
-                        }
+                          _editingController.text = "";
+                          setState(() {this._commentList.add(value);});
                       }).catchError((error) {
                         var problem =
                             ProblemDetails.fromJson(json.decode(error));
