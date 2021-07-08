@@ -196,10 +196,10 @@ class _CommentWidgetState extends State<CommentWidget> {
                                           border: InputBorder.none,
                                           contentPadding: EdgeInsets.all(7)),
                                       controller: new TextEditingController(text: widget._comment.content),
+                                      readOnly: true,
                                       expands: true,
                                       minLines: null,
                                       maxLines: null,
-                                      // widget._comment.content,,
                                     ),
                                   ),
                                 )
