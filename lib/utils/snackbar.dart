@@ -64,30 +64,119 @@ void showSuccess(
   );
 }
 
-void showTopFlash({FlashBehavior style = FlashBehavior.floating, required BuildContext context}) {
+FlashController showLoadingFlash(
+  BuildContext context, {
+  FlashBehavior style = FlashBehavior.floating,
+  required String title,
+}) {
+  var controller = FlashController(context,
+      transitionDuration: Duration(milliseconds: 400),
+      // persistent: false,
+      builder: (context, controller) =>
+          _showLoadFlash(context, controller: controller, title: "Loading"));
+  controller.show();
+  return controller;
+}
+
+Widget _showLoadFlash(
+  BuildContext context, {
+  FlashBehavior style = FlashBehavior.floating,
+  required FlashController controller,
+  required String title,
+}) {
+  return Flash.bar(
+    controller: controller,
+    backgroundColor: Colors.white,
+    brightness: Brightness.light,
+    boxShadows: [BoxShadow(blurRadius: 4)],
+    barrierBlur: 0.0,
+    // barrierColor: Colors.black38,
+    barrierDismissible: true,
+    behavior: style,
+    position: FlashPosition.bottom,
+    child: FlashBar(
+      content: Text(title),
+      showProgressIndicator: true,
+      primaryAction: TextButton(
+        onPressed: () => controller.dismiss(),
+        child: Text('Hủy', style: TextStyle(color: Colors.amber)),
+      ),
+    ),
+  );
+}
+
+// void showLoadingFlash(
+//     {FlashBehavior style = FlashBehavior.floating,
+//     required BuildContext context,
+//     required Function(FlashController controller) onSuccess}) {
+//   showFlash(
+//     context: context,
+//     // duration: const Duration(seconds: 2),
+//     // persistent: true,
+//     builder: (ctx, controller) {
+//       onSuccess(controller);
+//       return Flash.bar(
+//         controller: controller,
+//         backgroundColor: Colors.white,
+//         brightness: Brightness.light,
+//         boxShadows: [BoxShadow(blurRadius: 4)],
+//         barrierBlur: 3.0,
+//         barrierColor: Colors.black38,
+//         barrierDismissible: true,
+//         behavior: style,
+//         position: FlashPosition.bottom,
+//         child: FlashBar(
+//           content: Text('Đang loading'),
+//           showProgressIndicator: true,
+//           primaryAction: TextButton(
+//             onPressed: () => controller.dismiss(),
+//             child: Text('Hủy', style: TextStyle(color: Colors.amber)),
+//           ),
+//         ),
+//       );
+//     },
+//   );
+// }
+
+void showDialogFlash(
+    {required BuildContext context,
+    required Function action,
+    required String title}) {
   showFlash(
     context: context,
-    duration: const Duration(seconds: 2),
-    persistent: false,
+    // duration: const Duration(seconds: 2),
+    persistent: true,
     builder: (_, controller) {
-      return Flash(
+      return Flash.dialog(
         controller: controller,
-        backgroundColor: Colors.white,
-        brightness: Brightness.light,
+        margin: const EdgeInsets.all(8),
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
         boxShadows: [BoxShadow(blurRadius: 4)],
         barrierBlur: 3.0,
         barrierColor: Colors.black38,
         barrierDismissible: true,
-        behavior: style,
-        position: FlashPosition.top,
         child: FlashBar(
-          title: Text(''),
-          content: Text('Đang loading'),
-          showProgressIndicator: true,
-          primaryAction: TextButton(
-            onPressed: () => controller.dismiss(),
-            child: Text('Hủy', style: TextStyle(color: Colors.amber)),
+          content: Text(
+            title,
+            style: TextStyle(fontSize: 20),
           ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                controller.dismiss();
+              },
+              child: Text('Hủy',
+                  style: TextStyle(color: Colors.amber, fontSize: 16)),
+            ),
+            TextButton(
+              onPressed: () {
+                action();
+                controller.dismiss();
+              },
+              child: Text('OK',
+                  style: TextStyle(color: Colors.amber, fontSize: 16)),
+            ),
+          ],
         ),
       );
     },
