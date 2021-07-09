@@ -58,7 +58,13 @@ class _BodyState extends State<Body> {
         })); // remove post [0]
     state.setPost.add((post) => setState(() {
           _postList.add(post);
-        })); // remove post [1]
+        })); // add post [1]
+    state.setPost.add((post) => setState(() {
+      var flag = _postList.firstWhere((element) => element.id == post.id);
+      flag.title = post.title;
+      flag.content = post.content;
+      flag.image = post.image;
+    })); // rennder post [2]
     widget._fetchPost().then((value) {
       setState(() {
         _postList.addAll(value.content);
