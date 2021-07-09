@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/EditPost/edit_post.dart';
 import 'package:flutter_auth/Screens/PostDetail/post_detail.dart';
 import 'package:flutter_auth/components/navigate.dart';
+import 'package:flutter_auth/global/Subject.dart' as state;
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/post/Post.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_auth/utils/snackbar.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
-import 'package:flutter_auth/global/Subject.dart' as state;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../constants.dart';
@@ -94,8 +94,8 @@ class PostCard extends StatelessWidget {
                                       .map((String choice) {
                                     return PopupMenuItem<String>(
                                         value: choice,
-                                        child:
-                                            SettingPost(_group, _post, choice),);
+                                        child: buildSettingsPost(
+                                            context, _group, _post, choice));
                                   }).toList();
                                 },
                               )
@@ -142,22 +142,13 @@ class PostCard extends StatelessWidget {
       ),
     );
   }
-}
 
-class SettingPost extends StatelessWidget {
-  final Group _group;
-  final Post _post;
-  final String _text;
-
-  SettingPost(this._group, this._post, this._text);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget buildSettingsPost(
+      BuildContext context, Group _group, Post _post, String _text) {
     return Container(
         child: _text == "Edit"
             ? InkWell(
                 onTap: () {
-                  Navigator.pop(context);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -186,10 +177,11 @@ class SettingPost extends StatelessWidget {
                         .then((value) => showSuccess(
                             text: "Xóa bài viết thành công", context: context))
                         .catchError((onError) {
-                          print(onError);
-                          showError(
-                            text: (onError as ProblemDetails).title!,
-                            context: context);});
+                      print(onError);
+                      showError(
+                          text: (onError as ProblemDetails).title!,
+                          context: context);
+                    });
                   };
                   showDialogFlash(
                       context: context,

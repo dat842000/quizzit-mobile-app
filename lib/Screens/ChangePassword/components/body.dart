@@ -10,9 +10,11 @@ import 'package:flutter_auth/components/loading_dialog.dart';
 import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/models/login/LoginResponse.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/models/updatepassword/UpdatePasswordRequest.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
+import 'package:flutter_auth/utils/snackbar.dart';
 
 class Body extends StatefulWidget {
   const Body({
@@ -43,13 +45,10 @@ class _BodyState extends State<Body> {
     var jsonRes = json.decode(response.body);
     Navigator.of(context).pop();
     if (response.statusCode.isOk()) {
-      showOkAlert(
-        context,
-        "Update Password Successfully",
-        "Please Login again to continue",
-        onPressed: (ctx) async =>
-            await FirebaseAuth.instance.currentUser!.reload(),
-      );
+      var newToken = LoginResponse.fromJson(jsonRes);
+      await FirebaseAuth.instance.signInWithCustomToken(newToken.customToken);
+      await FirebaseAuth.instance.currentUser!.reload();
+      showSuccess(text: "Update Password Successfully", context: context);
     } else {
       var problem = ProblemDetails.fromJson(jsonRes);
       showOkAlert(context, problem.title!,

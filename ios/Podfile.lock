@@ -1,8 +1,4 @@
 PODS:
-  - agora_rtc_engine (4.0.2):
-    - AgoraRtcEngine_iOS (= 3.4.2)
-    - Flutter
-  - AgoraRtcEngine_iOS (3.4.2)
   - DKImagePickerController/Core (4.3.2):
     - DKImagePickerController/ImageDataManager
     - DKImagePickerController/Resource
@@ -133,7 +129,6 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - agora_rtc_engine (from `.symlinks/plugins/agora_rtc_engine/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - firebase_app_check (from `.symlinks/plugins/firebase_app_check/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
@@ -149,7 +144,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - AgoraRtcEngine_iOS
     - DKImagePickerController
     - DKPhotoGallery
     - Firebase
@@ -168,8 +162,6 @@ SPEC REPOS:
     - SwiftyGif
 
 EXTERNAL SOURCES:
-  agora_rtc_engine:
-    :path: ".symlinks/plugins/agora_rtc_engine/ios"
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
   firebase_app_check:
@@ -196,8 +188,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher/ios"
 
 SPEC CHECKSUMS:
-  agora_rtc_engine: 9c1a4eb2a33c2ff2dc860fe4a77a27be0345bb9d
-  AgoraRtcEngine_iOS: 3a4d64f2866ffc122e090a693153bb673021f6fe
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1

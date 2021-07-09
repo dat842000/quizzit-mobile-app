@@ -10,6 +10,7 @@ import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/components/rounded_image.dart';
 import 'package:flutter_auth/components/textfield_widget.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/models/login/LoginResponse.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/models/user/BaseUser.dart';
 import 'package:flutter_auth/models/user/UserInfoUpdateModel.dart';
@@ -39,11 +40,11 @@ class _BodyState extends State<Body> {
     Navigator.of(context).pop();
     print(response.body);
     if (response.statusCode.isOk()) {
-      // var newToken = LoginResponse.fromJson(jsonRes);
-      showOkAlert(context, "Update User Profile Success", "",
-          onPressed: (ctx) async {
+      var newToken = LoginResponse.fromJson(jsonRes);
+      await FirebaseAuth.instance.signInWithCustomToken(newToken.customToken);
+      showOkAlert(context, "Update User Profile Success", "", onPressed: (ctx) {
         Navigator.of(ctx).popUntil(ModalRoute.withName("/UserInfo"));
-        await FirebaseAuth.instance.currentUser!.reload();
+        FirebaseAuth.instance.currentUser!.reload();
       });
     } else {
       ProblemDetails problem = ProblemDetails.fromJson(jsonRes);
