@@ -40,14 +40,30 @@ class Option extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
                 color: getTheChooseAnswer(),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child:
+              Row(
                 children: [
-                  Text(
-                    "${arr[answerIndex]}. $text",
-                    style: TextStyle(color: Colors.grey[700], fontSize: 16),
-                  ),
-                ],
+                  Text("${arr[answerIndex]}. ", style: TextStyle(fontSize: 16),),
+
+                  Flexible(
+                    child: IntrinsicHeight(
+                    child: TextField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.all(2)),
+                      controller: new TextEditingController(
+                          text: "$text"),
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                      readOnly: true,
+                      expands: true,
+                      minLines: null,
+                      enabled: false,
+                      maxLines: null,
+                    ),
+                ),
+                  )],
               ),
             ),
           );

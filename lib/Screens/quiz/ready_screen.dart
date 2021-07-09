@@ -3,7 +3,7 @@ import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 
 class ReadyScreen extends StatelessWidget {
-  Group group;
+  final Group group;
 
   ReadyScreen(this.group);
 

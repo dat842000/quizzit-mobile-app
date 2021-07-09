@@ -1,11 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/quiz/constants.dart';
 import 'package:flutter_auth/Screens/quiz/controllers/question_controller.dart';
 import 'package:flutter_auth/Screens/quiz/submit_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter_auth/models/group/Group.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'question_card.dart';
 

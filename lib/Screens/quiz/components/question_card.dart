@@ -25,7 +25,7 @@ class QuestionCards extends State<QuestionCard> {
     QuestionController _controller = Get.put(QuestionController());
     return Container(
         margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-        padding: EdgeInsets.all(kDefaultPadding),
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: kDefaultPadding),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(25),
@@ -81,6 +81,7 @@ class QuestionCards extends State<QuestionCard> {
                   },
                 ),
               ),
+              SizedBox(height: 20),
             ],
           ),
         )
