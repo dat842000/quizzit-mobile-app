@@ -53,6 +53,9 @@ class Host {
   static const String members = "$_root/members";
   static String updateGroup({required int groupId}) => "$groups/$groupId";
   static String groupPost({required int groupId}) => "$groups/$groupId/posts";
+  static const String quiz = "$_root/daily-quiz";
+  static String groupQuiz({required int groupId})=>"$groups/$groupId/daily-quiz";
+  static String submitQuiz({required int quizId})=>"$quiz/$quizId";
   static const String posts = "$_root/posts";
   static String postComment(int postId) => "$posts/$postId/comments";
   static String commentWithId(int commentId) => "$_root/comments/$commentId";

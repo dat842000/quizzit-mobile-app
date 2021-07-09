@@ -6,10 +6,13 @@ import 'package:flutter_auth/Screens/GroupInfo/group_info_screen.dart';
 import 'package:flutter_auth/Screens/UpdateGroup/update_screen.dart';
 import 'package:flutter_auth/Screens/ListUser/list_user.dart';
 import 'package:flutter_auth/Screens/questions/question_screen.dart';
+import 'package:flutter_auth/Screens/quiz/controllers/question_controller.dart';
 import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
+import 'package:flutter_auth/Screens/quiz/ready_screen.dart';
 import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 import '../../../constants.dart';
 
@@ -17,6 +20,7 @@ class GroupTopBar extends StatelessWidget {
   GroupTopBar(this.group, this.update);
   Function update;
   final Group group;
+  final _controller = Get.put(QuestionController());
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +55,13 @@ class GroupTopBar extends StatelessWidget {
                     child: menuButton(kPrimaryColor, FontAwesomeIcons.question,)
                   )
                   : InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => QuizScreen(),
-                      ));
-                    },
-                    child:menuButton(kPrimaryColor, FontAwesomeIcons.brain,)
+                  onTap: () {
+                    _controller.resetQuestionNumber();
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ReadyScreen(group),
+                    ));
+                  },
+                    child:menuButton(kPrimaryColor, FontAwesomeIcons.book,)
                   ),
               InkWell(
                 onTap: () {
