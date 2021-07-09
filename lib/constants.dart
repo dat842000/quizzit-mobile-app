@@ -59,6 +59,7 @@ class Host {
   static String submitQuiz({required int quizId})=>"$quiz/$quizId";
   static const String posts = "$_root/posts";
   static String postComment(int postId) => "$posts/$postId/comments";
+  static String deletePost(int postId) => "$posts/$postId";
   static String commentWithId(int commentId) => "$_root/comments/$commentId";
   static const String questions = "$_root/questions";
   static String updateQuestion({required int questionId}) =>

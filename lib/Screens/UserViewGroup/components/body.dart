@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/components/GroupTopBar.dart';
-import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
@@ -37,25 +36,27 @@ class Body extends StatefulWidget {
   }
 
   @override
-  State createState() => _BodyState(_group, List.empty(growable: true));
+  State createState() => _BodyState(_group);
 }
 
 class _BodyState extends State<Body> {
   Group _group;
   int _currentPage = 1;
   bool _isLast = false;
-  List<PostCard> _postList;
+  List<Post> _postList = [];
   late Future<Model.Page<Post>> _futurePostPage;
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
-  _BodyState(this._group, this._postList);
+  _BodyState(this._group);
 
   @override
   void initState() {
     super.initState();
     _futurePostPage = widget._fetchPost();
-    state.setState.add((newGroup) => setState((){_group = newGroup;}));
+    state.setState.add((newGroup) => setState(() {
+          _group = newGroup;
+        }));
   }
 
   @override
@@ -67,7 +68,7 @@ class _BodyState extends State<Body> {
   Future _pullRefresh() async {
     await Future.delayed(Duration(milliseconds: 1000));
     setState(() {
-      _postList.clear();
+      _postList = [];
       _currentPage = 1;
       _isLast = false;
       _futurePostPage = widget._fetchPost(page: _currentPage);
@@ -111,22 +112,6 @@ class _BodyState extends State<Body> {
                       )),
                 ),
       backgroundColor: Color(0xffe4e6eb),
-      // appBar: AppBar(
-      //   leading: IconButton(
-      //       icon: Icon(Icons.arrow_back_ios),
-      //       color: Colors.white,
-      //       iconSize: 20,
-      //       onPressed: () =>
-      //           //TODO recheck
-      //           // Navigator.of(context).pushAndRemoveUntil(
-      //           //     MaterialPageRoute(builder: (c) => DashboardScreen()),
-      //           //         (route) => false)
-      //           //     ),
-      //           Navigate.popToDashboard(context)),
-      //   centerTitle: true,
-      //   title: Text(_group.name),
-      //   actions: [],
-      // ),
       body: SmartRefresher(
         controller: _refreshController,
         enablePullDown: true,
@@ -181,7 +166,8 @@ class _BodyState extends State<Body> {
                             color: Colors.white,
                             onPressed: () {
                               state.setState.clear();
-                              Navigate.popToDashboard(context);
+                              state.setPost.clear();
+                              Navigator.pop(context);
                             },
                           ),
                         ),
@@ -213,14 +199,19 @@ class _BodyState extends State<Body> {
                         snapshot.data!.content.map((item) {
                           var post = PostCard(item, _group);
                           if (!_postList
-                              .any((element) => element.post.id == item.id)) {
-                            _postList.add(post);
+                              .any((element) => element.id == item.id)) {
+                            _postList.add(item);
                           }
                           return post;
                         }).toList();
+                        state.setPost.add((post) => setState((){_postList.remove(post);}));
                         return _postList.isNotEmpty
                             ? Column(children: <Widget>[
-                                ..._postList.toList(),
+                                // ..._postList.toList(),
+                                ...List.generate(
+                                  _postList.length,
+                                  (index) => PostCard(_postList[index], _group),
+                                ),
                               ])
                             : Column(
                                 mainAxisAlignment: MainAxisAlignment.center,

@@ -20,8 +20,6 @@ import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_auth/utils/snackbar.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../global/UserLib.dart' as globals;
-
 class Body extends StatefulWidget {
   const Body({
     Key? key,
@@ -41,7 +39,6 @@ class Body extends StatefulWidget {
       if (firebase.currentUser != null) await firebase.signOut();
       var fbResponse =
           await firebase.signInWithCustomToken(tokenObject.customToken);
-      globals.userId = int.parse(firebase.currentUser!.uid);
       // Navigate.push(context, DashboardScreen());
       showSuccess(text: "Đăng nhập thành công", context: context);
       Navigator.of(context).push(MaterialPageRoute(

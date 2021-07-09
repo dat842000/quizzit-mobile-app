@@ -34,8 +34,8 @@ class _CommentWidgetState extends State<CommentWidget> {
             onTap: () {},
             child: Container(
               height: 50.0,
-              width: MediaQuery.of(context).size.width / 8.4,
-              // width: 50,
+              // width: MediaQuery.of(context).size.width / 8.4,
+              width: 50,
               decoration: BoxDecoration(
                   color: Colors.blue,
                   borderRadius: BorderRadius.all(Radius.circular(55))),
