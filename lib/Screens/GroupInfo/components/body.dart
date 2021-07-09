@@ -62,8 +62,7 @@ class Body extends StatefulWidget {
   // ];
 
   Future<GroupInfo> _getGroupInfo() async {
-    var response =
-        await fetch(Host.updateGroup(groupId: group.id), HttpMethod.GET);
+    var response = await fetch(Host.updateGroup(groupId: group.id), HttpMethod.GET);
     if (response.statusCode.isOk()) {
       var group = GroupInfo.fromJson(json.decode(response.body));
       this.group = group;

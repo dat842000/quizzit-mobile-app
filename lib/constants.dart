@@ -54,6 +54,7 @@ class Host {
   static String updateGroup({required int groupId}) => "$groups/$groupId";
   static String ranking({required int groupId}) => "$groups/$groupId/members/rank";
   static String groupPost({required int groupId}) => "$groups/$groupId/posts";
+  static String leaveGroup({required int groupId}) => "$users/groups/$groupId";
   static const String quiz = "$_root/daily-quiz";
   static String groupQuiz({required int groupId})=>"$groups/$groupId/daily-quiz";
   static String submitQuiz({required int quizId})=>"$quiz/$quizId";

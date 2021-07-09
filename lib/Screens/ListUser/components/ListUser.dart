@@ -100,7 +100,8 @@ class _ListUser extends State<ListUser> {
                   itemBuilder: (context, index) => Column(
                         children: [
                           UserCard(members[index], Colors.white, index, members,
-                              (isEmpty) => setState(() {this.isEmpty = isEmpty;}), widget.group)
+                              (isEmpty) => setState(() {this.isEmpty = isEmpty;}), widget.group,
+                          )
                         ],
                       )),
             ),

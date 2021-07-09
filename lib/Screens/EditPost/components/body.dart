@@ -21,7 +21,6 @@ import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:flutter_auth/global/Subject.dart' as state;
 import 'package:image_picker/image_picker.dart';
 
-import '../../../global/PostLib.dart' as globals;
 
 class Body extends StatefulWidget {
   final Group group;
@@ -42,7 +41,6 @@ class _BodyState extends State<Body> {
   quill.QuillController _controller = quill.QuillController.basic();
   bool _isLoading = false;
 
-  EditPostModel? _editPostModel;
 
   Future getImage() async {
     var picker = new ImagePicker();
@@ -90,28 +88,13 @@ class _BodyState extends State<Body> {
   }
 
   _BodyState({required this.post}) {
-    // this.selectedImage=Image;
     this.json = jsonDecode(post.content);
   }
 
 
-  @override
-  void initState() {
-    // _editPostModel = EditPostModel(post.title, post.content, post.image);
-    super.initState();
-  }
-
-  // void createPost() {
-  //   var json = jsonEncode(_controller.document.toDelta().toJson());
-  //   var plainText = _controller.document.toPlainText();
-  //   globals.content = json;
-  // }
 
   @override
   Widget build(BuildContext context) {
-    log((selectedImage == null).toString());
-    log(isDelete.toString());
-    log((post.image == null).toString());
     Widget image = Container(
       margin: EdgeInsets.symmetric(horizontal: 16),
       height: 170,
@@ -292,6 +275,5 @@ class _BodyState extends State<Body> {
               ),
             ),
     );
-    ;
   }
 }

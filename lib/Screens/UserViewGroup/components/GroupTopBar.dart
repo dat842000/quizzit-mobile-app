@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreatePost/create_post.dart';
@@ -11,6 +13,9 @@ import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
 import 'package:flutter_auth/Screens/quiz/ready_screen.dart';
 import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/models/group/Group.dart';
+import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
+import 'package:flutter_auth/utils/ApiUtils.dart';
+import 'package:flutter_auth/utils/snackbar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
@@ -21,6 +26,17 @@ class GroupTopBar extends StatelessWidget {
   Function update;
   final Group group;
   final _controller = Get.put(QuestionController());
+  Future leaveGroup(BuildContext context) async{
+    var response = await fetch(Host.leaveGroup(groupId: group.id), HttpMethod.DELETE);
+    if (response.statusCode.isOk()) {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+        // UpdateGroupScreen(group, update),
+        DashboardScreen(),
+      ));
+    }else
+      return Future.error(ProblemDetails.fromJson(jsonDecode(response.body)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +81,10 @@ class GroupTopBar extends StatelessWidget {
                   ),
               InkWell(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => DashboardScreen(),
-                  ));
+                  Function leave = (){
+                    leaveGroup(context);
+                  };
+                  showDialogFlash(context: context, action: leave, title: "Bạn có chắc muốn thoát nhóm ${group.name} ?");
                 },
                 child: menuButton(Colors.redAccent, Icons.logout)
               ),
@@ -75,7 +92,6 @@ class GroupTopBar extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
-                        // UpdateGroupScreen(group, update),
                         GroupInfoScreen(group,update),
                   ));
                 },

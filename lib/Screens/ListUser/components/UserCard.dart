@@ -9,6 +9,7 @@ import 'package:flutter_auth/models/member/Member.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_auth/utils/snackbar.dart';
+import 'package:flutter_auth/global/Subject.dart' as refresh;
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -32,11 +33,15 @@ class UserCard extends StatelessWidget {
         Host.updateMemeberStatus(memberId: this.member.id), HttpMethod.PUT,
         params: params);
     if (response.statusCode.isOk()) {
-      listMember.removeAt(this.index);
-      if (listMember.length == 0)
-        _setState(true);
-      else
-        _setState(false);
+      if(status!= MemberStatus.owner) {
+        listMember.removeAt(this.index);
+        if (listMember.length == 0)
+          _setState(true);
+        else
+          _setState(false);
+      }else{
+        refresh.forceRefresh!();
+      }
     } else
       return Future.error(ProblemDetails.fromJson(json.decode(response.body)));
   }
@@ -48,6 +53,43 @@ class UserCard extends StatelessWidget {
         ? Slidable(
             key: Key(member.id.toString()),
             actionPane: SlidableDrawerActionPane(),
+            actions: member.status == 2 &&
+                FirebaseAuth.instance.currentUser!.uid ==
+                    group.owner.id.toString() ? <Widget>[
+              Container(
+                child: InkWell(
+                  onTap: () {
+                    Function update = () {
+                      updateMemberStatus(status: MemberStatus.owner)
+                          .then((value) => showSuccess(
+                          text: "${member.fullName} là chủ cái bang mới",
+                          context: context))
+                          .catchError((onError) => showError(
+                          text: (onError as ProblemDetails).title!,
+                          context: context));
+                    };
+                    showDialogFlash(context: context, action: update, title: "Bạn có chắc muốn phong ${member.fullName} làm chủ cái bang ?");
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.crown,
+                        color: Colors.yellow[600],
+                        size: 15,
+                      ),
+                      Text(
+                        "New Owner",
+                        style: TextStyle(
+                            color: Colors.yellow[600],
+                            fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ]:<Widget>[],
             secondaryActions: member.status == 2 &&
                     FirebaseAuth.instance.currentUser!.uid ==
                         group.owner.id.toString()
@@ -75,7 +117,7 @@ class UserCard extends StatelessWidget {
                               color: Colors.redAccent,
                             ),
                             Text(
-                              "Banned",
+                              "Ban",
                               style: TextStyle(
                                   color: Colors.redAccent,
                                   fontWeight: FontWeight.bold),
@@ -135,11 +177,18 @@ class UserCard extends StatelessWidget {
                               backgroundImage:
                                   NetworkImage(member.avatar ?? defaultAvatar)),
                         ),
-                        title: Text(member.fullName,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold)),
+                        title: Row(
+                          children: [
+                            Text(member.fullName,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold)),
+                            SizedBox(width: 5,),
+                            member.status == 3 ?
+                            Icon(FontAwesomeIcons.crown,color: Colors.yellow[600],size: 15,) :SizedBox()
+                          ],
+                        ),
                         subtitle: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -148,25 +197,6 @@ class UserCard extends StatelessWidget {
                                     color: Colors.grey[600],
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold)),
-                            member.status == 3
-                                ? Row(
-                                    children: [
-                                      Icon(
-                                        FontAwesomeIcons.crown,
-                                        size: 12.5,
-                                        color: Colors.yellow[600],
-                                      ),
-                                      SizedBox(
-                                        width: 6,
-                                      ),
-                                      Text("Owned",
-                                          style: TextStyle(
-                                              color: Colors.grey[600],
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.bold)),
-                                    ],
-                                  )
-                                : Text(""),
                           ],
                         ),
                       ),

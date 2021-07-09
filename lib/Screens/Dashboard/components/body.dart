@@ -80,6 +80,10 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
         this._groups.addAll(value.content);
       });
     });
+    subject.forceRefresh = (){
+      Navigate.popToDashboard(context);
+      _refreshController.requestRefresh();
+    };
   }
 
   @override
