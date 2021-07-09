@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/components/GroupTopBar.dart';
+import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
@@ -180,7 +181,7 @@ class _BodyState extends State<Body> {
                             color: Colors.white,
                             onPressed: () {
                               state.setState.clear();
-                              Navigator.pop(context);
+                              Navigate.popToDashboard(context);
                             },
                           ),
                         ),

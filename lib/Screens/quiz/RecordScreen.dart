@@ -31,7 +31,7 @@ class _RecordScreenState extends State<RecordScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: FlatButton(onPressed: () => Navigate.push(context, UserViewScreen(group)), child: Icon(Icons.arrow_back)),
+        leading: FlatButton(onPressed: () => Navigate.popToGroup(context,group.id), child: Icon(Icons.arrow_back)),
         leadingWidth: 75,
       ),
       body: Container(
@@ -59,7 +59,7 @@ class _RecordScreenState extends State<RecordScreen> {
                           fontSize: 20,
                           fontWeight: FontWeight.bold)),
                   style: ElevatedButton.styleFrom(
-                    fixedSize: Size(120, 120),
+                    // fixedSize: Size(120, 120),
                     shape: CircleBorder(),
                     padding: EdgeInsets.all(24),
                   ),

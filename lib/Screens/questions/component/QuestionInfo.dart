@@ -2,7 +2,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/quiz/components/answer_row.dart';
-import 'package:flutter_auth/Screens/videocall/theme/colors.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/questions/Answers.dart';
 import 'package:flutter_auth/models/questions/Question.dart';
@@ -102,7 +101,7 @@ class _QuestionInfo extends State<QuestionInfo> {
                     child: Container(
                       padding: EdgeInsets.only(left: 7),
                       decoration: BoxDecoration(
-                          border: Border.all(width: 0.5, color: black),
+                          border: Border.all(width: 0.5, color: Colors.black),
                           borderRadius:
                               BorderRadius.all(Radius.circular(14.0))),
                       width: MediaQuery.of(context).size.width -

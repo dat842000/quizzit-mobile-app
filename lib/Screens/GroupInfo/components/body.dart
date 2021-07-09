@@ -4,13 +4,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/GroupInfo/components/Tags.dart';
-import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
 import 'package:flutter_auth/Screens/UpdateGroup/update_screen.dart';
 import 'package:flutter_auth/global/Subject.dart' as state;
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/dtos/User.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/group/GroupInfo.dart';
+import 'package:flutter_auth/models/group/Rank.dart';
 import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -73,6 +73,15 @@ class Body extends StatefulWidget {
       throw new Exception(response.body);
   }
 
+  Future<List<Rank>> _getRanking() async {
+    var response = await fetch(Host.ranking(groupId: group.id), HttpMethod.GET);
+    var rank = json.decode(response.body);
+    if (response.statusCode.isOk()) {
+      return List.from(rank.map((e) => Rank.fromJson(e)));
+    } else
+      throw new Exception(response.body);
+  }
+
   Body(this.group, this.update);
 
   @override
@@ -81,12 +90,16 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   late Future<GroupInfo> groupInfoFuture;
+  late Future<List<Rank>> rankFuture;
 
   @override
   void initState() {
     super.initState();
+    rankFuture = widget._getRanking();
     groupInfoFuture = widget._getGroupInfo();
-    widget.update = (newGroup) => setState(() {widget.group = newGroup;});
+    widget.update = (newGroup) => setState(() {
+          widget.group = newGroup;
+        });
   }
 
   @override
@@ -123,7 +136,7 @@ class _BodyState extends State<Body> {
                                   onPressed: () {
                                     Navigator.pop(context);
                                     state.setState[0].call(widget.group);
-                                    },
+                                  },
                                 ),
                               ),
                             ),
@@ -139,7 +152,7 @@ class _BodyState extends State<Body> {
                             child: widget.group.currentMemberStatus == 3
                                 ? InkWell(
                                     onTap: () {
-                                          Navigator.of(context)
+                                      Navigator.of(context)
                                           .push(MaterialPageRoute(
                                         builder: (context) => UpdateGroupScreen(
                                             widget.group, widget.update),
@@ -197,10 +210,19 @@ class _BodyState extends State<Body> {
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                           )),
-                      Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [...buildRankings(widget.users)]),
+                      FutureBuilder<List<Rank>>(
+                          future: rankFuture,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError)
+                              return Text(snapshot.error.toString());
+                            else if (snapshot.hasData) {
+                              return Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [...buildRankings(snapshot.data!)]);
+                            }
+                            return Center(child: CircularProgressIndicator());
+                          }),
                       Container(
                         padding: EdgeInsets.only(
                             left: 35, right: 35, top: 10, bottom: 5),
@@ -254,40 +276,58 @@ class _BodyState extends State<Body> {
   }
 }
 
-List<Widget> buildRankings(List<User> users) {
+List<Widget> buildRankings(List<Rank> users) {
   List<Widget> lists = [];
-  for (var index = 0; index < 6; index++) {
+  double maxHeight = 75;
+  double minHeight = 30;
+  List<double> height=[];
+  if(users[users.length-1].totalCorrectAnswersIn30Days == users[0].totalCorrectAnswersIn30Days && users[0].totalCorrectAnswersIn30Days==0){
+    for(var index = 0;index<users.length ;index++){
+      height.add(minHeight);
+    }
+  }
+  if(users[users.length-1].totalCorrectAnswersIn30Days == users[0].totalCorrectAnswersIn30Days && users[0].totalCorrectAnswersIn30Days > 0){
+    for(var index = 0;index<users.length ;index++){
+      height.add(maxHeight);
+    }
+  }
+  if(users[users.length-1].totalCorrectAnswersIn30Days < users[0].totalCorrectAnswersIn30Days) {
+    for (var index = 0; index < users.length; index++) {
+      height.add(minHeight + (maxHeight-minHeight)*(users[index].totalCorrectAnswersIn30Days/users[0].totalCorrectAnswersIn30Days));
+    }
+  }
+  for (var index = 0; index < users.length; index++) {
     switch (index) {
       case 0:
         lists.add(
-            userRankingColumn(90, Color(0xff83bb98), index + 1, users[index]));
+            userRankingColumn(height[index], Color(0xff83bb98), index + 1, users[index]));
         break;
       case 1:
         lists.add(
-            userRankingColumn(70, Color(0xfffb8b8c), index + 1, users[index]));
+            userRankingColumn(height[index], Color(0xfffb8b8c), index + 1, users[index]));
         break;
       case 2:
         lists.add(
-            userRankingColumn(60, Color(0xfff6ba3f), index + 1, users[index]));
+            userRankingColumn(height[index], Color(0xfff6ba3f), index + 1, users[index]));
         break;
       case 3:
         lists.add(
-            userRankingColumn(50, Color(0xff50bfeb), index + 1, users[index]));
+            userRankingColumn(height[index], Color(0xff50bfeb), index + 1, users[index]));
         break;
       case 4:
         lists.add(
-            userRankingColumn(40, Color(0xff83bb98), index + 1, users[index]));
+            userRankingColumn(height[index], Color(0xff83bb98), index + 1, users[index]));
         break;
       case 5:
         lists.add(
-            userRankingColumn(30, Color(0xfffb8b8c), index + 1, users[index]));
+            userRankingColumn(height[index], Color(0xfffb8b8c), index + 1, users[index]));
         break;
     }
   }
   return lists;
 }
 
-Widget userRankingColumn(double height, Color color, int rank, User user) =>
+Widget userRankingColumn(double height, Color color, int rank, Rank user) =>
     Padding(
       padding: const EdgeInsets.only(right: 12.0),
       child: Column(
@@ -307,7 +347,7 @@ Widget userRankingColumn(double height, Color color, int rank, User user) =>
             strokeWidth: 1,
             dashPattern: [4],
             child: CircleAvatar(
-                radius: 10, backgroundImage: NetworkImage(user.urlImg)),
+                radius: 10, backgroundImage: NetworkImage(user.avatar ?? defaultAvatar)),
           ),
           SizedBox(
             height: 5,
