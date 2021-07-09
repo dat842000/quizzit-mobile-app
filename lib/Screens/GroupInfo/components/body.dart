@@ -277,8 +277,8 @@ class _BodyState extends State<Body> {
 
 List<Widget> buildRankings(List<Rank> users) {
   List<Widget> lists = [];
-  double maxHeight = 75;
-  double minHeight = 30;
+  double maxHeight = 125;
+  double minHeight = 25;
   List<double> height=[];
   if(users[users.length-1].totalCorrectAnswersIn30Days == users[0].totalCorrectAnswersIn30Days && users[0].totalCorrectAnswersIn30Days==0){
     for(var index = 0;index<users.length ;index++){
