@@ -57,7 +57,7 @@ class _BodyState extends State<Body> {
           _postList.remove(post);
         })); // remove post [0]
     state.setPost.add((post) => setState(() {
-          _postList.add(post);
+          _postList.insert(0,post);
         })); // add post [1]
     state.setPost.add((post) => setState(() {
       var flag = _postList.firstWhere((element) => element.id == post.id);
