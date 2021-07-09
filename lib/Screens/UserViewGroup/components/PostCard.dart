@@ -182,13 +182,15 @@ class SettingPost extends StatelessWidget {
                   Function delete = () {
                     deletePost()
                         .then((value) => showSuccess(
-                        text: "Xóa bài viết thành công",
-                        context: context))
+                            text: "Xóa bài viết thành công", context: context))
                         .catchError((onError) => showError(
-                        text: (onError as ProblemDetails).title!,
-                        context: context));
+                            text: (onError as ProblemDetails).title!,
+                            context: context));
                   };
-                  showDialogFlash(context: context, action: delete, title: "Bạn có chắc muốn xóa bài viết này ?");
+                  showDialogFlash(
+                      context: context,
+                      action: delete,
+                      title: "Bạn có chắc muốn xóa bài viết này ?");
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -207,10 +209,10 @@ class SettingPost extends StatelessWidget {
   }
 
   Future deletePost() async {
-    var response = await fetch(
-        Host.deletePost(this._post.id), HttpMethod.DELETE);
+    var response =
+        await fetch(Host.deletePost(this._post.id), HttpMethod.DELETE);
     if (response.statusCode.isOk()) {
-      state.setPost[2].call(_post);
+      state.setPost[0].call(_post);
     } else
       return Future.error(ProblemDetails.fromJson(json.decode(response.body)));
   }

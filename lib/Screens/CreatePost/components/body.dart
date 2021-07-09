@@ -16,6 +16,7 @@ import 'package:flutter_auth/utils/FirebaseUtils.dart';
 import 'package:flutter_auth/utils/snackbar.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
+import 'package:flutter_auth/global/Subject.dart' as state;
 import 'package:image_picker/image_picker.dart';
 
 class Body extends StatefulWidget {
@@ -32,7 +33,7 @@ class _BodyState extends State<Body> {
   File? _selectedImage;
   quill.QuillController _controller = quill.QuillController.basic();
   bool _isLoading = false;
-  StateSetter? _stateSetter;
+
   Future getImage() async {
     var picker = new ImagePicker();
     var image = await picker.getImage(source: ImageSource.gallery);
@@ -60,12 +61,18 @@ class _BodyState extends State<Body> {
     fetch(Host.groupPost(groupId: widget._group.id), HttpMethod.POST,
             data: model)
         .then((value) {
-      showSuccess(text: "Tạo bài viết mới thành công", context: context);
-      Navigate.push(
-          context, PostDetailScreen(Post.fromJson(json.decode(value.body)),widget._group.id));
-    }).catchError((onError){
-      showError(
-          text: (onError as ProblemDetails).title!, context: context);
+      if (!value.statusCode.isOk()) {
+        showError(
+            text: ProblemDetails.fromJson(json.decode(value.body)).title!,
+            context: context);
+      } else {
+        state.setPost[1].call(Post.fromJson(json.decode(value.body)));
+        showSuccess(text: "Tạo bài viết mới thành công", context: context);
+        Navigate.push(
+            context,
+            PostDetailScreen(
+                Post.fromJson(json.decode(value.body)), widget._group.id));
+      }
     });
   }
 
@@ -121,13 +128,7 @@ class _BodyState extends State<Body> {
                         icon: Icons.title,
                         hintText: "Post Title",
                         onChanged: (String value) => this._title = value,
-                      )
-                      // TextFieldWidget(
-                      //   label: "",onChanged: (name){
-                      //     this.title = name;
-                      // },text: "Post title",
-                      // )
-                      ),
+                      )),
                   SizedBox(
                     height: 10,
                   ),

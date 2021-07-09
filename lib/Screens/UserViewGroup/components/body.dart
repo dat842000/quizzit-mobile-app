@@ -44,7 +44,7 @@ class _BodyState extends State<Body> {
   int _currentPage = 1;
   bool _isLast = false;
   List<Post> _postList = [];
-  late Future<Model.Page<Post>> _futurePostPage;
+
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
@@ -53,7 +53,17 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
-    _futurePostPage = widget._fetchPost();
+    state.setPost.add((post) => setState(() {
+          _postList.remove(post);
+        })); // remove post [0]
+    state.setPost.add((post) => setState(() {
+          _postList.add(post);
+        })); // remove post [1]
+    widget._fetchPost().then((value) {
+      setState(() {
+        _postList.addAll(value.content);
+      });
+    });
     state.setState.add((newGroup) => setState(() {
           _group = newGroup;
         }));
@@ -62,24 +72,33 @@ class _BodyState extends State<Body> {
   @override
   void didUpdateWidget(Body oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _futurePostPage = widget._fetchPost();
+    widget._fetchPost().then((value) {
+      setState(() {
+        _postList.addAll(value.content);
+      });
+    });
   }
 
   Future _pullRefresh() async {
     await Future.delayed(Duration(milliseconds: 1000));
-    setState(() {
-      _postList = [];
-      _currentPage = 1;
-      _isLast = false;
-      _futurePostPage = widget._fetchPost(page: _currentPage);
+    _postList.clear();
+    _currentPage = 1;
+    widget._fetchPost(page: _currentPage).then((value) {
+      setState(() {
+        _isLast = false;
+        _postList.addAll(value.content);
+      });
     });
     _refreshController.refreshCompleted();
   }
 
   Future _pullLoading() async {
     await Future.delayed(Duration(milliseconds: 1000));
-    setState(() {
-      _futurePostPage = widget._fetchPost(page: ++_currentPage);
+    widget._fetchPost(page: ++_currentPage).then((value) {
+      setState(() {
+        _postList.addAll(value.content);
+        _isLast = value.isLast;
+      });
     });
     _refreshController.loadComplete();
   }
@@ -178,54 +197,25 @@ class _BodyState extends State<Body> {
                 GroupTopBar(this._group, () {
                   setState(() {});
                 }),
-                FutureBuilder<Model.Page<Post>>(
-                    future: _futurePostPage,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        ProblemDetails problem =
-                            snapshot.error as ProblemDetails;
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Center(
-                                child: Text(
-                              problem.title!,
-                            ))
-                          ],
-                        );
-                      } else if (snapshot.hasData) {
-                        _isLast = snapshot.data!.isLast;
-                        snapshot.data!.content.map((item) {
-                          var post = PostCard(item, _group);
-                          if (!_postList
-                              .any((element) => element.id == item.id)) {
-                            _postList.add(item);
-                          }
-                          return post;
-                        }).toList();
-                        state.setPost.add((post) => setState((){_postList.remove(post);}));
-                        return _postList.isNotEmpty
-                            ? Column(children: <Widget>[
-                                // ..._postList.toList(),
-                                ...List.generate(
-                                  _postList.length,
-                                  (index) => PostCard(_postList[index], _group),
-                                ),
-                              ])
-                            : Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Center(
-                                      child: Text(
-                                    "No Post in this group yet",
-                                  ))
-                                ],
-                              );
-                      }
-                      return Center(child: CircularProgressIndicator());
-                    })
+                _postList.isNotEmpty
+                    ? Column(children: <Widget>[
+                        // ..._postList.toList(),
+                        ...List.generate(
+                          _postList.length,
+                          (index) => PostCard(_postList[index], _group),
+                        ),
+                      ])
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Center(
+                              child: Text(
+                            "No Post in this group yet",
+                          ))
+                        ],
+                      ),
+                // return Center(child: CircularProgressIndicator());
               ],
             ),
           ),
