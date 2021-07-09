@@ -92,6 +92,11 @@ class _BodyState extends State<Body> {
   }
 
 
+  @override
+  void initState() {
+    super.initState();
+    this.title=post.title;
+  }
 
   @override
   Widget build(BuildContext context) {
