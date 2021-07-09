@@ -95,7 +95,7 @@ class PostCard extends StatelessWidget {
                                     return PopupMenuItem<String>(
                                         value: choice,
                                         child:
-                                            SettingPost(_group, _post, choice));
+                                            SettingPost(_group, _post, choice),);
                                   }).toList();
                                 },
                               )
@@ -157,6 +157,7 @@ class SettingPost extends StatelessWidget {
         child: _text == "Edit"
             ? InkWell(
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -179,13 +180,16 @@ class SettingPost extends StatelessWidget {
               )
             : InkWell(
                 onTap: () {
+                  Navigator.pop(context);
                   Function delete = () {
                     deletePost()
                         .then((value) => showSuccess(
                             text: "Xóa bài viết thành công", context: context))
-                        .catchError((onError) => showError(
+                        .catchError((onError) {
+                          print(onError);
+                          showError(
                             text: (onError as ProblemDetails).title!,
-                            context: context));
+                            context: context);});
                   };
                   showDialogFlash(
                       context: context,
