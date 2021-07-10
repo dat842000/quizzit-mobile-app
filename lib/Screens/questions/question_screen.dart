@@ -5,6 +5,7 @@ import 'package:flutter_auth/Screens/questions/question_info_screen.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/questions/Answers.dart';
 import 'package:flutter_auth/models/questions/Question.dart';
+import 'package:flutter_auth/utils/snackbar.dart';
 
 class QuestionScreen extends StatelessWidget {
   final Group group;
@@ -25,13 +26,21 @@ class QuestionScreen extends StatelessWidget {
         actions: [
           GestureDetector(
             onTap: () {
-              List<Answer> listAns = [new Answer(0, "", false), new Answer(0, "", false)];
-              Question question = Question.temp("", group.subjects[0].id, true, listAns);
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context) => QuestionInfoScreen(question, true, group)
-                ),
-              );
+              if(group.subjects.length != 0){
+                List<Answer> listAns = [
+                  new Answer(0, "", false),
+                  new Answer(0, "", false)
+                ];
+                Question question =
+                    Question.temp("", group.subjects[0].id, true, listAns);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          QuestionInfoScreen(question, true, group)),
+                );
+              }else{
+                showError(text:"Nhóm hiện tại không có môn học" , context:  context);
+              }
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16),
