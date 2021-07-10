@@ -46,7 +46,7 @@ class _BodyState extends State<Body> {
   Future getImage() async {
     var picker = new ImagePicker();
     var image = await picker.getImage(source: ImageSource.gallery);
-
+    isDelete = false;
     setState(() {
       if (image != null) {
         selectedImage = File(image.path);
@@ -64,6 +64,8 @@ class _BodyState extends State<Body> {
           uploadLocation: UploadLocation.Posts,
           whileUpload: (int byteTransfered, int totalBytes) {},
           onError: (Object? error) {});
+    if(isDelete)
+      image = null;
     EditPostModel model = EditPostModel(
         this.title, jsonEncode(_controller.document.toDelta().toJson()), image);
     print(model.title);
@@ -130,7 +132,7 @@ class _BodyState extends State<Body> {
                 onTap: () {
                   setState(() {
                     selectedImage = null;
-                    // isDelete = true;
+                    isDelete = true;
                   });
                 },
                 child: Icon(
