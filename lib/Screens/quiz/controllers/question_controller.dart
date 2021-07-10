@@ -24,6 +24,7 @@ class QuestionController extends GetxController
 
   late Future<Model.QuestionsWrapper<Question>> _questionFuture;
   List<Question> listQuestions = [];
+  int ans = 0;
   List<QuestionSubmit> listQuestionSubmit = [];
   int id = 0;
   var groupId = 0.obs;
@@ -80,6 +81,7 @@ class QuestionController extends GetxController
     log("FETCH QUESTIONs");
     _questionFuture = _fetchQuiz(groupId);
     _questionFuture.then((value) {
+      ans = 0;
       id = value.id;
       listQuestions = value.questions;
       listQuestionSubmit = listQuestions
@@ -112,6 +114,7 @@ class QuestionController extends GetxController
     super.onClose();
     _animationController!.dispose();
     _pageController!.dispose();
+    ans =0;
   }
 
   void saveAnswer(Question question, int answerId) {
@@ -119,6 +122,11 @@ class QuestionController extends GetxController
     // listQuestions.firstWhere((element) => element.id == question.id).choice =
     //     selectedIndex;
 
+    if(listQuestionSubmit
+        .firstWhere((element) => element.questionId == question.id)
+        .answerId == -1){
+      ans++;
+    }
     listQuestionSubmit
         .firstWhere((element) => element.questionId == question.id)
         .answerId = answerId;
@@ -126,17 +134,17 @@ class QuestionController extends GetxController
 
   void nextQuestion() {
     _pageController!
-        .nextPage(duration: Duration(milliseconds: 250), curve: Curves.ease);
+        .nextPage(duration: Duration(milliseconds: 400), curve: Curves.ease);
   }
 
   void prevQuestion() {
     _pageController!.previousPage(
-        duration: Duration(milliseconds: 250), curve: Curves.ease);
+        duration: Duration(milliseconds: 400), curve: Curves.ease);
   }
 
   void goToQuestion(int page) {
     _pageController!.animateToPage(page,
-        duration: Duration(milliseconds: 250), curve: Curves.ease);
+        duration: Duration(milliseconds: 400), curve: Curves.ease);
   }
 
   void updateTheQnNum(int index) {

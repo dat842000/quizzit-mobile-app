@@ -2,12 +2,9 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
 import 'package:flutter_auth/Screens/quiz/RecordScreen.dart';
 import 'package:flutter_auth/Screens/quiz/constants.dart';
 import 'package:flutter_auth/Screens/quiz/controllers/question_controller.dart';
-import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
-import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/components/popup_alert.dart';
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/question/result/AnswerResult.dart';

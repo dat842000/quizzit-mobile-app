@@ -94,13 +94,13 @@ class _QuestionCard extends State<QuestionCard> {
                                 bottom: 0,
                               ),
                               child: Text(
-                                question.content.length > 70
-                                    ? "${question.content.substring(0, 73)}..."
-                                    : question.content,
+                                question.content,
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w700,
                                 ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
                               ),
                             ),
                           ),
