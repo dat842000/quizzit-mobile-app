@@ -5,11 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/CreatePost/create_post.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter_auth/Screens/GroupInfo/group_info_screen.dart';
-import 'package:flutter_auth/Screens/UpdateGroup/update_screen.dart';
 import 'package:flutter_auth/Screens/ListUser/list_user.dart';
 import 'package:flutter_auth/Screens/questions/question_screen.dart';
 import 'package:flutter_auth/Screens/quiz/controllers/question_controller.dart';
-import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
 import 'package:flutter_auth/Screens/quiz/ready_screen.dart';
 import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/models/group/Group.dart';
@@ -23,18 +21,21 @@ import '../../../constants.dart';
 
 class GroupTopBar extends StatelessWidget {
   GroupTopBar(this.group, this.update);
+
   Function update;
   final Group group;
   final _controller = Get.put(QuestionController());
-  Future leaveGroup(BuildContext context) async{
-    var response = await fetch(Host.leaveGroup(groupId: group.id), HttpMethod.DELETE);
+
+  Future leaveGroup(BuildContext context) async {
+    var response =
+        await fetch(Host.leaveGroup(groupId: group.id), HttpMethod.DELETE);
     if (response.statusCode.isOk()) {
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) =>
-        // UpdateGroupScreen(group, update),
-        DashboardScreen(),
+            // UpdateGroupScreen(group, update),
+            DashboardScreen(),
       ));
-    }else
+    } else
       return Future.error(ProblemDetails.fromJson(jsonDecode(response.body)));
   }
 
@@ -51,81 +52,91 @@ class GroupTopBar extends StatelessWidget {
                   onTap: () {
                     Navigate.push(context, CreatePostScreen(group));
                   },
-                  child: menuButton(Color(0xFFBADA85),FontAwesomeIcons.plusSquare),
+                  child: menuButton(
+                      Color(0xFFBADA85), FontAwesomeIcons.plusSquare),
                 ),
                 // width: 62,
               ),
               InkWell(
-                onTap: () {
-                  Navigate.push(context, ListUser(group: group));
-                },
-                child: menuButton(Color(0xffffeb3b), FontAwesomeIcons.userAlt,)),
+                  onTap: () {
+                    Navigate.push(context, ListUser(group: group));
+                  },
+                  child: menuButton(
+                    Color(0xffffeb3b),
+                    FontAwesomeIcons.userAlt,
+                  )),
               FirebaseAuth.instance.currentUser!.uid ==
                       group.owner.id.toString()
                   ? InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => QuestionScreen(group),
-                      ));
-                    },
-                    child: menuButton(kPrimaryColor, FontAwesomeIcons.question,)
-                  )
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => QuestionScreen(group),
+                        ));
+                      },
+                      child: menuButton(
+                        kPrimaryColor,
+                        FontAwesomeIcons.question,
+                      ))
                   : InkWell(
+                      onTap: () {
+                        _controller.resetQuestionNumber();
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ReadyScreen(group),
+                        ));
+                      },
+                      child: menuButton(
+                        kPrimaryColor,
+                        FontAwesomeIcons.book,
+                      )),
+              InkWell(
                   onTap: () {
-                    _controller.resetQuestionNumber();
+                    Function leave = () {
+                      leaveGroup(context);
+                    };
+                    showDialogFlash(
+                        context: context,
+                        action: leave,
+                        title: "Bạn có chắc muốn thoát nhóm ${group.name} ?");
+                  },
+                  child: menuButton(Colors.redAccent, Icons.logout)),
+              InkWell(
+                  onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ReadyScreen(group),
+                      builder: (context) => GroupInfoScreen(group, update),
                     ));
                   },
-                    child:menuButton(kPrimaryColor, FontAwesomeIcons.book,)
-                  ),
-              InkWell(
-                onTap: () {
-                  Function leave = (){
-                    leaveGroup(context);
-                  };
-                  showDialogFlash(context: context, action: leave, title: "Bạn có chắc muốn thoát nhóm ${group.name} ?");
-                },
-                child: menuButton(Colors.redAccent, Icons.logout)
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        GroupInfoScreen(group,update),
-                  ));
-                },
-                child: menuButton(Colors.grey, FontAwesomeIcons.info,)
-              ),
+                  child: menuButton(
+                    Colors.grey,
+                    FontAwesomeIcons.info,
+                  )),
             ])));
   }
 }
+
 Widget menuButton(Color color, icon) => Padding(
-  padding: const EdgeInsets.only(
-      left: 16.0, right: 8.0, top: 8, bottom: 8),
-  child: Container(
-    decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(25),
-        border:
-        Border.all(color: Colors.black54, width: 2)),
-    child: Align(
-      alignment: Alignment.bottomCenter,
-      child: ClipRRect(
-        borderRadius: BorderRadius.all(
-          Radius.circular(23.0),
-        ),
-        child: Container(
-          color: color,
-          height: 53,
-          width: 60,
-          child: Icon(
-            icon,
-            size: 26,
+      padding: const EdgeInsets.only(left: 16.0, right: 8.0, top: 8, bottom: 8),
+      child: Container(
+        decoration: BoxDecoration(
             color: Colors.white,
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(color: Colors.black54, width: 2)),
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(
+              Radius.circular(23.0),
+            ),
+            child: Container(
+              color: color,
+              height: 53,
+              width: 60,
+              child: Icon(
+                icon,
+                size: 26,
+                color: Colors.white,
+              ),
+            ),
           ),
         ),
       ),
-    ),
-  ),
-);
+    );

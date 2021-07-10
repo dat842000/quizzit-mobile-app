@@ -7,6 +7,7 @@ import 'package:flutter_auth/components/navigate.dart';
 import 'package:flutter_auth/components/rounded_input_field.dart';
 import 'package:flutter_auth/components/show_photo_menu.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/global/Subject.dart' as state;
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/post/CreatePostModel.dart';
 import 'package:flutter_auth/models/post/Post.dart';
@@ -16,7 +17,6 @@ import 'package:flutter_auth/utils/FirebaseUtils.dart';
 import 'package:flutter_auth/utils/snackbar.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
-import 'package:flutter_auth/global/Subject.dart' as state;
 import 'package:image_picker/image_picker.dart';
 
 class Body extends StatefulWidget {
@@ -33,6 +33,11 @@ class _BodyState extends State<Body> {
   File? _selectedImage;
   quill.QuillController _controller = quill.QuillController.basic();
   bool _isLoading = false;
+  FocusNode _inputNode = FocusNode();
+
+  void showKeyboard() {
+    FocusScope.of(context).requestFocus(_inputNode);
+  }
 
   Future getImage() async {
     var picker = new ImagePicker();
@@ -170,7 +175,7 @@ class _BodyState extends State<Body> {
                   ),
                   quill.QuillToolbar.basic(
                       controller: _controller,
-                      showHorizontalRule: true,
+                      // showHorizontalRule: true,
                       onImagePickCallback: (file) async =>
                           await FirebaseUtils.uploadImage(file,
                               uploadLocation: UploadLocation.Posts,
@@ -186,7 +191,9 @@ class _BodyState extends State<Body> {
                       children: [
                         quill.QuillEditor(
                           controller: _controller,
-                          focusNode: FocusNode(),
+                          focusNode: _inputNode,
+                          keyboardAppearance:
+                              MediaQuery.of(context).platformBrightness,
                           scrollController: ScrollController(),
                           scrollable: true,
                           autoFocus: true,

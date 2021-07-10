@@ -81,9 +81,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Quizit',
       theme: ThemeData(
+        brightness: Brightness.light,
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
+      // darkTheme: ThemeData(
+      //   brightness: Brightness.dark,
+      //   // primaryColor: kPrimaryColor,
+      //   // scaffoldBackgroundColor: Colors.white,
+      // ),
       initialRoute:
           FirebaseAuth.instance.currentUser == null ? "/" : "/Dashboard",
       routes: {
