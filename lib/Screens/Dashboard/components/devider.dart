@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/constants.dart';
 
 class Divide extends StatelessWidget {
   @override
@@ -16,7 +15,6 @@ class Divide extends StatelessWidget {
     );
   }
 
-
   Expanded buildDivider() {
     return Expanded(
       child: Divider(
@@ -27,5 +25,3 @@ class Divide extends StatelessWidget {
     );
   }
 }
-
-

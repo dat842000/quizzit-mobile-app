@@ -3,18 +3,18 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
-import 'package:flutter_auth/components/appbar_widget.dart';
-import 'package:flutter_auth/components/inputField.dart';
-import 'package:flutter_auth/components/loading_dialog.dart';
-import 'package:flutter_auth/components/navigate.dart';
-import 'package:flutter_auth/components/popup_alert.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/models/login/LoginResponse.dart';
-import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
-import 'package:flutter_auth/models/updatepassword/UpdatePasswordRequest.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
-import 'package:flutter_auth/utils/snackbar.dart';
+import 'package:quizzit/Screens/UserInfo/user_info.dart';
+import 'package:quizzit/components/appbar_widget.dart';
+import 'package:quizzit/components/inputField.dart';
+import 'package:quizzit/components/loading_dialog.dart';
+import 'package:quizzit/components/navigate.dart';
+import 'package:quizzit/components/popup_alert.dart';
+import 'package:quizzit/constants.dart';
+import 'package:quizzit/models/login/LoginResponse.dart';
+import 'package:quizzit/models/problemdetails/ProblemDetails.dart';
+import 'package:quizzit/models/updatepassword/UpdatePasswordRequest.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
+import 'package:quizzit/utils/snackbar.dart';
 
 class Body extends StatefulWidget {
   const Body({

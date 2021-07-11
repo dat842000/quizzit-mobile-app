@@ -1,15 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/ListUser/components/UserCard.dart';
-import 'package:flutter_auth/models/group/Group.dart';
-import 'package:flutter_auth/models/member/Member.dart';
-import 'package:flutter_auth/models/paging/PagingParams.dart';
-import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
-import 'package:flutter_auth/models/paging/Page.dart' as Model;
-import 'package:flutter_auth/utils/snackbar.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:quizzit/Screens/ListUser/components/UserCard.dart';
+import 'package:quizzit/models/group/Group.dart';
+import 'package:quizzit/models/member/Member.dart';
+import 'package:quizzit/models/paging/Page.dart' as Model;
+import 'package:quizzit/models/paging/PagingParams.dart';
+import 'package:quizzit/models/problemdetails/ProblemDetails.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
+import 'package:quizzit/utils/snackbar.dart';
 
 import '../../../constants.dart';
 
@@ -99,8 +99,15 @@ class _ListUser extends State<ListUser> {
                   physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index) => Column(
                         children: [
-                          UserCard(members[index], Colors.white, index, members,
-                              (isEmpty) => setState(() {this.isEmpty = isEmpty;}), widget.group,
+                          UserCard(
+                            members[index],
+                            Colors.white,
+                            index,
+                            members,
+                            (isEmpty) => setState(() {
+                              this.isEmpty = isEmpty;
+                            }),
+                            widget.group,
                           )
                         ],
                       )),

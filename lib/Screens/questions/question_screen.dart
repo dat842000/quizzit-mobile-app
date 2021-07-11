@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter_auth/Screens/questions/component/body.dart';
-import 'package:flutter_auth/Screens/questions/question_info_screen.dart';
-import 'package:flutter_auth/models/group/Group.dart';
-import 'package:flutter_auth/models/questions/Answers.dart';
-import 'package:flutter_auth/models/questions/Question.dart';
-import 'package:flutter_auth/utils/snackbar.dart';
+import 'package:quizzit/Screens/questions/component/body.dart';
+import 'package:quizzit/Screens/questions/question_info_screen.dart';
+import 'package:quizzit/models/group/Group.dart';
+import 'package:quizzit/models/questions/Answers.dart';
+import 'package:quizzit/models/questions/Question.dart';
+import 'package:quizzit/utils/snackbar.dart';
 
 class QuestionScreen extends StatelessWidget {
   final Group group;
@@ -18,15 +17,16 @@ class QuestionScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         // ignore: deprecated_member_use
-        leading: FlatButton(onPressed:() {
-          Navigator.pop(context);
-          }
-          , child: Icon(Icons.arrow_back)),
+        leading: FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.arrow_back)),
         leadingWidth: 75,
         actions: [
           GestureDetector(
             onTap: () {
-              if(group.subjects.length != 0){
+              if (group.subjects.length != 0) {
                 List<Answer> listAns = [
                   new Answer(0, "", false),
                   new Answer(0, "", false)
@@ -38,8 +38,9 @@ class QuestionScreen extends StatelessWidget {
                       builder: (context) =>
                           QuestionInfoScreen(question, true, group)),
                 );
-              }else{
-                showError(text:"Nhóm hiện tại không có môn học" , context:  context);
+              } else {
+                showError(
+                    text: "Nhóm hiện tại không có môn học", context: context);
               }
             },
             child: Container(
@@ -52,7 +53,6 @@ class QuestionScreen extends StatelessWidget {
           )
         ],
       ),
-
       body: Body(group),
     );
   }

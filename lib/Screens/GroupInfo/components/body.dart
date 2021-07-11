@@ -3,15 +3,15 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/GroupInfo/components/Tags.dart';
-import 'package:flutter_auth/Screens/UpdateGroup/update_screen.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/global/Subject.dart' as state;
-import 'package:flutter_auth/models/group/Group.dart';
-import 'package:flutter_auth/models/group/GroupInfo.dart';
-import 'package:flutter_auth/models/group/Rank.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:quizzit/Screens/GroupInfo/components/Tags.dart';
+import 'package:quizzit/Screens/UpdateGroup/update_screen.dart';
+import 'package:quizzit/constants.dart';
+import 'package:quizzit/global/Subject.dart' as state;
+import 'package:quizzit/models/group/Group.dart';
+import 'package:quizzit/models/group/GroupInfo.dart';
+import 'package:quizzit/models/group/Rank.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
 
 class Body extends StatefulWidget {
   Group group;

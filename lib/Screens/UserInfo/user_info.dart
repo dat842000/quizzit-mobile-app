@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/UserInfo/components/body.dart';
+import 'package:quizzit/Screens/UserInfo/components/body.dart';
 
 class UserInfoScreen extends StatelessWidget {
   @override

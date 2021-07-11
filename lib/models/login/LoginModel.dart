@@ -1,8 +1,10 @@
-import 'package:flutter_auth/models/Codable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:quizzit/models/Codable.dart';
+
 part 'LoginModel.g.dart';
+
 @JsonSerializable()
-class LoginRequest implements Encodable{
+class LoginRequest implements Encodable {
   String username;
   String password;
 
@@ -10,5 +12,4 @@ class LoginRequest implements Encodable{
 
   @override
   Map<String, dynamic> toJson() => _$LoginRequestToJson(this);
-
 }

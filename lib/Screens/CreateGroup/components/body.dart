@@ -4,20 +4,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_auth/Screens/CreateGroup/components/subject_page.dart';
-import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
-import 'package:flutter_auth/components/navigate.dart';
-import 'package:flutter_auth/components/show_photo_menu.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/models/group/CreateGroupModel.dart';
-import 'package:flutter_auth/models/group/Group.dart';
-import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
-import 'package:flutter_auth/models/subject/Subject.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
-import 'package:flutter_auth/utils/FirebaseUtils.dart';
-import 'package:flutter_auth/utils/snackbar.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:quizzit/Screens/CreateGroup/components/subject_page.dart';
+import 'package:quizzit/Screens/UserViewGroup/user_view_group.dart';
+import 'package:quizzit/components/navigate.dart';
+import 'package:quizzit/components/show_photo_menu.dart';
+import 'package:quizzit/constants.dart';
+import 'package:quizzit/models/group/CreateGroupModel.dart';
+import 'package:quizzit/models/group/Group.dart';
+import 'package:quizzit/models/problemdetails/ProblemDetails.dart';
+import 'package:quizzit/models/subject/Subject.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
+import 'package:quizzit/utils/FirebaseUtils.dart';
+import 'package:quizzit/utils/snackbar.dart';
 
 class Body extends StatefulWidget {
   const Body({
@@ -153,9 +152,16 @@ class _BodyState extends State<Body> {
                             top: 10,
                             right: 25,
                             child: InkWell(
-                                onTap:(){setState(() {
-                                  _selectedImage = null;
-                                });},child: Icon(Icons.cancel,color: Colors.redAccent,size: 20,)))
+                                onTap: () {
+                                  setState(() {
+                                    _selectedImage = null;
+                                  });
+                                },
+                                child: Icon(
+                                  Icons.cancel,
+                                  color: Colors.redAccent,
+                                  size: 20,
+                                )))
                       ])
                     : Container(
                         margin: EdgeInsets.symmetric(horizontal: 16),

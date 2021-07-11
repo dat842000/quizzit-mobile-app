@@ -4,21 +4,21 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/ChangePassword/change_password.dart';
-import 'package:flutter_auth/Screens/EditUserProfile/edit_user_profile.dart';
-import 'package:flutter_auth/Screens/Login/login_screen.dart';
-import 'package:flutter_auth/Screens/UserInfo/components/profile_widget.dart';
-import 'package:flutter_auth/components/navigate.dart';
-import 'package:flutter_auth/components/show_photo_menu.dart';
-import 'package:flutter_auth/models/user/AvatarUpdate.dart';
-import 'package:flutter_auth/models/user/UserInfo.dart' as Model;
-import 'package:flutter_auth/utils/ApiUtils.dart';
-import 'package:flutter_auth/utils/FirebaseUtils.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:quizzit/Screens/ChangePassword/change_password.dart';
+import 'package:quizzit/Screens/EditUserProfile/edit_user_profile.dart';
+import 'package:quizzit/Screens/Login/login_screen.dart';
+import 'package:quizzit/Screens/UserInfo/components/profile_widget.dart';
+import 'package:quizzit/components/navigate.dart';
+import 'package:quizzit/components/show_photo_menu.dart';
+import 'package:quizzit/models/user/AvatarUpdate.dart';
+import 'package:quizzit/models/user/UserInfo.dart' as Model;
+import 'package:quizzit/utils/ApiUtils.dart';
+import 'package:quizzit/utils/FirebaseUtils.dart';
 
 import '../../../constants.dart';
 import 'numbers_widget.dart';
@@ -40,7 +40,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
   final _firebaseAuth = FirebaseAuth.instance;
   final ImagePicker _picker = new ImagePicker();
   late Future<Model.UserInfo> userInfoFuture;
@@ -63,8 +62,8 @@ class _ProfilePageState extends State<ProfilePage> {
       EasyLoading.show(status: 'Đang thực hiện...');
       var imgUrl = await FirebaseUtils.uploadImage(pickedImage,
           uploadLocation: UploadLocation.Avatars,
-          whileUpload: (int byteTransfered, int totalBytes) {
-      }, onError: (Object? error) {});
+          whileUpload: (int byteTransfered, int totalBytes) {},
+          onError: (Object? error) {});
       var response = await fetch("${Host.users}/avatar", HttpMethod.PUT,
           data: AvatarUpdate(imgUrl));
       if (response.statusCode.isOk()) {

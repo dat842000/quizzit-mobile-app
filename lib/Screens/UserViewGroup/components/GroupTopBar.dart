@@ -2,20 +2,20 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/CreatePost/create_post.dart';
-import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
-import 'package:flutter_auth/Screens/GroupInfo/group_info_screen.dart';
-import 'package:flutter_auth/Screens/ListUser/list_user.dart';
-import 'package:flutter_auth/Screens/questions/question_screen.dart';
-import 'package:flutter_auth/Screens/quiz/controllers/question_controller.dart';
-import 'package:flutter_auth/Screens/quiz/ready_screen.dart';
-import 'package:flutter_auth/components/navigate.dart';
-import 'package:flutter_auth/models/group/Group.dart';
-import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
-import 'package:flutter_auth/utils/snackbar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:quizzit/Screens/CreatePost/create_post.dart';
+import 'package:quizzit/Screens/Dashboard/dashboard_screen.dart';
+import 'package:quizzit/Screens/GroupInfo/group_info_screen.dart';
+import 'package:quizzit/Screens/ListUser/list_user.dart';
+import 'package:quizzit/Screens/questions/question_screen.dart';
+import 'package:quizzit/Screens/quiz/controllers/question_controller.dart';
+import 'package:quizzit/Screens/quiz/ready_screen.dart';
+import 'package:quizzit/components/navigate.dart';
+import 'package:quizzit/models/group/Group.dart';
+import 'package:quizzit/models/problemdetails/ProblemDetails.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
+import 'package:quizzit/utils/snackbar.dart';
 
 import '../../../constants.dart';
 

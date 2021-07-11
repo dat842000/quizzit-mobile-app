@@ -6,14 +6,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
-import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
-import 'package:flutter_auth/Screens/Login/login_screen.dart';
-import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
-import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
-import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
-import 'package:flutter_auth/constants.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:quizzit/Screens/Dashboard/dashboard_screen.dart';
+import 'package:quizzit/Screens/Login/login_screen.dart';
+import 'package:quizzit/Screens/Signup/signup_screen.dart';
+import 'package:quizzit/Screens/UserInfo/user_info.dart';
+import 'package:quizzit/Screens/Welcome/welcome_screen.dart';
+import 'package:quizzit/constants.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -63,6 +63,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // FirebaseAuth.instance.signOut().then((value) => null);
     print(FirebaseAuth.instance.currentUser);
     if (FirebaseAuth.instance.currentUser != null) {
       FirebaseAuth.instance.currentUser!.reload().then((value) => FirebaseAuth

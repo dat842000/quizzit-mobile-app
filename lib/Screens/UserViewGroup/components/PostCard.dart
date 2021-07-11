@@ -3,17 +3,17 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/EditPost/edit_post.dart';
-import 'package:flutter_auth/Screens/PostDetail/post_detail.dart';
-import 'package:flutter_auth/components/navigate.dart';
-import 'package:flutter_auth/global/Subject.dart' as state;
-import 'package:flutter_auth/models/group/Group.dart';
-import 'package:flutter_auth/models/post/Post.dart';
-import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
-import 'package:flutter_auth/utils/snackbar.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:quizzit/Screens/EditPost/edit_post.dart';
+import 'package:quizzit/Screens/PostDetail/post_detail.dart';
+import 'package:quizzit/components/navigate.dart';
+import 'package:quizzit/global/Subject.dart' as state;
+import 'package:quizzit/models/group/Group.dart';
+import 'package:quizzit/models/post/Post.dart';
+import 'package:quizzit/models/problemdetails/ProblemDetails.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
+import 'package:quizzit/utils/snackbar.dart';
 
 import '../../../constants.dart';
 

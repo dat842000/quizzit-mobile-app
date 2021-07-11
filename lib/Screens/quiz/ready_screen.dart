@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
-import 'package:flutter_auth/models/group/Group.dart';
+import 'package:quizzit/Screens/quiz/quiz_screen.dart';
+import 'package:quizzit/models/group/Group.dart';
 
 class ReadyScreen extends StatelessWidget {
   final Group group;
@@ -45,7 +45,9 @@ class ReadyScreen extends StatelessWidget {
                   height: 250,
                 ),
               ),
-              SizedBox(height: 50,),
+              SizedBox(
+                height: 50,
+              ),
               FlatButton(
                 onPressed: () {
                   // Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -53,7 +55,7 @@ class ReadyScreen extends StatelessWidget {
                   // ));
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
-                        builder: (context) => QuizScreen(group)),
+                          builder: (context) => QuizScreen(group)),
                       ModalRoute.withName("/Groups/${group.id}"));
                   // Navigator.pushNamedAndRemoveUntil(
                   //     context,
@@ -63,14 +65,16 @@ class ReadyScreen extends StatelessWidget {
                 },
                 child: Text(
                   "Do It Now!",
-                  style: TextStyle(color: Colors.amber, fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.amber,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                 ),
                 color: Colors.redAccent,
-                shape: RoundedRectangleBorder(side: BorderSide(
-                    color: Colors.red,
-                    width: 2,
-                    style: BorderStyle.solid
-                ), borderRadius: BorderRadius.circular(50)),
+                shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                        color: Colors.red, width: 2, style: BorderStyle.solid),
+                    borderRadius: BorderRadius.circular(50)),
               )
             ],
           ),

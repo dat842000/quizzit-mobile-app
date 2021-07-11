@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/components/navigate.dart';
-import 'package:flutter_auth/components/popup_alert.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/models/comment/Comment.dart';
-import 'package:flutter_auth/models/comment/CreateCommentModel.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:intl/intl.dart';
+import 'package:quizzit/components/navigate.dart';
+import 'package:quizzit/components/popup_alert.dart';
+import 'package:quizzit/constants.dart';
+import 'package:quizzit/models/comment/Comment.dart';
+import 'package:quizzit/models/comment/CreateCommentModel.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
 
 class CommentWidget extends StatefulWidget {
   final Comment _comment;

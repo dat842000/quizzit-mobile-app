@@ -1,8 +1,8 @@
-import 'package:flutter_auth/models/Codable.dart';
-import 'package:flutter_auth/models/subject/Subject.dart';
-import 'package:flutter_auth/models/user/BaseUser.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:quizzit/models/Codable.dart';
+import 'package:quizzit/models/subject/Subject.dart';
+import 'package:quizzit/models/user/BaseUser.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
 
 part 'Group.g.dart';
 

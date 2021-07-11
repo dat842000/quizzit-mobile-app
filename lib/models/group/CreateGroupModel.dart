@@ -1,8 +1,10 @@
-import 'package:flutter_auth/models/Codable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:quizzit/models/Codable.dart';
+
 part 'CreateGroupModel.g.dart';
+
 @JsonSerializable()
-class CreateGroupModel implements Encodable{
+class CreateGroupModel implements Encodable {
   String groupName;
   int quizSize;
   String? image;
@@ -11,6 +13,5 @@ class CreateGroupModel implements Encodable{
   CreateGroupModel(this.groupName, this.quizSize, this.image, this.subjectIds);
 
   @override
-  Map<String, dynamic> toJson()=> _$CreateGroupModelToJson(this);
-
+  Map<String, dynamic> toJson() => _$CreateGroupModelToJson(this);
 }

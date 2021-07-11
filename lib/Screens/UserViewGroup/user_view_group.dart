@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/UserViewGroup/components/body.dart';
-import 'package:flutter_auth/models/group/Group.dart';
-
+import 'package:quizzit/Screens/UserViewGroup/components/body.dart';
+import 'package:quizzit/models/group/Group.dart';
 
 class UserViewScreen extends StatelessWidget {
   final Group group;

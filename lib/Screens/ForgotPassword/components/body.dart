@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
-import 'package:flutter_auth/Screens/Login/login_screen.dart';
-import 'package:flutter_auth/constants.dart';
+import 'package:quizzit/Screens/Dashboard/dashboard_screen.dart';
+import 'package:quizzit/Screens/Login/login_screen.dart';
+import 'package:quizzit/constants.dart';
 
 class Body extends StatefulWidget {
   const Body({
@@ -14,8 +14,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  String _username="";
-  String _password="";
+  String _username = "";
+  String _password = "";
 
   void setUsername(String username) => this._username = username;
 

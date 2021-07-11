@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/quiz/components/process_bar.dart';
-import 'package:flutter_auth/Screens/quiz/constants.dart';
-import 'package:flutter_auth/Screens/quiz/controllers/question_controller.dart';
-import 'package:flutter_auth/models/question/Question.dart';
+import 'package:quizzit/Screens/quiz/components/process_bar.dart';
+import 'package:quizzit/Screens/quiz/constants.dart';
+import 'package:quizzit/Screens/quiz/controllers/question_controller.dart';
+import 'package:quizzit/models/question/Question.dart';
 import 'package:get/get.dart';
 
 import 'option.dart';

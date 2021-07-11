@@ -3,15 +3,15 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/questions/question_info_screen.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/global/Subject.dart' as subject;
-import 'package:flutter_auth/models/group/Group.dart';
-import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
-import 'package:flutter_auth/models/questions/Question.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_auth/utils/snackbar.dart';
+import 'package:quizzit/Screens/questions/question_info_screen.dart';
+import 'package:quizzit/constants.dart';
+import 'package:quizzit/global/Subject.dart' as subject;
+import 'package:quizzit/models/group/Group.dart';
+import 'package:quizzit/models/problemdetails/ProblemDetails.dart';
+import 'package:quizzit/models/questions/Question.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
+import 'package:quizzit/utils/snackbar.dart';
 
 // ignore: must_be_immutable
 class QuestionCard extends StatefulWidget {
@@ -165,9 +165,14 @@ class _QuestionCard extends State<QuestionCard> {
                                               groupId: widget.group.id)
                                           .then((value) {
                                         setState(() {});
-                                        showSuccess(text: "Xóa khỏi group thành công", context: context);
+                                        showSuccess(
+                                            text: "Xóa khỏi group thành công",
+                                            context: context);
                                       }).catchError((onError) {
-                                        showError(text: (onError as ProblemDetails).title! , context:  context);
+                                        showError(
+                                            text: (onError as ProblemDetails)
+                                                .title!,
+                                            context: context);
                                       });
                                     },
                                     // color: Colors.redAccent,
@@ -219,9 +224,14 @@ class _QuestionCard extends State<QuestionCard> {
                                               groupId: widget.group.id)
                                           .then((value) {
                                         setState(() {});
-                                        showSuccess(text: "Thêm vào group thành công", context: context);
+                                        showSuccess(
+                                            text: "Thêm vào group thành công",
+                                            context: context);
                                       }).catchError((onError) {
-                                        showError(text: (onError as ProblemDetails).title! , context:  context);
+                                        showError(
+                                            text: (onError as ProblemDetails)
+                                                .title!,
+                                            context: context);
                                       });
                                     },
                                     color: Color(0xFF3AA35C),

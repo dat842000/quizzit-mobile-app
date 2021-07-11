@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
-import 'package:flutter_auth/Screens/JoinGroup/join_group_screen.dart';
-import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:quizzit/Screens/CreateGroup/create_group_screen.dart';
+import 'package:quizzit/Screens/JoinGroup/join_group_screen.dart';
+import 'package:quizzit/constants.dart';
 
 class BuildSettings extends StatelessWidget {
   @override
@@ -45,15 +43,13 @@ class BuildSettings extends StatelessWidget {
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 20),
-              child: (
-                  Text(
-                    'CREATE A NEW ONE',
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF0D253F),
-                        fontWeight: FontWeight.w600),
-                  )
-              ),
+              child: (Text(
+                'CREATE A NEW ONE',
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFF0D253F),
+                    fontWeight: FontWeight.w600),
+              )),
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -93,15 +89,13 @@ class BuildSettings extends StatelessWidget {
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 20),
-              child: (
-                  Text(
-                    'OR JOIN A GROUP YOU KNOW',
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF0D253F),
-                        fontWeight: FontWeight.w600),
-                  )
-              ),
+              child: (Text(
+                'OR JOIN A GROUP YOU KNOW',
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFF0D253F),
+                    fontWeight: FontWeight.w600),
+              )),
             ),
             Container(
               // margin: EdgeInsets.symmetric(vertical: 10),

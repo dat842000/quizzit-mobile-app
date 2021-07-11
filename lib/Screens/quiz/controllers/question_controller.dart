@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_auth/models/question/Question.dart';
-import 'package:flutter_auth/models/question/QuestionsWrapper.dart' as Model;
-import 'package:flutter_auth/models/question/submit/QuestionSubmit.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
+import 'package:quizzit/models/question/Question.dart';
+import 'package:quizzit/models/question/QuestionsWrapper.dart' as Model;
+import 'package:quizzit/models/question/submit/QuestionSubmit.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
 
 import '../../../constants.dart';
 
@@ -86,7 +86,7 @@ class QuestionController extends GetxController
       listQuestions = value.questions;
       listQuestionSubmit = listQuestions
           .map((question) =>
-          QuestionSubmit(question.id, question.questionToken, -1))
+              QuestionSubmit(question.id, question.questionToken, -1))
           .toList();
       print(listQuestionSubmit.toString());
       update();
@@ -114,7 +114,7 @@ class QuestionController extends GetxController
     super.onClose();
     _animationController!.dispose();
     _pageController!.dispose();
-    ans =0;
+    ans = 0;
   }
 
   void saveAnswer(Question question, int answerId) {
@@ -122,9 +122,10 @@ class QuestionController extends GetxController
     // listQuestions.firstWhere((element) => element.id == question.id).choice =
     //     selectedIndex;
 
-    if(listQuestionSubmit
-        .firstWhere((element) => element.questionId == question.id)
-        .answerId == -1){
+    if (listQuestionSubmit
+            .firstWhere((element) => element.questionId == question.id)
+            .answerId ==
+        -1) {
       ans++;
     }
     listQuestionSubmit

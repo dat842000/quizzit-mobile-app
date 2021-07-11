@@ -1,10 +1,10 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/quiz/components/answer_row.dart';
-import 'package:flutter_auth/models/group/Group.dart';
-import 'package:flutter_auth/models/questions/Answers.dart';
-import 'package:flutter_auth/models/questions/Question.dart';
+import 'package:quizzit/Screens/quiz/components/answer_row.dart';
+import 'package:quizzit/models/group/Group.dart';
+import 'package:quizzit/models/questions/Answers.dart';
+import 'package:quizzit/models/questions/Question.dart';
 
 // ignore: must_be_immutable
 class QuestionInfo extends StatefulWidget {
@@ -112,8 +112,8 @@ class _QuestionInfo extends State<QuestionInfo> {
                         items: items,
                         value: question.inSubject,
                         onChanged: (newVal) {
-                          setState(() =>
-                          question.inSubject = int.parse(newVal.toString()));
+                          setState(() => question.inSubject =
+                              int.parse(newVal.toString()));
                         },
                       ),
                     ),
@@ -121,28 +121,30 @@ class _QuestionInfo extends State<QuestionInfo> {
                   SizedBox(
                     height: 15,
                   ),
-                  widget.isNew != true ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text("Câu hỏi công khai ",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 40),
-                        child: Checkbox(
-                            value: !question.isPrivate!,
-                            onChanged: (newVal) {
-                              setState(() =>
-                              question.isPrivate = !question.isPrivate!);
-                            },
+                  widget.isNew != true
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text("Câu hỏi công khai ",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 40),
+                              child: Checkbox(
+                                value: !question.isPrivate!,
+                                onChanged: (newVal) {
+                                  setState(() => question.isPrivate =
+                                      !question.isPrivate!);
+                                },
+                              ),
+                            ),
+                          ],
+                        )
+                      : SizedBox(
+                          height: 0,
                         ),
-                      ),
-                    ],
-                  ) : SizedBox(
-                    height: 0,
-                  ),
                   SizedBox(
                     height: 20,
                   ),
@@ -190,39 +192,41 @@ class _QuestionInfo extends State<QuestionInfo> {
                   SizedBox(
                     height: 20,
                   ),
-                  question.answers.length < 4 ?
-                  InkWell(
-                    onTap: (){
-                      setState(() {
-                        question.answers.add(tempAns);
-                      });
-                    },
-                    child: DottedBorder(
-                        color: Colors.lightBlue,
-                        borderType: BorderType.RRect,
-                        radius: Radius.circular(12),
-                        padding: EdgeInsets.all(6),
-                        strokeWidth: 1,
-                        dashPattern: [6],
-                        child: Container(
-                          margin: EdgeInsets.all(5),
-                          padding: EdgeInsets.all(0.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.add_circle_outline,
-                                  size: 16, color: Colors.lightBlue),
-                              Text(
-                                "Thêm ",
-                                style: TextStyle(
-                                    color: Colors.lightBlue, fontSize: 16),
-                              ),
-                            ],
-                          ),
-                        )),
-                  ) : SizedBox(
-                    height: 5,
-                  ),
+                  question.answers.length < 4
+                      ? InkWell(
+                          onTap: () {
+                            setState(() {
+                              question.answers.add(tempAns);
+                            });
+                          },
+                          child: DottedBorder(
+                              color: Colors.lightBlue,
+                              borderType: BorderType.RRect,
+                              radius: Radius.circular(12),
+                              padding: EdgeInsets.all(6),
+                              strokeWidth: 1,
+                              dashPattern: [6],
+                              child: Container(
+                                margin: EdgeInsets.all(5),
+                                padding: EdgeInsets.all(0.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.add_circle_outline,
+                                        size: 16, color: Colors.lightBlue),
+                                    Text(
+                                      "Thêm ",
+                                      style: TextStyle(
+                                          color: Colors.lightBlue,
+                                          fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              )),
+                        )
+                      : SizedBox(
+                          height: 5,
+                        ),
                 ],
               ),
             ),

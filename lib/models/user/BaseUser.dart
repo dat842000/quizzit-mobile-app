@@ -1,5 +1,5 @@
-import 'package:flutter_auth/models/Codable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:quizzit/models/Codable.dart';
 
 part 'BaseUser.g.dart';
 
@@ -12,7 +12,8 @@ class BaseUser implements Codable {
   String email;
   DateTime dateOfBirth;
 
-  BaseUser(this.id, this.username, this.fullName, this.avatar, this.email, this.dateOfBirth);
+  BaseUser(this.id, this.username, this.fullName, this.avatar, this.email,
+      this.dateOfBirth);
 
   factory BaseUser.fromJson(Map<String, dynamic> json) =>
       _$BaseUserFromJson(json);

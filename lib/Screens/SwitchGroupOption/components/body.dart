@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/SwitchGroupOption/components/build_settings.dart';
+import 'package:quizzit/Screens/SwitchGroupOption/components/build_settings.dart';
 
 class Body extends StatefulWidget {
   @override

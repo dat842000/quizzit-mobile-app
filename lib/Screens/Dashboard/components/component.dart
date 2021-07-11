@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/constants.dart';
+import 'package:quizzit/constants.dart';
 
 class DashboardComponent {
   static PreferredSizeWidget buildAppBar(

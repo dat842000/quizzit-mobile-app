@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/quiz/controllers/question_controller.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/models/group/Group.dart';
 import 'package:get/get.dart';
+import 'package:quizzit/Screens/quiz/controllers/question_controller.dart';
+import 'package:quizzit/constants.dart';
+import 'package:quizzit/models/group/Group.dart';
 
 import 'components/body.dart';
 
@@ -45,28 +45,29 @@ class _QuizScreenState extends State<QuizScreen> {
                   appBar: AppBar(
                     backgroundColor: Colors.transparent,
                     elevation: 0,
-                    leading:
-                      Padding(
-                        padding: const EdgeInsets.only(top:11.0,bottom: 11.0,left: 20,right: 20),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                            qnController.questionNumber.value = 1;
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: kPrimaryColor,
-                                border: Border.all(color: Colors.black54,width: 2),
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Center(
-                                child: Icon(
-                                  Icons.arrow_back,
-                                  size: 20.0,
-                                  color: Colors.white,
-                                )),
-                          ),
+                    leading: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 11.0, bottom: 11.0, left: 20, right: 20),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                          qnController.questionNumber.value = 1;
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: kPrimaryColor,
+                              border:
+                                  Border.all(color: Colors.black54, width: 2),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Center(
+                              child: Icon(
+                            Icons.arrow_back,
+                            size: 20.0,
+                            color: Colors.white,
+                          )),
                         ),
                       ),
+                    ),
                     leadingWidth: 75,
                     actions: [
                       InkWell(

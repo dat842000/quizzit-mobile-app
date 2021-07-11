@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/Login/login_screen.dart';
-import 'package:flutter_auth/components/birthday_widget.dart';
-import 'package:flutter_auth/components/inputField.dart';
-import 'package:flutter_auth/components/navigate.dart';
-import 'package:flutter_auth/components/popup_alert.dart';
-import 'package:flutter_auth/components/rounded_button.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
-import 'package:flutter_auth/models/signup/SignupRequest.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
+import 'package:quizzit/Screens/Login/login_screen.dart';
+import 'package:quizzit/components/birthday_widget.dart';
+import 'package:quizzit/components/inputField.dart';
+import 'package:quizzit/components/navigate.dart';
+import 'package:quizzit/components/popup_alert.dart';
+import 'package:quizzit/components/rounded_button.dart';
+import 'package:quizzit/constants.dart';
+import 'package:quizzit/models/problemdetails/ProblemDetails.dart';
+import 'package:quizzit/models/signup/SignupRequest.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
 
 class Body extends StatefulWidget {
   @override

@@ -1,8 +1,10 @@
-import 'package:flutter_auth/models/Codable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:quizzit/models/Codable.dart';
+
 part 'CreateCommentModel.g.dart';
+
 @JsonSerializable(includeIfNull: false)
-class CreateCommentModel implements Encodable{
+class CreateCommentModel implements Encodable {
   String content;
   String? image;
 
@@ -10,5 +12,4 @@ class CreateCommentModel implements Encodable{
 
   @override
   Map<String, dynamic> toJson() => _$CreateCommentModelToJson(this);
-
 }

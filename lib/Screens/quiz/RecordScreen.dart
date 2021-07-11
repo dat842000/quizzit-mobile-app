@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/UserViewGroup/user_view_group.dart';
-import 'package:flutter_auth/components/navigate.dart';
-import 'package:flutter_auth/models/group/Group.dart';
+import 'package:quizzit/components/navigate.dart';
+import 'package:quizzit/models/group/Group.dart';
 
 class RecordScreen extends StatefulWidget {
   final Group group;
@@ -10,7 +9,8 @@ class RecordScreen extends StatefulWidget {
   RecordScreen(this.group, this.correctAnswers, this.questions);
 
   @override
-  State createState() => _RecordScreenState(this.group, this.correctAnswers, this.questions);
+  State createState() =>
+      _RecordScreenState(this.group, this.correctAnswers, this.questions);
 }
 
 class _RecordScreenState extends State<RecordScreen> {
@@ -31,7 +31,9 @@ class _RecordScreenState extends State<RecordScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: FlatButton(onPressed: () => Navigate.popToGroup(context,group.id), child: Icon(Icons.arrow_back)),
+        leading: FlatButton(
+            onPressed: () => Navigate.popToGroup(context, group.id),
+            child: Icon(Icons.arrow_back)),
         leadingWidth: 75,
       ),
       body: Container(
@@ -55,9 +57,8 @@ class _RecordScreenState extends State<RecordScreen> {
                 child: ElevatedButton(
                   onPressed: () {},
                   child: Text('$correctAnswers/$questions',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold)),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   style: ElevatedButton.styleFrom(
                     // fixedSize: Size(120, 120),
                     shape: CircleBorder(),

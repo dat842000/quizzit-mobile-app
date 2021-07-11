@@ -4,21 +4,21 @@ import 'dart:core';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
-import 'package:flutter_auth/Screens/Dashboard/components/search_widget.dart';
-import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
-import 'package:flutter_auth/components/navigate.dart';
-import 'package:flutter_auth/components/popup_alert.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/global/Subject.dart' as subject;
-import 'package:flutter_auth/models/group/Group.dart' as Model;
-import 'package:flutter_auth/models/paging/Page.dart' as Model;
-import 'package:flutter_auth/models/paging/PagingParams.dart';
-import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
-import 'package:flutter_auth/models/subject/Subject.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:quizzit/Screens/CreateGroup/create_group_screen.dart';
+import 'package:quizzit/Screens/Dashboard/components/search_widget.dart';
+import 'package:quizzit/Screens/UserInfo/user_info.dart';
+import 'package:quizzit/components/navigate.dart';
+import 'package:quizzit/components/popup_alert.dart';
+import 'package:quizzit/constants.dart';
+import 'package:quizzit/global/Subject.dart' as subject;
+import 'package:quizzit/models/group/Group.dart' as Model;
+import 'package:quizzit/models/paging/Page.dart' as Model;
+import 'package:quizzit/models/paging/PagingParams.dart';
+import 'package:quizzit/models/problemdetails/ProblemDetails.dart';
+import 'package:quizzit/models/subject/Subject.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
 
 import 'group_title.dart';
 
@@ -80,7 +80,7 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
         this._groups.addAll(value.content);
       });
     });
-    subject.forceRefresh = (){
+    subject.forceRefresh = () {
       Navigate.popToDashboard(context);
       _refreshController.requestRefresh();
     };

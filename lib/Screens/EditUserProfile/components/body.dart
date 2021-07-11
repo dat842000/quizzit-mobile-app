@@ -2,19 +2,19 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/EditUserProfile/components/birthday_edit_widget.dart';
-import 'package:flutter_auth/components/appbar_widget.dart';
-import 'package:flutter_auth/components/loading_dialog.dart';
-import 'package:flutter_auth/components/navigate.dart';
-import 'package:flutter_auth/components/popup_alert.dart';
-import 'package:flutter_auth/components/rounded_image.dart';
-import 'package:flutter_auth/components/textfield_widget.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/models/login/LoginResponse.dart';
-import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
-import 'package:flutter_auth/models/user/BaseUser.dart';
-import 'package:flutter_auth/models/user/UserInfoUpdateModel.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
+import 'package:quizzit/Screens/EditUserProfile/components/birthday_edit_widget.dart';
+import 'package:quizzit/components/appbar_widget.dart';
+import 'package:quizzit/components/loading_dialog.dart';
+import 'package:quizzit/components/navigate.dart';
+import 'package:quizzit/components/popup_alert.dart';
+import 'package:quizzit/components/rounded_image.dart';
+import 'package:quizzit/components/textfield_widget.dart';
+import 'package:quizzit/constants.dart';
+import 'package:quizzit/models/login/LoginResponse.dart';
+import 'package:quizzit/models/problemdetails/ProblemDetails.dart';
+import 'package:quizzit/models/user/BaseUser.dart';
+import 'package:quizzit/models/user/UserInfoUpdateModel.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
 
 class Body extends StatefulWidget {
   const Body(this._user);

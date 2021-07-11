@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/CreatePost/components/body.dart';
-import 'package:flutter_auth/models/group/Group.dart';
+import 'package:quizzit/Screens/CreatePost/components/body.dart';
+import 'package:quizzit/models/group/Group.dart';
 
 class CreatePostScreen extends StatelessWidget {
   final Group group;

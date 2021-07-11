@@ -1,9 +1,11 @@
-import 'package:flutter_auth/models/Codable.dart';
 import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:quizzit/models/Codable.dart';
+
 part 'SignupRequest.g.dart';
+
 @JsonSerializable()
-class SignupRequest implements Encodable{
+class SignupRequest implements Encodable {
   String username = "";
   String password = "";
   String fullName = "";
@@ -19,6 +21,6 @@ class SignupRequest implements Encodable{
   @override
   Map<String, dynamic> toJson() => _$SignupRequestToJson(this);
 
-  static String formatDate(DateTime value)=>DateFormat(DateFormat.YEAR_MONTH_DAY).format(value);
-
+  static String formatDate(DateTime value) =>
+      DateFormat(DateFormat.YEAR_MONTH_DAY).format(value);
 }

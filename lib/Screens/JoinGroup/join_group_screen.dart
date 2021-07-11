@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/JoinGroup/components/body.dart';
-
+import 'package:quizzit/Screens/JoinGroup/components/body.dart';
 
 class JoinGroupScreen extends StatelessWidget {
   @override

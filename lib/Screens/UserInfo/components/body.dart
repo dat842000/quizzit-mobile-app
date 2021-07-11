@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/UserInfo/components/profile_page.dart';
+import 'package:quizzit/Screens/UserInfo/components/profile_page.dart';
 
 class Body extends StatefulWidget {
   @override

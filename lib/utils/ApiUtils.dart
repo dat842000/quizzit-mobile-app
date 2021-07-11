@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/models/Codable.dart';
 import 'package:http/http.dart' as http;
+import 'package:quizzit/constants.dart';
+import 'package:quizzit/models/Codable.dart';
 
 Future<http.Response> fetch(String endpoint, HttpMethod method,
     {Encodable? data, Map<String, String>? params}) async {

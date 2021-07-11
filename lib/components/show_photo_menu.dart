@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_auth/utils/ImageUtils.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:quizzit/utils/ImageUtils.dart';
 
 import 'navigate.dart';
 

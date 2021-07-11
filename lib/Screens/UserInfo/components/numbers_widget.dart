@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/models/user/UserInfo.dart';
+import 'package:quizzit/models/user/UserInfo.dart';
 
 class NumbersWidget extends StatelessWidget {
   const NumbersWidget(this._user);
@@ -17,7 +17,9 @@ class NumbersWidget extends StatelessWidget {
       );
   Widget buildDivider() => Container(
         height: 24,
-        child: VerticalDivider(color: Colors.black,),
+        child: VerticalDivider(
+          color: Colors.black,
+        ),
       );
 
   Widget buildButton(BuildContext context, String value, String text) =>

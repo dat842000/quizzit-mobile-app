@@ -1,4 +1,4 @@
-package com.example.flutter_auth
+package com.quizgroup.quizzit
 
 import androidx.annotation.NonNull;
 import android.os.Bundle;

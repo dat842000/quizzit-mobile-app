@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:quizzit/Screens/ListUser/components/body.dart';
+import 'package:quizzit/models/group/Group.dart';
 
-import 'package:flutter_auth/Screens/ListUser/components/body.dart';
-import 'package:flutter_auth/models/group/Group.dart';
-
-class ListUser extends StatelessWidget{
+class ListUser extends StatelessWidget {
   const ListUser({
     Key? key,
     required this.group,
@@ -14,7 +13,6 @@ class ListUser extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Body(group : group);
+    return Body(group: group);
   }
-
 }

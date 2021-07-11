@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/components/rounded_image.dart';
+import 'package:quizzit/components/rounded_image.dart';
 
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
@@ -23,26 +23,26 @@ class ProfileWidget extends StatelessWidget {
           Positioned(
             bottom: 0,
             right: 4,
-            child: buildEditIcon(color,onClicked),
+            child: buildEditIcon(color, onClicked),
           ),
         ],
       ),
     );
   }
 
-  Widget buildEditIcon(Color color,VoidCallback onTap) => buildCircle(
+  Widget buildEditIcon(Color color, VoidCallback onTap) => buildCircle(
         color: Colors.white,
         all: 3,
         child: buildCircle(
           color: color,
           all: 8,
           child: InkWell(
-            onTap: onTap,
+              onTap: onTap,
               child: Icon(
-            CupertinoIcons.camera_fill,
-            color: Colors.white,
-            size: 20,
-          )),
+                CupertinoIcons.camera_fill,
+                color: Colors.white,
+                size: 20,
+              )),
         ),
       );
 

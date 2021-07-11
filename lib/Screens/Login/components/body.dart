@@ -2,20 +2,20 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
-import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
-import 'package:flutter_auth/components/already_have_an_account_acheck.dart';
-import 'package:flutter_auth/components/popup_alert.dart';
-import 'package:flutter_auth/components/rounded_button.dart';
-import 'package:flutter_auth/components/rounded_input_field.dart';
-import 'package:flutter_auth/components/rounded_password_field.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/models/login/LoginModel.dart';
-import 'package:flutter_auth/models/login/LoginResponse.dart';
-import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
-import 'package:flutter_auth/utils/snackbar.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:quizzit/Screens/Dashboard/dashboard_screen.dart';
+import 'package:quizzit/Screens/Signup/signup_screen.dart';
+import 'package:quizzit/components/already_have_an_account_acheck.dart';
+import 'package:quizzit/components/popup_alert.dart';
+import 'package:quizzit/components/rounded_button.dart';
+import 'package:quizzit/components/rounded_input_field.dart';
+import 'package:quizzit/components/rounded_password_field.dart';
+import 'package:quizzit/constants.dart';
+import 'package:quizzit/models/login/LoginModel.dart';
+import 'package:quizzit/models/login/LoginResponse.dart';
+import 'package:quizzit/models/problemdetails/ProblemDetails.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
+import 'package:quizzit/utils/snackbar.dart';
 
 class Body extends StatefulWidget {
   const Body({

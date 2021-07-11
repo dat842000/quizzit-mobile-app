@@ -1,21 +1,20 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/CreateGroup/components/subject_listtitle_widget.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/models/subject/Subject.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
-
-import 'package:flutter_auth/global/Subject.dart' as subject;
+import 'package:quizzit/Screens/CreateGroup/components/subject_listtitle_widget.dart';
+import 'package:quizzit/constants.dart';
+import 'package:quizzit/global/Subject.dart' as subject;
+import 'package:quizzit/models/subject/Subject.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
 
 class SubjectPage extends StatefulWidget {
   final List<Subject> subjects;
   const SubjectPage({
     Key? key,
-    this.subjects = const[],
+    this.subjects = const [],
   }) : super(key: key);
 
-  Future<List<Subject>> getSubjects() async{
+  Future<List<Subject>> getSubjects() async {
     var response = await fetch(Host.subjects, HttpMethod.GET);
     Iterable i = json.decode(response.body);
     return List<Subject>.from(i.map((m) => Subject.fromJson(m)));
@@ -54,10 +53,11 @@ class _SubjectPageState extends State<SubjectPage> {
       ),
     );
   }
-  Widget buildSelectButton(BuildContext context){
+
+  Widget buildSelectButton(BuildContext context) {
     final label = 'Select ${selectedSubjects.length} Subjects';
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 32, vertical:12),
+      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
       color: Theme.of(context).primaryColor,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -80,5 +80,6 @@ class _SubjectPageState extends State<SubjectPage> {
         ? selectedSubjects.remove(subject)
         : selectedSubjects.add(subject));
   }
+
   void submit() => Navigator.pop(context, selectedSubjects);
 }

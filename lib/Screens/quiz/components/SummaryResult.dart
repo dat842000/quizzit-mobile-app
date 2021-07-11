@@ -2,17 +2,17 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/quiz/RecordScreen.dart';
-import 'package:flutter_auth/Screens/quiz/constants.dart';
-import 'package:flutter_auth/Screens/quiz/controllers/question_controller.dart';
-import 'package:flutter_auth/components/popup_alert.dart';
-import 'package:flutter_auth/models/group/Group.dart';
-import 'package:flutter_auth/models/question/result/AnswerResult.dart';
-import 'package:flutter_auth/models/question/result/ResultWrapper.dart'
+import 'package:quizzit/Screens/quiz/RecordScreen.dart';
+import 'package:quizzit/Screens/quiz/constants.dart';
+import 'package:quizzit/Screens/quiz/controllers/question_controller.dart';
+import 'package:quizzit/components/popup_alert.dart';
+import 'package:quizzit/models/group/Group.dart';
+import 'package:quizzit/models/question/result/AnswerResult.dart';
+import 'package:quizzit/models/question/result/ResultWrapper.dart'
     as Model;
-import 'package:flutter_auth/models/question/submit/QuestionInfo.dart';
-import 'package:flutter_auth/models/question/submit/QuestionSubmit.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
+import 'package:quizzit/models/question/submit/QuestionInfo.dart';
+import 'package:quizzit/models/question/submit/QuestionSubmit.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
 import 'package:get/get.dart';
 
 import '../../../constants.dart';

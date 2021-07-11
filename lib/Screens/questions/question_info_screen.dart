@@ -3,17 +3,15 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_auth/Screens/questions/component/QuestionInfo.dart';
-import 'package:flutter_auth/Screens/questions/question_screen.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/models/group/Group.dart';
-import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
-
-import 'package:flutter_auth/models/questions/Question.dart';
-import 'package:flutter_auth/models/questions/QuestionCreate.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
-import 'package:flutter_auth/utils/snackbar.dart';
-
+import 'package:quizzit/Screens/questions/component/QuestionInfo.dart';
+import 'package:quizzit/Screens/questions/question_screen.dart';
+import 'package:quizzit/constants.dart';
+import 'package:quizzit/models/group/Group.dart';
+import 'package:quizzit/models/problemdetails/ProblemDetails.dart';
+import 'package:quizzit/models/questions/Question.dart';
+import 'package:quizzit/models/questions/QuestionCreate.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
+import 'package:quizzit/utils/snackbar.dart';
 
 // ignore: must_be_immutable
 class QuestionInfoScreen extends StatefulWidget {
@@ -72,7 +70,9 @@ class _QuestionInfoScreen extends State<QuestionInfoScreen> {
         actions: [
           GestureDetector(
             onTap: () async {
-              EasyLoading.show(status: 'Đang thực hiện...', maskType: EasyLoadingMaskType.black);
+              EasyLoading.show(
+                  status: 'Đang thực hiện...',
+                  maskType: EasyLoadingMaskType.black);
               widget.isNew
                   ? await widget
                       .createQuestion(widget.question, widget.group.id)
@@ -80,14 +80,18 @@ class _QuestionInfoScreen extends State<QuestionInfoScreen> {
                       widget.isErr = false;
                       showSuccess(text: "Tạo thành công", context: context);
                     }).catchError((onError) {
-                      showError(text: (onError as ProblemDetails).title! , context:  context);
+                      showError(
+                          text: (onError as ProblemDetails).title!,
+                          context: context);
                       widget.isErr = true;
                     })
                   : await widget
                       .updateQuestion(widget.question)
-                      .then(
-                          (value) => showSuccess(text: "Cập nhật thành công", context: context))
-                      .catchError((onError) => showError(text: (onError as ProblemDetails).title!, context: context));
+                      .then((value) => showSuccess(
+                          text: "Cập nhật thành công", context: context))
+                      .catchError((onError) => showError(
+                          text: (onError as ProblemDetails).title!,
+                          context: context));
               EasyLoading.dismiss();
               if (widget.isNew && !widget.isErr) {
                 Navigator.of(context).pop(

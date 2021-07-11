@@ -3,9 +3,9 @@ import 'package:animate_do/animate_do.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/ListUser/components/ListUser.dart';
-import 'package:flutter_auth/models/group/Group.dart';
-import 'package:flutter_auth/models/member/Member.dart';
+import 'package:quizzit/Screens/ListUser/components/ListUser.dart';
+import 'package:quizzit/models/group/Group.dart';
+import 'package:quizzit/models/member/Member.dart';
 
 class Body extends StatefulWidget {
   const Body({
@@ -32,7 +32,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        body: Column(
+      body: Column(
         children: [
           Row(
             children: [

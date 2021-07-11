@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/models/subject/Subject.dart';
+import 'package:quizzit/models/subject/Subject.dart';
 
 class SubjectListTitleWidget extends StatelessWidget {
   final Subject subject;
@@ -17,10 +17,10 @@ class SubjectListTitleWidget extends StatelessWidget {
     final selectedColor = Theme.of(context).primaryColor;
     final style = isSelected
         ? TextStyle(
-      fontSize: 18,
-      color: selectedColor,
-      fontWeight: FontWeight.bold,
-    )
+            fontSize: 18,
+            color: selectedColor,
+            fontWeight: FontWeight.bold,
+          )
         : TextStyle(fontSize: 18);
 
     return ListTile(
@@ -30,7 +30,7 @@ class SubjectListTitleWidget extends StatelessWidget {
         style: style,
       ),
       trailing:
-      isSelected ? Icon(Icons.check, color: selectedColor, size: 26) : null,
+          isSelected ? Icon(Icons.check, color: selectedColor, size: 26) : null,
     );
   }
 }

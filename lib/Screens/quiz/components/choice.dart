@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/quiz/constants.dart';
-import 'package:flutter_auth/Screens/quiz/controllers/question_controller.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:quizzit/Screens/quiz/constants.dart';
+import 'package:quizzit/Screens/quiz/controllers/question_controller.dart';
 
 class Choice extends StatelessWidget {
   const Choice({
@@ -21,10 +21,14 @@ class Choice extends StatelessWidget {
               margin: EdgeInsets.only(top: kDefaultPadding),
               padding: EdgeInsets.all(kDefaultPadding),
               decoration: BoxDecoration(
-                border: Border.all(color: kGrayColor),
-                borderRadius: BorderRadius.circular(15),
-                color: qnController.listQuestionSubmit.elementAt(questionIndex).answerId != -1 ? kGreenColor : kRedColor
-              ),
+                  border: Border.all(color: kGrayColor),
+                  borderRadius: BorderRadius.circular(15),
+                  color: qnController.listQuestionSubmit
+                              .elementAt(questionIndex)
+                              .answerId !=
+                          -1
+                      ? kGreenColor
+                      : kRedColor),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

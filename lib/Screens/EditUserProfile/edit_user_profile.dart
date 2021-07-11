@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/EditUserProfile/components/body.dart';
-import 'package:flutter_auth/models/user/BaseUser.dart';
+import 'package:quizzit/Screens/EditUserProfile/components/body.dart';
+import 'package:quizzit/models/user/BaseUser.dart';
 
 class EditUserScreen extends StatelessWidget {
   const EditUserScreen(this._user);

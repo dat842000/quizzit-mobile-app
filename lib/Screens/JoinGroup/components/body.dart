@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/CreateGroup/create_group_screen.dart';
-import 'package:flutter_auth/components/popup_alert.dart';
-import 'package:flutter_auth/constants.dart';
+import 'package:quizzit/constants.dart';
 
 class Body extends StatefulWidget {
   const Body({
@@ -71,8 +69,7 @@ class _BodyState extends State<Body> {
               child: Column(children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 15, bottom: 8.0),
-                  child:
-                  Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
@@ -100,7 +97,7 @@ class _BodyState extends State<Body> {
                       border: OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.number,
-                    onChanged: (val) => this._groupId=int.parse(val),
+                    onChanged: (val) => this._groupId = int.parse(val),
                   ),
                 ),
                 Padding(
@@ -140,7 +137,7 @@ class _BodyState extends State<Body> {
                 // padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                 color: kPrimaryColor,
                 onPressed: () {
-                  if(this._groupId!=null){
+                  if (this._groupId != null) {
                     // Navigate.push(context, destination)
                   }
                 },

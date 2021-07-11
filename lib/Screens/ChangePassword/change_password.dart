@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/ChangePassword/components/body.dart';
+import 'package:quizzit/Screens/ChangePassword/components/body.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
   @override

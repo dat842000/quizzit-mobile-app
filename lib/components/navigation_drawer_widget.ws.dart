@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/Dashboard/dashboard_screen.dart';
-import 'package:flutter_auth/Screens/UserInfo/user_info.dart';
-import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
-import 'package:flutter_auth/Screens/quiz/quiz_screen.dart';
-import 'package:flutter_auth/constants.dart';
+import 'package:quizzit/Screens/Dashboard/dashboard_screen.dart';
+import 'package:quizzit/Screens/UserInfo/user_info.dart';
+import 'package:quizzit/Screens/Welcome/welcome_screen.dart';
+import 'package:quizzit/constants.dart';
 
 class NavigationDrawer extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
@@ -56,10 +55,11 @@ class NavigationDrawer extends StatelessWidget {
       ),
     );
   }
+
   Widget buildHeader({
-    String name="",
-    String urlImage="",
-    String email="",
+    String name = "",
+    String urlImage = "",
+    String email = "",
     VoidCallback? onClicked,
   }) =>
       InkWell(
@@ -89,7 +89,7 @@ class NavigationDrawer extends StatelessWidget {
         ),
       );
   Widget buildMenuItem({
-    String text="",
+    String text = "",
     IconData? icon,
     VoidCallback? onClicked,
   }) {

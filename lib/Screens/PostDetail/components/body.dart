@@ -2,25 +2,25 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/PostDetail/components/comment_area.dart';
-import 'package:flutter_auth/components/navigate.dart';
-import 'package:flutter_auth/components/popup_alert.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/models/comment/Comment.dart';
-import 'package:flutter_auth/models/comment/CreateCommentModel.dart';
-import 'package:flutter_auth/models/paging/Page.dart' as Models;
-import 'package:flutter_auth/models/paging/PagingParams.dart';
-import 'package:flutter_auth/models/post/Post.dart';
-import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
-import 'package:flutter_auth/utils/ApiUtils.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:flutter_quill/widgets/simple_viewer.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:quizzit/Screens/PostDetail/components/comment_area.dart';
+import 'package:quizzit/components/navigate.dart';
+import 'package:quizzit/components/popup_alert.dart';
+import 'package:quizzit/constants.dart';
+import 'package:quizzit/models/comment/Comment.dart';
+import 'package:quizzit/models/comment/CreateCommentModel.dart';
+import 'package:quizzit/models/paging/Page.dart' as Models;
+import 'package:quizzit/models/paging/PagingParams.dart';
+import 'package:quizzit/models/post/Post.dart';
+import 'package:quizzit/models/problemdetails/ProblemDetails.dart';
+import 'package:quizzit/utils/ApiUtils.dart';
 
 class Body extends StatefulWidget {
   final Post _post;
   final int _groupId;
-  Body(this._post,this._groupId);
+  Body(this._post, this._groupId);
 
   Future<Comment> _createComment(int postId,
       {required String content, String? image}) async {
@@ -38,7 +38,6 @@ class Body extends StatefulWidget {
 }
 
 class PostDetail extends State<Body> {
-
   Future<Models.Page<Comment>> _loadComments(int postId,
       {int page = 1, int pageSize = 3, String sort = "createdAt_desc"}) async {
     var paging = new PagingParam(page: page, pageSize: pageSize, sort: sort);
@@ -72,7 +71,8 @@ class PostDetail extends State<Body> {
   void _onLoading() async {
     await Future.delayed(Duration(milliseconds: 1000));
     setState(() {
-      this._futurePageComment = _loadComments(widget._post.id, page: ++_currPage);
+      this._futurePageComment =
+          _loadComments(widget._post.id, page: ++_currPage);
     });
     _refreshController.loadComplete();
   }
@@ -113,7 +113,8 @@ class PostDetail extends State<Body> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            widget._post.image == null || widget._post.image!.isEmpty
+                            widget._post.image == null ||
+                                    widget._post.image!.isEmpty
                                 ? Padding(
                                     padding: const EdgeInsets.only(
                                         top: 8.0, bottom: 8.0),
@@ -153,7 +154,6 @@ class PostDetail extends State<Body> {
                       ),
                     ),
                     FutureBuilder<Models.Page<Comment>>(
-
                         future: _futurePageComment,
                         builder: (context, snapshot) {
                           if (snapshot.hasError)
@@ -177,6 +177,7 @@ class PostDetail extends State<Body> {
               ),
             ),
           ),
+
           ///
           _buildTextComposer()
         ],
@@ -200,23 +201,18 @@ class PostDetail extends State<Body> {
               Container(
                 alignment: Alignment.centerLeft,
                 constraints: BoxConstraints(
-                  minHeight: 40,
-                  maxHeight: 40,
-                  maxWidth: MediaQuery.of(context).size.width*81/100
-                ),
+                    minHeight: 40,
+                    maxHeight: 40,
+                    maxWidth: MediaQuery.of(context).size.width * 81 / 100),
                 decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(45)
-                ),
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(45)),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: TextField(
                     controller: _editingController,
-                    decoration:
-                        InputDecoration.collapsed(
-                          border: InputBorder.none,
-                            hintText: "Write a comment"
-                        ),
+                    decoration: InputDecoration.collapsed(
+                        border: InputBorder.none, hintText: "Write a comment"),
                   ),
                 ),
               ),
@@ -229,8 +225,10 @@ class PostDetail extends State<Body> {
                       widget
                           ._createComment(widget._post.id, content: content)
                           .then((value) {
-                          _editingController.text = "";
-                          setState(() {this._commentList.add(value);});
+                        _editingController.text = "";
+                        setState(() {
+                          this._commentList.add(value);
+                        });
                       }).catchError((error) {
                         var problem =
                             ProblemDetails.fromJson(json.decode(error));

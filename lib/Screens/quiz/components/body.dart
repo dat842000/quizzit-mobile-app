@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/quiz/constants.dart';
-import 'package:flutter_auth/Screens/quiz/controllers/question_controller.dart';
-import 'package:flutter_auth/Screens/quiz/submit_screen.dart';
 import 'package:get/get.dart';
-import 'package:flutter_auth/models/group/Group.dart';
+import 'package:quizzit/Screens/quiz/constants.dart';
+import 'package:quizzit/Screens/quiz/controllers/question_controller.dart';
+import 'package:quizzit/Screens/quiz/submit_screen.dart';
+import 'package:quizzit/models/group/Group.dart';
 
 import 'question_card.dart';
 
@@ -20,7 +20,6 @@ class Body extends StatelessWidget {
     _questionController.resetPageController();
     return Stack(
       children: [
-
         SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,8 +32,12 @@ class Body extends StatelessWidget {
                   controller: _questionController.pageController,
                   onPageChanged: _questionController.updateTheQnNum,
                   itemCount: _questionController.listQuestions.length + 1,
-                  itemBuilder: (context, index) => index < _questionController.listQuestions.length ? QuestionCard(
-                      question: _questionController.listQuestions.elementAt(index)) : SubmitScreen(group),
+                  itemBuilder: (context, index) =>
+                      index < _questionController.listQuestions.length
+                          ? QuestionCard(
+                              question: _questionController.listQuestions
+                                  .elementAt(index))
+                          : SubmitScreen(group),
                 ),
               ),
               Row(
