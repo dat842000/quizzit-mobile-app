@@ -64,8 +64,7 @@ class _BodyState extends State<Body> {
           uploadLocation: UploadLocation.Posts,
           whileUpload: (int byteTransfered, int totalBytes) {},
           onError: (Object? error) {});
-    if(isDelete)
-      image = null;
+    if (isDelete) image = null;
     EditPostModel model = EditPostModel(
         this.title, jsonEncode(_controller.document.toDelta().toJson()), image);
     print(model.title);
@@ -177,120 +176,124 @@ class _BodyState extends State<Body> {
     }
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: IconButton(
-            onPressed: () {
-              Navigate.popToGroup(context, widget.group.id);
-            },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 20,
-              color: kPrimaryColor,
-            )),
-        title: Text(
-          'Edit Post',
-          style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
-        ),
-        actions: <Widget>[
-          GestureDetector(
-            onTap: () async {
-              EasyLoading.show(
-                  status: 'Đang cập nhật...',
-                  maskType: EasyLoadingMaskType.black);
-              await editPost();
-              EasyLoading.dismiss();
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => UserViewScreen(widget.group)));
-            },
-            child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Icon(
-                  Icons.file_upload,
-                  color: kPrimaryColor,
-                )),
-          )
-        ],
-      ),
-      body: _isLoading
-          ? Container(
-              alignment: Alignment.center,
-              child: CircularProgressIndicator(),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: IconButton(
+              onPressed: () {
+                Navigate.popToGroup(context, widget.group.id);
+              },
+              icon: Icon(
+                Icons.arrow_back_ios,
+                size: 20,
+                color: kPrimaryColor,
+              )),
+          title: Text(
+            'Edit Post',
+            style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
+          ),
+          actions: <Widget>[
+            GestureDetector(
+              onTap: () async {
+                EasyLoading.show(
+                    status: 'Đang cập nhật...',
+                    maskType: EasyLoadingMaskType.black);
+                await editPost();
+                EasyLoading.dismiss();
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => UserViewScreen(widget.group)));
+              },
+              child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Icon(
+                    Icons.file_upload,
+                    color: kPrimaryColor,
+                  )),
             )
-          : SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                      margin: EdgeInsets.symmetric(horizontal: 16),
-                      width: MediaQuery.of(context).size.width,
-                      child: TextFieldWidget(
-                        label: "",
-                        onChanged: (name) {
-                          setState(() {
-                            this.title = name;
-                          });
+          ],
+        ),
+        body: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: _isLoading
+              ? Container(
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator(),
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                          margin: EdgeInsets.symmetric(horizontal: 16),
+                          width: MediaQuery.of(context).size.width,
+                          child: TextFieldWidget(
+                            label: "",
+                            onChanged: (name) {
+                              setState(() {
+                                this.title = name;
+                              });
+                            },
+                            text: post.title,
+                          )),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          getImage();
                         },
-                        text: post.title,
-                      )),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      getImage();
-                    },
-                    // child: selectedImage != null ?
-                    child: image,
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  quill.QuillToolbar.basic(
-                      controller: _controller,
-                      // showHorizontalRule: true,
-                      onImagePickCallback: (file) async =>
-                          await FirebaseUtils.uploadImage(file,
-                              uploadLocation: UploadLocation.Posts,
-                              whileUpload:
-                                  (int byteTransfered, int totalBytes) {},
-                              onError: (Object? error) {})),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      children: [
-                        quill.QuillEditor(
+                        // child: selectedImage != null ?
+                        child: image,
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      quill.QuillToolbar.basic(
                           controller: _controller,
-                          focusNode: _inputNode,
-                          keyboardAppearance:
-                              MediaQuery.of(context).platformBrightness,
-                          scrollController: ScrollController(),
-                          scrollable: true,
-                          autoFocus: true,
-                          showCursor: true,
-                          expands: false,
-                          minHeight: 230,
-                          padding: EdgeInsets.all(10),
-                          readOnly: false, // true for view only mode
-                          // embedBuilder: (context, node) {},
+                          // showHorizontalRule: true,
+                          onImagePickCallback: (file) async {
+                            FocusScope.of(context).unfocus();
+                            return await FirebaseUtils.uploadImage(file,
+                                uploadLocation: UploadLocation.Posts,
+                                whileUpload:
+                                    (int byteTransfered, int totalBytes) {},
+                                onError: (Object? error) {});
+                          }),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          children: [
+                            quill.QuillEditor(
+                              controller: _controller,
+                              focusNode: _inputNode,
+                              keyboardAppearance:
+                                  MediaQuery.of(context).platformBrightness,
+                              scrollController: ScrollController(),
+                              scrollable: true,
+                              autoFocus: true,
+                              showCursor: true,
+                              expands: false,
+                              minHeight: 230,
+                              padding: EdgeInsets.all(10),
+                              readOnly: false, // true for view only mode
+                              // embedBuilder: (context, node) {},
+                            ),
+                            // quill.QuillEditor.basic(
+                            //   controller: _controller = quill.QuillController(
+                            //       document: quill.Document.fromJson(json),
+                            //       selection: TextSelection.collapsed(offset: 0)),
+                            //   readOnly: false,
+                            //   // true for view only mode
+                            // ),
+                            // QuillSimpleViewer(controller: _controller = quill.QuillController(
+                            //     document: quill.Document.fromJson(myJSON),
+                            //     selection: TextSelection.collapsed(offset: 0)),)
+                          ],
                         ),
-                        // quill.QuillEditor.basic(
-                        //   controller: _controller = quill.QuillController(
-                        //       document: quill.Document.fromJson(json),
-                        //       selection: TextSelection.collapsed(offset: 0)),
-                        //   readOnly: false,
-                        //   // true for view only mode
-                        // ),
-                        // QuillSimpleViewer(controller: _controller = quill.QuillController(
-                        //     document: quill.Document.fromJson(myJSON),
-                        //     selection: TextSelection.collapsed(offset: 0)),)
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-    );
+                ),
+        ));
   }
 }

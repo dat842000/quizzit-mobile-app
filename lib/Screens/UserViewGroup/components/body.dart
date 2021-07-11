@@ -4,9 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/UserViewGroup/components/GroupTopBar.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/global/Subject.dart' as state;
 import 'package:flutter_auth/models/group/Group.dart';
 import 'package:flutter_auth/models/paging/Page.dart' as Model;
-import 'package:flutter_auth/global/Subject.dart' as state;
 import 'package:flutter_auth/models/paging/PagingParams.dart';
 import 'package:flutter_auth/models/post/Post.dart';
 import 'package:flutter_auth/models/problemdetails/ProblemDetails.dart';
@@ -57,14 +57,14 @@ class _BodyState extends State<Body> {
           _postList.remove(post);
         })); // remove post [0]
     state.setPost.add((post) => setState(() {
-          _postList.insert(0,post);
+          _postList.insert(0, post);
         })); // add post [1]
     state.setPost.add((post) => setState(() {
-      var flag = _postList.firstWhere((element) => element.id == post.id);
-      flag.title = post.title;
-      flag.content = post.content;
-      flag.image = post.image;
-    })); // rennder post [2]
+          var flag = _postList.firstWhere((element) => element.id == post.id);
+          flag.title = post.title;
+          flag.content = post.content;
+          flag.image = post.image;
+        })); // rennder post [2]
     widget._fetchPost().then((value) {
       setState(() {
         _postList.addAll(value.content);
@@ -112,6 +112,12 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(20),
+        child: SizedBox(
+          height: 20,
+        ),
+      ),
       bottomNavigationBar:
           MemberStatus.inGroupStatuses.contains(this._group.currentMemberStatus)
               ? null
@@ -141,6 +147,10 @@ class _BodyState extends State<Body> {
         controller: _refreshController,
         enablePullDown: true,
         enablePullUp: !_isLast,
+        header: BezierCircleHeader(
+          circleType: BezierCircleType.Raidal,
+          dismissType: BezierDismissType.RectSpread,
+        ),
         onRefresh: _pullRefresh,
         onLoading: _pullLoading,
         child: SingleChildScrollView(

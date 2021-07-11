@@ -82,135 +82,180 @@ class _BodyState extends State<Body> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    _inputNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: 20,
-          ),
-          color: kPrimaryColor,
-        ),
-        title: Text(
-          'Create Post',
-          style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
-        ),
-        actions: <Widget>[
-          GestureDetector(
-            onTap: () async {
-              EasyLoading.show(
-                  status: 'Đang tạo...', maskType: EasyLoadingMaskType.black);
-              await createPost();
-              EasyLoading.dismiss();
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(50),
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
             },
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Icon(
-                Icons.file_upload,
-                color: kPrimaryColor,
-              ),
-            ),
-          )
-        ],
-      ),
-      body: _isLoading
-          ? Container(
-              alignment: Alignment.center,
-              child: CircularProgressIndicator(),
-            )
-          : SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                      margin: EdgeInsets.symmetric(horizontal: 16),
-                      width: MediaQuery.of(context).size.width,
-                      child: RoundedInputField(
-                        icon: Icons.title,
-                        hintText: "Post Title",
-                        onChanged: (String value) => this._title = value,
-                      )),
-                  SizedBox(
-                    height: 10,
+              alignment: Alignment.topCenter,
+              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(color: Colors.black26, spreadRadius: 1.0),
+                BoxShadow(color: Colors.black12, spreadRadius: 3.0),
+                // BoxShadow(color: Colors.grey, spreadRadius: 4.0)
+              ]),
+              padding: EdgeInsets.symmetric(vertical: 16, horizontal: 6),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigate.popToGroup(context, widget._group.id);
+                    },
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      size: 20,
+                    ),
+                    color: kPrimaryColor,
+                  ),
+                  Text(
+                    'Create Post',
+                    style: TextStyle(
+                        fontSize: 25,
+                        color: kPrimaryColor,
+                        fontWeight: FontWeight.bold),
                   ),
                   GestureDetector(
-                      onTap: () {
-                        buildPhotoPickerMenu(context, onPick: (pickedImage) {
-                          setState(() {
-                            this._selectedImage = pickedImage;
-                          });
-                        });
-                      },
-                      child: _selectedImage != null
-                          ? Container(
-                              margin: EdgeInsets.symmetric(horizontal: 16),
-                              height: 170,
-                              width: MediaQuery.of(context).size.width,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.file(
-                                  _selectedImage!,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            )
-                          : Container(
-                              margin: EdgeInsets.symmetric(horizontal: 16),
-                              height: 170,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20)),
-                              width: MediaQuery.of(context).size.width,
-                              child: Icon(
-                                Icons.add_a_photo,
-                                color: Colors.black45,
-                              ),
-                            )),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  quill.QuillToolbar.basic(
-                      controller: _controller,
-                      // showHorizontalRule: true,
-                      onImagePickCallback: (file) async =>
-                          await FirebaseUtils.uploadImage(file,
-                              uploadLocation: UploadLocation.Posts,
-                              whileUpload:
-                                  (int byteTransfered, int totalBytes) {},
-                              onError: (Object? error) {})),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: kPrimaryColor)),
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      children: [
-                        quill.QuillEditor(
-                          controller: _controller,
-                          focusNode: _inputNode,
-                          keyboardAppearance:
-                              MediaQuery.of(context).platformBrightness,
-                          scrollController: ScrollController(),
-                          scrollable: true,
-                          autoFocus: true,
-                          expands: false,
-                          minHeight: 230,
-                          padding: EdgeInsets.all(10),
-                          readOnly: false, // true for view only mode
-                          // embedBuilder: (context, node) {
-                          //
-                          // },
-                        ),
-                      ],
+                    onTap: () async {
+                      EasyLoading.show(
+                          status: 'Đang tạo...',
+                          maskType: EasyLoadingMaskType.black);
+                      await createPost();
+                      EasyLoading.dismiss();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Icon(
+                        Icons.file_upload,
+                        color: kPrimaryColor,
+                      ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
-    );
+          ),
+        ),
+        // AppBar(
+        //     backgroundColor: Colors.white,
+        //     leading:
+        //     title:
+        //     actions: <Widget>[
+        //
+        //     ],
+        //   ),
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: _isLoading
+              ? Container(
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator(),
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                          margin: EdgeInsets.symmetric(horizontal: 16),
+                          width: MediaQuery.of(context).size.width,
+                          child: RoundedInputField(
+                            icon: Icons.title,
+                            hintText: "Post Title",
+                            onChanged: (String value) => this._title = value,
+                          )),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            buildPhotoPickerMenu(context,
+                                onPick: (pickedImage) {
+                              setState(() {
+                                this._selectedImage = pickedImage;
+                              });
+                            });
+                          },
+                          child: _selectedImage != null
+                              ? Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 16),
+                                  height: 170,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.file(
+                                      _selectedImage!,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 16),
+                                  height: 170,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20)),
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Icon(
+                                    Icons.add_a_photo,
+                                    color: Colors.black45,
+                                  ),
+                                )),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      quill.QuillToolbar.basic(
+                          controller: _controller,
+                          // showHorizontalRule: true,
+                          onImagePickCallback: (file) async {
+                            FocusScope.of(context).unfocus();
+                            var url = await FirebaseUtils.uploadImage(file,
+                                uploadLocation: UploadLocation.Posts,
+                                whileUpload:
+                                    (int byteTransfered, int totalBytes) {},
+                                onError: (Object? error) {});
+
+                            return url;
+                          }),
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: kPrimaryColor)),
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        child: Column(
+                          children: [
+                            quill.QuillEditor(
+                              controller: _controller,
+                              focusNode: _inputNode,
+                              keyboardAppearance:
+                                  MediaQuery.of(context).platformBrightness,
+                              scrollController: ScrollController(),
+                              scrollable: true,
+                              autoFocus: true,
+                              expands: false,
+                              minHeight: 230,
+                              padding: EdgeInsets.all(10),
+                              readOnly: false, // true for view only mode
+                              // embedBuilder: (context, node) {
+                              //
+                              // },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+        ));
   }
 }
