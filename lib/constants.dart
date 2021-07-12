@@ -15,6 +15,15 @@ class Constants {
   static const postSetting = <String>['Edit', 'Delete'];
 }
 
+extension ColorCompare on Color {
+  double diff(Color color) {
+    double diffRed = (this.red - color.red).abs() / 255;
+    double diffBlue = (this.blue - color.blue).abs() / 255;
+    double diffGreen = (this.green - color.green).abs() / 255;
+    return (diffRed + diffGreen + diffBlue) / 3 * 100;
+  }
+}
+
 enum HttpMethod { GET, POST, PUT, DELETE }
 
 abstract class MemberStatus {
@@ -52,12 +61,14 @@ class Host {
   static const String groups = "$_root/groups";
   static const String members = "$_root/members";
   static String updateGroup({required int groupId}) => "$groups/$groupId";
-  static String ranking({required int groupId}) => "$groups/$groupId/members/rank";
+  static String ranking({required int groupId}) =>
+      "$groups/$groupId/members/rank";
   static String groupPost({required int groupId}) => "$groups/$groupId/posts";
   static String leaveGroup({required int groupId}) => "$users/groups/$groupId";
   static const String quiz = "$_root/daily-quiz";
-  static String groupQuiz({required int groupId})=>"$groups/$groupId/daily-quiz";
-  static String submitQuiz({required int quizId})=>"$quiz/$quizId";
+  static String groupQuiz({required int groupId}) =>
+      "$groups/$groupId/daily-quiz";
+  static String submitQuiz({required int quizId}) => "$quiz/$quizId";
   static const String posts = "$_root/posts";
   static String editPost(int postId) => "$posts/$postId/";
   static String postComment(int postId) => "$posts/$postId/comments";
@@ -71,6 +82,8 @@ class Host {
   static String groupOwnerUpdateAddQuestion(
           {required int groupId, required int questionId}) =>
       "$groups/$groupId/questions/$questionId";
-  static String getMemeberInGroup({required int groupId}) => "$groups/$groupId/members";
-  static String updateMemeberStatus({required int memberId}) => "$members/$memberId";
+  static String getMemeberInGroup({required int groupId}) =>
+      "$groups/$groupId/members";
+  static String updateMemeberStatus({required int memberId}) =>
+      "$members/$memberId";
 }
