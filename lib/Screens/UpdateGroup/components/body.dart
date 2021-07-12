@@ -46,17 +46,23 @@ class _BodyState extends State<Body> {
   Future<void> updateGroup() async {
     //TODO CreateGroup
     String? image;
+    EasyLoading.show(
+        status: 'Đang cập nhật...', maskType: EasyLoadingMaskType.black);
     if (this._selectedImage != null) {
       image = await FirebaseUtils.uploadImage(
         _selectedImage!,
         uploadLocation: UploadLocation.Groups,
         whileUpload: (byteTransfered, totalBytes) {},
-        onError: (error) {},
+        onError: (error) {
+          EasyLoading.dismiss();
+          showError(
+              text: "Upload Image Failed, Please Try Again.", context: context);
+        },
       );
     } else if (isDelete == false) {
       image = widget.group.image;
     }
-    print(_subjects);
+    // print(_subjects);
     if (this._subjects.isNotEmpty) {
       _subjects.forEach((e) => this._updateGroupModel!.subjectIds.add(e.id));
     }
@@ -64,6 +70,7 @@ class _BodyState extends State<Body> {
     var response = await fetch(
         Host.updateGroup(groupId: widget.group.id), HttpMethod.PUT,
         data: this._updateGroupModel);
+    EasyLoading.dismiss();
     var jsonRes = json.decode(response.body);
     if (response.statusCode.isOk()) {
       var newGroup = Group.fromJson(jsonRes);
@@ -312,11 +319,7 @@ class _BodyState extends State<Body> {
                         ),
                         InkWell(
                             onTap: () async {
-                              EasyLoading.show(
-                                  status: 'Đang cập nhật...',
-                                  maskType: EasyLoadingMaskType.black);
                               await updateGroup();
-                              EasyLoading.dismiss();
                             },
                             child: buildSubmit()),
                       ],

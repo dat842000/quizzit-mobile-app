@@ -54,18 +54,24 @@ class _BodyState extends State<Body> {
 
   Future createPost() async {
     String? image;
-
+    EasyLoading.show(
+        status: 'Đang tạo...', maskType: EasyLoadingMaskType.black);
     if (_selectedImage != null)
       image = await FirebaseUtils.uploadImage(_selectedImage!,
           uploadLocation: UploadLocation.Posts,
           whileUpload: (int byteTransfered, int totalBytes) {},
-          onError: (Object? error) {});
+          onError: (Object? error) {
+        EasyLoading.dismiss();
+        showError(
+            text: "Upload Image Failed, Please Try Again.", context: context);
+      });
     CreatePostModel model = CreatePostModel(
         this._title, jsonEncode(_controller.document.toDelta().toJson()),
         image: image);
     fetch(Host.groupPost(groupId: widget._group.id), HttpMethod.POST,
             data: model)
         .then((value) {
+      EasyLoading.dismiss();
       if (!value.statusCode.isOk()) {
         showError(
             text: ProblemDetails.fromJson(json.decode(value.body)).title!,
@@ -127,11 +133,7 @@ class _BodyState extends State<Body> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      EasyLoading.show(
-                          status: 'Đang tạo...',
-                          maskType: EasyLoadingMaskType.black);
                       await createPost();
-                      EasyLoading.dismiss();
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 16),

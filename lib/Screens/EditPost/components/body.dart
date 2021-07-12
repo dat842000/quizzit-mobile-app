@@ -58,17 +58,22 @@ class _BodyState extends State<Body> {
 
   Future editPost() async {
     String? image = post.image;
-
+    EasyLoading.show(
+        status: 'Đang cập nhật...', maskType: EasyLoadingMaskType.black);
     if (selectedImage != null)
       image = await FirebaseUtils.uploadImage(selectedImage!,
           uploadLocation: UploadLocation.Posts,
           whileUpload: (int byteTransfered, int totalBytes) {},
-          onError: (Object? error) {});
+          onError: (Object? error) {
+        EasyLoading.dismiss();
+        showError(
+            text: "Upload Image Failed, Please Try Again.", context: context);
+      });
     if (isDelete) image = null;
     EditPostModel model = EditPostModel(
         this.title, jsonEncode(_controller.document.toDelta().toJson()), image);
-    print(model.title);
     fetch(Host.editPost(post.id), HttpMethod.PUT, data: model).then((value) {
+      EasyLoading.dismiss();
       if (!value.statusCode.isOk()) {
         showError(
             text: ProblemDetails.fromJson(json.decode(value.body)).title!,
@@ -79,7 +84,8 @@ class _BodyState extends State<Body> {
         post.image = model.image;
         state.setPost[2].call(this.post);
         showSuccess(text: "Sửa bài viết thành công", context: context);
-        Navigate.push(context, PostDetailScreen(this.post, widget.group.id));
+        Navigate.pushReplacement(
+            context, PostDetailScreen(this.post, widget.group.id));
       }
     });
   }
