@@ -44,7 +44,7 @@ class GroupTopBar extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
         child: Container(
-            color: Colors.white,
+            color: Color(0xfff9f9f9),
             height: 76,
             child: ListView(scrollDirection: Axis.horizontal, children: [
               Container(

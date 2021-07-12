@@ -142,7 +142,7 @@ class _BodyState extends State<Body> {
                             ]),
                       )),
                 ),
-      backgroundColor: Color(0xffe4e6eb),
+      backgroundColor: Color(0xfff9f9f9),
       body: SmartRefresher(
         controller: _refreshController,
         enablePullDown: true,
@@ -162,27 +162,18 @@ class _BodyState extends State<Body> {
                   children: <Widget>[
                     Container(
                       width: double.infinity,
-                      height: MediaQuery.of(context).size.width * 90 / 100,
+                      height: MediaQuery.of(context).size.width * 65 / 100,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(30.0),
-                          bottomRight: Radius.circular(30.0),
-                        ),
                         boxShadow: [
                           BoxShadow(
                             color: kPrimaryColor,
                           ),
                         ],
                       ),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(30.0),
-                            bottomRight: Radius.circular(30.0),
-                          ),
-                          child: CachedNetworkImage(
-                            imageUrl: _group.image ?? "",
-                            fit: BoxFit.cover,
-                          )),
+                      child: CachedNetworkImage(
+                        imageUrl: _group.image ?? "",
+                        fit: BoxFit.cover,
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(

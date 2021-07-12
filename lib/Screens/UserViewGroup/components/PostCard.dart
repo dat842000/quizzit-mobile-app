@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
+import 'package:intl/intl.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:quizzit/Screens/EditPost/edit_post.dart';
 import 'package:quizzit/Screens/PostDetail/post_detail.dart';
@@ -75,69 +76,274 @@ class _PostCardState extends State<PostCard> {
             else
               textColor = _lightColor;
           }
-          return InkWell(
-            onTap: () {
-              Navigate.push(context,
-                  PostDetailScreen(this.widget._post, this.widget._group.id));
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: 250,
-                height: 174,
-                decoration: BoxDecoration(
-                  // color: Color(0xff2e2e2e),
-                  color: color,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Stack(
-                  children: <Widget>[
-                    widget._post.image == null
-                        ? SizedBox()
-                        : Container(
+          return Container(
+            height: 220,
+            child: Stack(children: [
+              Positioned(
+                  left: 25,
+                  child: Column(
+                    children: [
+                      Text(DateFormat('EEE').format(widget._post.createdAt)),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: Color(0xfffabd49),
+                          border: Border.all(color: Colors.black87, width: 2),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Center(
+                          child: Text(
+                            widget._post.createdAt.day.toString(),
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      )
+                    ],
+                  )),
+              Positioned(
+                right: 10,
+                child: InkWell(
+                  onTap: () {
+                    Navigate.push(
+                        context,
+                        PostDetailScreen(
+                            this.widget._post, this.widget._group.id));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: 16.0, right: 16, left: 16),
+                    child: Container(
+                      width: 300,
+                      height: 194,
+                      decoration: BoxDecoration(
+                        color: color,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Stack(
+                        children: <Widget>[
+                          widget._post.image == null
+                              ? SizedBox()
+                              : Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.black54,
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(
+                                          widget._post.image ?? ""),
+                                    ),
+                                  ),
+                                  height: 170.0,
+                                ),
+                          Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Colors.black54,
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(widget._post.image ?? ""),
+                              gradient: LinearGradient(
+                                begin: FractionalOffset.topCenter,
+                                end: FractionalOffset.bottomCenter,
+                                colors: [
+                                  color.withOpacity(0),
+                                  color.withOpacity(0.95),
+                                  color,
+                                ],
+                                stops: [0.33, 0.66, 0.99],
                               ),
                             ),
-                            height: 140.0,
                           ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(
-                          begin: FractionalOffset.topCenter,
-                          end: FractionalOffset.bottomCenter,
-                          colors: [
-                            // Color(0xff2e2e2e).withOpacity(0),
-                            color.withOpacity(0),
-                            // Color(0xff2e2e2e).withOpacity(0.95),
-                            color.withOpacity(0.95),
-                            // Color(0xff2e2e2e),
-                            color,
-                          ],
-                          stops: [0.33, 0.66, 0.99],
-                        ),
+                          widget._post.user.id ==
+                                  int.parse(
+                                      FirebaseAuth.instance.currentUser!.uid)
+                              ? Positioned(
+                                top:5,
+                                right: 5,
+                                child: PopupMenuButton<String>(
+                                    child: Container(
+                                      width: 25,
+                                      height: 25,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xffdfe7ec)
+                                            .withOpacity(0.75),
+                                        borderRadius:
+                                            BorderRadius.circular(25),
+                                      ),
+                                      child: Center(
+                                        child: Icon(
+                                          Icons.more_horiz_sharp,
+                                          size: 15,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                    ),
+                                    onSelected: choiceAction,
+                                    itemBuilder: (BuildContext context) {
+                                      return Constants.postSetting
+                                          .map((String choice) {
+                                        return PopupMenuItem<String>(
+                                            value: choice,
+                                            child: buildSettingsPost(
+                                                context,
+                                                widget._group,
+                                                widget._post,
+                                                choice));
+                                      }).toList();
+                                    }),
+                              )
+                              : SizedBox(),
+                          Positioned(
+                            bottom: 0,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10.0, bottom: 16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(children: [
+                                    Container(
+                                      width: 20,
+                                      child: CircleAvatar(
+                                          backgroundImage: NetworkImage(
+                                              widget._post.user.avatar ??
+                                                  defaultAvatar)),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      widget._post.user.fullName,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: textColor,
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ]),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        3 /
+                                        4,
+                                    height: 40,
+                                    child: Text(
+                                      widget._post.title,
+                                      style: TextStyle(
+                                          color: textColor,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.bold,
+                                          height: 1.5),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                    widget._post.user.id ==
-                            int.parse(FirebaseAuth.instance.currentUser!.uid)
-                        ? Positioned(
-                            top: 5,
-                            right: 5,
-                            child: Container(
-                              width: 25,
-                              height: 25,
-                              decoration: BoxDecoration(
-                                color: Color(0xffdfe7ec).withOpacity(0.75),
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              child: Center(
-                                child: InkWell(
-                                  onTap: () {},
+                  ),
+                ),
+              ),
+            ]),
+          );
+        }
+        return Container(
+          height: 220,
+          child: Stack(children: [
+            Positioned(
+                left: 25,
+                child: Column(
+                  children: [
+                    Text(DateFormat('EEE').format(widget._post.createdAt)),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: Color(0xfffabd49),
+                        border: Border.all(color: Colors.black87, width: 2),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Center(
+                        child: Text(
+                          widget._post.createdAt.day.toString(),
+                          style: TextStyle(fontSize: 15),
+                        ),
+                      ),
+                    )
+                  ],
+                )),
+            Positioned(
+              right: 10,
+              child: InkWell(
+                onTap: () {
+                  Navigate.push(
+                      context,
+                      PostDetailScreen(
+                          this.widget._post, this.widget._group.id));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      bottom: 16.0, right: 16, left: 16),
+                  child: Container(
+                    width: 300,
+                    height: 194,
+                    decoration: BoxDecoration(
+                      color: color,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Stack(
+                      children: <Widget>[
+                        widget._post.image == null
+                            ? SizedBox()
+                            : Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.black54,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                  widget._post.image ?? ""),
+                            ),
+                          ),
+                          height: 170.0,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(
+                              begin: FractionalOffset.topCenter,
+                              end: FractionalOffset.bottomCenter,
+                              colors: [
+                                color.withOpacity(0),
+                                color.withOpacity(0.95),
+                                color,
+                              ],
+                              stops: [0.33, 0.66, 0.99],
+                            ),
+                          ),
+                        ),
+                        widget._post.user.id ==
+                            int.parse(
+                                FirebaseAuth.instance.currentUser!.uid)
+                            ? Positioned(
+                          top:5,
+                          right: 5,
+                          child: PopupMenuButton<String>(
+                              child: Container(
+                                width: 25,
+                                height: 25,
+                                decoration: BoxDecoration(
+                                  color: Color(0xffdfe7ec)
+                                      .withOpacity(0.75),
+                                  borderRadius:
+                                  BorderRadius.circular(25),
+                                ),
+                                child: Center(
                                   child: Icon(
                                     Icons.more_horiz_sharp,
                                     size: 15,
@@ -145,154 +351,75 @@ class _PostCardState extends State<PostCard> {
                                   ),
                                 ),
                               ),
-                            ))
-                        : SizedBox(),
-                    Positioned(
-                      bottom: 0,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10.0, bottom: 16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(children: [
-                              Container(
-                                width: 20,
-                                child: CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                        widget._post.user.avatar ??
-                                            defaultAvatar)),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                widget._post.user.fullName,
-                                style: TextStyle(
-                                    fontSize: 11,
-                                    color: textColor,
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ]),
-                            Text(
-                              widget._post.title,
-                              style: TextStyle(
-                                  color: textColor,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.bold),
+                              onSelected: choiceAction,
+                              itemBuilder: (BuildContext context) {
+                                return Constants.postSetting
+                                    .map((String choice) {
+                                  return PopupMenuItem<String>(
+                                      value: choice,
+                                      child: buildSettingsPost(
+                                          context,
+                                          widget._group,
+                                          widget._post,
+                                          choice));
+                                }).toList();
+                              }),
+                        )
+                            : SizedBox(),
+                        Positioned(
+                          bottom: 0,
+                          child: Padding(
+                            padding:
+                            const EdgeInsets.only(left: 10.0, bottom: 16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(children: [
+                                  Container(
+                                    width: 20,
+                                    child: CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                            widget._post.user.avatar ??
+                                                defaultAvatar)),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    widget._post.user.fullName,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: textColor,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                ]),
+                                Container(
+                                  width: MediaQuery.of(context).size.width *
+                                      3 /
+                                      4,
+                                  height: 40,
+                                  child: Text(
+                                    widget._post.title,
+                                    style: TextStyle(
+                                        color: textColor,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold,
+                                        height: 1.5),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
-          );
-        }
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            width: 250,
-            height: 174,
-            decoration: BoxDecoration(
-              // color: Color(0xff2e2e2e),
-              color: color,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Stack(
-              children: <Widget>[
-                widget._post.image == null
-                    ? SizedBox()
-                    : Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.black54,
-                        ),
-                        height: 140.0,
-                        child: Center(child: CircularProgressIndicator()),
-                      ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: LinearGradient(
-                      begin: FractionalOffset.topCenter,
-                      end: FractionalOffset.bottomCenter,
-                      colors: [
-                        // Color(0xff2e2e2e).withOpacity(0),
-                        color.withOpacity(0),
-                        // Color(0xff2e2e2e).withOpacity(0.95),
-                        color.withOpacity(0.95),
-                        // Color(0xff2e2e2e),
-                        color,
-                      ],
-                      stops: [0.33, 0.66, 0.99],
-                    ),
-                  ),
-                ),
-                widget._post.user.id ==
-                        int.parse(FirebaseAuth.instance.currentUser!.uid)
-                    ? Positioned(
-                        top: 5,
-                        right: 5,
-                        child: Container(
-                          width: 25,
-                          height: 25,
-                          decoration: BoxDecoration(
-                            color: Color(0xffdfe7ec).withOpacity(0.75),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Center(
-                            child: InkWell(
-                              onTap: () {},
-                              child: Icon(
-                                Icons.more_horiz_sharp,
-                                size: 15,
-                                color: Colors.black87,
-                              ),
-                            ),
-                          ),
-                        ))
-                    : SizedBox(),
-                Positioned(
-                  bottom: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0, bottom: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(children: [
-                          Container(
-                            width: 20,
-                            child: CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    widget._post.user.avatar ?? defaultAvatar)),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            widget._post.user.fullName,
-                            style: TextStyle(
-                                fontSize: 11,
-                                color: textColor,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ]),
-                        Text(
-                          widget._post.title,
-                          style: TextStyle(
-                              color: textColor,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
+          ]),
         );
       },
     );
