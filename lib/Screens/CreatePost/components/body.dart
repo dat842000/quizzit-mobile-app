@@ -73,7 +73,7 @@ class _BodyState extends State<Body> {
       } else {
         state.setPost[1].call(Post.fromJson(json.decode(value.body)));
         showSuccess(text: "Tạo bài viết mới thành công", context: context);
-        Navigate.push(
+        Navigate.pushReplacement(
             context,
             PostDetailScreen(
                 Post.fromJson(json.decode(value.body)), widget._group.id));

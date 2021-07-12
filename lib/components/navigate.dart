@@ -16,6 +16,11 @@ abstract class Navigate {
     );
   }
 
+  static void pushReplacement(BuildContext context, Widget destination) {
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => destination));
+  }
+
   static void pop(BuildContext context, {Widget? destination}) {
     destination != null
         ? Navigator.of(context).pop(
