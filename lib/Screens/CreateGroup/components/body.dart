@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quizzit/Screens/CreateGroup/components/subject_page.dart';
 import 'package:quizzit/Screens/UserViewGroup/user_view_group.dart';
 import 'package:quizzit/components/navigate.dart';
@@ -97,28 +98,6 @@ class _BodyState extends State<Body> {
         ),
         backgroundColor: Colors.white,
         elevation: 0.0,
-        actions: <Widget>[
-          GestureDetector(
-            onTap: () async {
-              EasyLoading.show(
-                  status: 'Đang tạo...', maskType: EasyLoadingMaskType.black);
-              createGroup().then((value) {
-                showSuccess(text: "Tạo group thành công", context: context);
-                Navigate.push(context, UserViewScreen(value));
-                EasyLoading.dismiss();
-              }).catchError((onError) {
-                showError(
-                    text: (onError as ProblemDetails).title!, context: context);
-              });
-            },
-            child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Icon(
-                  Icons.file_upload,
-                  color: kPrimaryColor,
-                )),
-          )
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -266,6 +245,21 @@ class _BodyState extends State<Body> {
                     height: 5,
                   ),
                   buildChoosingSubjects(),
+                  SizedBox(height: 20,),
+                  GestureDetector(
+                    onTap: () async {
+                      EasyLoading.show(
+                          status: 'Đang tạo...', maskType: EasyLoadingMaskType.black);
+                      createGroup().then((value) {
+                        showSuccess(text: "Tạo group thành công", context: context);
+                        Navigate.push(context, UserViewScreen(value));
+                        EasyLoading.dismiss();
+                      }).catchError((onError) {
+                        showError(
+                            text: (onError as ProblemDetails).title!, context: context);
+                      });
+                    },
+                    child: buildSubmit()),
                 ],
               ),
             )
@@ -334,3 +328,42 @@ class _BodyState extends State<Body> {
         ],
       );
 }
+Widget buildSubmit() => Container(
+  width: 220,
+  height: 56,
+  child: Stack(children: [
+    Positioned(
+        top: 5,
+        left: 5,
+        width: 214,
+        height: 50,
+        child: Container(
+          decoration: BoxDecoration(
+              color: Color(0xff51b1d3),
+              borderRadius: BorderRadius.circular(13),
+              border: Border.all(color: Colors.black87, width: 2)),
+        )),
+    Container(
+        width: 214,
+        height: 50,
+        decoration: BoxDecoration(
+            color: Color(0xfff8d966),
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.black87, width: 2)),
+        child: Center(
+            child:
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(
+                "Submit",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Icon(
+                FontAwesomeIcons.play,
+                size: 15,
+              )
+            ]))),
+  ]),
+);
