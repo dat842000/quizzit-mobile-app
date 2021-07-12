@@ -39,8 +39,9 @@ dependencies:
   font_awesome_flutter: ^9.1.0
   flutter_slidable: ^0.6.0
   google_fonts: ^2.1.0
+  palette_generator: ^0.3.0
 
-  flutter_quill: ^1.3.3
+  flutter_quill: ^1.6.0
 
   collection: ^1.15.0
   dotted_border: ^2.0.0
