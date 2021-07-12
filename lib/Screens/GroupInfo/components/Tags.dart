@@ -9,7 +9,7 @@ class Tag extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(2.0),
-      width: 83.0,
+      width: 95.0,
       decoration: BoxDecoration(
         color: Color(0xff75c7c9),
         borderRadius: BorderRadius.circular(20.0),

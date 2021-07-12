@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:quizzit/Screens/Dashboard/dashboard_screen.dart';
 import 'package:quizzit/Screens/Login/login_screen.dart';
@@ -82,6 +83,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Quizit',
       theme: ThemeData(
+        fontFamily: GoogleFonts.montserrat().fontFamily,
         brightness: Brightness.light,
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,

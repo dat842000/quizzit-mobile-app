@@ -108,12 +108,29 @@ class _QuizScreenState extends State<QuizScreen> {
                   appBar: AppBar(
                     backgroundColor: Colors.transparent,
                     elevation: 0,
-                    leading: FlatButton(
-                        onPressed: () {
+                    leading: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 11.0, bottom: 11.0, left: 20, right: 20),
+                      child: InkWell(
+                        onTap: () {
                           Navigator.pop(context);
                           qnController.questionNumber.value = 1;
                         },
-                        child: Icon(Icons.arrow_back)),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Color(0xfff8d966),
+                              border:
+                                  Border.all(color: Colors.black54, width: 2),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Center(
+                              child: Icon(
+                            Icons.arrow_back,
+                            size: 20.0,
+                            color: Colors.white,
+                          )),
+                        ),
+                      ),
+                    ),
                     leadingWidth: 75,
                   ),
                   body: Container(
@@ -133,7 +150,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         ),
                         ClipOval(
                           child: Image.asset(
-                            "assets/icons/cry_face.png",
+                            "assets/images/undraw_Traveling_re_weve.png",
                             height: 250,
                           ),
                         ),

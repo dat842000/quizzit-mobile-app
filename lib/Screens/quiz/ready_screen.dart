@@ -13,71 +13,87 @@ class ReadyScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          leading: FlatButton(
-              onPressed: () {
+          leading: Padding(
+            padding: const EdgeInsets.only(
+                top: 11.0, bottom: 11.0, left: 20, right: 20),
+            child: InkWell(
+              onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back)),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Color(0xfff8d966),
+                    border:
+                    Border.all(color: Colors.black54, width: 2),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Center(
+                    child: Icon(
+                      Icons.arrow_back,
+                      size: 20.0,
+                      color: Colors.white,
+                    )),
+              ),
+            ),
+          ),
           leadingWidth: 75,
         ),
-        body: Container(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 60,
-              ),
-              Center(
-                child: Text(
-                  "Ready To Do The Quiz?",
-                  style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
+        body: Column(
+          children: [
+            SizedBox(
+              height: 80,
+            ),
+            Center(
+              child: Text(
+                "Ready To Do The Quiz?",
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
-                height: 40,
+            ),
+            ClipOval(
+              child: Image.asset(
+                "assets/images/undraw_Outer_space_drqu.png",
+                height: 250,
               ),
-              ClipOval(
-                child: Image.asset(
-                  "assets/images/quiz.jpg",
-                  height: 250,
-                ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              FlatButton(
-                onPressed: () {
-                  // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  //   builder: (context) => QuizScreen(group),
-                  // ));
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                          builder: (context) => QuizScreen(group)),
-                      ModalRoute.withName("/Groups/${group.id}"));
-                  // Navigator.pushNamedAndRemoveUntil(
-                  //     context,
-                  //     QuizScreenExtractArgumentsScreen.routeName,
-                  //     ModalRoute.withName(UserViewGroupExtractArgumentsScreen.routeName),
-                  //     arguments: group);
-                },
-                child: Text(
-                  "Do It Now!",
-                  style: TextStyle(
-                      color: Colors.amber,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-                color: Colors.redAccent,
-                shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                        color: Colors.red, width: 2, style: BorderStyle.solid),
-                    borderRadius: BorderRadius.circular(50)),
-              )
-            ],
-          ),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (context) => QuizScreen(group)),
+                    ModalRoute.withName("/Groups/${group.id}"));
+              },
+              child: buildSubmit(),
+            )
+          ],
         ));
   }
 }
+Widget buildSubmit() => Container(
+  width: 120,
+  height: 56,
+  child: Stack(children: [
+    Positioned(
+        top: 5,
+        left: 5,
+        width: 114,
+        height: 50,
+        child: Container(
+          decoration: BoxDecoration(
+              color: Color(0xff51b1d3),
+              borderRadius: BorderRadius.circular(13),
+              border: Border.all(color: Colors.black87, width: 2)),
+        )),
+    Container(
+      width: 114,
+      height: 50,
+      decoration: BoxDecoration(
+          color: Color(0xfff8d966),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.black87, width: 2)),
+      child: Center(child: Text("Submit",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),))
+    ),
+  ]),
+);
