@@ -181,7 +181,6 @@ class _BodyState extends State<Body> {
               size: 20,
               color: kPrimaryColor,
             )),
-        centerTitle: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -195,6 +194,7 @@ class _BodyState extends State<Body> {
             )
           ],
         ),
+        actions: [SizedBox(width: 45,)],
         backgroundColor: Colors.white,
         elevation: 0.0,
       ),

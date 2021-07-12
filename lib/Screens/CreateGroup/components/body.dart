@@ -96,6 +96,9 @@ class _BodyState extends State<Body> {
             )
           ],
         ),
+        actions: [
+          SizedBox(width: 45,)
+        ],
         backgroundColor: Colors.white,
         elevation: 0.0,
       ),
