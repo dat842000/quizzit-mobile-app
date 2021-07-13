@@ -77,184 +77,13 @@ class _PostCardState extends State<PostCard> {
               textColor = _lightColor;
           }
           return Container(
-            height: 220,
-            child: Stack(children: [
-              Positioned(
-                  left: 25,
-                  child: Column(
-                    children: [
-                      Text(DateFormat('EEE').format(widget._post.createdAt)),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        width: 30,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          color: Color(0xfffabd49),
-                          border: Border.all(color: Colors.black87, width: 2),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Center(
-                          child: Text(
-                            widget._post.createdAt.day.toString(),
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
-                      )
-                    ],
-                  )),
-              Positioned(
-                right: 10,
-                child: InkWell(
-                  onTap: () {
-                    Navigate.push(
-                        context,
-                        PostDetailScreen(
-                            this.widget._post, this.widget._group.id));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        bottom: 16.0, right: 16, left: 16),
-                    child: Container(
-                      width: 300,
-                      height: 194,
-                      decoration: BoxDecoration(
-                        color: color,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Stack(
-                        children: <Widget>[
-                          widget._post.image == null
-                              ? SizedBox()
-                              : Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.black54,
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                          widget._post.image ?? ""),
-                                    ),
-                                  ),
-                                  height: 170.0,
-                                ),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(
-                                begin: FractionalOffset.topCenter,
-                                end: FractionalOffset.bottomCenter,
-                                colors: [
-                                  color.withOpacity(0),
-                                  color.withOpacity(0.95),
-                                  color,
-                                ],
-                                stops: [0.33, 0.66, 0.99],
-                              ),
-                            ),
-                          ),
-                          widget._post.user.id ==
-                                  int.parse(
-                                      FirebaseAuth.instance.currentUser!.uid)
-                              ? Positioned(
-                                top:5,
-                                right: 5,
-                                child: PopupMenuButton<String>(
-                                    child: Container(
-                                      width: 25,
-                                      height: 25,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xffdfe7ec)
-                                            .withOpacity(0.75),
-                                        borderRadius:
-                                            BorderRadius.circular(25),
-                                      ),
-                                      child: Center(
-                                        child: Icon(
-                                          Icons.more_horiz_sharp,
-                                          size: 15,
-                                          color: Colors.black87,
-                                        ),
-                                      ),
-                                    ),
-                                    onSelected: choiceAction,
-                                    itemBuilder: (BuildContext context) {
-                                      return Constants.postSetting
-                                          .map((String choice) {
-                                        return PopupMenuItem<String>(
-                                            value: choice,
-                                            child: buildSettingsPost(
-                                                context,
-                                                widget._group,
-                                                widget._post,
-                                                choice));
-                                      }).toList();
-                                    }),
-                              )
-                              : SizedBox(),
-                          Positioned(
-                            bottom: 0,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10.0, bottom: 16),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(children: [
-                                    Container(
-                                      width: 20,
-                                      child: CircleAvatar(
-                                          backgroundImage: NetworkImage(
-                                              widget._post.user.avatar ??
-                                                  defaultAvatar)),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      widget._post.user.fullName,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          color: textColor,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ]),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        3 /
-                                        4,
-                                    height: 40,
-                                    child: Text(
-                                      widget._post.title,
-                                      style: TextStyle(
-                                          color: textColor,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.bold,
-                                          height: 1.5),
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ]),
-          );
-        }
-        return Container(
-          height: 220,
-          child: Stack(children: [
-            Positioned(
-                left: 25,
+            height: MediaQuery.of(context).size.height * 32 / 100,
+            child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Container(
+                width: MediaQuery.of(context).size.width * 16 / 100,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(DateFormat('EEE').format(widget._post.createdAt)),
                     SizedBox(
@@ -276,146 +105,293 @@ class _PostCardState extends State<PostCard> {
                       ),
                     )
                   ],
-                )),
-            Positioned(
-              right: 10,
-              child: InkWell(
+                ),
+              ),
+              InkWell(
                 onTap: () {
                   Navigate.push(
                       context,
                       PostDetailScreen(
                           this.widget._post, this.widget._group.id));
                 },
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      bottom: 16.0, right: 16, left: 16),
-                  child: Container(
-                    width: 300,
-                    height: 194,
-                    decoration: BoxDecoration(
-                      color: color,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Stack(
-                      children: <Widget>[
-                        widget._post.image == null
-                            ? SizedBox()
-                            : Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.black54,
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  widget._post.image ?? ""),
-                            ),
-                          ),
-                          height: 170.0,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
-                              begin: FractionalOffset.topCenter,
-                              end: FractionalOffset.bottomCenter,
-                              colors: [
-                                color.withOpacity(0),
-                                color.withOpacity(0.95),
-                                color,
-                              ],
-                              stops: [0.33, 0.66, 0.99],
-                            ),
-                          ),
-                        ),
-                        widget._post.user.id ==
-                            int.parse(
-                                FirebaseAuth.instance.currentUser!.uid)
-                            ? Positioned(
-                          top:5,
-                          right: 5,
-                          child: PopupMenuButton<String>(
-                              child: Container(
-                                width: 25,
-                                height: 25,
-                                decoration: BoxDecoration(
-                                  color: Color(0xffdfe7ec)
-                                      .withOpacity(0.75),
-                                  borderRadius:
-                                  BorderRadius.circular(25),
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.more_horiz_sharp,
-                                    size: 15,
-                                    color: Colors.black87,
-                                  ),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 80 / 100,
+                  height: MediaQuery.of(context).size.height * 28 / 100,
+                  decoration: BoxDecoration(
+                    color: color,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Stack(
+                    children: <Widget>[
+                      widget._post.image == null
+                          ? SizedBox()
+                          : Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.black54,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(widget._post.image ?? ""),
                                 ),
                               ),
-                              onSelected: choiceAction,
-                              itemBuilder: (BuildContext context) {
-                                return Constants.postSetting
-                                    .map((String choice) {
-                                  return PopupMenuItem<String>(
-                                      value: choice,
-                                      child: buildSettingsPost(
-                                          context,
-                                          widget._group,
-                                          widget._post,
-                                          choice));
-                                }).toList();
-                              }),
-                        )
-                            : SizedBox(),
-                        Positioned(
-                          bottom: 0,
-                          child: Padding(
-                            padding:
-                            const EdgeInsets.only(left: 10.0, bottom: 16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(children: [
-                                  Container(
-                                    width: 20,
-                                    child: CircleAvatar(
-                                        backgroundImage: NetworkImage(
-                                            widget._post.user.avatar ??
-                                                defaultAvatar)),
+                              height:
+                                  MediaQuery.of(context).size.height * 25 / 100,
+                            ),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          gradient: LinearGradient(
+                            begin: FractionalOffset.topCenter,
+                            end: FractionalOffset.bottomCenter,
+                            colors: [
+                              color.withOpacity(0),
+                              color.withOpacity(0.95),
+                              color,
+                            ],
+                            stops: [0.33, 0.66, 0.99],
+                          ),
+                        ),
+                      ),
+                      widget._post.user.id ==
+                              int.parse(FirebaseAuth.instance.currentUser!.uid)
+                          ? Positioned(
+                              top: 5,
+                              right: 5,
+                              child: PopupMenuButton<String>(
+                                  child: Container(
+                                    width: 25,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                      color:
+                                          Color(0xffdfe7ec).withOpacity(0.75),
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.more_horiz_sharp,
+                                        size: 15,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
                                   ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    widget._post.user.fullName,
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: textColor,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                ]),
+                                  onSelected: choiceAction,
+                                  itemBuilder: (BuildContext context) {
+                                    return Constants.postSetting
+                                        .map((String choice) {
+                                      return PopupMenuItem<String>(
+                                          value: choice,
+                                          child: buildSettingsPost(
+                                              context,
+                                              widget._group,
+                                              widget._post,
+                                              choice));
+                                    }).toList();
+                                  }),
+                            )
+                          : SizedBox(),
+                      Positioned(
+                        bottom: 0,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(left: 10.0, bottom: 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(children: [
                                 Container(
-                                  width: MediaQuery.of(context).size.width *
-                                      3 /
-                                      4,
-                                  height: 40,
-                                  child: Text(
-                                    widget._post.title,
-                                    style: TextStyle(
-                                        color: textColor,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.bold,
-                                        height: 1.5),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
+                                  width: 20,
+                                  child: CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                          widget._post.user.avatar ??
+                                              defaultAvatar)),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  widget._post.user.fullName,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: textColor,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ]),
+                              Container(
+                                width:
+                                    MediaQuery.of(context).size.width * 3 / 4,
+                                height: 40,
+                                child: Text(
+                                  widget._post.title,
+                                  style: TextStyle(
+                                      color: textColor,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                      height: 1.5),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ]),
+          );
+        }
+        return Container(
+          height: MediaQuery.of(context).size.height * 32 / 100,
+          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Container(
+              width: MediaQuery.of(context).size.width * 16 / 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(DateFormat('EEE').format(widget._post.createdAt)),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      color: Color(0xfffabd49),
+                      border: Border.all(color: Colors.black87, width: 2),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: Text(
+                        widget._post.createdAt.day.toString(),
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Navigate.push(context,
+                    PostDetailScreen(this.widget._post, this.widget._group.id));
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width * 80 / 100,
+                height: MediaQuery.of(context).size.height * 28 / 100,
+                decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Stack(
+                  children: <Widget>[
+                    widget._post.image == null
+                        ? SizedBox()
+                        : Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.black54),
+                            height:
+                                MediaQuery.of(context).size.height * 25 / 100,
+                            child: Center(child: CircularProgressIndicator())),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: LinearGradient(
+                          begin: FractionalOffset.topCenter,
+                          end: FractionalOffset.bottomCenter,
+                          colors: [
+                            color.withOpacity(0),
+                            color.withOpacity(0.95),
+                            color,
+                          ],
+                          stops: [0.33, 0.66, 0.99],
+                        ),
+                      ),
+                    ),
+                    widget._post.user.id ==
+                            int.parse(FirebaseAuth.instance.currentUser!.uid)
+                        ? Positioned(
+                            top: 5,
+                            right: 5,
+                            child: PopupMenuButton<String>(
+                                child: Container(
+                                  width: 25,
+                                  height: 25,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xffdfe7ec).withOpacity(0.75),
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.more_horiz_sharp,
+                                      size: 15,
+                                      color: Colors.black87,
+                                    ),
                                   ),
                                 ),
-                              ],
+                                onSelected: choiceAction,
+                                itemBuilder: (BuildContext context) {
+                                  return Constants.postSetting
+                                      .map((String choice) {
+                                    return PopupMenuItem<String>(
+                                        value: choice,
+                                        child: buildSettingsPost(
+                                            context,
+                                            widget._group,
+                                            widget._post,
+                                            choice));
+                                  }).toList();
+                                }),
+                          )
+                        : SizedBox(),
+                    Positioned(
+                      bottom: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0, bottom: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(children: [
+                              Container(
+                                width: 20,
+                                child: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                        widget._post.user.avatar ??
+                                            defaultAvatar)),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                widget._post.user.fullName,
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: textColor,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ]),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 3 / 4,
+                              height: 40,
+                              child: Text(
+                                widget._post.title,
+                                style: TextStyle(
+                                    color: textColor,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    height: 1.5),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),
