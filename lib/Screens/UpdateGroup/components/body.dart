@@ -319,7 +319,15 @@ class _BodyState extends State<Body> {
                         ),
                         InkWell(
                             onTap: () async {
-                              await updateGroup();
+                              if(this._updateGroupModel!.quizSize < 3){
+                                showError(text: "Quz size must be more than 3", context: context);
+                              }
+                              if(this._updateGroupModel!.groupName.length > 50){
+                                showError(text: "Group name must be less than 50", context: context);
+                              }
+                              if(this._updateGroupModel!.quizSize >= 3 && this._updateGroupModel!.groupName.length <= 50) {
+                                await updateGroup();
+                              }
                             },
                             child: buildSubmit()),
                       ],

@@ -133,7 +133,11 @@ class _BodyState extends State<Body> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      await createPost();
+                      if(this._title.length < 1 ){
+                        showError(text: "Group title must have content", context: context);
+                      }else {
+                        await createPost();
+                      }
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 16),

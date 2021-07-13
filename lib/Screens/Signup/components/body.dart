@@ -11,6 +11,7 @@ import 'package:quizzit/constants.dart';
 import 'package:quizzit/models/problemdetails/ProblemDetails.dart';
 import 'package:quizzit/models/signup/SignupRequest.dart';
 import 'package:quizzit/utils/ApiUtils.dart';
+import 'package:quizzit/utils/snackbar.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -121,11 +122,15 @@ class _BodyState extends State<Body> {
               RoundedButton(
                 text: "SIGN UP",
                 press: () async {
-                  signupRequest.password.isNotEmpty &&
-                          signupRequest.password == _confirmedPassword
-                      ? await widget._signUp(context, signupRequest)
-                      : showOkAlert(context, "Signup Failed",
-                          "Confirmed Password Not Match");
+                  if(signupRequest.password.length < 8 || signupRequest.password.length > 16 ){
+                    showError(text: "Password must be from 8 to 16 character", context: context);
+                  }else {
+                    signupRequest.password.isNotEmpty &&
+                        signupRequest.password == _confirmedPassword
+                        ? await widget._signUp(context, signupRequest)
+                        : showOkAlert(context, "Signup Failed",
+                        "Confirmed Password Not Match");
+                  }
                 },
               ),
             ],

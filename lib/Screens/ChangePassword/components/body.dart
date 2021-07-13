@@ -112,19 +112,26 @@ class _BodyState extends State<Body> {
                             EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                         color: Colors.blue[500],
                         onPressed: () async {
-                          if (this._updatePasswordRequest.oldPassword.isEmpty ||
-                              this._updatePasswordRequest.oldPassword.isEmpty)
-                            showOkAlert(context, "Invalid Input",
-                                "All Field is Required");
-                          else if (this
-                                  ._updatePasswordRequest
-                                  .newPassword
-                                  .compareTo(this._confirmedPassword) !=
-                              0)
-                            showOkAlert(context, "Invalid Input",
-                                "New Password and Confirm Password Not Match");
-                          else
-                            await _updatePassword();
+                          if(_updatePasswordRequest.newPassword.length < 8 || _updatePasswordRequest.newPassword.length > 16 ){
+                            showError(text: "New password must be from 8 to 16 character", context: context);
+                          }else {
+                            if (this
+                                    ._updatePasswordRequest
+                                    .oldPassword
+                                    .isEmpty ||
+                                this._updatePasswordRequest.oldPassword.isEmpty)
+                              showOkAlert(context, "Invalid Input",
+                                  "All Field is Required");
+                            else if (this
+                                    ._updatePasswordRequest
+                                    .newPassword
+                                    .compareTo(this._confirmedPassword) !=
+                                0)
+                              showOkAlert(context, "Invalid Input",
+                                  "New Password and Confirm Password Not Match");
+                            else
+                              await _updatePassword();
+                          }
                         },
                         child: Text(
                           "Update Password",

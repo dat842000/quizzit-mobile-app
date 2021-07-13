@@ -70,35 +70,43 @@ class _QuestionInfoScreen extends State<QuestionInfoScreen> {
         actions: [
           GestureDetector(
             onTap: () async {
-              EasyLoading.show(
-                  status: 'Đang thực hiện...',
-                  maskType: EasyLoadingMaskType.black);
-              widget.isNew
-                  ? await widget
-                      .createQuestion(widget.question, widget.group.id)
-                      .then((value) {
-                      widget.isErr = false;
-                      showSuccess(text: "Tạo thành công", context: context);
-                    }).catchError((onError) {
-                      showError(
-                          text: (onError as ProblemDetails).title!,
-                          context: context);
-                      widget.isErr = true;
-                    })
-                  : await widget
-                      .updateQuestion(widget.question)
-                      .then((value) => showSuccess(
-                          text: "Cập nhật thành công", context: context))
-                      .catchError((onError) => showError(
-                          text: (onError as ProblemDetails).title!,
-                          context: context));
-              EasyLoading.dismiss();
-              if (widget.isNew && !widget.isErr) {
-                Navigator.of(context).pop(
-                  MaterialPageRoute(
-                    builder: (context) => QuestionScreen(widget.group),
-                  ),
-                );
+              bool invalidAnswer = widget.question.answers
+                  .any((element) => element.content.length == 0);
+              if (widget.question.content.length != 0 && !invalidAnswer) {
+                EasyLoading.show(
+                    status: 'Đang thực hiện...',
+                    maskType: EasyLoadingMaskType.black);
+                widget.isNew
+                    ? await widget
+                        .createQuestion(widget.question, widget.group.id)
+                        .then((value) {
+                        widget.isErr = false;
+                        showSuccess(text: "Tạo thành công", context: context);
+                      }).catchError((onError) {
+                        showError(
+                            text: (onError as ProblemDetails).title!,
+                            context: context);
+                        widget.isErr = true;
+                      })
+                    : await widget
+                        .updateQuestion(widget.question)
+                        .then((value) => showSuccess(
+                            text: "Cập nhật thành công", context: context))
+                        .catchError((onError) => showError(
+                            text: (onError as ProblemDetails).title!,
+                            context: context));
+                EasyLoading.dismiss();
+                if (widget.isNew && !widget.isErr) {
+                  Navigator.of(context).pop(
+                    MaterialPageRoute(
+                      builder: (context) => QuestionScreen(widget.group),
+                    ),
+                  );
+                }
+              } else if (invalidAnswer) {
+                showError(text: "Đáp án phải có nội dung", context: context);
+              } else {
+                showError(text: "Câu hỏi phải có nội dung", context: context);
               }
             },
             child: Container(

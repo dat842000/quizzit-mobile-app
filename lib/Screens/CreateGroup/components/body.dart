@@ -251,16 +251,27 @@ class _BodyState extends State<Body> {
                   SizedBox(height: 20,),
                   GestureDetector(
                     onTap: () async {
-                      EasyLoading.show(
-                          status: 'Đang tạo...', maskType: EasyLoadingMaskType.black);
-                      createGroup().then((value) {
-                        showSuccess(text: "Tạo group thành công", context: context);
-                        Navigate.push(context, UserViewScreen(value));
-                        EasyLoading.dismiss();
-                      }).catchError((onError) {
-                        showError(
-                            text: (onError as ProblemDetails).title!, context: context);
-                      });
+                      if(this._createGroupModel.quizSize < 3){
+                        showError(text: "Quz size must be more than 3", context: context);
+                      }
+                      if(this._createGroupModel.groupName.length > 50){
+                        showError(text: "Group name must be less than 50", context: context);
+                      }
+                      if(this._createGroupModel.quizSize >= 3 && this._createGroupModel.groupName.length <= 50) {
+                        EasyLoading.show(
+                            status: 'Đang tạo...',
+                            maskType: EasyLoadingMaskType.black);
+                        createGroup().then((value) {
+                          showSuccess(
+                              text: "Tạo group thành công", context: context);
+                          Navigate.push(context, UserViewScreen(value));
+                          EasyLoading.dismiss();
+                        }).catchError((onError) {
+                          showError(
+                              text: (onError as ProblemDetails).title!,
+                              context: context);
+                        });
+                      }
                     },
                     child: buildSubmit()),
                 ],
