@@ -41,9 +41,13 @@ class _BodyState extends State<Body> {
     print(response.body);
     if (response.statusCode.isOk()) {
       var newToken = LoginResponse.fromJson(jsonRes);
-      await FirebaseAuth.instance.signInWithCustomToken(newToken.customToken);
+      // await FirebaseAuth.instance.signInWithCustomToken(newToken.customToken);
       showOkAlert(context, "Update User Profile Success", "", onPressed: (ctx) {
-        Navigator.of(ctx).popUntil(ModalRoute.withName("/UserInfo"));
+        Navigator.of(context).pop();
+        // Navigator.of(ctx).popUntil((route) {
+        //   print(route.settings.name);
+        //   return route.settings.name == "/UserInfo";
+        // });
         FirebaseAuth.instance.currentUser!.reload();
       });
     } else {

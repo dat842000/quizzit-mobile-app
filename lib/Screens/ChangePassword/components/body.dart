@@ -46,9 +46,9 @@ class _BodyState extends State<Body> {
     Navigator.of(context).pop();
     if (response.statusCode.isOk()) {
       var newToken = LoginResponse.fromJson(jsonRes);
-      await FirebaseAuth.instance.signInWithCustomToken(newToken.customToken);
-      await FirebaseAuth.instance.currentUser!.reload();
       showSuccess(text: "Update Password Successfully", context: context);
+      // await FirebaseAuth.instance.signInWithCustomToken(newToken.customToken);
+      await FirebaseAuth.instance.currentUser!.reload();
     } else {
       var problem = ProblemDetails.fromJson(jsonRes);
       showOkAlert(context, problem.title!,
@@ -112,9 +112,13 @@ class _BodyState extends State<Body> {
                             EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                         color: Colors.blue[500],
                         onPressed: () async {
-                          if(_updatePasswordRequest.newPassword.length < 8 || _updatePasswordRequest.newPassword.length > 16 ){
-                            showError(text: "New password must be from 8 to 16 character", context: context);
-                          }else {
+                          if (_updatePasswordRequest.newPassword.length < 8 ||
+                              _updatePasswordRequest.newPassword.length > 16) {
+                            showError(
+                                text:
+                                    "New password must be from 8 to 16 character",
+                                context: context);
+                          } else {
                             if (this
                                     ._updatePasswordRequest
                                     .oldPassword
