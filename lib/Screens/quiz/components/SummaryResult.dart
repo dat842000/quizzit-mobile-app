@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:quizzit/Screens/quiz/RecordScreen.dart';
 import 'package:quizzit/Screens/quiz/constants.dart';
 import 'package:quizzit/Screens/quiz/controllers/question_controller.dart';
+import 'package:quizzit/components/navigate.dart';
 import 'package:quizzit/components/popup_alert.dart';
 import 'package:quizzit/models/group/Group.dart';
 import 'package:quizzit/models/question/result/AnswerResult.dart';
@@ -48,7 +49,8 @@ class SummaryResult extends StatefulWidget {
               ),
               ModalRoute.withName("/Groups/${group.id}")));
     } else {
-      print(response.body);
+      showOkAlert(context, "Unexpected error", "",
+          onPressed: (con) => Navigate.popToGroup(context, group.id));
     }
   }
 }

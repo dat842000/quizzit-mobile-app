@@ -96,11 +96,16 @@ class _BodyState extends State<Body> {
                               ),
                             ),
                           ),
-                          Text(
-                            // snapshot.data!.name,
-                            widget.group.name,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 17),
+                          Container(
+                            width: MediaQuery.of(context).size.width - 120,
+                            child: Text(
+                              // snapshot.data!.name,
+                              widget.group.name,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 17),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 20.0),
@@ -420,7 +425,7 @@ Widget buildSettings(BuildContext context, Group group) => Container(
               color: Color(0xfff4f8ec),
               borderRadius: BorderRadius.circular(24),
               border: Border.all(color: Colors.black54, width: 2)),
-          child: buildAboutSettings(Icons.settings, group),
+          child: buildAboutSettings(Icons.settings, group ,context),
         ),
       ]),
     );
@@ -481,7 +486,7 @@ Widget buildAboutInfo(IconData iconTitle, GroupInfo group) => Container(
       ),
     );
 
-Widget buildAboutSettings(IconData iconTitle, Group group) => Container(
+Widget buildAboutSettings(IconData iconTitle, Group group, BuildContext context) => Container(
       padding: EdgeInsets.only(top: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -517,7 +522,8 @@ Widget buildAboutSettings(IconData iconTitle, Group group) => Container(
                 SizedBox(
                   width: 15,
                 ),
-                Text(group.name),
+                Container(width: MediaQuery.of(context).size.width * 1 /4,child: Text(group.name,overflow: TextOverflow.ellipsis,
+                  maxLines: 1,)),
               ],
             ),
           ),

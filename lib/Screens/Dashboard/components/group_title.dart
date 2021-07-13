@@ -118,11 +118,16 @@ class _GroupsTitleState extends State<GroupsTitle> {
                                   top: 3,
                                   bottom: 5,
                                 ),
-                                child: Text(
-                                  this._group.name,
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w700,
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width - 100,
+                                  child: Text(
+                                    this._group.name,
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
                                   ),
                                 ),
                               ),
@@ -181,47 +186,6 @@ class _GroupsTitleState extends State<GroupsTitle> {
                             height: 0,
                             thickness: 2,
                           ),
-                          // MemberStatus.inGroupStatuses
-                          //         .contains(this._group.currentMemberStatus)
-                          //     ? Padding(
-                          //         padding: const EdgeInsets.only(
-                          //           left: 10.4,
-                          //           top: 10.5,
-                          //           bottom: 15.5,
-                          //           right: 0,
-                          //         ),
-                          //         child: Row(
-                          //           mainAxisAlignment:
-                          //               MainAxisAlignment.spaceBetween,
-                          //           children: [
-                          //             Wrap(
-                          //               children: <Widget>[
-                          //                 Padding(
-                          //                   padding: const EdgeInsets.only(
-                          //                       right: 8.0),
-                          //                   child: Icon(
-                          //                     Icons.calendar_today_outlined,
-                          //                     size: 18,
-                          //                   ),
-                          //                 ),
-                          //                 Padding(
-                          //                   padding: const EdgeInsets.only(
-                          //                       right: 14.0),
-                          //                   child: Text(
-                          //                     DateFormat('EEE d MMM yyyy')
-                          //                         .format(this._group.createAt),
-                          //                     style: TextStyle(
-                          //                       fontSize: 17,
-                          //                       fontWeight: FontWeight.w500,
-                          //                     ),
-                          //                   ),
-                          //                 ),
-                          //               ],
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       )
-                          //     :
                           Padding(
                             padding: const EdgeInsets.only(
                               left: 12.4,

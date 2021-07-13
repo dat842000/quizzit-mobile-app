@@ -118,30 +118,6 @@ class _BodyState extends State<Body> {
           height: 20,
         ),
       ),
-      bottomNavigationBar:
-          MemberStatus.inGroupStatuses.contains(this._group.currentMemberStatus)
-              ? null
-              : Container(
-                  decoration: BoxDecoration(color: Colors.white),
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        decoration: BoxDecoration(
-                            color: kPrimaryColor,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: InkWell(
-                                  child: Text("Join"),
-                                ),
-                              ),
-                            ]),
-                      )),
-                ),
       backgroundColor: Color(0xfff9f9f9),
       body: SmartRefresher(
         controller: _refreshController,
